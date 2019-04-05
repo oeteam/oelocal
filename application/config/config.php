@@ -25,7 +25,7 @@ date_default_timezone_set('asia/dubai');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/works/otelseasy/';
+$config['base_url'] = 'http://localhost/works/oelocal/';
 
 /*
 |--------------------------------------------------------------------------
