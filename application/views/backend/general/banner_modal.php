@@ -25,14 +25,24 @@
                     <button type="button" id="undo_redo_leftAll" class="no-border btn-sm btn-default btn-block"><i class="fa fa-backward"></i></button>
                     <button type="button" id="undo_redo_redo" class="no-border btn-sm btn-primary btn-block">Redo</button>
                 </div>
-                
-                <div class="col-xs-5">
-                    <span>Active Hotels</span>
-                    <form id="hotels_banner_form" method="post">
-                    <select name="hotels_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
-                    </form>
-                </div>
-            </div>
+                <form id="hotels_banner_form" method="post">
+                    <div class="col-xs-5">
+                        <span>Active Hotels</span>
+                        
+                        <select name="hotels_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
+                        
+                    </div>
+                    <div class="col-xs-5">
+                        <span>Single Banner</span>
+                        <select name="single_hotelID" id="single_hotelID" class="form-control">
+                            <?php foreach ($hotels as $key => $value) { ?>
+                                <option <?php if(isset($single)&&$single==$value->id) echo "selected" ?> value="<?php echo $value->id ?>"><?php echo $value->hotel_name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </form>
+        </div><br>
+          
         <div class="modal-footer">
             <input type="button" id="update_hotels_banner" class="no-border btn-sm btn-success" value="Update">
         </div>

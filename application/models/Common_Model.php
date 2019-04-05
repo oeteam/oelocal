@@ -728,7 +728,7 @@ class Common_Model extends CI_Model {
       return $final;
   }
   public function hotelBannerDetails() {
-    $this->db->select('htl_banner');
+    $this->db->select('htl_banner,single_banner');
     $this->db->from('hotel_tbl_general_settings');
     $this->db->where('id',1);
     $result = $this->db->get()->result();
@@ -737,6 +737,7 @@ class Common_Model extends CI_Model {
   public function hotelsBannerUpdate($request) {
     $data= array(
                   'htl_banner'                  => implode(",", $request['hotels_to']),
+                  'single_banner'               => $request['single_hotelID'],
                   'Updated_Date'                => date('Y-m-d'),
                   'Updated_By'                  =>  $this->session->userdata('id'),
                 );

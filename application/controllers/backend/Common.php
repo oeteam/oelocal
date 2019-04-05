@@ -1054,6 +1054,7 @@ class Common extends MY_Controller {
     $data['hotels'] = $this->Hotels_Model->hotel_list_select(1)->result();
     $query = $this->Common_Model->hotelBannerDetails();
     $data['permission'] = $query[0]->htl_banner;
+    $data['single'] = $query[0]->single_banner;
     $this->load->view("backend/general/banner_modal",$data);
   }
   public function hotelsBannerUpdate() {

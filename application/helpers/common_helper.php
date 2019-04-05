@@ -2385,8 +2385,12 @@ function my_id()
 }
 function Hotelsbanner() {
   $ci =& get_instance();
-  $query=$ci->db->query('select id,hotel_name,hotel_description,image1,website from hotel_tbl_hotels where hotel_name like "%Raintree%" order by rand() limit 1')->result();
-  return $query;
+  $ci->db->select('hotel_tbl_hotels.id,hotel_tbl_hotels.Image1,hotel_tbl_hotels.hotel_name,hotel_tbl_hotels.hotel_description');
+  $ci->db->from('hotel_tbl_hotels');
+  $ci->db->join('hotel_tbl_general_settings','hotel_tbl_general_settings.single_banner = hotel_tbl_hotels.id');
+  $ci->db->where('hotel_tbl_general_settings.id',1);
+  $query=$ci->db->get();
+  return $query->result();
 }
 function get_row($table, $where, $fields = null)
 {

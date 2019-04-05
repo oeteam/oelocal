@@ -2,6 +2,7 @@
 
 $HotelsView = HotelsView();
 $Hotelsbanner = Hotelsbanner();
+// print_r($Hotelsbanner);exit;
 ?>
 <!-- <script type="text/javascript">
    if (location.protocol != 'https:')
@@ -286,7 +287,7 @@ $Hotelsbanner = Hotelsbanner();
                            <div class="col-md-6" style="background-color: #f4f4f4;">
                               <?php if (count($Hotelsbanner)!=0) { ?>
                               <div class="cuadro_intro_hover" style="height:275px">
-                                 <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $Hotelsbanner[0]->id."/".$Hotelsbanner[0]->image1 ?>" class="img-responsive" width="100%"  alt=""/>
+                                 <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $Hotelsbanner[0]->id."/".$Hotelsbanner[0]->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
                                  <div class="caption" style="top:200px">
                                     <div class="blur"></div>
                                     <div class="caption-text">
