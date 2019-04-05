@@ -1,6 +1,5 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<link href="<?php echo base_url(); ?>assets/css/agentfooter.css" rel="stylesheet" media="screen">
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/search.js"></script>
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&sensor=false&libraries=places'></script>
 <!-- id="dajy" was here -->
@@ -620,9 +619,11 @@ function currency_change(type){
 						</div>
 					</div>
 				</div>
-			</div>
-		
+				</div>
 <style type="text/css">
+.footerbgblack,.footerbg3black {
+	font-size: 14px;
+}
 .cuadro_intro_hover:hover {
     filter: brightness(125%);
 }
@@ -687,6 +688,5 @@ function currency_change(type){
 }
 </style>
 		<!-- END OF WRAP -->
-<?php init_load_frontend_footer();
- ?>
+<?php init_front_black_tail(); ?>
 

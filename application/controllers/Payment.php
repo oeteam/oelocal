@@ -1702,6 +1702,9 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           "HotelCode" => [
             "value" => $_REQUEST['hotel_id']
           ],
+          "IsCancellationPolicyRequired" => [
+            "value" => true
+          ],
           "ResponseTime" => [
             "value" => 0
           ],
