@@ -320,11 +320,11 @@ class lists extends MY_Controller {
     if (count($HotelList)==0) {
       $data['list'][] = '<p class="text-center no-records"><i class="fa fa-warning"></i>No Records found.</p>';
     }
-    $data['list'][] = '<div class="col-md-12 pull-right"><div class="hpadding20">
-      <ul class="pagination right paddingbtm20">
-      '.$result["links"].'
-      </ul>
-      </div></div>';
+    // $data['list'][] = '<div class="col-md-12 pull-right"><div class="hpadding20">
+    //   <ul class="pagination right paddingbtm20">
+    //   '.$result["links"].'
+    //   </ul>
+    //   </div></div>';
     $minAmount = $this->db->query("SELECT IF(MIN(round(TotalPrice))='',0,min(round(TotalPrice))) as MinAmount FROM ci_sessions where TotalPrice != 0 AND ip_add = '".get_client_ip()."' AND agent_id = '".$this->session->userdata('agent_id')."'")->result();
 
     $data['countprice'][] = $config['total_rows']==0 ? 0 : $minAmount[0]->MinAmount;

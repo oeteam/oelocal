@@ -3850,6 +3850,7 @@ public function loadRequest($action,$arr_value) {
     $this->db->where('TotalPrice >',$price1);
     $this->db->where('TotalPrice <',$price2);
     $this->db->where('ip_add',get_client_ip());
+    $this->db->where('searchDate', date("Y-m-d"));
     if (count($rating)!=0) {
       $this->db->where_in('Rating',$rating);
     }
@@ -3912,6 +3913,7 @@ public function loadRequest($action,$arr_value) {
     $this->db->where('TotalPrice >',$price1);
     $this->db->where('TotalPrice <',$price2);
     $this->db->where('ip_add',get_client_ip());
+    $this->db->where('searchDate', date("Y-m-d"));
     if (count($rating)!=0) {
       $this->db->where_in('Rating',$rating);
     }
@@ -3938,7 +3940,7 @@ public function loadRequest($action,$arr_value) {
     } else {
       $this->db->order_by('round(TotalPrice)','asc');
     }
-    $this->db->limit($limit, $start);
+    // $this->db->limit($limit, $start);
     $query = $this->db->get()->result();
     return $query; 
   }

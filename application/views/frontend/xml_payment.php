@@ -156,13 +156,13 @@ function StateSelectFun(){
     });
 }
 
-// $(document).ready(function() {
-//   $(".cancellatin-span").hover(function(){
-//     $(this).closest('.av-div').find('.cancellatin-table').css("display", "block");
-//     }, function(){
-//     $(this).closest('.av-div').find('.cancellatin-table').css("display", "none");
-//   });
-// })
+$(document).ready(function() {
+  $(".cancellatin-span").hover(function(){
+    $(this).closest('.av-div').find('.cancellatin-table').css("display", "block");
+    }, function(){
+    $(this).closest('.av-div').find('.cancellatin-table').css("display", "none");
+  });
+})
 
 
 </script>
@@ -638,7 +638,7 @@ function StateSelectFun(){
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomTypeName'] ?> <span class="pull-right cancellatin-span">cancellation<span></h5>
-                        <table style="display: none;position: fixed;left: 10px;left: 17%;width: 83%;" class="table table-bordered table-hover cancellatin-table">
+                        <table style="display: none;position: absolute;left: 17%;width: 83%;" class="table table-bordered table-hover cancellatin-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
                               <td>Cancelled on or After</td>
