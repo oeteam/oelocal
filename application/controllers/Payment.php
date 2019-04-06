@@ -1728,6 +1728,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $data['agent_markup'] = mark_up_get();
       $data['admin_markup'] = general_mark_up_get();
       $data['revenue_markup'] =  xmlrevenue_markup('tbo',$this->session->userdata('agent_id'));
+      $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/xml_payment',$data);
     }
     public function StateSelect() {

@@ -157,10 +157,10 @@ function StateSelectFun(){
 }
 
 $(document).ready(function() {
-  $(".cancellatin-span").hover(function(){
-    $(this).closest('.av-div').find('.cancellatin-table').css("display", "block");
+  $(".cancellation-span").hover(function(){
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
     }, function(){
-    $(this).closest('.av-div').find('.cancellatin-table').css("display", "none");
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "none");
   });
 })
 
@@ -269,6 +269,9 @@ $(document).ready(function() {
           border: 1px solid #5cb880 ! important;
           filter: grayscale(0) ! important;
         }
+        .r-type--room ul > li > label > input[type="radio"]:disabled + div  > h5 > i:first-child {          display: none;
+        }
+
         .r-type--room ul > li > label > input[type="radio"]:checked + div {
           border: 1px solid #5cb880;
           opacity: 1;
@@ -502,11 +505,11 @@ $(document).ready(function() {
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <input type="text" class="form-control email validate validated" name="email" id="email"  placeholder="Email" value="">
+                    <input type="text" class="form-control email validate validated" name="email" id="email"  placeholder="Email" value="<?php echo $agent_info[0]->Email ?>">
                     <small class="required-msg">*required</small>
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control address1 validate validated" name="address1" id="address1" placeholder="Address Line 1"></textarea>
+                    <textarea class="form-control address1 validate validated" name="address1" id="address1" placeholder="Address Line 1"><?php echo $agent_info[0]->Address ?></textarea>
                     <small class="required-msg">*required</small>
                   </div>
                 </div>
@@ -514,11 +517,11 @@ $(document).ready(function() {
                 <div class="col-sm-6">
                   <div class="form-group">
                     <input type="number" class="hide-spinner  form-control contact_num validate validated" name="contact_num" id="contact_num"
-                      placeholder="Contact number" value="">
+                      placeholder="Contact number" value="<?php echo $agent_info[0]->Mobile ?>">
                       <small class="required-msg">*required</small>
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control address2" name="address2" id="address2" placeholder="Address Line 2"></textarea>
+                    <textarea class="form-control address2" name="address2" id="address2" placeholder="Address Line 2"><?php echo $agent_info[0]->Address ?></textarea>
                   </div>
                 </div>
 
@@ -529,11 +532,11 @@ $(document).ready(function() {
                     <small class="required-msg">*required</small>
                   </div>
                 </div>
-                <div class="col-sm-3"><input type="text" class="form-control citySelect validate validated" name="citySelect" placeholder="City">
+                <div class="col-sm-3"><input type="text" class="form-control citySelect validate validated" value="<?php echo $agent_info[0]->City ?>" name="citySelect" placeholder="City">
                 <small class="required-msg">*required</small></div>
                 <div class="col-sm-3"> <input type="text" class="form-control areacode validate validated" name="areacode" id="areacode"
-                    placeholder="Area code"><small class="required-msg">*required</small></div>
-                <div class="col-sm-3"><input type="text" class="form-control zipcode validate validated" name="zipcode" id="zipcode"
+                    placeholder="Area code" value="<?php echo $agent_info[0]->Fax ?>"><small class="required-msg">*required</small></div>
+                <div class="col-sm-3"><input type="text" class="form-control zipcode validate validated" name="zipcode" id="zipcode" value="<?php echo $agent_info[0]->Pincode ?>" 
                     placeholder="Zip Code"><small class="required-msg">*required</small></div>
               </div>
 
@@ -637,8 +640,8 @@ $(document).ready(function() {
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
-                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomTypeName'] ?> <span class="pull-right cancellatin-span">cancellation<span></h5>
-                        <table style="display: none;position: absolute;left: 17%;width: 83%;" class="table table-bordered table-hover cancellatin-table">
+                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomTypeName'] ?> <span class="pull-right cancellation-span">cancellation<span></h5>
+                        <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
                               <td>Cancelled on or After</td>
@@ -665,6 +668,11 @@ $(document).ready(function() {
                               </td>
                             </tr>
                           <?php } ?>
+                          <tr>
+                            <td colspan="3">
+                              <?php echo $value['CancelPolicies']['DefaultPolicy']?>
+                            </td>
+                          </tr>
                           </tbody>
                         </table>
                       

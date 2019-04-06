@@ -256,7 +256,7 @@ class lists extends MY_Controller {
             <div class="labelleft2">      
             <a  target="'.$target.'" class="'.$reqClass.'" href="'.$reqDetails.'"><H3>'.$value->HotelName.'</H3></a>
             '.$value->RatingImg.'
-            <p class="grey">'.$HotelDescription[$key].'</p><br/>
+            <p class="grey">'.utf8_encode($HotelDescription[$key]).'</p><br/>
             <ul class="hotelpreferences--search">
             </ul>
             </div>
@@ -309,7 +309,7 @@ class lists extends MY_Controller {
           </div>
           <div class="labelleft">     
           <b>'.$value->HotelName.'</b><br><br><br>
-          <p class="grey">'.$HotelDescription[$key].'</p>
+          <p class="grey">'.utf8_encode($HotelDescription[$key]).'</p>
           </div>
           </div>
           </div>';

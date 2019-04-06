@@ -920,7 +920,7 @@
 			<br/><br/>
 			<div class="clearfix"></div>
 
-			<div class="itemscontainer offset-1">
+			<div class="itemscontainer offset-1" style="height: 869px;overflow-y: scroll;">
 				<div id="rotateBanner"></div>
 				<div id="result_search" class="shide" >
 					

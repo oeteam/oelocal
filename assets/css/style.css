@@ -130,15 +130,15 @@ a:hover {
     overflow-y: auto;
     /*position: absolute;*/
     position: fixed;
-    -webkit-transition: all 0.2s ease-in-out;
+    /*-webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
-    box-shadow: -1px -1px 6px 0px rgba(0, 0, 0, 0.21);
+    box-shadow: -1px -1px 6px 0px rgba(0, 0, 0, 0.21);*/
 }
-.sb2-1::-webkit-scrollbar { 
+/*.sb2-1::-webkit-scrollbar { 
     display: none; 
-}
+}*/
 
 .sb2-1 a {
     color: #37474F;
