@@ -25,6 +25,7 @@ class Profile extends MY_Controller {
 		// print_r($data);
 		// exit();
 		$data['currency_list']= $this->Profile_Model->currency();
+    $data['contry']= $this->Profile_Model->SelectCountry();
 		$this->load->view('frontend/profile',$data);
 	}
 	public function profile_update()
@@ -88,8 +89,9 @@ class Profile extends MY_Controller {
       echo json_encode($Return);
 	}
 	public function agent_register() {
-	$data['view'] = $this->Profile_Model->general_settings_select();
+	  $data['view'] = $this->Profile_Model->general_settings_select();
     $data['currency_list']= $this->Profile_Model->currency();
+    $data['contry']= $this->Profile_Model->SelectCountry();
 		$this->load->view('agent_reg',$data);
 	}
     public function agent_reg_insert() {
@@ -123,4 +125,8 @@ class Profile extends MY_Controller {
   // public function dummmy() {
   // 	RegisteringMail('2');
   // }
+  public function StateSelect() {
+      $data = $this->Profile_Model->SelectState($_REQUEST['Conid']);
+      echo json_encode($data);
+  }
 }

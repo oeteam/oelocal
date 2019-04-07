@@ -11,7 +11,8 @@ $(document).ready(function() {
       var last_name       = $("#last_name").val();
       var designation     = $("#designation").val();
       var nature_business   = $("#nature_business").val();
-      var country     = $("#country").val();
+      var country     = $("#ConSelect").val();
+      var state     = $("#stateSelect").val();
       var website   = $("#website").val();
       var address = $("#address").val();
       var pincode = $("#pincode").val();
@@ -89,11 +90,16 @@ $(document).ready(function() {
            $(".nature_business_err").text("Nature Of Business field is required!");
           } else {
             $(".nature_business_err").text("");
-          }
+          } 
           if (country=="")    {
            $(".country_err").text("Country field is required!");
           } else {
             $(".country_err").text("");
+          }
+          if (state=="")    {
+           $(".state_err").text("State field is required!");
+          } else {
+            $(".state_err").text("");
           }
           if (website=="")    {
            $(".website_err").text("Website field is required!");
@@ -262,3 +268,19 @@ function agency_email_already_registered() {
       }
     });
 }
+function ConSelectFun(){
+      $('#stateSelect option').remove();
+        var ConSelect = $('#ConSelect').val();
+        $.ajax({
+            url: base_url+'/Profile/StateSelect?Conid='+ConSelect,
+            type: "POST",
+            data:{},
+            dataType: "json",
+            success:function(data) {
+              $('#stateSelect').append('<option value="">Select</option>');
+                $.each(data, function(i, v) {
+                    $('#stateSelect').append('<option  value="'+ v.id +'">'+ v.name +'</option>');
+                });
+            }
+        });
+  }

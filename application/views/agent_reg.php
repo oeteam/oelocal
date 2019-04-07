@@ -241,13 +241,41 @@ $data = title();
      <div class="form-group">
        <label for="country" class="col-sm-3 control-label fontstyl" style="">Country<span class="starcolor">*</span></label>
        <div class="col-sm-9">
-         <input type="text" class="form-control" id="country" name="country">
+         <select name="ConSelect" id="ConSelect" onchange ="ConSelectFun();" class="form-control">
+          <option value=""> Country </option>
+          <?php $count=count($contry);
+
+          for ($i=0; $i <$count ; $i++) { ?>
+          <option value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
+          <?php  } ?>
+          </select>
          <span class="country_err popup_err blink_me"></span>
 
        </div>
      </div>
    </div>
  </div>
+  <div class="col-sm-5">
+   <div class=form-horizondal>
+     <div class="form-group">
+       <label for="state" class="col-sm-3 control-label fontstyl" style="">State<span class="starcolor">*</span></label>
+       <div class="col-sm-9">
+         <div class="multi-select-mod multi-select-trans multi-select-trans1">
+         <select name="stateSelect" id="stateSelect" class="form-control">
+         <option value="">Select</option>
+         </select> 
+         <span class="state_err popup_err blink_me"></span>
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+ <div class="col-sm-1"></div>
+
+</div>
+<div class="row">
+ <div class="col-sm-1"></div>
  <div class="col-sm-5">
    <div class=form-horizondal>
      <div class="form-group">
@@ -260,11 +288,6 @@ $data = title();
      </div>
    </div>
  </div>
- <div class="col-sm-1"></div>
-
-</div>	
-<div class="row">
- <div class="col-sm-1"></div>
  <div class="col-sm-5">
   <div class=form-horizondal>
     <div class="form-group">
@@ -277,6 +300,10 @@ $data = title();
     </div>
   </div>
 </div>
+<div class="col-sm-1"></div>
+</div>
+<div class="row">
+<div class="col-sm-1"></div>
 <div class="col-sm-5">
   <div class=form-horizondal>
     <div class="form-group">
@@ -284,15 +311,10 @@ $data = title();
       <div class="col-sm-9">
         <input type="text" class="form-control" id="fax" name="fax">
         <span class="fax_err popup_err blink_me"></span>
-
       </div>
     </div>
   </div>
 </div>
-<div class="col-sm-1"></div>
-</div>	
-<div class="row">
- <div class="col-sm-1"></div>
  <div class="col-sm-5">
   <div class=form-horizondal>
    <div class="form-group">

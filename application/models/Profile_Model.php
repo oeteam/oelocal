@@ -41,9 +41,9 @@ class Profile_Model extends CI_Model {
                   'Date_Of_Birth'           =>$data['date'],
                   'Sex'                     =>$data['sex'],
                   'City'                    =>$data['city'],
-                  'Country'                 =>$data['country'],
+                  'Country'                 =>$data['ConSelect'],
                   'Address'                 =>$data['address'],
-                  'State'                   =>$data['state'],
+                  'State'                   =>$data['stateSelect'],
                   'Designation'             =>$data['designation'],
                   'Pincode'                 =>$data['pin_code'],
                   'Fax'                     =>$data['fax'],
@@ -102,7 +102,8 @@ class Profile_Model extends CI_Model {
                   'Business_Type' =>$data['business_type'],
                   'Website' =>$data['website'],
                   'City' =>$data['city'],
-                  'Country' =>$data['country'],
+                  'Country' =>$data['ConSelect'],
+                  'State' =>$data['stateSelect'],
                   'Pincode' =>$data['pincode'],
                   'Address' =>$data['address'],
                   'Iata_Status' =>$data['iata_status'],
@@ -167,10 +168,25 @@ class Profile_Model extends CI_Model {
         return $query->result();
     }
     public function currency(){
-    $this->db->select('*');
-    $this->db->from('currency_update');
-    $query=$this->db->get();
-    return $query->result();
-
+        $this->db->select('*');
+        $this->db->from('currency_update');
+        $query=$this->db->get();
+        return $query->result();
+    }
+    public function SelectCountry() {
+        $this->db->select('*');
+        $this->db->from('countries');
+        $this->db->order_by('id','asce');
+        $query=$this->db->get();
+        return $query->result();
+    }
+    public function SelectState($Conid){
+        $this->db->select('*');
+        $this->db->from('states');
+        $this->db->where('country_id',$Conid);
+        $this->db->order_by('id','asce');
+        $query=$this->db->get();
+        return $query->result();
   }
+
 }

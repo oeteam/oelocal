@@ -39,6 +39,7 @@ class Agents extends MY_Controller {
       redirect("../backend/");
     }
     $agentmenu = menuPermissionAvailability($this->session->userdata('id'),'Agents','');
+    $data['contry']= $this->Agents_Model->SelectCountry();
     if (isset($_REQUEST['edit_id']) && $_REQUEST['edit_id'] !="") {
       $id=$_REQUEST['edit_id'];
       $data['view'] = $this->Agents_Model->general_settings_select($id);
@@ -330,7 +331,9 @@ class Agents extends MY_Controller {
     //   }
     // } else {
       foreach($agent->result() as $key => $r) {
-        $agentmenu = menuPermissionAvailability($this->session->userdata('id'),'Agents',''); 
+        $agentmenu = menuPermissionAvailability($this->session->userdata('id'),'Agents','');
+        $country_info = $this->Agents_Model->getCountry($r->Country);
+        $country = isset($country_info[0]->name)?$country_info[0]->name:'';
         if($agentmenu[0]->delete!=0) {
             if ($r->delflg==0) {
                   $permission = '<div class="switch">
@@ -375,7 +378,7 @@ class Agents extends MY_Controller {
           '<a href="#"><span class="list-enq-name">'.$r->First_Name." ".$r->Last_Name.'</span><span class="list-enq-city">'.$r->City.",".$r->Country.'</span></a>',
           $r->Mobile,
           $r->Email,
-          $r->Country,
+          $country,
           $permission,
           $edit,
         );
@@ -565,6 +568,10 @@ class Agents extends MY_Controller {
     $description = 'Hotels banner updated [id:'.$_REQUEST['id'].']';
     AdminlogActivity($description);
     redirect(base_url().'backend/Agents/new_agent?edit_id='.$_REQUEST['id'].'');
+  }
+  public function StateSelect() {
+      $data = $this->Agents_Model->SelectState($_REQUEST['Conid']);
+      echo json_encode($data);
   }
 }
 ?>

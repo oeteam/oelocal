@@ -3,11 +3,11 @@ $(document).ready(function() {
  		var fname              = $("#name").val();
  		var lname              = $("#lastname").val();
  		var address            = $("#address").val();
- 		var country            = $("#country").val();
+ 		var country            = $("#ConSelect").val();
     var city               = $("#city").val();
     var phone              = $("#phone").val();
     var phone_num          = $("#phone_num").val();
-    var state              = $("#state").val();
+    var state              = $("#stateSelect").val();
     var designation        = $("#designation").val();
     var pin_code           = $("#pin_code").val();
     var nature_business    = $("#nature_business").val();
@@ -304,4 +304,26 @@ function myFunction_management() {
         x.type = "password";
     }
 }
+function ConSelectFun(){
+      var hiddenState = $("#hiddenState").val();
+      $('#stateSelect option').remove();
+        var ConSelect = $('#ConSelect').val();
+        $.ajax({
+            url: base_url+'/Profile/StateSelect?Conid='+ConSelect,
+            type: "POST",
+            data:{},
+            dataType: "json",
+            success:function(data) {
+              $('#stateSelect').append('<option value="">Select</option>');
+                $.each(data, function(i, v) {
+                    if (hiddenState==v.id) {
+                      selected = 'selected';
+                    } else {
+                      selected = '';
+                    }
+                    $('#stateSelect').append('<option '+selected+' value="'+ v.id +'">'+ v.name +'</option>');
+                });
+            }
+        });
+  }
 

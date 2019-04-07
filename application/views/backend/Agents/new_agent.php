@@ -14,6 +14,74 @@
    cursor: pointer;
    pointer-events: all;
  }
+ .multi-select-trans .select-wrapper input.select-dropdown, .dropdown-content.select-dropdown.multiple-select-dropdown{
+        display: none !important;
+    }
+
+    .multi-select-trans .multiselect.dropdown-toggle.btn.btn-default {
+        border-color: transparent !important;
+        transform: translateY(-8px) !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+    .multi-select-trans .form-control {
+        padding: 6px 0 !important;
+    }
+    .multi-select-trans1 .form-control {
+        padding: 0px 0 !important;
+    }
+    .multi-select-mod button {
+        background-color: transparent;
+        color: #ccc;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        height: 34px;
+        font-size: 14px;
+        font-weight: normal;
+        text-transform: capitalize;
+        padding: 0 1rem;
+    }
+
+    .multi-select-mod button:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #ccc;
+        border: 1px solid #ccc;
+    }
+
+    .multi-select-mod .dropdown-menu {
+        left: 0;
+        top: 34px;
+    }
+
+    .multi-select-mod label {
+        color: black;
+    }
+    .multi-select-mod li.active a, .multi-select-mod li.active a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .multi-select-mod li.active a label {
+        color: #000;
+    }
+    .multi-select-mod [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        left: auto !important;
+        opacity: 1 !important;
+    }
+
+    .multi-select-mod .btn-group, .multi-select-mod button, .multi-select-mod .dropdown-menu {
+        width: 100%;
+    }
+    .multi-select-trans .multiselect.dropdown-toggle.btn.btn-default {
+        border: 1px solid #cccccc ! important;
+        margin-top: 9px;
+    }
+    .caret {
+        display: none;
+    } 
+    .select {
+        -webkit-appearance:none
+    } 
 
 
 /* Styles for CodePen Demo Only */
@@ -137,6 +205,12 @@
                                                 <input id="iata_reg" name="iata_reg" type="text" class="form-control" value="<?php echo isset($edit[0]->Iata_Reg_Number) ? $edit[0]->Iata_Reg_Number : '' ?>">
                                             </div> 
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label for="credit">Credit Amount*</label>
+                                            <input id="credit" name="credit" type="number" class="form-control" value="<?php echo isset($edit[0]->Credit_amount) ? $edit[0]->Credit_amount : '' ?>">
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                 </div>
@@ -226,21 +300,29 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
+                                    <label for="from_date">Country</label>
+                                    <select name="ConSelect" id="ConSelect" onchange ="ConSelectFun();">
+                                    <option value=" "> Country </option>
+                                    <?php $count=count($contry);
+
+                                    for ($i=0; $i <$count ; $i++) { ?>
+                                    <option <?php echo isset($edit[0]->Country) && $edit[0]->Country ==$contry[$i]->id  ? 'selected' : '' ?> value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
+                                    <?php  } ?>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                 <label for="stateSelect">State</label>
+                                    <input type="hidden" id="hiddenState" value="<?php echo isset($edit[0]->State) ? $edit[0]->State : '' ?>">
+                                    <div class="multi-select-mod multi-select-trans multi-select-trans1">
+                                    <select name="stateSelect" id="stateSelect" class="form-control">
+                                    <option value="">Select</option>
+                                    </select> 
+                                    </div>
+                                </div>
+                                <div class=" form-group col-md-4">
                                     <div class="form-group">
                                     <label for="city">City*</label>
                                     <input id="city" name="city" type="text" class="form-control" value="<?php echo isset($edit[0]->City) ? $edit[0]->City : '' ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                    <label for="credit">Credit Amount*</label>
-                                    <input id="credit" name="credit" type="number" class="form-control" value="<?php echo isset($edit[0]->Credit_amount) ? $edit[0]->Credit_amount : '' ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                    <label for="country">Country*</label>
-                                    <input id="country" name="country" type="text" class="form-control" value="<?php echo isset($edit[0]->Country) ? $edit[0]->Country : '' ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

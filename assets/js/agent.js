@@ -282,3 +282,25 @@ function commonDelete() {
       }
     });
   }
+  function ConSelectFun(){
+      var hiddenState = $("#hiddenState").val();
+      $('#stateSelect option').remove();
+        var ConSelect = $('#ConSelect').val();
+        $.ajax({
+            url: base_url+'/backend/Agents/StateSelect?Conid='+ConSelect,
+            type: "POST",
+            data:{},
+            dataType: "json",
+            success:function(data) {
+              $('#stateSelect').append('<option value="">Select</option>');
+                $.each(data, function(i, v) {
+                    if (hiddenState==v.id) {
+                      selected = 'selected';
+                    } else {
+                      selected = '';
+                    }
+                    $('#stateSelect').append('<option '+selected+' value="'+ v.id +'">'+ v.name +'</option>');
+                });
+            }
+        });
+  }

@@ -23,7 +23,8 @@ class Agents_Model extends CI_Model {
                   'Sex' =>$data['sex'],
                   'password' =>md5($data['password']),
                   'City' =>$data['city'],
-                  'Country' =>$data['country'],
+                  'Country' =>$data['ConSelect'],
+                  'State' => $data['stateSelect'],
                   'Credit_amount' =>$data['credit'],
                   'Agency_Name' =>$data['agency_name'],
                   'Email' =>$data['email'],
@@ -89,7 +90,8 @@ class Agents_Model extends CI_Model {
                   'Sex'                         =>$data['sex'],
                   'password'                    =>md5($data['password']),
                   'City'                        =>$data['city'],
-                  'Country'                     =>$data['country'],
+                  'Country'                     =>$data['ConSelect'],
+                  'State'                       => $data['stateSelect'],
                   'Credit_amount'               =>$data['credit'],
                   'Email'                       =>$data['email'],
                   'Address'                     =>$data['address'],
@@ -343,6 +345,27 @@ class Agents_Model extends CI_Model {
     $this->db->where('id',$request['id']);
     $this->db->update('hotel_tbl_agents',$data);
   }
-    
+  public function SelectCountry() {
+    $this->db->select('*');
+    $this->db->from('countries');
+    $this->db->order_by('id','asce');
+    $query=$this->db->get();
+    return $query->result();
+  }
+  public function SelectState($Conid){
+    $this->db->select('*');
+    $this->db->from('states');
+    $this->db->where('country_id',$Conid);
+    $this->db->order_by('id','asce');
+    $query=$this->db->get();
+    return $query->result();
+  }
+  public function getCountry($id) {
+    $this->db->select('name');
+    $this->db->from('countries');
+    $this->db->where('id',$id);
+    $query=$this->db->get();
+    return $query->result();
+  }   
 }
 ?>

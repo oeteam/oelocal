@@ -108,7 +108,14 @@
 								<div class="col-md-4 form-group">
 									<label for="country">Country*:</label> 
 									<!-- <br> <br> -->
-									<input type="text" class="form-control" value="<?php echo $view[0]->Country ?>" name="country" id="country">
+									<select name="ConSelect" id="ConSelect" onchange ="ConSelectFun();" class="form-control">
+						          	<option value=""> Country </option>
+						          	<?php $count=count($contry);
+
+						          	for ($i=0; $i <$count ; $i++) { ?>
+						          	<option <?php echo isset($view[0]->Country) && $view[0]->Country ==$contry[$i]->id  ? 'selected' : '' ?> value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
+						          	<?php  } ?>
+						          	</select>
 							        <i class="country_error err_hide"></i>
 								</div>
 								<div class="col-md-4 form-group">
@@ -122,7 +129,12 @@
 								<div class="col-md-4 form-group">
 									<label for="state">State*:</label> 
 									<!-- <br> <br> -->
-									<input type="text" class="form-control" id="state"  name="state" value="<?php echo $view[0]->State ?>">
+									<input type="hidden" id="hiddenState" value="<?php echo isset($view[0]->State) ? $view[0]->State : '' ?>">
+						         	<div class="multi-select-mod multi-select-trans multi-select-trans1">
+						         	<select name="stateSelect" id="stateSelect" class="form-control">
+						         	<option value="">Select</option>
+						         	</select> 
+						         	</div>
 						            <i class="state_error err_hide"></i>
 							    </div>
 								<div class="col-md-4 form-group">
