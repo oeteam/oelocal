@@ -1120,6 +1120,17 @@ class Common extends MY_Controller {
     print_r($arr_data);
     exit();
   }
+  public function currencyapi_update() {
+    if ($this->session->userdata('name')=="") {
+     redirect("../backend/logout");
+    }
+    $data = array('currency_api' => $_REQUEST['currency_api'],
+                );
+    $update = $this->Common_Model->general_settings_currencyapi_update($data);
+    $description = 'Currency API details updated to '.$_REQUEST['currency_api'];
+    AdminlogActivity($description); 
+    redirect('../backend/common/payment');
+  }
 }
 
 

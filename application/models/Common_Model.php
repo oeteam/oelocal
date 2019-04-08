@@ -751,5 +751,11 @@ class Common_Model extends CI_Model {
     $result = $this->db->get();
     return $result;
   }
+  public function general_settings_currencyapi_update($data)
+    {
+      $this->db->where('id',1);
+      $this->db->update('hotel_tbl_general_settings',$data);
+      return true;
+    }
 }
 

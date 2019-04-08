@@ -304,6 +304,21 @@ $('#icons_form_button').click(function (e) {
       $("#hotels_banner_form").submit();
     }
   })
+  $("#currencyapi_form_button").click(function(e) {
+    e.preventDefault();
+    // var markup = $("#markup").val();
+    // var tax = $("#tax").val();
+    // if (markup=="") {
+    //   addToast("Markup field is required !","orange");
+    // } else if (tax=="") {
+    //   addToast("Tax field is required !","orange");
+    // } else {
+      addToast("Currency API updated Successfully","green");
+      window.setTimeout(function(){
+         $("#currencyapi_form").submit();
+      }, 1000);
+    // }
+  });
 
 
    

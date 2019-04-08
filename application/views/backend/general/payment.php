@@ -100,9 +100,25 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                                  </div> 
                                 </form>
                             </div>
+                <?php } ?>
+                            <div class="form-group col-md-6">
+                                <label for="list-title">Currency API</label>
+                                <form action="<?php echo base_url(); ?>backend/common/currencyapi_update" name="currencyapi_form" id="currencyapi_form" method="post" enctype="multipart/form-data">
+                                <br>
+                                    <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" name="currency_api" id="currency_api" value="<?php if(isset($view[0]->currency_api)) echo $view[0]->currency_api ?>">
+                                    </div>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                    <div class="form-group col-md-12">
+                                    <button type="button" id="currencyapi_form_button" class="waves-effect waves-light btn-sm btn-success pull-right">update</button>
+                                    </div>
+                                    </div>
+                                 </div> 
+                                </form>
+                            </div>
                         </div>
                     </div>
-                <?php } ?>
             </div>
             </div>
         </div>
