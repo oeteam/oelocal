@@ -73,7 +73,7 @@ $(document).ready(function() {
     $(".b-rates--grand-total").text(sum);
   });
   RoomCombinationinitCheck();
-  ConSelectFun();
+  // ConSelectFun();
   var startStamp = new Date($("#startTime").val()).getTime();
   var start = new Date($("#startTime").val());
   var maxTime = (30*60)*1000;
@@ -121,23 +121,23 @@ $(document).ready(function() {
   }
   setInterval(updateClock, 1000);
 });
-function ConSelectFun(){
+// function ConSelectFun(){
  
-  $('#stateSelect option').remove();
-    var ConSelect = $('#nationality').val();
-    $.ajax({
-        url: base_url+'payment/StateSelect?Conid='+ConSelect,
-        type: "POST",
-        data:{},
-        dataType: "json",
-        success:function(data) {
-          $('#stateSelect').append('<option value="">Select</option>');
-            $.each(data, function(i, v) {
-                $('#stateSelect').append('<option  value="'+ v.id +'">'+ v.name +'</option>');
-            });
-        }
-    });
-}
+//   $('#stateSelect option').remove();
+//     var ConSelect = $('#nationality').val();
+//     $.ajax({
+//         url: base_url+'payment/StateSelect?Conid='+ConSelect,
+//         type: "POST",
+//         data:{},
+//         dataType: "json",
+//         success:function(data) {
+//           $('#stateSelect').append('<option value="">Select</option>');
+//             $.each(data, function(i, v) {
+//                 $('#stateSelect').append('<option  value="'+ v.id +'">'+ v.name +'</option>');
+//             });
+//         }
+//     });
+// }
 function StateSelectFun(){
     $('#citySelect option').remove();
     var StateSelect = $('#stateSelect').val();
@@ -499,7 +499,7 @@ $(document).ready(function() {
             $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
           }
         ?>
-              <div class="row">
+              <div class="row hide">
                 <div class="col-sm-12">
                   <h5 class="margtop15">Address Information</h5>
                 </div>
@@ -527,10 +527,11 @@ $(document).ready(function() {
 
                 <div class="col-sm-3">
                   <input type="hidden" id="nationality" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
-                  <div class="multi-select-mod multi-select-trans multi-select-trans1">
+                  <input type="hidden" name="stateSelect" value="<?php echo $agent_info[0]->State ?>">
+                  <!-- <div class="multi-select-mod multi-select-trans multi-select-trans1">
                     <select name="stateSelect" id="stateSelect" class="form-control stateSelect validate validated"></select>
                     <small class="required-msg">*required</small>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="col-sm-3"><input type="text" class="form-control citySelect validate validated" value="<?php echo $agent_info[0]->City ?>" name="citySelect" placeholder="City">
                 <small class="required-msg">*required</small></div>
@@ -540,11 +541,7 @@ $(document).ready(function() {
                     placeholder="Zip Code"><small class="required-msg">*required</small></div>
               </div>
 
-            </div>
-
-          </div>
-
-          <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
+              <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
           <div class="row">
             <div class="col-sm-12">
@@ -602,6 +599,12 @@ $(document).ready(function() {
               </table>
             </div>
           </div>
+          
+            </div>
+
+          </div>
+
+          
           <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
           <?php
            if (isset($HotelRoom[0])) {

@@ -1,5 +1,5 @@
 <?php
- ini_set('maxdb_execution_time',300000);
+ ini_set('maxdb_execution_time',900000);
  ini_set('mysql.connect_timeout', 300000);
  ini_set('memory_limit', '128M');
 /**

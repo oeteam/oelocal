@@ -538,7 +538,7 @@
 </div>
 <script src="<?php echo base_url(); ?>assets/js/agent.js"></script>
 <script type="text/javascript">
-
+    ConSelectFun();
     // $( document ).ready(function() {
         $("#datepicker").datepicker({
             yearRange: "1950:<?php echo date('Y') ?>",

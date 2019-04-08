@@ -527,7 +527,7 @@ function currency_type_gc($usr_c,$c_type) {
     // $get = explode("</span>",$get[1]);
     // $rate= preg_replace("/[^0-9\.]/", null, $get[0]);
     $resultKey = $from_Currency.'_'.$to_Currency;
-    $get = file_get_contents("http://free.currencyconverterapi.com/api/v6/convert?q=".$resultKey."&&compact=ultra&apiKey=b06fe49c67407a0f5c71", false, stream_context_create($arrContextOptions));
+    $get = file_get_contents("http://free.currencyconverterapi.com/api/v6/convert?q=".$resultKey."&&compact=ultra&apiKey=9a5af0a7bb829e4c993e", false, stream_context_create($arrContextOptions));
     $get = json_decode($get);
     // $get = $get->results;
     // $rate =$get->$resultKey->val;

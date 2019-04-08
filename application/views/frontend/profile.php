@@ -1,5 +1,10 @@
 <?php init_front_head_dashboard(); ?> 
 <script src="<?php echo base_url(); ?>skin/js/profile.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		ConSelectFun();
+	})
+</script>
 	<div class="col-md-12 apagecontainer2 offset-0">
 		<div class="col-xs-11 offset-0 prof-top">
 			<ul class="nav nav-tabs myTab2pos">
