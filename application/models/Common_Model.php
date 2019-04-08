@@ -751,11 +751,26 @@ class Common_Model extends CI_Model {
     $result = $this->db->get();
     return $result;
   }
-  public function general_settings_currencyapi_update($data)
-    {
-      $this->db->where('id',1);
-      $this->db->update('hotel_tbl_general_settings',$data);
-      return true;
+  public function general_settings_currencyapi_update($data) {
+    $this->db->where('id',1);
+    $this->db->update('hotel_tbl_general_settings',$data);
+    return true;
+  }
+  public function cityUpdate($value) {
+    $this->db->where(array('CityName'=>$value['B'],'CountryCode'=>$value['E']));
+    $q= $this->db->get('xml_city_tbl')->result();
+    if( count($q) > 0 && ($q[0]->CityCode!=$value['A'])) {
+          $data1['CityCode'] = $value['A'];
+          $this->db->where('id',$q[0]->id); 
+          $this->db->update('xml_city_tbl',$data1);
+    } else if(count($q) == 0) {
+          $data1 = array(
+                        'CountryCode' => $value['E'],
+                        'CityCode' => $value['A'],
+                        'CityName' => $value['B']);
+          $this->db->insert('xml_city_tbl',$data1); 
     }
+    return true;
+  }
 }
 

@@ -32,6 +32,7 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                                 <div class="form-group col-md-12">
                                     <form id="citylistForm" method="post" enctype="multipart/form-data">
                                         <label>Upload excel file</label>
+                                         <span class="pull-right mar_left_10"><a href="<?php echo base_url(); ?>uploads/samplecityList.xlsx" ><i class="fa fa-download"></i> (Sample.xlsx*)</a></span>
                                         <input type="file" name="citylist" id="citylist"  onchange="return ValidateFileUpload();"/>
                                         <button type="button" id="CityUploadButton" class="waves-effect waves-light btn-sm btn-success pull-right">Update</button>
                                     </form>
@@ -82,8 +83,11 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
         if (citylist=="") {
            addToast("Must upload a excel file!",'orange');
         } else {
-            $("#citylistForm").attr("action",base_url+"backend/common/citylistupload");
-            $("#citylistForm").submit();
+            addToast("Updated Successfully","green");
+            window.setTimeout(function(){
+              $("#citylistForm").attr("action",base_url+"backend/common/citylistupload");
+              $("#citylistForm").submit();
+            }, 1000); 
         }
     })
 </script>

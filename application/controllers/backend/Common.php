@@ -1116,9 +1116,12 @@ class Common extends MY_Controller {
     //send the data in an array format
     $data['header'] = $header;
     $data['values'] = $arr_data;
-    
-    print_r($arr_data);
-    exit();
+    foreach($arr_data as $value) {
+      $update = $this->Common_Model->cityUpdate($value);
+    }
+    $description = 'City details updated';
+    AdminlogActivity($description); 
+    redirect('../backend/common/citylist');  
   }
   public function currencyapi_update() {
     if ($this->session->userdata('name')=="") {
