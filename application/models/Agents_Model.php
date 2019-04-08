@@ -79,8 +79,9 @@ class Agents_Model extends CI_Model {
       // exit();
       // if (isset($data['date'])) {
       //   $data['date'] = date('d/m/Y' ,strtotime($data['date']));
-      // }
-      if (isset($data['password']) && $data['password']!="") {
+      // 
+        if (isset($data['password']) && $data['password']!="") {
+
         $data= array(
                   'First_Name'                  =>$data['first_name'],
                   'Last_Name'                   =>$data['last_name'],
@@ -91,7 +92,7 @@ class Agents_Model extends CI_Model {
                   'password'                    =>md5($data['password']),
                   'City'                        =>$data['city'],
                   'Country'                     =>$data['ConSelect'],
-                  'State'                       => $data['stateSelect'],
+                  'State'                       =>$data['stateSelect'],
                   'Credit_amount'               =>$data['credit'],
                   'Email'                       =>$data['email'],
                   'Address'                     =>$data['address'],
@@ -135,7 +136,8 @@ class Agents_Model extends CI_Model {
                   'Date_Of_Birth'               =>$data['date'],
                   'Sex'                         =>$data['sex'],
                   'City'                        =>$data['city'],
-                  'Country'                     =>$data['country'],
+                  'Country'                     =>$data['ConSelect'],
+                  'State'                       =>$data['stateSelect'],
                   'Credit_amount'               =>$data['credit'],
                   'Email'                       =>$data['email'],
                   'Address'                     =>$data['address'],
