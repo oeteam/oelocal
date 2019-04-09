@@ -515,6 +515,9 @@ function currency_type_gc($usr_c,$c_type) {
         "verify_peer"=>false,
         "verify_peer_name"=>false,
       ),
+    "http" =>array(
+        "ignore_errors" => true,
+    ),
   );
 
   $to_currency = $usr_c;
@@ -531,11 +534,15 @@ function currency_type_gc($usr_c,$c_type) {
     $get = json_decode($get);
     // $get = $get->results;
     // $rate =$get->$resultKey->val;
-    $rate = $get->$resultKey;
-    $converted_amount = $amount*$rate;
-    return $converted_amount;
+    if(isset($get->error)){
+      return "failed";
+    } else {
+      $rate = $get->$resultKey;
+      $converted_amount = $amount*$rate;
+      return $converted_amount;
+    }  
   }else{
-    return $c_type;
+    return "failed";
   }
 }
 function currency_type_aed($f_cur,$usr_c,$c_type) {

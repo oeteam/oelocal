@@ -292,8 +292,10 @@ class Common extends MY_Controller {
      redirect("../backend/logout");
     }
       foreach ($_REQUEST['id'] as $key => $value) {
-        $data[$key]=currency_type_gc($_REQUEST['currency_type'][$key],"1"); 
-        $update = $this->Common_Model->added_currency_amount_update($data[$key],$value);
+        $data[$key]=currency_type_gc($_REQUEST['currency_type'][$key],"1");
+        if($data[$key] != "failed") {
+          $update = $this->Common_Model->added_currency_amount_update($data[$key],$value);
+        }   
       }
     redirect('../backend/common/payment');
   }

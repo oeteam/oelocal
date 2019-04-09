@@ -121,9 +121,10 @@ class Welcome extends CI_Controller {
 
     foreach ($query as $key => $value) {
       $data[$key]=currency_type_gc($value->currency_type,"1"); 
-      $update = $this->Common_Model->added_currency_amount_update($data[$key],$value->id); 
+      if($data[$key] != "failed") {
+        $update = $this->Common_Model->added_currency_amount_update($data[$key],$value->id); 
+      }
     }
-
     $description = 'Currency updated automatically [Time : '.date('H:i:s').']';
     OtherlogActivity($description);    
   }
