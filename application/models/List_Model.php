@@ -212,7 +212,18 @@ class List_Model extends CI_Model {
     /*Allotment check end*/
     $return['OtelseasyHotels'] = $OtelseasyHotels;
     $return['TBOHotels'] = $TBOHotels;
-    return $return;
+    $path  = get_upload_path_by_type('searchdata') . $this->session->userdata('agent_id') . '/';
+     _maybe_create_upload_path($path);
+     $myFile = $path.date('Ymd').'search.txt';
+     if (file_exists($myFile)) {
+      file_put_contents($myFile, "");
+      $fh = fopen($myFile, 'a');
+      fwrite($fh, json_encode($return));
+    } else {
+      $fh = fopen($myFile, 'w');
+      fwrite($fh, json_encode($return));
+    }
+    return true;
   }
   public function searchedHotels($data) {
     $search = '';

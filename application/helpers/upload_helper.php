@@ -597,6 +597,9 @@ function get_upload_path_by_type($type)
         case 'offline_requests_invoice_pdf':
             return INVOICE_PDF_FOLDER;
         break; 
+        case 'searchdata':
+            return SEARCH_FOLDER;
+        break;
         default:
         return false;
     }

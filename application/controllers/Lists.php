@@ -9,6 +9,7 @@ class lists extends MY_Controller {
     parent::__construct();
     $this->load->helper('url');
     $this->load->helper('html');
+    $this->load->helper('file');
     $this->load->helper('common');
     $this->load->helper('upload');
     $this->load->library("Pagination");
@@ -38,23 +39,26 @@ class lists extends MY_Controller {
   }
   public function search_list() {
     if ($_REQUEST['temp']==1) {
-    $listarray = json_decode($_REQUEST['listarray']);
-
-    $Otelseasyoutput = $listarray->OtelseasyHotels;
-    $TBOoutput = $listarray->TBOHotels;
+    // $listarray = json_decode($_REQUEST['listarray']);
+    $path  = get_upload_path_by_type('searchdata') . $this->session->userdata('agent_id') . '/';
+    $myFile = $path.date('Ymd').'search.txt';
+    $temparray = file_get_contents($myFile);
+    $listarray = json_decode($temparray,true);
+    $Otelseasyoutput = $listarray['OtelseasyHotels'];
+    $TBOoutput = $listarray['TBOHotels'];
     $mergeData = array_merge($Otelseasyoutput,$TBOoutput);
     $this->db->query("CREATE TABLE IF NOT EXISTS ci_sessions(HotelCode VARCHAR(100), HotelName VARCHAR(255), HotelPicture VARCHAR(2000), HotelDescription VARCHAR(2000),RoomName VARCHAR(255),Rating INT(11),TotalPrice VARCHAR(255),Currency VARCHAR(100),OriginalPrice VARCHAR(255),oldPrice VARCHAR(255),DataType VARCHAR(255),RatingImg VARCHAR(255),ReviewImg VARCHAR(2000),reviews VARCHAR(255),BookBtn VARCHAR(1000),HotelRequest VARCHAR(5000),Inclusion VARCHAR(2000),agent_id INT(11),ip_add VARCHAR(255),searchDate VARCHAR(255))");
         $ip_add = get_client_ip();
         $this->db->query("DELETE FROM ci_sessions where agent_id = ".$this->session->userdata('agent_id')." and ip_add = '".$ip_add."'");
         $this->db->query("DELETE FROM ci_sessions where searchDate < '".date('Y-m-d',strtotime('-1 day'))."'");
         foreach ($mergeData as $key => $value) {
-                if ($value->DataType!="TBO") {
-                    if ($value->Rating!=10) {
-                        $RatingImg = '<img src="'.base_url().'skin/images/filter-rating-'.ceil($value->Rating).ceil($value->Rating).'.png" class="hotel-rating" alt=""/>';
+                if ($value['DataType']!="TBO") {
+                    if ($value['Rating']!=10) {
+                        $RatingImg = '<img src="'.base_url().'skin/images/filter-rating-'.ceil($value['Rating']).ceil($value['Rating']).'.png" class="hotel-rating" alt=""/>';
                     } else {
                         $RatingImg = '<label style="width:100px;" class="hotel-rating"><i class="fa fa-building" style="color: #258732;"></i> Apartment</label>';
                     }
-                    $ReviewImg =  base_url().'skin/images/user-rating-'.ceil($value->reviews).'.png';
+                    $ReviewImg =  base_url().'skin/images/user-rating-'.ceil($value['reviews']).'.png';
                     $imploderequestChildAge = array();
                     foreach ($_REQUEST['Child'] as $reqCkey => $reqCvalue) {
                       for ($i=1; $i <= $reqCvalue ; $i++) { 
@@ -75,46 +79,46 @@ class lists extends MY_Controller {
 
                     $requestChild = "Child[]=".implode("&Child[]=", $_REQUEST['Child']);
 
-                    $request = 'RequestType=Book&hotel_id='.$value->HotelCode.'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'];    
-                    $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment?'.$request.'\',\''.str_replace("'", "", $value->HotelName).'\',\''.str_replace("'", "", $value->HotelAddress).'\',\''.$value->HotelPicture.'\',\''.$value->HotelCode.'\','.$value->Rating.')" style="background:green;border-bottom: 2px solid green;cursor:pointer" href="#" class="hotel-view-btn">Book</a>';
+                    $request = 'RequestType=Book&hotel_id='.$value['HotelCode'].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'];    
+                    $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment?'.$request.'\',\''.str_replace("'", "", $value['HotelName']).'\',\''.str_replace("'", "", $value['HotelAddress']).'\',\''.$value['HotelPicture'].'\',\''.$value['HotelCode'].'\','.$value['Rating'].')" style="background:green;border-bottom: 2px solid green;cursor:pointer" href="#" class="hotel-view-btn">Book</a>';
 
-                    $HotelRequest = base_url().'details?search_id='.$value->HotelCode.'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'; 
+                    $HotelRequest = base_url().'details?search_id='.$value['HotelCode'].'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'; 
 
-                    $revenue_markup = revenue_markup($value->HotelCode,$value->contract_id,$this->session->userdata('agent_id'));
+                    $revenue_markup = revenue_markup($value['HotelCode'],$value['contract_id'],$this->session->userdata('agent_id'));
                     $total_markup = mark_up_get()+general_mark_up_get();
                     if ($revenue_markup!=0) {
                        $total_markup = $revenue_markup+mark_up_get();
                     }  
-                    if (!is_numeric($value->oldPrice)) {
-                      $value->oldPrice = 0;
+                    if (!is_numeric($value['oldPrice'])) {
+                      $value['oldPrice'] = 0;
                     }
-                    $OriginalPrice = ($value->OriginalPrice*$total_markup)/100+$value->OriginalPrice;
+                    $OriginalPrice = ($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'];
                     $oldPrice = ($value->oldPrice*$total_markup)/100+$value->oldPrice;
                 } else {
-                    $RatingImg = $value->RatingImg;
-                    $ReviewImg = $value->ReviewImg;
-                    $BookBtn = $value->BookBtn;
-                    $HotelRequest = $value->HotelRequest;
-                    $OriginalPrice = $value->OriginalPrice;
-                    $oldPrice = $value->oldPrice;
+                    $RatingImg = $value['RatingImg'];
+                    $ReviewImg = $value['ReviewImg'];
+                    $BookBtn = $value['BookBtn'];
+                    $HotelRequest = $value['HotelRequest'];
+                    $OriginalPrice = $value['OriginalPrice'];
+                    $oldPrice = $value['oldPrice'];
                 }
                 $array = array(
-                        'HotelCode' =>$value->HotelCode,
-                        'HotelName' =>$value->HotelName,
-                        'HotelPicture' =>$value->HotelPicture,
-                        'HotelDescription' =>$value->HotelDescription,
-                        'Rating' =>$value->Rating,
-                        'TotalPrice' => floatval(preg_replace('/[^\d.]/', '', $value->TotalPrice)),
-                        'Currency' =>$value->Currency,
+                        'HotelCode' =>$value['HotelCode'],
+                        'HotelName' =>$value['HotelName'],
+                        'HotelPicture' =>$value['HotelPicture'],
+                        'HotelDescription' =>$value['HotelDescription'],
+                        'Rating' =>$value['Rating'],
+                        'TotalPrice' => floatval(preg_replace('/[^\d.]/', '', $value['TotalPrice'])),
+                        'Currency' =>$value['Currency'],
                         'OriginalPrice' =>$OriginalPrice,
                         'oldPrice' => $oldPrice,
-                        'DataType' =>$value->DataType,
+                        'DataType' =>$value['DataType'],
                         'RatingImg' =>$RatingImg,
                         'ReviewImg' =>$ReviewImg,
-                        'reviews' =>$value->reviews,
+                        'reviews' =>$value['reviews'],
                         'BookBtn' =>$BookBtn,
                         'HotelRequest' =>$HotelRequest,
-                        'Inclusion' => isset($value->Inclusion) ? $value->Inclusion : '',
+                        'Inclusion' => isset($value['Inclusion']) ? $value['Inclusion'] : '',
                         'agent_id' =>$this->session->userdata('agent_id'),
                         'ip_add' => $ip_add,
                         'searchDate' => date("Y-m-d"),
