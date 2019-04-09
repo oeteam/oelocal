@@ -519,7 +519,12 @@ function currency_type_gc($usr_c,$c_type) {
         "ignore_errors" => true,
     ),
   );
-
+  $ci->db->select('currency_api');
+  $ci->db->from('hotel_tbl_general_settings');
+  $ci->db->where('id',1);
+  $query=$ci->db->get();
+  $final= $query->result();
+  $api = $final[0]->currency_api;
   $to_currency = $usr_c;
   $amount= $c_type;
   $from_Currency = urlencode("AED");
@@ -530,7 +535,7 @@ function currency_type_gc($usr_c,$c_type) {
     // $get = explode("</span>",$get[1]);
     // $rate= preg_replace("/[^0-9\.]/", null, $get[0]);
     $resultKey = $from_Currency.'_'.$to_Currency;
-    $get = file_get_contents("http://free.currencyconverterapi.com/api/v6/convert?q=".$resultKey."&&compact=ultra&apiKey=9a5af0a7bb829e4c993e", false, stream_context_create($arrContextOptions));
+    $get = file_get_contents("http://free.currencyconverterapi.com/api/v6/convert?q=".$resultKey."&&compact=ultra&apiKey=".$api, false, stream_context_create($arrContextOptions));
     $get = json_decode($get);
     // $get = $get->results;
     // $rate =$get->$resultKey->val;

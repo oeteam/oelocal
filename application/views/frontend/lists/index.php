@@ -243,7 +243,7 @@
             right: 0;
             bottom: 0;
             left: 0;
-            background-color: #c9f1ff;
+            background-color: #006699;
             text-align: center;
             /*font-family: 'Titillium Web';*/
             z-index: 9999999;
@@ -264,12 +264,12 @@
             text-transform: uppercase;
             margin: 0;
             letter-spacing: 2px;
-            color: #0784ff;
+            color: white;
         }
         
         .fl-subtext {
             margin: 0;
-            color: #757575;
+            color: white;
         }
         
         .fl-info-card {
