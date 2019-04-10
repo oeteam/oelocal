@@ -118,7 +118,7 @@ function mark_up_get() {
     $ci->db->where('id',$id);
     $query=$ci->db->get();
     $final =  $query->result();
-    return $final[0]->Markup;
+    return count($final)!=0 && $final[0]->Markup!="" ? $final[0]->Markup : 0;
 }
 function hotel_mark_up_get() {
   $ci =& get_instance();
@@ -137,7 +137,7 @@ function general_mark_up_get() {
     $ci->db->where('id',$id);
     $query=$ci->db->get();
     $final =  $query->result();
-    return $final[0]->general_markup;
+    return count($final)!=0 && $final[0]->general_markup!="" ? $final[0]->Markup : 0;
 }
 function admin_mark_up_get() {
   $ci =& get_instance();
