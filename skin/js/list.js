@@ -5,7 +5,9 @@ function FullLoading(flag, dest, from, to) {
   let toDate = to || '16/05/2018';
 
   function startLoading() {
-      let html = `<div id="fullLoading" class="full-loading"><img src="../skin/images/fullloading.gif" alt=""><div class="fl-data"><h2 class="fl-title">Taking you there!</h2><p class="fl-subtext">In a few moments, you'll be celebrating hotel options galore!</p><div class="fl-info-card"><div class="top"><span>- Destination -</span><p>${destination}</p></div><div class="mid"><div><span>From</span><p>${fromDate}</p></div><div><span>To</span><p>${toDate}</p></div></div></div></div></div>`;
+      let html = `<div id="fullLoading" class="full-loading">
+      <p><img src="`+base_url+`/assets/images/logo-white.png" style="width: 128px;top: 75px;"></p>
+      <img src="`+base_url+`skin/images/fullloading.gif" alt=""><div class="fl-data"><h2 class="fl-title">Searching the best prices<small style="color:white"> for you...</small></h2><div class="fl-info-card"><div class="top"><span>- Destination -</span><p>${destination}</p></div><div class="mid"><div><span>From</span><p>${fromDate}</p></div><div><span>To</span><p>${toDate}</p></div></div></div></div></div>`;
       document.body.innerHTML += html;
   }
 
