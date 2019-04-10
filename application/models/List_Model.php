@@ -2976,12 +2976,12 @@ public function loadRequest($action,$arr_value) {
     $request = $this->xml->saveXML();
     // print_r(htmlentities($request));
     // exit();
-    $location = "https://api.tbotechnology.in/hotelapi_v7/hotelservice.svc";
+    $location = $query[0]->url;
     $action = "http://TekTravel/HotelBookingApi/$action";
     $restore = error_reporting(0);
     $result = '';
      try {
-      $client = new SoapClient("https://api.tbotechnology.in/hotelapi_v7/hotelservice.svc?wsdl", ['exceptions' => true]);
+      $client = new SoapClient($query[0]->url."?wsdl", ['exceptions' => true]);
       $this->result = $client->__doRequest($request, $location, $action, 2);
       $result = $this->result;
       // print_r(htmlentities($result));exit;
