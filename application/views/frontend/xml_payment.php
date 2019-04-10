@@ -6,7 +6,7 @@
 <script>
   let RoomCombination = new Array();
   RoomCombination = <?php echo json_encode($RoomCombination) ?>;
- $(".xml-default").remove();
+   $(".xml-default").remove();
 function RoomCombinationinitCheck() {
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {

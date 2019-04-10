@@ -3219,5 +3219,51 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $this->session->set_userdata('roomdata'.$_REQUEST['hotel_id'],$_REQUEST['RoomData']);
       echo json_encode(true);
     }
+    public function hotelBook() {
+      if ($this->session->userdata('agent_id')=="") {
+        redirect(base_url());
+      }
+      if (!isset($_REQUEST['adults'][0])) {
+        redirect('../hotels');
+      }
+      $bookbuttondata = $this->session->userdata('hoteldata');
+      $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
+       $contracts =$this->List_Model->contractchecking($_REQUEST);
+      $Rooms = $this->Hotels_Model->select_hotel_room($_REQUEST['hotel_id'])->result();
+      $agent_markup = mark_up_get()+general_mark_up_get();
+      $i = 0;
+      foreach ($Rooms as $key => $value) {
+        foreach ($contracts['contract_id'] as $key1 => $value1) {
+          $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
+          $total_markup = $agent_markup;
+          if ($revenue_markup!=0) {
+            $total_markup = $revenue_markup+mark_up_get();
+          }
+          $contractBoardget = $this->List_Model->contractBoardget($_REQUEST['hotel_id'],$value1);
+
+          $room_current_count = $this->List_Model->room_current_count($value->room_id,$_REQUEST['Check_in'],$_REQUEST['Check_out'],$value1,$_REQUEST['adults'],$_REQUEST['Child'],$_REQUEST,$total_markup,$value1);
+          $room_closedout = $this->List_Model->all_closedout_room($_REQUEST['hotel_id'],$value1,$_REQUEST,$value);
+          $minimumStay = $this->List_Model->minimumStayCheckAvailability($_REQUEST,$value->room_id);
+          if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count['price']!=0) {
+            $rooms[$i]['RoomName'] = $value->room_name.' '.$value->Room_Type;
+            $rooms[$i]['RoomIndex'] = $value1.'-'.$value->room_id;
+            $rooms[$i]['room_id'] = $value->room_id;
+            $rooms[$i]['board'] = $contractBoardget->board;
+            $rooms[$i]['contract_id'] = $value1;
+            $rooms[$i]['price'] = $room_current_count['price'];
+            $rooms[$i]['generalsupplementType'] = count($room_current_count['generalsupplementType'])!=0 ? array_unique($room_current_count['generalsupplementType']) : array();
+            if ($room_current_count['allotement']> 0) {
+              $rooms[$i]['RequestType'] = 'Book';
+            } else {
+              $rooms[$i]['RequestType'] = 'On Request';
+            }
+            $i++;
+          }
+        }
+      }
+      $data['rooms'] = $rooms;
+      $data['agent_info'] = $this->Common_Model->agent_info();
+      $this->load->view('frontend/hotelbook',$data);
+    }
 }
 
