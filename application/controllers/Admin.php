@@ -12,6 +12,9 @@ class admin extends CI_Controller {
      }
 	public function index()
 	{
+    if ($this->session->userdata('name')!="") {
+      redirect(base_url().'backend/logout');
+    }
 		$this->load->view('backend/login');
 	}
 	public function hotel_portal()

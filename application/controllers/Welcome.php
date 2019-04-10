@@ -16,19 +16,12 @@ class Welcome extends CI_Controller {
      }
 	public function index()
 	{
-    $arrContextOptions=array(
-      "ssl"=>array(
-          "verify_peer"=>false,
-          "verify_peer_name"=>false,
-        ),
-    );
-
+    if ($this->session->userdata('agent_name')!="") {
+      redirect(base_url().'backend/logout/agent_logout');
+    }
     $data['view'] = $this->Hotels_Model->currency_settings_select();
-      $data['currency_list']= $this->Hotels_Model->currency();
-    // $fb_count = file_get_contents('https://graph.facebook.com/v3.0/1300104086787656?access_token=EAAD8eaaZAwtABAKNhZCS6AZBvcv272qLRSj0aSkWMkG0hYvuUwcV51uRv9J7zi6Dv27lIrwzFuh9520RObZCpGZAaIRDAZCUsmVygqWcfGcKHhmbO2Nzn3PZAIxwZB04lYjuktHwqfj44WoHijx7VZAQKvcPb4X1kYV3p1icRTZCk2peXHdRztUcNKFQzouy88uaAZD&fields=fan_count', false, stream_context_create($arrContextOptions));
-    // $data['fb_count']  = json_decode($fb_count)->fan_count;
+    $data['currency_list']= $this->Hotels_Model->currency();
     $this->load->view('index',$data);
-    // $this->load->view('landingpage');
 	}
   public function about_us(){
     $data['view'] = $this->Hotels_Model->about_us_select();
