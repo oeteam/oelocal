@@ -3248,9 +3248,9 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             $rooms[$i]['RoomName'] = $value->room_name.' '.$value->Room_Type;
             $index = array();
             for($m=0;$m<count($_REQUEST['adults']);$m++){
-              $index[] = $value1.'-'.$value->room_id;
+              $index[$m] = $value1.'-'.$value->room_id;
             } 
-            $rooms[$i]['Index']['RoomIndex'] = implode(',', array_values($index));
+            $rooms[$i]['Index']['RoomIndex'] = $index;
             $rooms[$i]['RoomIndex'] = $value1.'-'.$value->room_id;
             $rooms[$i]['room_id'] = $value->room_id;
             $rooms[$i]['board'] = $contractBoardget->board;
