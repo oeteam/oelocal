@@ -185,7 +185,7 @@
 </style>
 <script>
 let RoomCombination = new Array();
-RoomCombination = <?php echo json_encode($rooms) ?>;
+RoomCombination = <?php echo json_encode($RoomCombination) ?>;
 $(".xml-default").remove();
 function RoomCombinationinitCheck() {
   $(".r-type").find('input').prop('disabled',true);
@@ -199,10 +199,10 @@ function RoomCombinationinitCheck() {
     }
     
   });
-  var availableRooms = $('.r-type--room:first-child').find('.availability').closest('li');
-  $.each(availableRooms, function(){
-     $(this).closest('ul').prepend($(this).closest('li'));
-  })
+  // var availableRooms = $('.r-type--room:first-child').find('.availability').closest('li');
+  // $.each(availableRooms, function(){
+  //    $(this).closest('ul').prepend($(this).closest('li'));
+  // })
   RoomCombinationCheck();
 } 
 function RoomCombinationCheck() {
@@ -215,7 +215,7 @@ function RoomCombinationCheck() {
   }
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
-      if (v.RoomIndex==room1) {
+      if (v.RoomIndex[0]==room1) {
         for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
           $('#Room'+i+v.RoomIndex).prop('disabled',false);
           $('#Room'+i+v.RoomIndex).closest('li').find('.av-div').addClass('availability');
@@ -238,7 +238,7 @@ function RoomCombinationCheck() {
 function goBack() {
     window.history.back();
 }
-defaultRateCheck(); 
+//defaultRateCheck(); 
 
 function defaultRateCheck() {
 	if ($("#def_rid").val()!="" && $("#def_cid").val()!="") {

@@ -4387,6 +4387,441 @@ public function loadRequest($action,$arr_value) {
     }
     return $result1;
   }
+  public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id) {
+      /*Tax percentage grt from contract start*/
+
+      $request['contract_id']  = $contract_ajax_id;
+      if ($contract_ajax_id!="") {
+       $contract_id = $contract_ajax_id;
+     }
+
+     $this->db->select('linkedContract,contract_type');
+     $this->db->from('hotel_tbl_contract');
+     $this->db->where('hotel_id',$request['hotel_id']);
+     $this->db->where('contract_id',$contract_id);
+     $linkedcontract=$this->db->get()->result();
+     if ($linkedcontract[0]->contract_type=="Sub") {
+      $Lcontract_id = "CON0".$linkedcontract[0]->linkedContract;
+    } else {
+      $Lcontract_id = $contract_id;
+    }
+
+    $this->db->select('tax_percentage,max_child_age,board,nonRefundable');
+    $this->db->from('hotel_tbl_contract');
+    $this->db->where('hotel_id',$request['hotel_id']);
+    if ($contract_ajax_id!="") {
+      $this->db->where('contract_id',$contract_ajax_id);
+    } else {
+      $this->db->where('contract_id',$request['contract_id']);
+    }
+    $query = $this->db->get();
+    $row_values  = $query->row_array();
+    $tax = $row_values['tax_percentage'];
+    $max_child_age = $row_values['max_child_age'];
+    
+
+    $contract_board = $row_values['board'];
+    $nonRefundable = '';
+    if ($row_values['nonRefundable']==1) {
+      $nonRefundable = 'Non Refundable';
+    }
+    /*Tax percentage grt from contract end*/
+
+    /*Standard capacity get from rooms start*/
+
+    $this->db->select('occupancy,occupancy_child,standard_capacity,max_total,linked_to_room_type');
+    $this->db->from('hotel_tbl_hotel_room_type');
+    $this->db->where('hotel_id',$request['hotel_id']);
+    $this->db->where('id',$room_id);
+    $Rmquery = $this->db->get();
+    $Rmrow_values  = $Rmquery->row_array();
+    $occupancyAdult = $Rmrow_values['occupancy'];
+    $occupancyChild = $Rmrow_values['occupancy_child'];
+    $standard_capacity = $Rmrow_values['standard_capacity'];
+    $max_capacity = $Rmrow_values['max_total'];
+    /*Standard capacity get from rooms end*/
+    $BoardsupplementType = array();
+    $adultBoardAmount = array();
+    $childBoardAmount = array();
+    $childarrayBoardSumData =array();
+    $adultAmount = array();
+    $childAmount = array();
+    $adultAmountPR = array();
+    $childAmountPR = array();
+    $generalsupplementType  = array();
+    $ManadultAmount  = array();
+    $ManadultAmountPR = array();
+    $MangeneralsupplementforAdults = array();
+    $ManchildAmount = array();
+    $MangeneralsupplementforChilds = array();
+    $MangeneralsupplementType = array();
+    $generalsupplementforAdults = array();
+    $generalsupplementforChilds = array();
+    $extrabedAmount  = array();
+    $extrabedType = array();
+    
+    $adultscount = array_sum($adults);
+    $childscount = array_sum($child);
+    $roomType = $this->db->query("SELECT id FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
+    $cut_off_date = array();
+    $cut_off_msg = "";
+    $checkin_date=date_create($start_date);
+    $checkout_date=date_create($end_date);
+    $no_of_days=date_diff($checkin_date,$checkout_date);
+    $tot_days = $no_of_days->format("%a");
+    for($i = 0; $i < $tot_days; $i++) {
+      $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
+      if (isset($request['board'])) {
+        foreach ($request['board'] as $key5 => $value5) {
+          $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = '".$value5."'")->result();
+          // print_r("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = '".$value5."'");
+          // echo "<br>";
+
+
+          foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
+
+            $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
+
+            foreach ($explodeBoardroomtype[$key7] as $key6 => $value6) {
+
+              if ($value6==$roomType[0]->id) {
+
+                    //   $boardsupplementData[$key7] = $value7;
+                if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
+
+                  $BoardsupplementType[$key5] = $value7->board;
+
+                  $adultBoardAmount[$key5] = $value7->amount;
+                }
+                      // if($max_child_age >= $value7->finalAge) {
+
+                $childBoardcnt[$i] = array();
+                for ($j=1; $j <= count($request['adults']); $j++) { 
+                  if (isset($request['room'.$j.'-childAge'])) {
+                    foreach ($request['room'.$j.'-childAge'] as $key4 => $value4) {
+                      if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
+                       $childBoardcnt[$i][]= $value4;
+                     } 
+                   }
+
+                 }
+
+               }
+               if (count($childBoardcnt[$i])!=0) {
+                $childBoardAmount[$i][] = $value7->amount*count($childBoardcnt[$i]);
+              } 
+                      // }
+            }
+          }
+        }
+      }
+    }
+
+    $adultarrayBoardSumData[$i] = array_sum($adultBoardAmount);
+    if (isset($childBoardAmount[$i])) {
+      $childarrayBoardSumData[$i] = array_sum($childBoardAmount[$i]);
+    }
+    /*mandatory General Supplement start*/
+
+    $generalSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_generalsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0 AND mandatory = 1")->result();
+    
+    $gsarraySum[$i] = count($generalSplmntCheck[$i]);
+    if ($gsarraySum[$i]!=0) {
+      $gsData[$i] = $generalSplmntCheck[$i];
+
+      foreach ($gsData[$i] as $key3 => $value3) {
+
+        $explodeRoomType[$key3] = explode(",", $value3->roomType);
+        if ($value3->application=="Per Person") {
+          $adultAmount[] = $value3->adultAmount;
+          for ($j=1; $j <= count($request['adults']); $j++) { 
+            if (isset($request['room'.$j.'-childAge'])) {
+              foreach ($request['room'.$j.'-childAge'] as $key44 => $value44) {
+                if ($value3->MinChildAge < $value44) {
+                  $childAmount[] = $value3->childAmount;
+                } 
+              }
+
+            }
+          }
+        } else {
+          $adultAmountPR[] = $value3->adultAmount;
+          $childAmountPR[] = $value3->childAmount;
+        }
+        $generalsupplementType[] = $value3->type;
+        $generalsupplementforAdults[] = $occupancyAdult;
+        $generalsupplementforChilds[] =  $occupancyChild;
+      }
+
+    }
+    /*mandatory General Supplement end*/
+    /*Extrabed allotment start*/
+
+    if ($contract_board=="BB") {
+      $contract_boardRequest = array('Breakfast');
+    } else if($contract_board=="HB") {
+      $contract_boardRequest = array('Breakfast','Dinner');
+    } else if($contract_board=="FB") {
+      $contract_boardRequest = array('Breakfast','Dinner','Lunch');
+    } else {
+      $contract_boardRequest = array();
+    }
+    $implodeboardRequest = implode("','", $contract_boardRequest);
+
+    $extrabedallotment[$i] = $this->db->query("SELECT amount,ChildAmount,ChildAgeFrom,ChildAgeTo FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+    if (count($extrabedallotment[$i])!=0) {
+      foreach ($extrabedallotment[$i] as $key15 => $value15) {
+       foreach ($request['adults'] as $key17 => $value17) {
+        if (($value17+$request['Child'][$key17]) > $standard_capacity) {
+                    // for ($k=1; $k <= count($adults); $k++) { 
+          if (isset($request['room'.($key17+1).'-childAge'])) {
+            foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
+              if ($max_child_age < $value18) {
+               $extrabedAmount[] =  $value15->amount;
+               $extrabedType[] =  'Adult Extrabed';
+             } else {
+              if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
+                if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
+                  $extrabedAmount[] =  $value15->ChildAmount;
+                  $extrabedType[] =  'Child Extrabed';
+                }
+              } else {
+                $boardalt[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+                if (count($boardalt[$i])!=0) {
+                  foreach ($boardalt[$i] as $key21 => $value21) {
+                    if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                      $extrabedAmount[] =  $value21->amount;
+                      $extrabedType[] =  'Child '.$value21->board;
+                    }
+
+                  }
+                }
+              }  
+
+            }
+          }
+
+        }
+
+                    // }
+                    // if ($request['Child'][$key17]==0) {
+        if ($value17 > $standard_capacity) {
+          $extrabedAmount[] =  $value15->amount;
+          $extrabedType[] =  'Adult Extrabed';
+        }
+                    // echo $request['Child'][$key17];
+                    // echo "<BR>";
+
+      }
+    }
+  }
+}
+
+
+/* Board wise supplement check start */
+$boardSp[$i] = array();
+if($contract_board=="HB") {
+  $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Half Board' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+} else if($contract_board=="FB") {
+  $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Full Board' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+}
+if (count($boardSp[$i])!=0) {
+  foreach ($boardSp[$i] as $key21 => $value21) {
+    foreach ($request['adults'] as $key17 => $value17) {
+      if (($value17+$request['Child'][$key17]) > $standard_capacity) {
+        if (isset($request['room'.($key17+1).'-childAge'])) {
+          foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
+            if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+              $extrabedAmount[] =  $value21->amount;
+              $extrabedType[] =  'Child '.$value21->board;
+            }
+          }
+        }
+      }
+      if ($value21->startAge >= 18) {
+        $extrabedAmount[] =  $value21->amount;
+        $extrabedType[] =  'Adult '.$value21->board;
+      }
+    }
+  }
+}
+
+/* Board wise supplement check end */
+          // print_r($extrabedType);
+          // echo "<br>";
+/*Extrabed allotment end*/
+
+}
+    // $totalAdultBoardSumData =  array_sum($adultarrayBoardSumData)*$adultscount; 
+    // $totalChildBoardSumData =  array_sum($childarrayBoardSumData); 
+$array_sumAdultAmount = array_sum($adultAmount)*array_sum($request['adults'])+(array_sum($adultAmountPR)*count($request['adults']));
+$array_sumChildAmount = array_sum($childAmount);
+$manGenarray_sumAdultAmount =  array_sum($ManadultAmount)+array_sum($ManadultAmountPR);
+$manGenarray_sumChildAmount = array_sum($ManchildAmount);
+$extrabedTotalAmount = array_sum($extrabedAmount);
+    // print_r($extrabedAmount);
+    //     echo "<br>";
+
+if ($markup!=0) {
+      // $totalAdultBoardSumData = (($totalAdultBoardSumData*$markup)/100)+$totalAdultBoardSumData;
+      // $totalChildBoardSumData = (($totalChildBoardSumData*$markup)/100)+$totalChildBoardSumData;
+  $array_sumAdultAmount = (($array_sumAdultAmount*$markup)/100)+$array_sumAdultAmount;
+  $array_sumChildAmount = (($array_sumChildAmount*$markup)/100)+$array_sumChildAmount;
+  $manGenarray_sumAdultAmount = (($manGenarray_sumAdultAmount*$markup)/100)+$manGenarray_sumAdultAmount;
+  $manGenarray_sumChildAmount = (($manGenarray_sumChildAmount*$markup)/100)+$manGenarray_sumChildAmount;
+  $extrabedTotalAmount =  (($extrabedTotalAmount*$markup)/100)+$extrabedTotalAmount;
+}
+$implode = implode("','",$date);
+$linkedAllotmentquery = array();
+if ($Rmrow_values['linked_to_room_type']!="" && $Rmrow_values['linked_to_room_type']!=NULL) {
+  $linkedAllotmentquery = $this->db->query("SELECT allotement FROM hotel_tbl_allotement WHERE allotement_date IN ('".$implode."') AND room_id = '".$Rmrow_values['linked_to_room_type']."' AND contract_id = '".$Lcontract_id."'")->result();
+}
+
+$query = $this->db->query("SELECT hotel_id,room_id,allotement_date,contract_id,allotement,cut_off FROM hotel_tbl_allotement WHERE allotement_date IN ('".$implode."') AND room_id = '".$room_id."' AND contract_id = '".$Lcontract_id."'")->result();
+if (count($query)!=0) {
+  foreach ($query as $key1 => $value1) {
+
+    $RMdiscount = DateWisediscount(date('Y-m-d',strtotime($start_date)),$value1->hotel_id,$value1->room_id,$Lcontract_id,'Room',date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)));
+    $amtGet = $this->db->query("SELECT amount FROM hotel_tbl_allotement WHERE allotement_date = '".$value1->allotement_date."' AND room_id = '".$room_id."' AND contract_id = '".$contract_id."'")->result();
+    if (count($amtGet)!=0) {
+      $ramount = $amtGet[0]->amount;
+    } else {
+      $ramount = 0;
+    }
+
+    if ($markup!=0) {
+      $ramount = (($ramount*$markup)/100)+$ramount;
+    } else {
+      $ramount = $ramount;
+    }
+    if (is_numeric($RMdiscount['discount'])) {
+      $RMdiscount = $RMdiscount['discount'];
+    } else {
+      $RMdiscount = 0;
+    }
+    $amount[$key1] = $ramount-($ramount*$RMdiscount)/100;
+    $Disamount[$key1] = $ramount;
+    $discount[$key1] = $RMdiscount;
+    if ($ramount!=0) {
+      if (isset($linkedAllotmentquery[$key1]->allotement)) {
+        $linkedAllotment=$linkedAllotmentquery[$key1]->allotement;
+      } else {
+        $linkedAllotment=0;
+      }
+      $booked = $this->List_Model->all_booked_roomDatewise($value1->hotel_id,$value1->room_id,$value1->allotement_date,$value1->contract_id);
+      $allotement[] = ($value1->allotement+$linkedAllotment)-$booked;
+    } else {
+      $allotement[] = 0;
+    }
+
+    $current_date = date_create(date('Y-m-d'));
+    $ck_2 = date_create($value1->allotement_date);
+    $date_diff_check = date_diff($current_date,$ck_2);
+    $check_cutoff1 = $date_diff_check->format("%a");
+    if ($check_cutoff1<$value1->cut_off) {
+      $cut_off_date[] = date('d/m/Y', strtotime($value1->allotement_date));
+    }  
+
+  }
+
+
+  if (count($cut_off_date)!=0) {
+    $cut_off_msg = "Cannot book selected dates (".implode(",", $cut_off_date).") due to cut off period. Kindly select another date";
+  }
+
+  foreach ($query as $key => $value) {
+    $c1 = date_create(date('Y-m-d'));
+    $c2 = date_create($value->allotement_date);
+    $days=date_diff($c1,$c2);
+    $check_cutoff = $days->format("%a");
+
+    if ($check_cutoff<$value->cut_off) {
+      $data['condition'] =  "false";
+      break;
+    } else {
+      $data['condition'] =  "true";
+    }
+  }
+
+  if (isset($request['nationality'])) {
+    $nationality = $this->db->query("SELECT contract_id FROM hotel_tbl_contract WHERE contract_id = '".$contract_id."' AND FIND_IN_SET('".$request['nationality']."', IFNULL(nationalityPermission,'')) = 0")->result();
+    if (count($nationality)==0) {
+      $data['condition'] =  "false";
+    }
+
+  }
+
+  $data['cut_off_msg'] = $cut_off_msg;
+  $adultsRoomCount = count($adults);
+      // print_r($manGenarray_sumAdultAmount);
+      // echo "<br>";
+      // $totalbkamount = ceil((array_sum($amount)*$adultsRoomCount)+$array_sumAdultAmount+$array_sumChildAmount+$totalAdultBoardSumData+$totalChildBoardSumData+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+  $discountGet = Alldiscount(date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)),$request['hotel_id'],$room_id,$contract_id,'Room');
+  if ($discountGet['dis']=="true") {
+    $Cdays = $tot_days/$discountGet['stay'];
+    $parts = explode('.', $Cdays);
+    $Cdays = $parts[0];
+    $Sdays = $discountGet['stay']*$Cdays;
+    $Pdays = $discountGet['pay']*$Cdays;
+    $Tdays = $tot_days-$Sdays;
+    $Fdays = $Pdays+$Tdays;
+    $discountGet['stay'];
+    $discountGet['pay'];
+    array_splice($amount, $Fdays);
+    $discount[0] = 1;
+  }
+  $totalbkamount = ((array_sum($amount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+  $totalbkamount1 = ((array_sum($Disamount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+
+  if($tax!=0) {
+    $totalbkamount = ((($totalbkamount*$tax)/100)+$totalbkamount);
+    $totalbkamount1 = ((($totalbkamount*$tax)/100)+$totalbkamount);
+  }
+  $data['price'] = $totalbkamount;
+  $data['discountAmount'] = $totalbkamount1;
+  $rtrn = array();
+  foreach ($request['adults'] as $key77 => $value77) {
+
+
+    if ((($value77+$request['Child'][$key77]) > $max_capacity) || ($value77 > $occupancyAdult) || ($request['Child'][$key77] > $occupancyChild)) {
+      $rtrn[$key77] = 1;
+    } else {
+      $rtrn[$key77] = 0;
+    }
+  }
+  if (array_sum($rtrn) == 0 && $cut_off_msg=="") {
+    $data['allotement'] = min($allotement);
+  } else {
+    $data['allotement'] = 0;
+    $data['condition'] =  "false";
+  }
+  $data['generalsupplementType'] = array_unique($generalsupplementType);
+  $data['MangeneralsupplementType'] = array_unique($MangeneralsupplementType);
+  $data['BoardsupplementType'] = implode(", ", array_unique($BoardsupplementType));
+  $data['nonRefundable'] = $nonRefundable;
+  $data['extrabedType'] = $extrabedType;
+  $data['discount'] = array_sum($discount);
+
+} else {
+  $this->db->select('*');
+  $this->db->from('hotel_tbl_hotel_room_type');
+  $this->db->where('id',$room_id);
+  $query1=$this->db->get();
+  $final =  $query1->result();
+  $data['cut_off_msg'] = $cut_off_msg;
+  $data['condition'] =  "TRUE";
+  $data['price'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
+  $data['discountAmount'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
+  $data['allotement'] = $final[0]->allotement;
+  $data['generalsupplementType'] = array_unique($generalsupplementType);
+  $data['MangeneralsupplementType'] = array_unique($MangeneralsupplementType);
+  $data['BoardsupplementType'] = implode(", ", array_unique($BoardsupplementType));
+  $data['extrabedType'] = $extrabedType;
+  $data['nonRefundable'] = $nonRefundable;
+  $data['discount'] = 0;
+}
+return $data;
+}
 }    
 
 
