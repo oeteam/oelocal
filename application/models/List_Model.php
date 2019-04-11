@@ -949,8 +949,8 @@ if (count($query)!=0) {
     array_splice($amount, $Fdays);
     $discount[0] = 1;
   }
-  $totalbkamount = ((array_sum($amount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
-  $totalbkamount1 = ((array_sum($Disamount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+  $totalbkamount = ((array_sum($amount)*$adultsRoomCount)+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+  $totalbkamount1 = ((array_sum($Disamount)*$adultsRoomCount)+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
 
   if($tax!=0) {
     $totalbkamount = ((($totalbkamount*$tax)/100)+$totalbkamount);
