@@ -191,8 +191,8 @@ function RoomCombinationinitCheck() {
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {
    if (isNaN(RoomCombination.RoomIndex)) {
-      $('#Room'+1+v.RoomIndex).prop('disabled',false);
-      $('#Room'+1+v.RoomIndex).closest('li').find('.av-div').addClass('availability');
+      $('#Room'+1+v.RoomIndex[0]).prop('disabled',false);
+      $('#Room'+1+v.RoomIndex[0]).closest('li').find('.av-div').addClass('availability');
     } else {
       $('#Room'+1+RoomCombination.RoomIndex).prop('disabled',false);
       $('#Room'+1+RoomCombination.RoomIndex).closest('li').find('.av-div').addClass('availability');
@@ -572,7 +572,7 @@ function ConSelectFun(){
 		              		}
 		              	?>
 		                <li>
-		                  <label for="Room<?php echo $value['RoomIndex'] ?>">
+		                  <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
 		                    
 		                    <div class="av-div">
