@@ -3239,6 +3239,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           if ($revenue_markup!=0) {
             $total_markup = $revenue_markup+mark_up_get();
           }
+          $rooms[$i]['CancellationPolicy'] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value1,$value->room_id);
           $contractBoardget = $this->List_Model->contractBoardget($_REQUEST['hotel_id'],$value1);
 
           $room_current_count_price = $this->List_Model->room_current_count_price($value->room_id,$_REQUEST['Check_in'],$_REQUEST['Check_out'],$value1,$_REQUEST['adults'],$_REQUEST['Child'],$_REQUEST,$total_markup,$value1);
@@ -3267,6 +3268,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         }
       }
       $data['rooms'] = $rooms; 
+      //print_r(array_column($data['rooms'], 'CancellationPolicy'));exit;
       $data['RoomCombination'] = array_column($data['rooms'], 'Index');
       //print_r(json_encode(array_column($data['rooms'], 'Index')));exit;
       $data['agent_info'] = $this->Common_Model->agent_info();

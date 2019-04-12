@@ -88,7 +88,7 @@
 	}
 
 	.r-type--room ul > li > label > input[type="radio"] + div > h5 > i {
-	  display: none;
+	 /* display: none;*/
 	}  
 
 	.r-type--room ul > li > label > input[type="radio"] + div.availability  > h5 > i:first-child {
@@ -337,6 +337,13 @@ function ConSelectFun(){
         }
     });
 }
+$(document).ready(function() {
+  $(".cancellation-span").hover(function(){
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
+    }, function(){
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "none");
+  });
+})
 </script>
 
 <style type="text/css">
@@ -572,13 +579,33 @@ function ConSelectFun(){
 		              		}
 		              	?>
 		                <li>
+        
 		                  <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
 		                    
 		                    <div class="av-div">
-		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - 
-		                      <?php echo $value['board'] ?>
+		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
+	                  		  <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
+                          <thead style="background: #0074b9;color: white;">
+                            <tr>
+                              <td>Cancelled on or After</td>
+                              <td>Cancelled on or Before</td>
+                              <td>Cancellation Charge</td>
+                              <td>Description</td>
+                            </tr>
+                          </thead>
+                         <tbody> 
+					    	<?php foreach ($value['CancellationPolicy'] as $Canckey => $Cancvalue) { ?>
+					    	<tr>
+					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['after'] ?></td>
+					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['before'] ?></td>
+					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['percentage'] ?> </td>
+					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['description'] ?></td>
+					    	</tr>
+							<?php } ?>
+				    	</tbody>
+                        </table>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
 		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>
 		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>

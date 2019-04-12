@@ -2070,4 +2070,108 @@ class Payment_Model extends CI_Model {
       $query = $this->db->get()->result();
       return $query;
     }
+    public function get_CancellationPolicy_table($request,$contract_id,$room_id) {
+      $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$contract_id."' AND nonRefundable = 1")->result();
+      $checkin_date=date_create($_REQUEST['Check_in']);
+      $checkout_date=date_create($_REQUEST['Check_out']);
+      $no_of_days=date_diff($checkin_date,$checkout_date);
+      $tot_days = $no_of_days->format("%a");
+
+      $disNRFVal = '';
+
+      for ($i=0; $i < $tot_days ; $i++) {
+        $dateOut = date('Y-m-d', strtotime($_REQUEST['Check_in']. ' + '.$i.'  days'));
+        $disNRF[$i] = DateWisediscountNonRefundable($dateOut,$request['hotel_id'],$room_id,$contract_id,'Room',$_REQUEST['Check_in'],$_REQUEST['Check_out']);
+        if ($disNRF[$i]['NRF']==1) {
+          $disNRFVal = $disNRF[$i]['discount'];
+        }
+      }
+      
+  
+      if (count($refund)!=0) {
+        $data[0]['description'] = "This booking is Nonrefundable";
+        $data[0]['after'] = "";
+        $data[0]['before'] = "";
+        $data[0]['percentage'] = "";
+        $data[0]['application'] = "Nonrefundable";
+      } else if($disNRFVal!='') {
+        $data[0]['description'] = "This booking is Nonrefundable";
+        $data[0]['after'] = '';
+        $data[0]['before'] = '';
+        $data[0]['percentage'] = "";
+        $data[0]['application'] = "Nonrefundable";
+      } else {
+        $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
+        $data = array();
+        $checkin_date=date_create($request['Check_in']);
+        $checkout_date=date_create($request['Check_out']);
+        $no_of_days=date_diff($checkin_date,$checkout_date);
+        $tot_days = $no_of_days->format("%a");
+
+
+        $start=date_create(date('m/d/Y'));
+        $end=date_create($request['Check_in']);
+        $nod=date_diff($start,$end);
+        $tot_days1 = $nod->format("%a");
+
+        for($i = 0; $i < $tot_days; $i++) {
+          $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
+          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
+          if (count($CancellationPolicyCheck[$i])!=0) {
+            foreach ($CancellationPolicyCheck[$i] as $key => $value) {
+                $exploderoomType[$key] = explode(",", $value->roomType);
+                foreach ($exploderoomType[$key] as $key1 => $value1) {
+
+                  
+                  if ($value1==$roomType[0]->id) {
+                      $after = date('Y-m-d', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+                      $before = date('Y-m-d', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+                      if ($after < date('Y-m-d')) {
+                        $data[$key]['after'] = date('d/m/Y');
+                      } else {
+                        $data[$key]['after'] = date('d/m/Y', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+                      }
+                      if ($before < date('Y-m-d')) {
+                        $data[$key]['before'] = date('d/m/Y');
+                      } else {
+                        $data[$key]['before'] = date('d/m/Y', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+                      }
+
+                      if ($value->daysFrom==0) {
+                        $daysInAdvance = 'your check-in date';
+                      } else if($value->daysFrom==1) {
+                        $daysInAdvance = 'within 24 hours of your check-in';
+                      } else {
+                        $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
+                      }
+
+                      
+                      $data[$key]['percentage'] = $value->cancellationPercentage;
+                          $data[$key]['application'] = $value->application;
+
+                      if ($value->application=="FIRST NIGHT") {
+                        $data[$key]['description'] = '<span>
+                                   If you cancel '.$daysInAdvance.',you will pay '.$value->cancellationPercentage.'% of one night stay with supplementary charges no matter the number of stay days.
+                                </span>';
+
+                      } else if ($value->application=="STAY") {
+
+                          $data[$key]['description'] = '<span>
+                                      If you cancel '.$daysInAdvance.', you will pay '.$value->cancellationPercentage.'% of the booking amount.
+                                </span>';
+                      } else {
+                        $data[$key]['description'] = '<span>
+                                   If you cancel '.$daysInAdvance.',  Cancellation charge is free .
+                              </span>';
+                      }
+                  }
+                }
+            }
+          }
+        }
+        
+
+      }
+      return $data;
+    }
 }
