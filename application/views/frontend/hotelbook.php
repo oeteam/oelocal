@@ -596,14 +596,20 @@ $(document).ready(function() {
                             </tr>
                           </thead>
                          <tbody> 
-					    	<?php foreach ($value['CancellationPolicy'] as $Canckey => $Cancvalue) { ?>
-					    	<tr>
-					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['after'] ?></td>
-					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['before'] ?></td>
-					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['percentage'] ?> </td>
-					    		<td><?php echo $value['CancellationPolicy'][$Canckey]['description'] ?></td>
-					    	</tr>
-							<?php } ?>
+					    	<?php foreach ($value['CancellationPolicy'] as $Canckey => $Cancvalue) { 
+					    		if($value['CancellationPolicy'][$Canckey]['application'] == "Nonrefundable") { ?>
+					    			<tr>
+					    				<td colspan="4">This booking is Nonrefundable.</td>
+					    			</tr>
+					    		<?php } else { ?>
+							    	<tr>
+							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['after'] ?></td>
+							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['before'] ?></td>
+							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['percentage'] ?> </td>
+							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['description'] ?></td>
+							    	</tr>
+							    <?php } 
+							} ?>
 				    	</tbody>
                         </table>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
