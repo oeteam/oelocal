@@ -2230,15 +2230,15 @@ class Payment_Model extends CI_Model {
                     if ($value4==$roomType[0]->id) {
                       if ($value1->application=="Per Person") {
                         if (round($value1->adultAmount)!=0) {
-                          $adultAmount[$value1->type] = $value1->adultAmount*array_sum($request['reqadults']);
+                          $adultAmount[$value1->type] = $value1->adultAmount*array_sum($request['adults']);
                         }
-                        for ($j=1; $j <= count($request['reqadults']); $j++) { 
+                        for ($j=1; $j <= count($request['adults']); $j++) { 
                           if (round($value1->adultAmount)!=0) {
-                            $RWadultAmount[$value1->type][$j] = $value1->adultAmount*$request['reqadults'][$j-1];
+                            $RWadultAmount[$value1->type][$j] = $value1->adultAmount*$request['adults'][$j-1];
                             $RWadult[$value1->type][$j] = $j;
                           }
-                          if (isset($request['reqroom'.$j.'-childAge'])) {
-                            foreach ($request['reqroom'.$j.'-childAge'] as $key44 => $value44) {
+                          if (isset($request['room'.$j.'-childAge'])) {
+                            foreach ($request['room'.$j.'-childAge'] as $key44 => $value44) {
                               if ($value1->MinChildAge < $value44) {
                                 if (round($value1->childAmount)!=0) {
                                   $childAmount[$value1->type] = $value1->childAmount;
@@ -2254,9 +2254,9 @@ class Payment_Model extends CI_Model {
                         }
                       } else {
                         if (round($value1->adultAmount)!=0) {
-                          $adultAmount[$value1->type] = $value1->adultAmount*count($request['reqadults']);
+                          $adultAmount[$value1->type] = $value1->adultAmount*count($request['adults']);
                           $childAmount[$value1->type] = 0;
-                          $RWadultAmount[$value1->type][1] = $value1->adultAmount*count($request['reqadults']);
+                          $RWadultAmount[$value1->type][1] = $value1->adultAmount*count($request['adults']);
                           $RWadult[$value1->type][1] = 1;
                         }
                       }
@@ -2357,11 +2357,11 @@ class Payment_Model extends CI_Model {
            $extrabedallotment[$i] = $this->db->query("SELECT * FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."'")->result();
             if (count($extrabedallotment[$i])!=0) {
             foreach ($extrabedallotment[$i] as $key15 => $value15) {
-                 foreach ($request['reqadults'] as $key17 => $value7) {
-                  if (($value7+$request['reqChild'][$key17]) > $standard_capacity) {
-                    // for ($k=1; $k <= count($request['reqadults']); $k++) { 
-                      if (isset($request['reqroom'.($key17+1).'-childAge'])) {
-                        foreach ($request['reqroom'.($key17+1).'-childAge'] as $key18 => $value18) {
+                 foreach ($request['adults'] as $key17 => $value7) {
+                  if (($value7+$request['Child'][$key17]) > $standard_capacity) {
+                    // for ($k=1; $k <= count($request['adults']); $k++) { 
+                      if (isset($request['room'.($key17+1).'-childAge'])) {
+                        foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
                             if ($max_child_age < $value18) {
                                 $explodeexRType = explode(",", $value15->roomType);
                                   foreach ($explodeexRType as $exexrtypekey => $exexrtypevalue) {
@@ -2431,10 +2431,10 @@ class Payment_Model extends CI_Model {
 
             if (count($boardSp[$i])!=0) {
               foreach ($boardSp[$i] as $key21 => $value21) {
-                foreach ($request['reqadults'] as $key17 => $value17) {
-                  if (($value17+$request['reqChild'][$key17]) > $standard_capacity) {
-                    if (isset($request['reqroom'.($key17+1).'-childAge'])) {
-                      foreach ($request['reqroom'.($key17+1).'-childAge'] as $key18 => $value18) {
+                foreach ($request['adults'] as $key17 => $value17) {
+                  if (($value17+$request['Child'][$key17]) > $standard_capacity) {
+                    if (isset($request['room'.($key17+1).'-childAge'])) {
+                      foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
                         if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
                           if (round($value21->amount)!=0) {
                             $extrabedAmount[$i][$key17][] =  $value21->amount;

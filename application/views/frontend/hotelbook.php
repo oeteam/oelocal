@@ -423,11 +423,11 @@ $(document).ready(function() {
 		                <div class="row booking-details-info">
 		                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check in date</span><br>
-		                    <span class="text-blue"><?php echo $_REQUEST['Check_in']; ?></span>
+		                    <span class="text-blue"><?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])); ?></span>
 		                  </div>
 		                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check out date</span><br>
-		                    <span class="text-blue"><?php echo $_REQUEST['Check_out']; ?></span>
+		                    <span class="text-blue"><?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])); ?></span>
 		                  </div>
 		                    <?php 
 		                       $adult= array_sum($_REQUEST['adults']);
@@ -592,12 +592,19 @@ $(document).ready(function() {
 		                    <div class="av-div">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
-	                  		  <small class="r-type-includes"><?php if(count($value['additionalfoodrequest'])!=0) {
+	                  		  <?php if(isset($value['additionalfoodrequest']) && count($value['additionalfoodrequest'])!=0) { ?>
+	                  		  <small class="r-type-includes"><?php 
 									foreach ($value['additionalfoodrequest']['board'] as $frkey => $frvalue) {
-										echo "-".$frvalue;
+										echo $frvalue;
 									}
-								}
-								?></small>
+								?></small><br><?php }
+								 ?>
+								 <?php if(isset($value['extrabed']['extrabedType'][0][0][0])) { ?>
+								 	<small class="r-type-includes">
+								 		<?php echo $value['extrabed']['extrabedType'][0][0][0] ?>
+							 		</small><br>
+						 		<?php }
+						 		 ?>
 	                  		  <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
