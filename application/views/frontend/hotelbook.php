@@ -229,6 +229,9 @@ function RoomCombinationCheck() {
       $(this).closest('ul').prepend($(this).closest('li'));
   })
   var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
+  $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());
+  $("#contract_index").val($('input[type="radio"]:checked').closest('li').find('.contract_id').val());
+  $("#RequestType").val($('input[type="radio"]:checked').closest('li').find('.RequestType').val());
   var sum = 0
   $.each(comAmnt,function(i,v) {
     sum += Number($(this).val().replace(/,/g , '')); 
@@ -265,6 +268,9 @@ $(document).ready(function() {
 
   $('input[type="radio"]').on('change',function() {
     var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
+    $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());
+	$("#contract_index").val($('input[type="radio"]:checked').closest('li').find('.contract_id').val());
+	$("#RequestType").val($('input[type="radio"]:checked').closest('li').find('.RequestType').val());
     var sum = 0
     $.each(comAmnt,function(i,v) {
       sum += Number($(this).val().replace(/,/g , '')); 
@@ -586,6 +592,12 @@ $(document).ready(function() {
 		                    <div class="av-div">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
+	                  		  <small class="r-type-includes"><?php if(count($value['additionalfoodrequest'])!=0) {
+									foreach ($value['additionalfoodrequest']['board'] as $frkey => $frvalue) {
+										echo "-".$frvalue;
+									}
+								}
+								?></small>
 	                  		  <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
