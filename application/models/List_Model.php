@@ -4753,7 +4753,7 @@ if (count($query)!=0) {
 
   $data['cut_off_msg'] = $cut_off_msg;
   $adultsRoomCount = count($adults);
-      // print_r($manGenarray_sumAdultAmount);
+      // print_r($$adultsRoomCount = count($adults););
       // echo "<br>";
       // $totalbkamount = ceil((array_sum($amount)*$adultsRoomCount)+$array_sumAdultAmount+$array_sumChildAmount+$totalAdultBoardSumData+$totalChildBoardSumData+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
   $discountGet = Alldiscount(date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)),$request['hotel_id'],$room_id,$contract_id,'Room');
