@@ -593,17 +593,26 @@ $(document).ready(function() {
 		                    <div class="av-div">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
-	                  		<!--   <?php if(isset($rooms[$i]['additionalfoodrequest']['board']) && count($rooms[$i]['additionalfoodrequest']['board'])!=0) { 
+	                  		   <?php foreach($rooms[$i]['extrabed'][$key] as $extrabed) { ?>
+	                  		   	<small class="r-type-includes">
+	                  		   		<?php echo $extrabed; ?>
+	                  		   </small>
+	                  		   <?php }	                  		   
+	                  		   if(is_array($rooms[$i]['generalsupplementType']) && count($rooms[$i]['generalsupplementType'])!=0) { 
+		                      	foreach ($rooms[$i]['generalsupplementType'][$key] as $key1 => $value1) {  ?>
+		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>
+		                  	 <?php } } ?>
+	                  		<!--<?php if(isset($rooms[$i]['additionalfoodrequest']['board']) && count($rooms[$i]['additionalfoodrequest']['board'])!=0) { 
 	                  		  	foreach ($rooms[$i]['additionalfoodrequest']['board'] as $frkey => $frvalue) {
               		  			?>
 	                  		  <small class="r-type-includes"><?php  echo $frvalue; ?></small><br>
 	                  			<?php } } ?> -->
-								 <?php if(isset($rooms[$i]['extrabed']['extrabedType'][0][0][0])) { ?>
+								<!--  <?php if(isset($rooms[$i]['extrabed']['extrabedType'][0][0][0])) { ?>
 								 	<small class="r-type-includes">
 								 		<?php echo $rooms[$i]['extrabed']['extrabedType'][0][0][0] ?>
 							 		</small><br>
 						 		<?php }
-						 		 ?>
+						 		 ?> -->
 	                  		  <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>

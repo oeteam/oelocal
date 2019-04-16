@@ -3338,7 +3338,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       //   }
       // }
       $data['rooms'] = $rooms; 
-      // print_r(array_column($data['rooms'], 'extrabed'));exit;
+      //print_r(array_column($data['rooms'], 'generalsupplementType'));exit;
       $data['RoomCombination'] = array_column($data['rooms'], 'Index');
       $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/hotelbook',$data);
