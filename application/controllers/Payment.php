@@ -1599,7 +1599,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       echo json_encode(true);
     }
     public function dummy() {
-      emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'56','56','167','0','On Requst');
+     // emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'56','56','167','0','On Requst');
     }
     public function offlineRequest() {
       $this->load->view('frontend/offlineRequest');
@@ -2929,7 +2929,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         }
         
         AgentlogActivity('New hotel booking added [BookingID: HAB0'.$insert_id.' ,HotelID: HOB0'.$data['hotel_id'].' ,Provider: Otelsesy]');
-        emailNotification('Booking','Accept',$this->session->userdata('agent_id'),$data['hotel_id'],$insert_id,$data['room_id'],$discount,$data['RequestType']);
+        //emailNotification('Booking','Accept',$this->session->userdata('agent_id'),$data['hotel_id'],$insert_id,$data['room_id'],$discount,$data['RequestType']);
         // print_r($ExtrabedAmount);
         // exit();
         $this->session->set_flashdata('message', 'Booked Successfully');
