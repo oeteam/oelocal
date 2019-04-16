@@ -3252,7 +3252,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                 for($m=0;$m<count($_REQUEST['adults']);$m++){
                   $index[$m] = $value1.'-'.$value->room_id;
                 } 
-                $rooms[$i]['Index']['RoomIndex'] = $index;
+                $rooms[$i]['Index'][]['RoomIndex'] = $index;
                 $rooms[$i]['RoomIndex'][] = $value1.'-'.$value->room_id;
                 $rooms[$i]['room_id'][] = $value->room_id;
                 $rooms[$i]['board'][] = $contractBoardget->board;
@@ -3275,7 +3275,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
 
       $data['rooms'] = $rooms; 
       //print_r(array_column($data['rooms'], 'generalsupplementType'));exit;
-      $data['RoomCombination'] = array_column($data['rooms'], 'Index');
+      $RoomCombination = array_column($data['rooms'], 'Index');
+      $data['RoomCombination'] = $RoomCombination[0];
       $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/hotelbook',$data);
     }
