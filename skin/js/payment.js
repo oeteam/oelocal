@@ -81,7 +81,7 @@ $(document).ready(function() {
         }
 
         if (err==0) {
-            $("#payment_form").attr("action","payment_booking");
+            $("#payment_form").attr("action",base_url+"payment/payment_booking");
             $("#payment_form").submit();
         }        
   	});

@@ -4387,7 +4387,7 @@ public function loadRequest($action,$arr_value) {
     }
     return $result1;
   }
-  public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id) {
+  public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id,$index) {
       /*Tax percentage grt from contract start*/
 
       $request['contract_id']  = $contract_ajax_id;
@@ -4460,8 +4460,8 @@ public function loadRequest($action,$arr_value) {
     $extrabedAmount  = array();
     $extrabedType = array();
     
-    $adultscount = array_sum($adults);
-    $childscount = array_sum($child);
+    $adultscount = $adults;
+    $childscount = $child;
     $roomType = $this->db->query("SELECT id FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
     $cut_off_date = array();
     $cut_off_msg = "";
@@ -4496,17 +4496,14 @@ public function loadRequest($action,$arr_value) {
                       // if($max_child_age >= $value7->finalAge) {
 
                 $childBoardcnt[$i] = array();
-                for ($j=1; $j <= count($request['adults']); $j++) { 
-                  if (isset($request['room'.$j.'-childAge'])) {
-                    foreach ($request['room'.$j.'-childAge'] as $key4 => $value4) {
+                  if (isset($request['room'.$index.'-childAge'])) {
+                    foreach ($request['room'.$index.'-childAge'] as $key4 => $value4) {
                       if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
                        $childBoardcnt[$i][]= $value4;
                      } 
                    }
 
                  }
-
-               }
                if (count($childBoardcnt[$i])!=0) {
                 $childBoardAmount[$i][] = $value7->amount*count($childBoardcnt[$i]);
               } 
@@ -4534,16 +4531,14 @@ public function loadRequest($action,$arr_value) {
         $explodeRoomType[$key3] = explode(",", $value3->roomType);
         if ($value3->application=="Per Person") {
           $adultAmount[] = $value3->adultAmount;
-          for ($j=1; $j <= count($request['adults']); $j++) { 
-            if (isset($request['room'.$j.'-childAge'])) {
-              foreach ($request['room'.$j.'-childAge'] as $key44 => $value44) {
+            if (isset($request['room'.$index.'-childAge'])) {
+              foreach ($request['room'.$index.'-childAge'] as $key44 => $value44) {
                 if ($value3->MinChildAge < $value44) {
                   $childAmount[] = $value3->childAmount;
                 } 
               }
 
             }
-          }
         } else {
           $adultAmountPR[] = $value3->adultAmount;
           $childAmountPR[] = $value3->childAmount;
@@ -4571,11 +4566,10 @@ public function loadRequest($action,$arr_value) {
     $extrabedallotment[$i] = $this->db->query("SELECT amount,ChildAmount,ChildAgeFrom,ChildAgeTo FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
     if (count($extrabedallotment[$i])!=0) {
       foreach ($extrabedallotment[$i] as $key15 => $value15) {
-       foreach ($request['adults'] as $key17 => $value17) {
-        if (($value17+$request['Child'][$key17]) > $standard_capacity) {
+        if (($adults+$child) > $standard_capacity) {
                     // for ($k=1; $k <= count($adults); $k++) { 
-          if (isset($request['room'.($key17+1).'-childAge'])) {
-            foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
+          if (isset($request['room'.$index.'-childAge'])) {
+            foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
               if ($max_child_age < $value18) {
                $extrabedAmount[] =  $value15->amount;
                $extrabedType[] =  'Adult Extrabed';
@@ -4605,7 +4599,7 @@ public function loadRequest($action,$arr_value) {
 
                     // }
                     // if ($request['Child'][$key17]==0) {
-        if ($value17 > $standard_capacity) {
+        if ($adults > $standard_capacity) {
           $extrabedAmount[] =  $value15->amount;
           $extrabedType[] =  'Adult Extrabed';
         }
@@ -4613,7 +4607,6 @@ public function loadRequest($action,$arr_value) {
                     // echo "<BR>";
 
       }
-    }
   }
 }
 
@@ -4627,10 +4620,9 @@ if($contract_board=="HB") {
 }
 if (count($boardSp[$i])!=0) {
   foreach ($boardSp[$i] as $key21 => $value21) {
-    foreach ($request['adults'] as $key17 => $value17) {
-      if (($value17+$request['Child'][$key17]) > $standard_capacity) {
-        if (isset($request['room'.($key17+1).'-childAge'])) {
-          foreach ($request['room'.($key17+1).'-childAge'] as $key18 => $value18) {
+      if (($adults+$child) > $standard_capacity) {
+        if (isset($request['room'.$index.'-childAge'])) {
+          foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
             if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
               $extrabedAmount[] =  $value21->amount;
               $extrabedType[] =  'Child '.$value21->board;
@@ -4642,7 +4634,6 @@ if (count($boardSp[$i])!=0) {
         $extrabedAmount[] =  $value21->amount;
         $extrabedType[] =  'Adult '.$value21->board;
       }
-    }
   }
 }
 
@@ -4752,7 +4743,7 @@ if (count($query)!=0) {
   }
 
   $data['cut_off_msg'] = $cut_off_msg;
-  $adultsRoomCount = count($adults);
+  $adultsRoomCount = $adults;
       // print_r($manGenarray_sumAdultAmount);
       // echo "<br>";
       // $totalbkamount = ceil((array_sum($amount)*$adultsRoomCount)+$array_sumAdultAmount+$array_sumChildAmount+$totalAdultBoardSumData+$totalChildBoardSumData+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
@@ -4780,14 +4771,10 @@ if (count($query)!=0) {
   $data['price'] = $totalbkamount;
   $data['discountAmount'] = $totalbkamount1;
   $rtrn = array();
-  foreach ($request['adults'] as $key77 => $value77) {
-
-
-    if ((($value77+$request['Child'][$key77]) > $max_capacity) || ($value77 > $occupancyAdult) || ($request['Child'][$key77] > $occupancyChild)) {
-      $rtrn[$key77] = 1;
-    } else {
-      $rtrn[$key77] = 0;
-    }
+  if ((($adults+$child) > $max_capacity) || ($adults > $occupancyAdult) || ($child > $occupancyChild)) {
+    $rtrn[] = 1;
+  } else {
+    $rtrn[] = 0;
   }
   if (array_sum($rtrn) == 0 && $cut_off_msg=="") {
     $data['allotement'] = min($allotement);

@@ -576,6 +576,7 @@ $(document).ready(function() {
 		          	<?php $div = 12/count($_REQUEST['adults']);
              		for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
 		            <div class="col-sm-<?php echo $div ?> r-type--room">
+		            	<h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
 		              <ul class="list-unstyled r-type--list margtop10">
 		              	<?php 
 		                foreach ($rooms as $key => $value) { 
