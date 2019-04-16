@@ -4564,6 +4564,7 @@ public function loadRequest($action,$arr_value) {
     $implodeboardRequest = implode("','", $contract_boardRequest);
 
     $extrabedallotment[$i] = $this->db->query("SELECT amount,ChildAmount,ChildAgeFrom,ChildAgeTo FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+
     if (count($extrabedallotment[$i])!=0) {
       foreach ($extrabedallotment[$i] as $key15 => $value15) {
         if (($adults+$child) > $standard_capacity) {
