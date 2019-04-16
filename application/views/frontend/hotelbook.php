@@ -579,7 +579,7 @@ $(document).ready(function() {
 		            	<h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
 		              <ul class="list-unstyled r-type--list margtop10">
 		              	<?php 
-		                foreach ($rooms as $key => $value) { 
+		                foreach ($rooms[$i]['RoomName'] as $key => $value) { 
 		              		$checked = '';
 		              		if ($key==0 && $i==0) {
 		              			$checked ='checked';
@@ -587,22 +587,20 @@ $(document).ready(function() {
 		              	?>
 		                <li>
         
-		                  <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
-                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
+		                  <label for="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">
+                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>" value="<?php echo $rooms[$i]['RoomIndex'][$key] ?>">
 		                    
 		                    <div class="av-div">
-		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
+		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
-	                  		  <?php if(isset($value['additionalfoodrequest']) && count($value['additionalfoodrequest'])!=0) { ?>
-	                  		  <small class="r-type-includes"><?php 
-									foreach ($value['additionalfoodrequest']['board'] as $frkey => $frvalue) {
-										echo $frvalue;
-									}
-								?></small><br><?php }
-								 ?>
-								 <?php if(isset($value['extrabed']['extrabedType'][0][0][0])) { ?>
+	                  		<!--   <?php if(isset($rooms[$i]['additionalfoodrequest']['board']) && count($rooms[$i]['additionalfoodrequest']['board'])!=0) { 
+	                  		  	foreach ($rooms[$i]['additionalfoodrequest']['board'] as $frkey => $frvalue) {
+              		  			?>
+	                  		  <small class="r-type-includes"><?php  echo $frvalue; ?></small><br>
+	                  			<?php } } ?> -->
+								 <?php if(isset($rooms[$i]['extrabed']['extrabedType'][0][0][0])) { ?>
 								 	<small class="r-type-includes">
-								 		<?php echo $value['extrabed']['extrabedType'][0][0][0] ?>
+								 		<?php echo $rooms[$i]['extrabed']['extrabedType'][0][0][0] ?>
 							 		</small><br>
 						 		<?php }
 						 		 ?>
@@ -616,32 +614,32 @@ $(document).ready(function() {
                             </tr>
                           </thead>
                          <tbody> 
-					    	<?php foreach ($value['CancellationPolicy'] as $Canckey => $Cancvalue) { 
-					    		if($value['CancellationPolicy'][$Canckey]['application'] == "Nonrefundable") { ?>
+					    	<?php foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
+					    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
 					    			<tr>
 					    				<td colspan="4">This booking is Nonrefundable.</td>
 					    			</tr>
 					    		<?php } else { ?>
 							    	<tr>
-							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['after'] ?></td>
-							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['before'] ?></td>
-							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['percentage'] ?> </td>
-							    		<td><?php echo $value['CancellationPolicy'][$Canckey]['description'] ?></td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
 							    	</tr>
 							    <?php } 
 							} ?>
 				    	</tbody>
                         </table>
-		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
-		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>
+		                      <?php if(is_array($rooms[$i]['generalsupplementType']) && count($rooms[$i]['generalsupplementType'])!=0) { 
+		                      	foreach ($rooms[$i]['generalsupplementType'][$key] as $key1 => $value1) {  ?>
 		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>
 		                  	 <?php } } ?>
 		                      <p class="text-green m-0 bold">
-		                      	<input type="hidden" class="RequestType" value="<?php echo $value['RequestType'] ?>">
-		                      	<input type="hidden" class="room_id" value="<?php echo $value['room_id'] ?>">
-		                      	<input type="hidden" class="contract_id" value="<?php echo $value['contract_id'] ?>">
-		                      	<input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($value['price'],agent_currency(),agent_currency()); ?>">
-		                      	<small><?php echo agent_currency().' '.xml_currency_change($value['price'],agent_currency(),agent_currency()); ?></small>
+		                      	<input type="hidden" class="RequestType" value="<?php echo $rooms[$i]['RequestType'][$key] ?>">
+		                      	<input type="hidden" class="room_id" value="<?php echo $rooms[$i]['room_id'][$key] ?>">
+		                      	<input type="hidden" class="contract_id" value="<?php echo $rooms[$i]['contract_id'][$key] ?>">
+		                      	<input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($rooms[$i]['price'][$key],agent_currency(),agent_currency()); ?>">
+		                      	<small><?php echo agent_currency().' '.xml_currency_change($rooms[$i]['price'][$key],agent_currency(),agent_currency()); ?></small>
 		                      </p>
 		                    </div>
 		                  </label>

@@ -1599,7 +1599,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       echo json_encode(true);
     }
     public function dummy() {
-      emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'56','56','167','0','On Requst');
+     // emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'56','56','167','0','On Requst');
     }
     public function offlineRequest() {
       $this->load->view('frontend/offlineRequest');
@@ -2929,7 +2929,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         }
         
         AgentlogActivity('New hotel booking added [BookingID: HAB0'.$insert_id.' ,HotelID: HOB0'.$data['hotel_id'].' ,Provider: Otelsesy]');
-        emailNotification('Booking','Accept',$this->session->userdata('agent_id'),$data['hotel_id'],$insert_id,$data['room_id'],$discount,$data['RequestType']);
+        //emailNotification('Booking','Accept',$this->session->userdata('agent_id'),$data['hotel_id'],$insert_id,$data['room_id'],$discount,$data['RequestType']);
         // print_r($ExtrabedAmount);
         // exit();
         $this->session->set_flashdata('message', 'Booked Successfully');
@@ -3247,63 +3247,31 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             $room_closedout = $this->List_Model->all_closedout_room($_REQUEST['hotel_id'],$value1,$_REQUEST,$value);
             $minimumStay = $this->List_Model->minimumStayCheckAvailability($_REQUEST,$value->room_id);
               if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count_price['price']!=0) {
-                $rooms[$i]['RoomName'] = $value->room_name.' '.$value->Room_Type;
-                print_r($rooms[$i]['RoomName']);
-                echo "  ";
+                $rooms[$i]['RoomName'][] = $value->room_name.' '.$value->Room_Type;
                 $index = array();
                 for($m=0;$m<count($_REQUEST['adults']);$m++){
                   $index[$m] = $value1.'-'.$value->room_id;
                 } 
                 $rooms[$i]['Index']['RoomIndex'] = $index;
-                $rooms[$i]['RoomIndex'] = $value1.'-'.$value->room_id;
-                $rooms[$i]['room_id'] = $value->room_id;
-                $rooms[$i]['board'] = $contractBoardget->board;
-                $rooms[$i]['contract_id'] = $value1;
-                echo $rooms[$i]['price'] = $room_current_count_price['price'];
-                $rooms[$i]['general'] = $this->Payment_Model->get_paxgeneral_supplement($_REQUEST,$value->room_id,$value1);
-                $rooms[$i]['extrabed'] = $this->Payment_Model->get_PaymentpaxextrabedAllotment($_REQUEST,$value->room_id,$value1);
-                $rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value1,$value->room_id);
-                echo "<br>";
-                if ($contractBoardget->board=="RO") {
-                  $Breakfast = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Breakfast!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Breakfast';
-                  }
-                  $Lunch = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Lunch!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Lunch';
-                  }
-                  $Dinner = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Dinner!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Dinner';
-                  }
-                } else if ($contractBoardget->board=="BB") {
-                  $Lunch = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Lunch!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Lunch';
-                  }
-                  $Dinner = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Dinner!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Dinner';
-                  }
-                } else if ($contractBoardget->board=="HB") {
-                  $Lunch = $this->Payment_Model->paxadditionalfoodrequest($_REQUEST,'Breakfast',$value1,$value->room_id);
-                  if ($Lunch!=false) {
-                    $rooms[$i]['additionalfoodrequest']['board'][] = 'Lunch';
-                  }
-                } 
-                $rooms[$i]['generalsupplementType'] = count($room_current_count_price['generalsupplementType'])!=0 ? array_unique($room_current_count_price['generalsupplementType']) : array();
+                $rooms[$i]['RoomIndex'][] = $value1.'-'.$value->room_id;
+                $rooms[$i]['room_id'][] = $value->room_id;
+                $rooms[$i]['board'][] = $contractBoardget->board;
+                $rooms[$i]['contract_id'][] = $value1;
+                $rooms[$i]['price'][] = $room_current_count_price['price'];
+                $rooms[$i]['general'][] = $room_current_count_price['generalsupplementType'];
+                $rooms[$i]['extrabed'][] = $room_current_count_price['extrabedType'];
+                $rooms[$i]['Boardsupplement'][] = $room_current_count_price['BoardsupplementType'];
+                $rooms[$i]['CancellationPolicy'][] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value1,$value->room_id);
+                $rooms[$i]['generalsupplementType'][] = count($room_current_count_price['generalsupplementType'])!=0 ? array_unique($room_current_count_price['generalsupplementType']) : array();
                 if ($room_current_count_price['allotement']> 0) {
-                  $rooms[$i]['RequestType'] = 'Book';
+                  $rooms[$i]['RequestType'][] = 'Book';
                 } else {
-                  $rooms[$i]['RequestType'] = 'On Request';
+                  $rooms[$i]['RequestType'][] = 'On Request';
                 }
               }
           }
         }
       }
-      // print_r($rooms);
-      exit();
       // foreach ($Rooms as $key => $value) {
       //   foreach ($contracts['contract_id'] as $key1 => $value1) {
       //     $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
