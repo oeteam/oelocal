@@ -36,7 +36,7 @@ class Reviews_Model extends CI_Model {
 	public function hotel_review_list() {
 		$this->db->select('*,hotel_tbl_review.id as review_id');
 		$this->db->from('hotel_tbl_review');
-    $this->db->join('hotel_tbl_hotels','hotel_tbl_hotels.id = hotel_tbl_review.hotel_id');
+    $this->db->join('hotel_tbl_hotels','hotel_tbl_hotels.id = hotel_tbl_review.hotel_id','inner');
 		$this->db->where('hotel_tbl_review.delflg',1);
 		$data= $this->db->get();
 		return $data;
