@@ -787,7 +787,7 @@
 								<br/>
 								<br/>
 
-								<input type="hidden" name="hotel_id" id="hotel_id">
+								<!-- <input type="hidden" name="hotel_id" id="hotel_id"> -->
 								<input type="hidden" name="roomIndex" id="roomIndex">
 								<input type="hidden" name="roomName" id="roomName">
 							</form>
