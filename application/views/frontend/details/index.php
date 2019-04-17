@@ -702,7 +702,7 @@
 						</div>
 						<div class="wh66percent right offset-0">
 							<form name="review_form" method="post" action="<?php echo base_url('details/review_insert'); ?>" id="review_form">
-								<input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['search_id'] ?>">
+								<input type="hidden" name="hotel_id" value="<?php echo $_REQUEST['search_id'] ?>">
 							<script>
 								//This is a fix for when the slider is used in a hidden div
 								function testTriger(){
