@@ -3320,6 +3320,112 @@ class Hotels extends MY_Controller {
 		AdminlogActivity($description);
 		redirect("../backend/hotels/Disoffers");
 	}
+	public function display_manage() {
+		$this->load->view('backend/hotels/display_manage'); 
+		// $revenueMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
+		// if (count($revenueMenu)!=0 && $revenueMenu[0]->view==1) {
+  //    			$this->load->view('backend/hotels/Revenue'); 
+  //   	} else {
+  //     			redirect(base_url().'backend/dashboard');
+  //   	}  		
+	}
+	public function Displaylist() {
+		if ($this->session->userdata('name')==""){
+			redirect("../backend/");
+		}
+		$data = array();
+		$season = "";
+		// Datatables Variables
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+		$RevenueList = $this->Hotels_Model->RevenueList($_REQUEST['filter']);
+		foreach($RevenueList->result() as $key => $r) {
+			$revenueMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
+			if($revenueMenu[0]->edit!=0){
+			$edit='<a href="RevenueEdit?id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+			}else{
+	            $edit="";
+	        }
+			if($revenueMenu[0]->delete!=0){
+				$delete='<a href="#" onclick="Revenuedeletefun('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-trash-o red" aria-hidden="true"></i></a>';
+			}else{
+	            $delete="";
+	        }
+			$agentsName = array();
+			$hotelName = array();
+			$ContarctID = array();
+			$hotel = explode(",", $r->hotels);
+	       	foreach ($hotel as $exhkey => $exhvalue) {
+	       		$hotelName[$exhkey] = $this->Hotels_Model->gethotelname($exhvalue);
+	       	}
+	       	$impHotelName[$key] =  implode(",", $hotelName);
+			$contract=explode(",", $r->contracts);
+	       	foreach ($contract as $Ckey => $Cvalue) {
+	       		$ContarctID[$Ckey] = $this->Hotels_Model->getcontractName($Cvalue);
+	       	}
+	       	$impContarct[$key] =  implode(",", $ContarctID);
+
+	       	if ($r->Season=='Other' || $r->Season=='') {
+	       		$season = 'Other';
+	       	} else {
+	       		$seasonQuery = $this->Hotels_Model->RevenueSeasonDetails($r->Season);
+	       		$season = $seasonQuery[0]->SeasonName;
+	       	}
+
+	       	$agents = explode(",", $r->Agents);
+	       	foreach ($agents as $exakey => $exavalue) {
+	       		$agentsName[$exakey] = $this->Hotels_Model->getagentname($exavalue);
+	       	}
+	       	$impAgentName[$key] =  implode(",", $agentsName);
+
+			$data[] = array(
+				$key+1,
+				$impHotelName[$key],
+				date('d/m/Y' ,strtotime($r->FromDate)),
+				date('d/m/Y' ,strtotime($r->ToDate)),
+				$impContarct[$key],
+				$impAgentName[$key],
+				$r->Markup,
+				$edit.$delete,
+			);
+      	}
+		$output = array(
+		   	"draw" 			=> $draw,
+			"recordsTotal" 	=> $RevenueList->num_rows(),
+			"recordsFiltered" => $RevenueList->num_rows(),
+			"data" => $data
+		);
+	  echo json_encode($output);
+	  exit();
+	}
+	public function displayEdit() {
+		$data['edit'] = array();
+		$data['view']= $this->Hotels_Model->hotel_select();
+	    $data['agents'] = $this->Hotels_Model->agentList();
+		//$revenueMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
+		if (isset($_REQUEST['id'])) {
+			$data['edit']= $this->Hotels_Model->RevenueEdit($_REQUEST['id']);
+			if (count($revenueMenu)!=0 && $revenueMenu[0]->edit==1) {
+				$this->load->view('backend/hotels/RevenueEdit',$data);
+			} else {
+				redirect(base_url().'backend/dashboard');
+			}
+		} else {
+			// if (count($revenueMenu)!=0 && $revenueMenu[0]->create==1) {
+				$this->load->view('backend/hotels/DisplayEdit',$data);
+			// } else {
+			// 	redirect(base_url().'backend/dashboard');
+			// }
+		}		
+	}
+	public function DisplaySubmit() {
+		if ($this->session->userdata('name')=="") {
+			redirect("../backend/");
+		}
+		$this->Hotels_Model->DisplaySubmit($_REQUEST);
+		redirect("../backend/hotels/display_manage");
+	}
 }
 
 

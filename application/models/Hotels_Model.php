@@ -5316,6 +5316,42 @@ class Hotels_Model extends CI_Model {
         $query=$this->db->get();
         return $query->result();
 	}
+	public function DisplaySubmit($request) {
+		$tbo = '';
+		if (isset($request['TBO'])) {
+			$tbo = 1;
+		} 
+		if ($request['id']=="") {
+			$data= array( 
+			 'hotels' 	  => $request['hoteltext'],
+			 'Agents' 	  => $request['Agentstext'],
+			 'FromDate' 	  => $request['fromDate'],
+			 'ToDate' 	  => $request['toDate'],
+			 'CreatedDate' 	  => date('Y-m-d H:i:s'),
+			 'CreatedBy' 	  => $this->session->userdata('id'),
+			 'tbo' => $tbo
+			);
+			$this->db->insert('hotel_tbl_displaymanage',$data);
+			$id = $this->db->insert_id();
+			$description = 'New Display Management Details Added [id:'.$id.']';
+    		AdminlogActivity($description);
+		} else {
+			$data= array( 
+			 'hotels' 	  => $request['hoteltext'],
+			 'Agents' 	  => $request['Agentstext'],
+			 'FromDate' 	  => $request['fromDate'],
+			 'ToDate' 	  => $request['toDate'],
+			 'CreatedDate' 	  => date('Y-m-d H:i:s'),
+			 'CreatedBy' 	  => $this->session->userdata('id'),
+			 'tbo' => $tbo
+			);
+			$this->db->where('id',$request['id']);
+			$this->db->update('hotel_tbl_displaymanage',$data);
+			$description = 'Display Management Details Updated [id:'.$request['id'].']';
+    		AdminlogActivity($description);
+		}
+		return true;
+	}
 }		
 
 

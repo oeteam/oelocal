@@ -3701,6 +3701,41 @@ function Rankingfilter(filter) {
       }
   });
 }
+function DisplayFilter(filter) {
+  var Display_list_table = $("#Display_list_table").dataTable({
+        "bDestroy": true,
+        "ajax": {
+            url : base_url+'/backend/Hotels/Displaylist?filter='+filter,
+            type : 'POST'
+
+        },
+    "fnDrawCallback": function(settings){
+    $('[data-toggle="tooltip"]').tooltip();          
+    }
+  });
+}
+$("#DisplayUpdate").click(function() {
+      var hotel = $("#hoteltext").val();
+      var con   = $("#context").val();
+      var agent = $("#Agentstext").val();
+      var Markup = $("#Markup").val();
+      if (hotel=="") {
+        addToast(" Hotel field is required !","orange");
+        $("#hotel_undo_redo_to").focus();
+      } else if (con=="") {
+        addToast("Contract field is required !","orange");
+        $("#contract_undo_redo").focus();
+      } else if(agent=="") {
+        addToast("Agent field is required !","orange");
+        $("#Agents_undo_redo").focus();
+      } else if(Markup=="") {
+        addToast("Markup field is required !","orange");
+        $("#Markup").focus();
+      } else {
+        $("#DisplayForm").submit();
+      }
+    });
+
 
   
 

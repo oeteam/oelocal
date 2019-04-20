@@ -56,8 +56,9 @@
                                     <li class="main_review">
                                         <a href="<?php echo base_url(); ?>backend/hotels/Disoffers" class="collapsible-header"> Discounts & Offers</a>
                                     </li>
-                                    <?php }  
-                                    if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
+                                    <?php }  ?>
+                                     <li><a class="hotels_menu" href="<?php echo base_url(); ?>backend/hotels/display_manage"> Display Management</a></li>
+                                    <?php if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
                                     <li>
                                         <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/Revenue">Revenue List</a>
                                     </li>

@@ -18,7 +18,7 @@ $menu = hotel_menu_permission();
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="btn-toolbar pull-right">
-                                    <?php if ($menu[0]->edit_profile=="1"){ ?>
+                                    <?php if ($view[0]['edit_profile']=="1"){ ?>
                                     <button class="btn  hide" id="hotel_login_detail_back" name="hotel_login_detail_back"><i class="fa fa-hand-o-left"></i>&nbsp;Back</button>
                                     <div id="hidden-div">
                                     <button class="btn btn-info" id="hotel_login_edit" name="hotel_login_edit"><i class="fa fa-edit"></i>&nbsp;Edit</button>
@@ -378,7 +378,7 @@ $menu = hotel_menu_permission();
                         </div>
                         <div class="col-sm-12">
                             <div class="row" style="margin-top: 10px;">
-                              <?php if ($menu[0]->edit_profile=="1"){ ?>
+                              <?php if ($view[0]['edit_profile']=="1"){ ?>
                                 <button class="btn btn-success pull-right hide"  id="hotel_login_detail_update" name="hotel_login_detail_update" type="button" ><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
                                 <?php } ?>
                             </div>
