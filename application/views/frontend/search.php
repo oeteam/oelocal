@@ -410,7 +410,7 @@ function currency_change(type){
 										<input type="hidden" class="form-control b-r-40" name="citycode" id="citycode">
 										<input type="hidden" class="form-control b-r-40" name="cityname" id="cityname">
 										<input type="hidden" class="form-control b-r-40" name="countryname" id="countryname">
-										<ul class="search-dropdown txtcountry" style="margin-left:15px;margin-right:0px;display:none" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
+										<ul class="search-dropdown txtcountry" style="margin-left:15px;margin-right:0px;display:none;overflow-y: scroll;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
 									</div>	
 									<?php $date = date('m/d/Y', strtotime("+1 day", strtotime(date('m/d/Y'))));
 									$date1 = date('d/m/Y', strtotime("+1 day", strtotime(date('m/d/Y')))); ?>

@@ -2883,10 +2883,17 @@ class Hotels extends MY_Controller {
 	       		$agentsName[$exakey] = $this->Hotels_Model->getagentname($exavalue);
 	       	}
 	       	$impAgentName[$key] =  implode(",", $agentsName);
-
+	       	$tbo = "";
+	       	if ($r->tbo!="") {
+	       		if ($impHotelName[$key]!="") {
+	       			$tbo = "TBO Hotels, ";
+	       		} else {
+	       			$tbo = "TBO Hotels";
+	       		}
+	       	}
 			$data[] = array(
 				$key+1,
-				$impHotelName[$key],
+				$tbo.$impHotelName[$key],
 				date('d/m/Y' ,strtotime($r->FromDate)),
 				date('d/m/Y' ,strtotime($r->ToDate)),
 				$impContarct[$key],

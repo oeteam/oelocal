@@ -67,12 +67,12 @@
                                     
                                     <label>Providers</label>
                                     <div class="custom-control custom-checkbox">
-                                        <input name="TBO" <?php echo isset($edit[0]->tbo) && $edit[0]->tbo == 1 ? 'checked' : '' ?> type="checkbox" style="display: none;" class="custom-control-input" id="TBO">
+                                        <input name="TBO" <?php echo isset($edit[0]->tbo) && $edit[0]->tbo == 1 ? 'checked' : '' ?> type="checkbox" style="display: none;" onclick="return tbochangefun();" class="custom-control-input" id="TBO">
                                         <label class="custom-control-label" for="TBO">Tbo hotels</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row hotel-div">
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-xs-5">
@@ -133,7 +133,7 @@
                                     
                                 </div>
                             </div>
-                            <div class="clearfix" style="margin-top: 75px ! important;"></div>
+                            <div class="clearfix hotel-div" style="margin-top: 75px ! important;"></div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -238,6 +238,14 @@
 <script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript">
+    // tbochangefun();
+    // function tbochangefun() {
+    //     if ($("input[name=TBO]"). prop("checked") == true) {
+    //         $(".hotel-div").addClass('hide');
+    //     } else {
+    //         $(".hotel-div").removeClass('hide');
+    //     }
+    // }
     // $(document).ready(function() {
         // make code pretty
         // stayChange();

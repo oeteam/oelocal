@@ -5023,7 +5023,7 @@ class Hotels_Model extends CI_Model {
 		if ($keyword=="") {
 		   	$query = array();
 	    } else {
-        	$query=$this->db->query("select a.id as cityid,CityCode,CityName,name as CountryName,CountryCode,CONCAT(CityName,',',name) as displayName from xml_city_tbl a left join countries b on b.sortname = a.CountryCode where a.CityName like '%".$keyword."%' limit 5")->result_array();
+        	$query=$this->db->query("select a.id as cityid,CityCode,CityName,name as CountryName,CountryCode,CONCAT(CityName,',',name) as displayName from xml_city_tbl a inner join countries b on b.sortname = a.CountryCode where a.CityName like '%".$keyword."%' OR b.name like '%".$keyword."%' limit 20")->result_array();
     	}    
         return $query;
     }

@@ -2534,10 +2534,10 @@ $("#RevenueSeasonSubmit").off().click(function() {
       var season = $("#season").val();
       var other_season = $("#other_season").is(":checked");
       var Markup = $("#Markup").val();
-      if (hotel=="") {
+      if (hotel=="" && $("input[name=TBO]"). prop("checked")!=true) {
         addToast(" Hotel field is required !","orange");
         $("#hotel_undo_redo_to").focus();
-      } else if (con=="") {
+      } else if (con=="" && $("input[name=TBO]"). prop("checked")!=true) {
         addToast("Contract field is required !","orange");
         $("#contract_undo_redo").focus();
       } else if(agent=="") {

@@ -453,7 +453,7 @@
 							<span class="opensans size1 dest_err">Enter Destination</span>
 							<input type="text" name="location" id="location" class="form-control" placeholder="Enter country name" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>" autocomplete="off">
 							
-							<ul class="txtcountry search-dropdown" style="margin-right:0px;display:none;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
+							<ul class="txtcountry search-dropdown" style="margin-right:0px;display:none;overflow-y: scroll;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
 							<div class="clearfix pbottom15"></div>
 							<span class="opensans size13 nat_err">Nationality</span>
 							<select class="form-control" name="nationality" id="nationality">
