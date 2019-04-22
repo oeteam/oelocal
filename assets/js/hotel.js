@@ -692,7 +692,19 @@ var hotel_id = $("#hotel_id").val();
                   $('[data-toggle="tooltip"]').tooltip();          
                 }
               });
-          }else {
+          }else if(response.table == "Display_list_table") {
+            var Display_list_table = $("#Display_list_table").dataTable({
+                    "bDestroy": true,
+                    "ajax": {
+                        url : base_url+'/backend/Hotels/Displaylist',
+                        type : 'POST'
+
+                    },
+                "fnDrawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();          
+                }
+              });
+          } else {
               room_type_table.api().ajax.reload(function(){ 
                 addToast(response.error,response.color);
               }, true); 
@@ -2578,6 +2590,9 @@ function closeout_period_delete(id) {
 function discountdeletefun(id) {
   deletepopupfun(base_url+"backend/hotels/discountDelete",id);
 }
+function Displaydeletefun(id) {
+  deletepopupfun(base_url+"backend/hotels/Displaydelete",id);
+}
 function ValidateFileUpload() {
         var fuData = document.getElementById('room_image');
         var FileUploadPath = fuData.value;
@@ -3699,19 +3714,6 @@ function Rankingfilter(filter) {
       "fnDrawCallback": function(settings){
       $('[data-toggle="tooltip"]').tooltip();          
       }
-  });
-}
-function DisplayFilter(filter) {
-  var Display_list_table = $("#Display_list_table").dataTable({
-        "bDestroy": true,
-        "ajax": {
-            url : base_url+'/backend/Hotels/Displaylist?filter='+filter,
-            type : 'POST'
-
-        },
-    "fnDrawCallback": function(settings){
-    $('[data-toggle="tooltip"]').tooltip();          
-    }
   });
 }
 $("#DisplayUpdate").click(function() {

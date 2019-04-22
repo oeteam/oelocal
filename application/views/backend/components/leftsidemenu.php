@@ -35,11 +35,12 @@
                         $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','S/O Sales & Availability'); 
                         $discountOffers = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Discounts & Offers');  
                         $revenueList = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
+                        $displayManage = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
                         $hotelRanking = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotel Ranking'); 
                         $RoomType = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Type');
                         $Facilities = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotel Facilities'); 
                         $RoomFacility  = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Facilities');
-                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($revenueList)!=0 && $revenueList[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
+                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($revenueList)!=0 && $revenueList[0]->view!=0) || (count($displayManage)!=0 && $displayManage[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
                             <li class="hotels"><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-building" aria-hidden="true"></i></i>Hotels</a>
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>                                    
@@ -56,13 +57,17 @@
                                     <li class="main_review">
                                         <a href="<?php echo base_url(); ?>backend/hotels/Disoffers" class="collapsible-header"> Discounts & Offers</a>
                                     </li>
-                                    <?php }  ?>
-                                     <li><a class="hotels_menu" href="<?php echo base_url(); ?>backend/hotels/display_manage"> Display Management</a></li>
-                                    <?php if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
+                                    <?php }  
+                                    if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
                                     <li>
                                         <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/Revenue">Revenue List</a>
                                     </li>
-                                    <?php }  
+                                    <?php } 
+                                    if (count($displayManage)!=0 && isset($displayManage[0]->view) && $displayManage[0]->view!=0) { ?>
+                                    <li>
+                                        <a class="hotels_menu" href="<?php echo base_url(); ?>backend/hotels/display_manage"> Display Management</a>
+                                    </li>
+                                    <?php }
                                     if (count($hotelRanking)!=0 && isset($hotelRanking[0]->view) && $hotelRanking[0]->view!=0) { ?>
                                     <li>
                                         <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/Ranking">Hotel Ranking</a>

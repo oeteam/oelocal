@@ -51,49 +51,9 @@
                     <div class="tab-inn">
                         <form method="post" action="DisplaySubmit" name="DisplayForm" id="DisplayForm" enctype="multipart/form-data"> 
                             <input type="hidden" name="id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
+                            
                             <div class="row">
                                 <div class="col-md-6">
-                                    
-                                    <label>Providers</label>
-                                    <div class="custom-control custom-checkbox">
-                                        <input name="TBO" <?php echo isset($edit[0]->tbo) && $edit[0]->tbo == 1 ? 'checked' : '' ?> type="checkbox" style="display: none;" class="custom-control-input" id="TBO">
-                                        <label class="custom-control-label" for="TBO">Tbo hotels</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-xs-5">
-                                            <label>Hotels</label>
-                                            <select name="hotel_select[]"  id="hotel_undo_redo" class="form-control multi-select-trans2"  size="13" multiple="multiple">
-                                            <?php $count=count($view);
-                                                for ($i=0; $i <$count ; $i++) {  ?>
-                                                <option value="<?php echo $view[$i]->id; ?>"><?php echo $view[$i]->hotel_name; ?></option>
-                                            <?php  } ?>
-                                            </select>
-                                                           
-                                        </div>
-                                        
-                                        <div class="col-xs-2">
-                                            <button type="button" id="hotel_undo_redo_undo" class="mt-6 no-border btn-sm btn-primary btn-block">Undo</button>
-                                            <button type="button"  id="hotel_undo_redo_rightAll" class="no-border btn-sm btn-default btn-block"><i class="fa fa-forward"></i></button>
-                                            <button type="button" id="hotel_undo_redo_rightSelected"  class="no-border btn-sm btn-default btn-block"><i class="fa fa-chevron-right"></i></button>
-                                            <button type="button" id="hotel_undo_redo_leftSelected" class="no-border btn-sm btn-default btn-block"><i class="fa fa-chevron-left"></i></button>
-                                            <button type="button" id="hotel_undo_redo_leftAll" class="no-border btn-sm btn-default btn-block"><i class="fa fa-backward"></i></button>
-                                            <button type="button" id="hotel_undo_redo_redo" class="no-border btn-sm btn-primary btn-block">Redo</button>
-                                        </div>
-                                        
-                                        <div class="col-xs-5">
-                                            <label>Selected Hotels</label>
-                                                <input type="hidden" name="hotel_id" value="<?php echo  $view[0]->id ?>">
-                                                <!-- <input type="hidden" name="contract_id" value="<?php echo $_REQUEST['con_id'] ?>"> -->
-                                            <select name="hotel[]" class="form-control multi-select-trans2"  id="hotel_undo_redo_to"  size="13" multiple="multiple"></select>
-                                            <input type="hidden" name="hoteltext" id="hoteltext" value="<?php echo isset($edit[0]->hotels) ? $edit[0]->hotels : ''; ?>"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-xs-5">
                                            <label> Agents</label>
@@ -122,34 +82,24 @@
                                     </div>
                                     
                                 </div>
-                            </div>
-                            <div class="clearfix" style="margin-top: 75px ! important;"></div>
-                            <div class="row">
                                 <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>From Date</label>
-                                                <input type="text" class="datePicker-hide datepicker" id="fromDate" name="fromDate" placeholder="dd/mm/yyyy" value="<?php echo isset($edit[0]->FromDate) ?  $edit[0]->FromDate : date('Y-m-d') ?>"  >
-                                                <div class="input-group">
-                                                    <input class="form-control datepicker date-pic" id="alternate1" name="" value="<?php echo isset($edit[0]->FromDate) ?  date('d/m/Y',strtotime($edit[0]->FromDate)) : date('d/m/Y') ?>"  >
-                                                    <label for="alternate1" class="input-group-addon"><i class="fa fa-calendar"></i></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>To Date</label>
-                                                <input type="text" class="datePicker-hide datepicker" id="toDate" name="toDate" placeholder="dd/mm/yyyy" value="<?php echo isset($edit[0]->ToDate) ?  $edit[0]->ToDate : date('Y-m-d') ?>"  >
-                                                <div class="input-group">
-                                                    <input class="form-control datepicker date-pic" id="alternate2" name=""  value="<?php echo isset($edit[0]->ToDate) ?  date('d/m/Y',strtotime($edit[0]->ToDate)): date('d/m/Y') ?>"  >
-                                                    <label for="alternate2" class="input-group-addon"><i class="fa fa-calendar"></i></label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="list-title">Direct Hotels</label><br>
+                                        <input type="radio" id="dfirst" class="display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "first" ? 'checked' : '' ?> value="first" />
+                                        <label for="dfirst">First</label>                              &nbsp&nbsp&nbsp
+                                        <input type="radio" id="dsecond" class="display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "second" ? 'checked' : '' ?> value="second"/>
+                                        <label for="dsecond">Second</label>
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="list-title">TBO Hotels</label><br>
+                                        <input type="radio" id="tfirst" name="tbo" value="first" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "first" ? 'checked' : '' ?> />
+                                        <label for="tfirst">First</label>                              &nbsp&nbsp&nbsp
+                                        <input type="radio" id="tsecond" name="tbo" value="second" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "second" ? 'checked' : '' ?> />
+                                        <label for="tsecond">Second</label>
                                     </div>
                                 </div>
                             </div>
+                            <div class="clearfix" style="margin-top: 75px ! important;"></div>
                             <br>
                             <div class="clearfix" style="margin-top: 10px ! important;"></div>
                              <div class="row">
@@ -182,26 +132,6 @@
         // stayChange();
 
         window.prettyPrint && prettyPrint();
-
-        $('#hotel_undo_redo').multiselect({
-            submitAllRight : true,
-            search: {
-                left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-                right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-            },
-            fireSearch: function(value) {
-                return value.length = 1;
-            },
-            afterMoveToLeft: function($left, $right, $options) { 
-               selecthotel();
-             },
-             afterMoveToRight: function($left, $right, $options) { 
-               selecthotel();
-             }
-
-
-        });
-
         $('#Agents_undo_redo').multiselect({
             search: {
                 left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -219,36 +149,7 @@
              }
         });
 
-        var nextDay = new Date($("#fromDate").val());
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    $("#fromDate").datepicker({
-        altField: "#alternate1",
-        dateFormat: "yy-mm-dd",
-        altFormat: "dd/mm/yy",
-        minDate: new Date(<?php date('d/m/Y') ?>),
-        changeYear : true,
-        changeMonth : true,
-        onSelect: function(dateText) {
-            var nextDay = new Date(dateText);
-            nextDay.setDate(nextDay.getDate());
-            $("#toDate").datepicker('option', 'minDate', nextDay);
-        }
-    });
-    $("#toDate").datepicker({
-        altField: "#alternate2",
-        dateFormat: "yy-mm-dd",
-        altFormat: "dd/mm/yy",
-        minDate: new Date(<?php date('d/m/Y', strtotime('+ 1 day')) ?>),
-        changeYear : true,
-        changeMonth : true,
-    });
-    $("#alternate1").click(function() {
-        $( "#fromDate" ).trigger('focus');
-    });
-    $("#alternate2").click(function() {
-        $( "#toDate" ).trigger('focus');
-    });
+       
     function DisplayAgentSelect() {
         var agentValues = [];
         $('#Agents_undo_redo_to option').each(function() {
@@ -258,14 +159,6 @@
     }
 
     <?php if (count($edit)!=0) { ?>
-            var hoteltext = $("#hoteltext").val().split(",");
-            $.each(hoteltext, function(i, v) {
-                $('#hotel_undo_redo option[value='+v+']').attr('selected','selected');
-            });
-
-            $("#hotel_undo_redo_rightSelected").trigger('click');
-            $('#hotel_undo_redo_to').prop('selectedIndex', 0).focus();  
-
             var Agentstext = $("#Agentstext").val().split(",");
             $.each(Agentstext, function(i, v) {
                 $('#Agents_undo_redo option[value='+v+']').attr('selected','selected');
@@ -275,6 +168,16 @@
             $('#Agents_undo_redo_to').prop('selectedIndex', 0).focus();  
 
     <?php } ?>
+    $(".display").click(function() {
+        var type=$('input[name=direct]:checked').val();
+        if(type=='first') {
+          $("#tfirst").removeAttr('checked');
+          $("#tsecond").attr('checked', 'checked');
+        } else if(type=='second'){ 
+          $("#tsecond").removeAttr('checked');
+          $("#tfirst").attr('checked', 'checked');
+        }
+     })
 </script>
 <?php init_tail(); ?>
 

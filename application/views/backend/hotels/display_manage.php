@@ -6,16 +6,10 @@
                 <div class="box-inn-sp">
                     <div class="inn-title">
                         <span>Display Management</span>
-                        <?php /*$revenueMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
-                            if (count($revenueMenu)!=0 && $revenueMenu[0]->create==1) {*/ ?>
+                        <?php $displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+                            if (count($displayMenu)!=0 && $displayMenu[0]->create==1) { ?>
                                 <span class="pull-right"><a href="<?php echo base_url(); ?>backend/hotels/displayEdit" class="btn-sm btn-primary">Add</a></span>
-                        <?php //} ?>
-                    </div>
-                    <div class="col-md-12 mar_top_10">
-                      <ul class="tabs" style="box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16);">
-                        <li class="tab col s2"><a class="Pending active" href="#" onclick="DisplayFilter('1')">Current</a></li>
-                        <li class="tab col s2"><a class="Rejected" href="#" onclick="DisplayFilter('0')">Expired</a></li>
-                      </ul>
+                        <?php } ?>
                     </div>
                     <div class="clearfix"></div>
             <br>
@@ -26,12 +20,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Hotels</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Contracts</th>
                                         <th>Agents</th>
-                                        <th>Markup</th>
+                                        <th>Direct Hotels</th>
+                                        <th>TBO Hotels</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -49,6 +40,16 @@
 
 <script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript">
-    DisplayFilter(1);
+    var Display_list_table = $("#Display_list_table").dataTable({
+        "bDestroy": true,
+        "ajax": {
+            url : base_url+'/backend/Hotels/Displaylist',
+            type : 'POST'
+
+        },
+    "fnDrawCallback": function(settings){
+    $('[data-toggle="tooltip"]').tooltip();          
+    }
+  });
 </script>
 <?php init_tail(); ?>

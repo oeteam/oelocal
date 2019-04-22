@@ -5317,19 +5317,13 @@ class Hotels_Model extends CI_Model {
         return $query->result();
 	}
 	public function DisplaySubmit($request) {
-		$tbo = '';
-		if (isset($request['TBO'])) {
-			$tbo = 1;
-		} 
 		if ($request['id']=="") {
 			$data= array( 
-			 'hotels' 	  => $request['hoteltext'],
+			 'directhotels' => $request['direct'],
 			 'Agents' 	  => $request['Agentstext'],
-			 'FromDate' 	  => $request['fromDate'],
-			 'ToDate' 	  => $request['toDate'],
 			 'CreatedDate' 	  => date('Y-m-d H:i:s'),
 			 'CreatedBy' 	  => $this->session->userdata('id'),
-			 'tbo' => $tbo
+			 'tbohotels' => $request['tbo']
 			);
 			$this->db->insert('hotel_tbl_displaymanage',$data);
 			$id = $this->db->insert_id();
@@ -5337,19 +5331,36 @@ class Hotels_Model extends CI_Model {
     		AdminlogActivity($description);
 		} else {
 			$data= array( 
-			 'hotels' 	  => $request['hoteltext'],
+			 'directhotels' => $request['direct'],
 			 'Agents' 	  => $request['Agentstext'],
-			 'FromDate' 	  => $request['fromDate'],
-			 'ToDate' 	  => $request['toDate'],
-			 'CreatedDate' 	  => date('Y-m-d H:i:s'),
-			 'CreatedBy' 	  => $this->session->userdata('id'),
-			 'tbo' => $tbo
+			 'UpdatedDate' 	  => date('Y-m-d H:i:s'),
+			 'UpdatedBy' 	  => $this->session->userdata('id'),
+			  'tbohotels' => $request['tbo']
 			);
 			$this->db->where('id',$request['id']);
 			$this->db->update('hotel_tbl_displaymanage',$data);
 			$description = 'Display Management Details Updated [id:'.$request['id'].']';
     		AdminlogActivity($description);
 		}
+		return true;
+	}
+	public function DisplayList()
+	{    
+		$this->db->select('*');
+		$this->db->from('hotel_tbl_displaymanage');
+	    $query=$this->db->get();
+		return $query;
+	}
+	public function DisplayEdit($id) {
+    	$this->db->select('*');
+		$this->db->from('hotel_tbl_displaymanage');
+       	$this->db->where('id',$id);
+	    $query=$this->db->get()->result();
+		return $query;
+    }
+    public function Displaydelete($id) {
+		$this->db->where('id',$id);
+		$this->db->delete('hotel_tbl_displaymanage');
 		return true;
 	}
 }		
