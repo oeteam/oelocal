@@ -85,16 +85,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="list-title">Direct Hotels</label><br>
-                                        <input type="radio" id="dfirst" class="display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "first" ? 'checked' : '' ?> value="first" />
+                                        <input type="radio" id="dfirst" class="direct-display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "1" ? 'checked' : '' ?> value="1" />
                                         <label for="dfirst">First</label>                              &nbsp&nbsp&nbsp
-                                        <input type="radio" id="dsecond" class="display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "second" ? 'checked' : '' ?> value="second"/>
+                                        <input type="radio" id="dsecond" class="direct-display" name="direct" <?php echo isset($edit[0]->directhotels) && $edit[0]->directhotels == "2" ? 'checked' : '' ?> value="2"/>
                                         <label for="dsecond">Second</label>
                                     </div>
                                      <div class="form-group">
                                         <label for="list-title">TBO Hotels</label><br>
-                                        <input type="radio" id="tfirst" name="tbo" value="first" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "first" ? 'checked' : '' ?> />
+                                        <input type="radio" id="tfirst" class="tbo-display" name="tbo" value="1" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "1" ? 'checked' : '' ?> />
                                         <label for="tfirst">First</label>                              &nbsp&nbsp&nbsp
-                                        <input type="radio" id="tsecond" name="tbo" value="second" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "second" ? 'checked' : '' ?> />
+                                        <input type="radio" id="tsecond" class="tbo-display" name="tbo" value="2" <?php echo isset($edit[0]->tbohotels) && $edit[0]->tbohotels == "2" ? 'checked' : '' ?> />
                                         <label for="tsecond">Second</label>
                                     </div>
                                 </div>
@@ -168,14 +168,26 @@
             $('#Agents_undo_redo_to').prop('selectedIndex', 0).focus();  
 
     <?php } ?>
-    $(".display").click(function() {
+    $(".direct-display").click(function() {
         var type=$('input[name=direct]:checked').val();
-        if(type=='first') {
-          $("#tfirst").removeAttr('checked');
-          $("#tsecond").attr('checked', 'checked');
-        } else if(type=='second'){ 
-          $("#tsecond").removeAttr('checked');
-          $("#tfirst").attr('checked', 'checked');
+        if(type=='1') {
+          $("#tfirst").prop('checked',false);
+          $("#tsecond").prop('checked', true);
+        } else if(type=='2'){ 
+          $("#tsecond").prop('checked',false);
+          $("#tfirst").prop('checked', true);
+        }
+     })
+
+    $(".tbo-display").click(function() {
+        var type=$('input[name=tbo]:checked').val();
+        alert(type);
+        if(type=='1') {
+          $("#dfirst").prop('checked',false);
+          $("#dsecond").prop('checked', true);
+        } else if(type=='2'){ 
+          $("#dsecond").prop('checked',false);
+          $("#dfirst").prop('checked', true);
         }
      })
 </script>
