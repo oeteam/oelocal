@@ -3872,7 +3872,7 @@ public function loadRequest($action,$arr_value) {
     return $query[0]->count; 
   }
 
-  public function SearchListDataFetch($limit, $start) {
+  public function SearchListDataFetch($limit, $start,$order) {
     $expPrice = explode(";", $_REQUEST['price']);
     $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
     $price2 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[1]) ));
@@ -3930,6 +3930,11 @@ public function loadRequest($action,$arr_value) {
     }
     if (count($Inclusion)!=0) {
       $this->db->where_in('Inclusion',$Inclusion);
+    }
+    if($order=="direct") {
+      $this->db->order_by('DataType','asc');
+    } else {
+      $this->db->order_by('DataType','desc');
     }
     if ($_REQUEST['guest_rating']==1) {
       $this->db->order_by('Rating','desc');
@@ -4809,6 +4814,13 @@ if (count($query)!=0) {
   $data['discount'] = 0;
 }
 return $data;
+}
+public function getDisplayOrder() {
+  $this->db->select('*');
+  $this->db->from('hotel_tbl_displaymanage');
+  $this->db->where('find_in_set("'.$this->session->userdata('agent_id').'", Agents) <> 0');
+  $query1=$this->db->get();
+  return $query1->result();
 }
 }    
 

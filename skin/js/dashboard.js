@@ -494,7 +494,7 @@ $('#contract_detail_update').click(function () {
 });
 // social
  $("#hotel_login_edit_social").click(function() {
-       $("#hotel_login_detail_back_social").removeClass("hide");
+       $("#hotel_login_detail_update_social").removeClass("hide");
        $("#new_hotel_form_login_detail_update_social").removeClass("hide");
        $("input").removeAttr('readonly');
        $(this).addClass("hide");

@@ -100,7 +100,7 @@
             <div class="row">
               <div class="col-md-12">
 	               <div class="col-md-10">
-	                    <button class="btn btn-success pull-right"  id="hotel_login_detail_update_social" name="hotel_login_detail_update_social" type="button" ><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+	                    <button class="btn btn-success pull-right hide"  id="hotel_login_detail_update_social" name="hotel_login_detail_update_social" type="button" ><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
                 </div>
 	            </div>
             </div>

@@ -194,9 +194,12 @@ class lists extends MY_Controller {
       $page = $_REQUEST['page'];
     }
     $result["links"] = $this->ajax_pagination->create_links();
-
-    $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page);
-
+    $displayOrder =$this->List_Model->getDisplayOrder();
+    if($displayOrder[0]->directhotels=='1') {
+        $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"direct");
+     } else {
+        $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"tbo");
+     }
     // $HotelIdList = array_slice($HotelCode,$page,$config['per_page'],true);
 
     $checkin_date=date_create($_REQUEST['Check_in']);
