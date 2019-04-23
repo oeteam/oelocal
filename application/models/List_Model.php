@@ -568,7 +568,6 @@ class List_Model extends CI_Model {
     }
     public function room_current_count($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id) {
       /*Tax percentage grt from contract start*/
-
       $request['contract_id']  = $contract_ajax_id;
       if ($contract_ajax_id!="") {
        $contract_id = $contract_ajax_id;
@@ -1510,7 +1509,7 @@ public function ContractBasedFetchData($hotel_id,$Adroom=null,$Adcontract=null) 
       $contract_markup[$key1] = $this->List_Model->contract_markup($hotel_id,$value1);
       $revenue_markup = revenue_markup($hotel_id,$value1,$this->session->userdata('agent_id'));
       $total_markup[$key1] = $contract_markup[$key1]+$agent_markup;
-      if ($revenue_markup!=0) {
+      if ($revenue_markup!='') {
         $total_markup[$key1] = $revenue_markup+mark_up_get();
       }
       // $roomDetails = $this->List_Model->roomDetails($value->id);
@@ -2821,7 +2820,7 @@ public function xmlrequest($request) {
     
     $revenue_markup = xmlrevenue_markup('tbo',$this->session->userdata('agent_id'));
     $total_markup = mark_up_get()+general_mark_up_get();
-    if ($revenue_markup!=0) {
+    if ($revenue_markup!='') {
       $total_markup = mark_up_get()+$revenue_markup;
     }
     $Tbohotels = $this->HotelSearch($inp_arr_hotel);

@@ -86,14 +86,14 @@ class lists extends MY_Controller {
 
                     $revenue_markup = revenue_markup($value['HotelCode'],$value['contract_id'],$this->session->userdata('agent_id'));
                     $total_markup = mark_up_get()+general_mark_up_get();
-                    if ($revenue_markup!=0) {
+                    if ($revenue_markup!="") {
                        $total_markup = $revenue_markup+mark_up_get();
                     }  
                     if (!is_numeric($value['oldPrice'])) {
                       $value['oldPrice'] = 0;
                     }
                     $OriginalPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
-                    $oldPrice = (($value->oldPrice*$total_markup)/100+$value->oldPrice)*count($_REQUEST['adults']);
+                    $oldPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
                 } else {
                     $RatingImg = $value['RatingImg'];
                     $ReviewImg = $value['ReviewImg'];
@@ -195,7 +195,7 @@ class lists extends MY_Controller {
     }
     $result["links"] = $this->ajax_pagination->create_links();
     $displayOrder =$this->List_Model->getDisplayOrder();
-    if($displayOrder[0]->directhotels=='1') {
+    if(count($displayOrder)!=0 && $displayOrder[0]->directhotels=='1') {
         $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"direct");
      } else {
         $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"tbo");

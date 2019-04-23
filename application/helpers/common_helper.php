@@ -2359,7 +2359,7 @@ function offlineemailNotification($id) {
 }
 function revenue_markup($hotel_id,$contract_id,$agent_id) {  
   $ci =& get_instance();
-  $query = $ci->db->query("SELECT IFNULL(MAX(Markup),0) as Markup FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
+  $query = $ci->db->query("SELECT IFNULL(MAX(Markup),'') as Markup FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
   return $query[0]->Markup;
 }
 function profile($id = null)
@@ -3852,7 +3852,7 @@ function ObjectToArray($val) {
 }
 function xmlrevenue_markup($provider,$agent_id) {  
   $ci =& get_instance();
-  $query = $ci->db->query("SELECT IFNULL(MAX(Markup),0) as Markup FROM `hotel_tbl_revenue` where ".$provider." = 1 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out']))."'")->result();
+  $query = $ci->db->query("SELECT IFNULL(MAX(Markup),'') as Markup FROM `hotel_tbl_revenue` where ".$provider." = 1 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out']))."'")->result();
   return $query[0]->Markup;
 }
 function get_client_ip() {

@@ -313,7 +313,7 @@
             	$Amount = array();
             	$HotelRooms = array();
             	$total_markup = $agent_markup+$admin_markup;
-	            if ($revenue_markup!=0) {
+	            if ($revenue_markup!='') {
 	              $total_markup = $agent_markup+$revenue_markup;
 	            }
             	foreach ($_REQUEST['adults'] as $RAkey => $RAvalue) { ?>

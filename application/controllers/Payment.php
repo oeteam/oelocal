@@ -50,7 +50,7 @@ class Payment extends MY_Controller {
         foreach ($contracts['contract_id'] as $key1 => $value1) {
           $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
           $total_markup = $agent_markup;
-          if ($revenue_markup!=0) {
+          if ($revenue_markup!='') {
             $total_markup = $revenue_markup+mark_up_get();
           }
           $contractBoardget = $this->List_Model->contractBoardget($_REQUEST['hotel_id'],$value1);
@@ -93,7 +93,7 @@ class Payment extends MY_Controller {
         $data['view'] = $this->Payment_Model->hotel_details_view($id);
         $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$_REQUEST['contract_index'],$this->session->userdata('agent_id'));
         $total_markup = mark_up_get()+general_mark_up_get();
-        if ($revenue_markup!=0) {
+        if ($revenue_markup!='') {
           $total_markup = $revenue_markup+mark_up_get();
         }
         $data['contract'] = $this->Payment_Model->get_policy_contract($_REQUEST['hotel_id'],$_REQUEST['contract_id']);
@@ -2670,7 +2670,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $contract_markup = $this->List_Model->contract_markup($data['hotel_id'],$data['contract_id']);
         $revenue_markup = revenue_markup($data['hotel_id'],$data['contract_id'],$this->session->userdata('agent_id'));
          $total_markup = $agent_markup+$agent_general_markup;
-        if ($revenue_markup!=0) {
+        if ($revenue_markup!='') {
           $total_markup = $agent_markup+$revenue_markup;
           $agent_general_markup = 0;
           $contract_markup = $revenue_markup;
@@ -3001,7 +3001,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
     public function xmlbookingdataInsert($type,$data) {  
       $revenue_markup = xmlrevenue_markup('tbo',$this->session->userdata('agent_id'));
       $admin_markup = general_mark_up_get();
-      if ($revenue_markup!=0) {
+      if ($revenue_markup!='') {
         $admin_markup = $revenue_markup;
       } 
        $bookbuttondata = $this->session->userdata('hoteldata'.$_REQUEST['hotel_id']);
@@ -3239,7 +3239,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           foreach ($contracts['contract_id'] as $key1 => $value1) {
             $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
             $total_markup = $agent_markup;
-            if ($revenue_markup!=0) {
+            if ($revenue_markup!='') {
               $total_markup = $revenue_markup+mark_up_get();
             }
             $contractBoardget = $this->List_Model->contractBoardget($_REQUEST['hotel_id'],$value1);

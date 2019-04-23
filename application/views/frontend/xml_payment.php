@@ -618,7 +618,7 @@ $(document).ready(function() {
           <div class="row r-type margtop10">
             <?php
             $total_markup = $agent_markup+$admin_markup;
-            if ($revenue_markup!=0) {
+            if ($revenue_markup!='') {
               $total_markup = $agent_markup+$revenue_markup;
             }
             $div = 12/count($_REQUEST['adults']);
