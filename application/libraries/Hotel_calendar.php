@@ -370,7 +370,7 @@ class Hotel_calendar {
                 <div class="cal-info-group">
                     <div class="cal-amt">Amount :<span class="input">'.$room_amount.'</span></div>
                     <div class="cal-alot-real hide">Allotment : <span class="input">'.$real_allotement.'</span></div>
-                    <div class="cal-alot">Allotment : <span class="input">'.$room_amount.'</span></div>
+                    <div class="cal-alot">Allotment : <span class="input">'.$room_allotement.'</span></div>
                     <div class="cal-bal">Cut-off :<span class="input">'.$room_cut_off.'</span></div>
                 <div class="cal-bkd">Booked : <span class="input">'.$room_booking.'</span></div>
                 <div class="cal-bal-room">Balance : <span class="input">'.$room_balance.'</span></div>
