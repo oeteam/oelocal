@@ -414,7 +414,7 @@ function currency_change(type){
 									</div>	
 									<?php $date = date('m/d/Y', strtotime("+1 day", strtotime(date('m/d/Y'))));
 									$date1 = date('d/m/Y', strtotime("+1 day", strtotime(date('m/d/Y')))); ?>
-									<div class="col-xs-6 col-md-6">
+									<div class="col-xs-12 col-md-6">
 										<label class="nat_err control-label text-white">Nationality</label>
 										<select class="form-control" name="nationality" id="Nationality">
 											<option value="">--select--</option>
@@ -425,11 +425,11 @@ function currency_change(type){
 									</div>
 								</div>
 								<div class="row" style="margin-top: 15px;">
-									<div class="col-xs-6 col-md-6 hidden-xs">
+									<div class="col-xs-12 col-md-6">
 										<label for="" class="control-label htl_err text-white">Search by Hotel Name</label>
 										<input type="text" id="hotel_name" name="hotel_name" class="form-control b-r-40" placeholder="Enter hotel name" />
 									</div>	
-									<div class="col-xs-6 col-md-3">
+									<div class="col-xs-12 col-md-3">
 										<div class=" textleft">
 											<label for="" class="chckin_err control-label text-white">Check In</label>
 											<input type="text" style="width: 100% ! important;opacity: 0" class="mySelectCalendar" id="datepicker3" name="Check_in" placeholder="mm/dd/yyyy" value="<?php echo date('m/d/Y') ?>" />
@@ -440,7 +440,7 @@ function currency_change(type){
 										</div>
 									</div>
 									
-									<div class="col-xs-6 col-md-3">
+									<div class="col-xs-12 col-md-3">
 										<div class=" textleft">
 											<label for="" class="chckout_err control-label text-white">Check Out</label>
 											<input type="text" style="width: 0px ! important;opacity: 0" class=" mySelectCalendar" id="datepicker2" name="Check_out" placeholder="mm/dd/yyyy" value="<?php echo $date; ?>" />
@@ -450,7 +450,7 @@ function currency_change(type){
 											<label for="datepicker2" class="input-group-addon"><i class="fa fa-calendar"></i></label>
 										</div>
 									</div>
-									<div class="col-xs-6 col-md-6">
+									<div class="col-xs-12 col-md-6">
 										<label for="" class="rate_err control-label text-white">Category</label><br>
 										<input type="checkbox" class="rate rating5" name="rating5" value="5"> <span class="white">5</span>
 										<input type="checkbox" class="rate rating4" name="rating4" value="4"> <span class="white">4</span>
@@ -460,7 +460,7 @@ function currency_change(type){
 										<input type="checkbox" class="rate rating2" name="rating10" value="10"> <span class="white">Apartment</span>
 										<input type="checkbox" class="ratingall" value=""> <span class="white">All</span>
 									</div>
-									<div class="col-xs-1">
+									<div class="col-xs-2 col-md-1">
 										<label for="" class="control-label text-white">Rooms</label><br>
 										<select  class="form-control mySelectBoxClass" id="Rooms" onchange="roomsCheck();">
 											<option value="1">1</option>
@@ -475,7 +475,7 @@ function currency_change(type){
 											<option value="10">10</option>
 										</select>
 									</div>
-									<div class="col-xs-6 col-md-1">
+									<div class="col-xs-2 col-md-1">
 										<label for="" class="adults_err control-label text-white">Adults</label>
 										<select id="adults" name="adults[]" class="form-control mySelectBoxClass">
 											<option value="1">1</option>
@@ -490,7 +490,7 @@ function currency_change(type){
 											<option value="10">10</option>
 										</select>
 									</div>
-									<div class="col-xs-6 col-md-1">
+									<div class="col-xs-2 col-md-1">
 										<label for="" class="control-label text-white">Child</label>
 										<select name="Child[]" class="form-control mySelectBoxClass room1-child">
 											<option value="0"></option>
@@ -506,7 +506,7 @@ function currency_change(type){
 										<input type="hidden" name="mark_up" class="form-control b-r-40"/>
 										<!-- </div> -->
 										
-										<div class="col-xs-6 col-md-3 scol-md-offset-9">
+										<div class="col-xs-6 col-md-3">
 											<div class="row room1-childAge <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
 												<p style="margin-bottom: 0 ! important"><label class="room1-child-p rate_err control-label text-white" style="padding-left: 15px;">Children Age</label></p>
 												<?php for ($l=1; $l <= 4 ; $l++) {  ?>
@@ -524,7 +524,7 @@ function currency_change(type){
 										
 										<?php for ($i=2; $i <=10 ; $i++) { ?>
 											<div class="room<?php echo $i; ?> hide roomshide">
-												<div class="col-xs-6 col-md-1 col-md-offset-7">
+												<div class="col-xs-2 col-md-1 col-md-offset-7">
 													<label for="" class="adults_err control-label text-white">Adults</label>
 													<select id="adults"  disabled="" name="adults[]" class="room<?php echo $i; ?>-adults roomadults form-control mySelectBoxClass">
 														<option value="1">1</option>
@@ -539,7 +539,7 @@ function currency_change(type){
 														<option value="10">10</option>
 													</select>
 												</div>
-												<div class="col-xs-6 col-md-1">
+												<div class="col-xs-2 col-md-1">
 													<label for="" class="control-label text-white">Child</label>
 													<select name="Child[]" disabled="" class="roomsChild form-control mySelectBoxClass room<?php echo $i ?>-child"> 
 														<option value="0"></option>

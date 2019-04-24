@@ -140,12 +140,14 @@
 		    success: function (respose) {
 		     	strdate = new Date();
 		        var date = moment(strdate).format('YYYYMMDDHHmmss');
-			window.open(url+"&token="+date,'_blank');
+		        window.location = url+"&token="+date;
+			// window.open(url+"&token="+date,'_blank');
 		    }, 
 		   error: function(xhr,err){
     			strdate = new Date();
 			var date = moment(strdate).format('YYYYMMDDHHmmss');
-			window.open(url+"&token="+date,'_blank');
+		        window.location = url+"&token="+date;
+			// window.open(url+"&token="+date,'_blank');
 		   }
 		});
 	}
@@ -857,7 +859,7 @@
 
 												<div class="hpadding20">
 													<!-- Top filters -->
-													<div class="topsortby">
+													<div class="topsortby hidden-xs">
 														<div class="col-md-3 offset-0">
 
 															<div class="left mt7"><b>Sort by:</b></div>
