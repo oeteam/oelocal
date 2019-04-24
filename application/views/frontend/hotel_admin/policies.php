@@ -20,12 +20,6 @@
                 } else {
                     $(".imp_remarks_err").text("");
                 }
-             if (cancel_policy=="")    {
-
-                    $(".cancel_policy_err").text("Cancellation Policy field is required!");
-                } else {
-                    $(".cancel_policy_err").text("");
-                }
               if (imp_notes=="")    {
                     $(".imp_notes_err").text("Important Notes & Conditions field is required!");
                 } else {
@@ -84,7 +78,7 @@
                         <span class="imp_remarks_err popup_err blink_me"></span>
                     </div>
                 </div>
-                <div class="form-group col-md-12 cancel_policy">
+               <!--  <div class="form-group col-md-12 cancel_policy">
                     <div class=form-horizondal>
                         <label for="t5-n1">Cancellation Policy</label>
                         <label><div class="form-group">
@@ -101,7 +95,7 @@
                         
                         <span class="cancel_policy_err popup_err blink_me"></span>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group col-md-12 imp_notes">
                     <div class=form-horizondal>
                         <label for="t5-n1">Important Notes & Conditions</label>
