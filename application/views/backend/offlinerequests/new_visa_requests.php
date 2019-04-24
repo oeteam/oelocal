@@ -117,8 +117,12 @@
                     <div class="row">
                       <div class="form-group col-md-6">
                             <label>Birthday</label>
-                            <input type="text" class="form-control" id="bdate" name="bdate" value="<?php echo date('m/d/Y') ?>">
-                            <input type="text" readonly="" style="transform: translateY(-34px);" id="alternate1" class="form-control datetime" value="<?php echo date('d/m/Y') ?>">
+                            <input type="text" class="datePicker-hide datepicker input-group-addon" id="bdate" name="bdate" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
+                            <?php $today=date('d/m/Y'); ?>
+                            <div class="input-group">
+                              <input class="form-control datepicker date-pic" id="alternate" name="" value="<?php echo $today ?>">
+                              <label for="datepicker" class="input-group-addon"><i class="fa fa-calendar"></i></label>
+                            </div>
                         </div>  
                       <div class="form-group col-md-6">
                             <label for="list-title">Other Special Request</label>
@@ -130,8 +134,12 @@
                     <div class="row">
                       <div class="form-group col-md-6">
                             <label>Passport Expiry Date</label>
-                            <input type="text" class="form-control" id="expiry" name="expiry" value="<?php echo date('m/d/Y') ?>">
-                            <input type="text" readonly="" style="transform: translateY(-34px);" id="alternate2" class="form-control datetime" value="<?php echo date('d/m/Y') ?>">
+                            <input type="text" class="datePicker-hide datepicker input-group-addon" id="expiry" name="expiry" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
+                          <?php $today=date('d/m/Y'); ?>
+                            <div class="input-group">
+                              <input class="form-control datepicker date-pic" id="alternate1" name="" value="<?php echo $today ?>">
+                              <label for="datepicker" class="input-group-addon"><i class="fa fa-calendar"></i></label>
+                            </div>
                         </div> 
                       <div class="form-group col-md-4">
                             <label for="list-title">Passport Copy Image</label>
@@ -166,19 +174,28 @@
  <script type="text/javascript">
       $(window).load(function() {
        //datepicker
-       $.datetimepicker.setDateFormatter({
-          parseDate: function (date, format) {
-              var d = moment(date, format);
-              return d.isValid() ? d.toDate() : false;
-          },
-          formatDate: function (date, format) {
-              return moment(date).format(format);
-          },
+      $("#bdate").datepicker({
+            yearRange: "1950:<?php echo date('Y',strtotime('+15 Years')) ?>",
+            altField: "#alternate",
+            dateFormat: "yy-mm-dd",
+            altFormat: "dd/mm/yy",
+            changeYear : true,
+            changeMonth : true,
         });
-        $(".datetime").datetimepicker({
-          timepicker: false,
-          format: 'DD/MM/Y',
-          formatDate: 'YYYY/MM/DD',
+        $("#alternate").click(function() {
+            $( "#bdate" ).trigger('focus');
+        });
+         $("#expiry").datepicker({
+            minDate: 0,
+            yearRange: "1950:<?php echo date('Y',strtotime('+15 Years')) ?>",
+            altField: "#alternate1",
+            dateFormat: "yy-mm-dd",
+            altFormat: "dd/mm/yy",
+            changeYear : true,
+            changeMonth : true,
+        });
+        $("#alternate1").click(function() {
+            $( "#expiry" ).trigger('focus');
         });
       // destination autocomplete
         var xhrTimer;

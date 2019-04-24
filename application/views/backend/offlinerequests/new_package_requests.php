@@ -77,21 +77,13 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                           <label>Check in</label><span>*</span>
-                          <input type="text" class="datePicker-hide datepicker input-group-addon" id="CheckIn" name="CheckIn" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
-                          <?php $today=date('d/m/Y'); ?>
-                            <div class="input-group">
-                              <input class="form-control datepicker date-pic" id="alternate" name="" value="<?php echo $today ?>">
-                              <label for="datepicker" class="input-group-addon"><i class="fa fa-calendar"></i></label>
-                            </div>
+                          <input type="text" class="form-control" id="CheckIn" name="CheckIn" value="<?php echo date('m/d/Y') ?>">
+                            <input type="text" readonly="" style="transform: translateY(-34px);" id="alternate" class="form-control" value="<?php echo date('d/m/Y') ?>">
                         </div>  
                         <div class="col-md-6 form-group">
                           <label>Check out</label><span>*</span>
-                          <input type="text" class="datePicker-hide datepicker input-group-addon" id="CheckOut" name="CheckOut" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
-                          <?php $today=date('d/m/Y'); ?>
-                            <div class="input-group">
-                              <input class="form-control datepicker date-pic" id="alternate2" name="" value="<?php echo $today ?>">
-                              <label for="datepicker" class="input-group-addon"><i class="fa fa-calendar"></i></label>
-                            </div>
+                          <input type="text" name="CheckOut" class="form-control" id="CheckOut" value="<?php echo date('m/d/Y' ,strtotime('+1 days')) ?>">
+                            <input type="text" readonly="" style="transform: translateY(-34px);" id="alternate2" class="form-control" value="<?php echo date('d/m/Y' ,strtotime('+1 days')) ?>">
                         </div> 
                     </div>  
                     <div class="row">
@@ -184,28 +176,34 @@
  <script type="text/javascript">
   // @datepicker
   //datepicker with alternate days for checkin and checkout
-        $("#CheckIn").datepicker({
-            yearRange: "1950:<?php echo date('Y') ?>",
-            altField: "#alternate",
-            dateFormat: "yy-mm-dd",
-            altFormat: "dd/mm/yy",
-            changeYear : true,
-            changeMonth : true,
-        });
-        $("#alternate").click(function() {
-            $( "#CheckIn" ).trigger('focus');
-        });
-       $("#CheckOut").datepicker({
-            yearRange: "1950:<?php echo date('Y') ?>",
-            altField: "#alternate2",
-            dateFormat: "yy-mm-dd",
-            altFormat: "dd/mm/yy",
-            changeYear : true,
-            changeMonth : true,
-        });
-        $("#alternate2").click(function() {
-            $( "#CheckOut" ).trigger('focus');
-        });
+       var nextDay = new Date($("#CheckIn").val());
+      nextDay.setDate(nextDay.getDate() + 1);
+      $("#CheckIn").datepicker({
+          minDate: 0,
+          altField: "#alternate",
+          altFormat: "dd/mm/yy",
+          onSelect: function(dateText) {
+          var nextDay = new Date(dateText);
+          nextDay.setDate(nextDay.getDate() + 1);
+          $("#CheckOut").datepicker('option', 'minDate', nextDay);
+            setTimeout(function(){
+              $( "#datepicker2" ).datepicker('show');
+            }, 16);     
+          }
+      });
+      $("#CheckOut").datepicker({
+          minDate: nextDay,
+          altField: "#alternate2",
+          altFormat: "dd/mm/yy",
+          onSelect: function(dateText) {
+          }
+      });
+      $("#alternate").click(function() {
+          $( "#CheckIn" ).trigger('focus');
+      });
+      $("#alternate2").click(function() {
+          $( "#CheckOut" ).trigger('focus');
+      });
         $(window).load(function() {     
       // @destination autocomplete
       // autocomplete dropdown for destination

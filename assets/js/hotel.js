@@ -1522,7 +1522,7 @@ function blockHotel() {
   $("#policy_click").click(function() {
     var hotel_id = $("#hotel_id").val();
     var imp_remarks = $(".imp_remarks .trumbowyg-editor").html();
-    var cancel_policy = $(".cancel_policy .trumbowyg-editor").html();
+    //var cancel_policy = $(".cancel_policy .trumbowyg-editor").html();
     var imp_notes = $(".imp_notes .trumbowyg-editor").html();
     if (imp_remarks=="") {
         addToast("Important Remarks & Policies field is required!","orange");
@@ -1532,7 +1532,7 @@ function blockHotel() {
         addToast("Important Notes & Conditions field is required!","orange");
     } else {
         $("#imp_remarks").val(imp_remarks);
-        $("#cancel_policy").val(cancel_policy);
+        //$("#cancel_policy").val(cancel_policy);
         $("#imp_notes").val(imp_notes);
         $.ajax({
         dataType: 'json',

@@ -186,6 +186,7 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/offlinerequests.js"></script> 
  <script type="text/javascript">
      $("#tdate").datepicker({
+            minDate: 0,
             yearRange: "1950:<?php echo date('Y',strtotime('+15 Years')) ?>",
             altField: "#alternate",
             dateFormat: "yy-mm-dd",

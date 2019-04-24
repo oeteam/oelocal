@@ -209,6 +209,7 @@
           },
       });
       $(".datetime").datetimepicker({
+        minDate: 0,
         format: 'DD/MM/Y HH:mm',
         formatDate: 'YYYY/MM/DD',
         formatTime: 'HH:mm',

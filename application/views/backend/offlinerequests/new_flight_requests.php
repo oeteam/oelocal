@@ -133,12 +133,8 @@
                       <div class="row">
                         <div class="col-md-6 form-group departdate">
                           <label>Departure Date</label><span>*</span>
-                          <input type="text" class="datePicker-hide datepicker input-group-addon" id="departdate" name="departdate" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
-                          <?php $today=date('d/m/Y'); ?>
-                            <div class="input-group">
-                              <input class="form-control datepicker date-pic" id="alternate" name="" value="<?php echo $today ?>">
-                              <label for="datepicker" class="input-group-addon"><i class="fa fa-calendar"></i></label>
-                            </div>
+                          <input type="text" class="form-control" id="departdate" name="departdate" value="<?php echo date('m/d/Y') ?>">
+                            <input type="text" readonly="" style="transform: translateY(-34px);" id="alternate" class="form-control" value="<?php echo date('d/m/Y') ?>">
                           </div>  
                         <div class="col-md-6 form-group returndate">
                           <label>Return Date</label><span>*</span>
@@ -169,24 +165,30 @@
  <script type="text/javascript">
   // @datepicker
   // datepicker  for departure and return
+      var nextDay = new Date($("#departdate").val());
+      nextDay.setDate(nextDay.getDate() + 1);
       $("#departdate").datepicker({
-            yearRange: "1950:<?php echo date('Y') ?>",
-            altField: "#alternate",
-            dateFormat: "yy-mm-dd",
-            altFormat: "dd/mm/yy",
-            changeYear : true,
-            changeMonth : true,
+          minDate: 0,
+          altField: "#alternate",
+          altFormat: "dd/mm/yy",
+          onSelect: function(dateText) {
+          var nextDay = new Date(dateText);
+          nextDay.setDate(nextDay.getDate() + 1);
+          $("#returndate").datepicker('option', 'minDate', nextDay);
+            setTimeout(function(){
+              $( "#datepicker2" ).datepicker('show');
+            }, 16);     
+          }
+        });
+       $("#returndate").datepicker({
+          minDate: nextDay,
+          altField: "#alternate2",
+          altFormat: "dd/mm/yy",
+          onSelect: function(dateText) {
+          }
         });
         $("#alternate").click(function() {
             $( "#departdate" ).trigger('focus');
-        });
-       $("#returndate").datepicker({
-            yearRange: "1950:<?php echo date('Y') ?>",
-            altField: "#alternate2",
-            dateFormat: "yy-mm-dd",
-            altFormat: "dd/mm/yy",
-            changeYear : true,
-            changeMonth : true,
         });
         $("#alternate2").click(function() {
             $( "#returndate" ).trigger('focus');

@@ -163,6 +163,7 @@
   // @datepicker
   // datepicker  for departure and return
       $("#pdate").datepicker({
+            minDate:0,
             yearRange: "1950:<?php echo date('Y') ?>",
             altField: "#alternate",
             dateFormat: "yy-mm-dd",
