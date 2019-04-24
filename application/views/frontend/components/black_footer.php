@@ -2,7 +2,7 @@
 <?php 
 	$CustomerSupport = CustomerSupport();
  ?>
-<div class="footerbgblack">
+<div class="footerbgblack hidden-xs">
 	<div class="container">		
 		
 		<div class="col-md-3">
@@ -72,7 +72,7 @@
 	</div>	
 </div>
 
-<div class="footerbg3black">
+<div class="footerbg3black hidden-xs">
 	<div class="container center grey"> 
 	<a href="<?php echo base_url(); ?>dashboard">Home</a> | 
 	<a href="<?php echo base_url(); ?>hotels">Hotel</a> | 

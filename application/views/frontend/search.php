@@ -1,7 +1,6 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/search.js"></script>
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&sensor=false&libraries=places'></script>
 <!-- id="dajy" was here -->
 <style>
     .full-loading {
@@ -325,7 +324,7 @@
  var autocomplete = new google.maps.places.Autocomplete(input);*/
 
 
- <?php for ($l = 1; $l <=11 ; $l++) { ?>
+ <?php for ($l = 1; $l <=7 ; $l++) { ?>
  	tpj(".room<?php echo $l ?>-child").change(function() {
  		var room = tpj(this).val();
  		<?php for ($k = 1; $k <= 4; $k++) { ?>
@@ -385,7 +384,7 @@ function currency_change(type){
 }
 </script>
 <!-- WRAP -->
-<div class="wrap cstyle03" style="height: 100%">
+<div class="wrap cstyle03 small-bg-none" style="height: 100%">
 	 
 	<div class="container mt-250 z-index100">		
 		<div class="row">
@@ -460,7 +459,7 @@ function currency_change(type){
 										<input type="checkbox" class="rate rating2" name="rating10" value="10"> <span class="white">Apartment</span>
 										<input type="checkbox" class="ratingall" value=""> <span class="white">All</span>
 									</div>
-									<div class="col-xs-2 col-md-1">
+									<div class="col-xs-3 col-md-1">
 										<label for="" class="control-label text-white">Rooms</label><br>
 										<select  class="form-control mySelectBoxClass" id="Rooms" onchange="roomsCheck();">
 											<option value="1">1</option>
@@ -469,13 +468,13 @@ function currency_change(type){
 											<option value="4">4</option>
 											<option value="5">5</option>
 											<option value="6">6</option>
-											<option value="7">7</option>
+										<!-- 	<option value="7">7</option>
 											<option value="8">8</option>
 											<option value="9">9</option>
-											<option value="10">10</option>
+											<option value="10">10</option> -->
 										</select>
 									</div>
-									<div class="col-xs-2 col-md-1">
+									<div class="col-xs-3 col-md-1">
 										<label for="" class="adults_err control-label text-white">Adults</label>
 										<select id="adults" name="adults[]" class="form-control mySelectBoxClass">
 											<option value="1">1</option>
@@ -490,7 +489,7 @@ function currency_change(type){
 											<option value="10">10</option>
 										</select>
 									</div>
-									<div class="col-xs-2 col-md-1">
+									<div class="col-xs-3 col-md-1">
 										<label for="" class="control-label text-white">Child</label>
 										<select name="Child[]" class="form-control mySelectBoxClass room1-child">
 											<option value="0"></option>
@@ -500,13 +499,13 @@ function currency_change(type){
 											<option value="4">4</option>
 										</select>
 									</div>
-
+									<div class="clearfix hidden-lg"></div>
 									<!-- <div class="hidden-xs col-xs-6 col-md-3"> -->
 										<!-- <label for="" class="control-label text-white">Markup %</label> -->
 										<input type="hidden" name="mark_up" class="form-control b-r-40"/>
 										<!-- </div> -->
 										
-										<div class="col-xs-6 col-md-3">
+										<div class="col-xs-12 col-md-3">
 											<div class="row room1-childAge <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
 												<p style="margin-bottom: 0 ! important"><label class="room1-child-p rate_err control-label text-white" style="padding-left: 15px;">Children Age</label></p>
 												<?php for ($l=1; $l <= 4 ; $l++) {  ?>
@@ -524,7 +523,7 @@ function currency_change(type){
 										
 										<?php for ($i=2; $i <=10 ; $i++) { ?>
 											<div class="room<?php echo $i; ?> hide roomshide">
-												<div class="col-xs-2 col-md-1 col-md-offset-7">
+												<div class="col-xs-3 col-md-1 col-md-offset-7">
 													<label for="" class="adults_err control-label text-white">Adults</label>
 													<select id="adults"  disabled="" name="adults[]" class="room<?php echo $i; ?>-adults roomadults form-control mySelectBoxClass">
 														<option value="1">1</option>
@@ -539,7 +538,7 @@ function currency_change(type){
 														<option value="10">10</option>
 													</select>
 												</div>
-												<div class="col-xs-2 col-md-1">
+												<div class="col-xs-3 col-md-1">
 													<label for="" class="control-label text-white">Child</label>
 													<select name="Child[]" disabled="" class="roomsChild form-control mySelectBoxClass room<?php echo $i ?>-child"> 
 														<option value="0"></option>
@@ -549,7 +548,8 @@ function currency_change(type){
 														<option value="4">4</option>
 													</select>
 												</div>
-												<div class="col-xs-6 col-md-3 scol-md-offset-9">
+												<div class="clearfix hidden-lg"></div>
+												<div class="col-xs-12 col-md-3 scol-md-offset-9">
 													<div class="row room<?php echo $i ?>-childAge hide" style="transform: translateX(-8px);margin: 0 -8px;">
 														<p style="margin-bottom: 0 ! important"><label class="room<?php echo $i ?>-child-p rate_err control-label text-white" style="padding-left: 15px;">Children Age</label></p>
 														<?php for ($l=1; $l <= 4 ; $l++) {  ?>
@@ -565,7 +565,7 @@ function currency_change(type){
 												</div>
 											</div>
 										<?php } ?>
-										<div class="col-xs-6 col-md-6 col-md-offset-6">
+										<div class="col-xs-12 col-md-6 col-md-offset-6">
 											<button type="button" id="search_btn" class="btn-search btn-block">Find Hotels</button>
 										</div>
 									</div>
@@ -582,7 +582,7 @@ function currency_change(type){
 				</div>
 			</div>
 		</div>
-		<div class="lastminute" style="height: auto;background: white;">
+		<div class="lastminute hidden-xs" style="height: auto;background: white;">
 			<div class="container ">	
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
@@ -685,6 +685,11 @@ function currency_change(type){
     z-index: 5;
     position: absolute;
     width: 100%;
+}
+@media only screen and (max-width: 480px) and (min-width: 320px) {
+     .small-bg-none {
+       background: none !important;
+     }
 }
 </style>
 		<!-- END OF WRAP -->

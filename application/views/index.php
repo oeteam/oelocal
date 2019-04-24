@@ -11,6 +11,7 @@ $Hotelsbanner = Hotelsbanner();
    }
 </script> -->
 <!--baner-->
+
 <section>
    <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
       <!-- Wrapper for slides -->
@@ -36,13 +37,12 @@ $Hotelsbanner = Hotelsbanner();
                   </div>
                </div>
                <div id="box-hldr">
-
                   <div class="col-md-12">
                      <div class="panel with-nav-tabs panel-info">
                         <div class="panel-heading toggle-style">
                            <ul class="nav nav-tabs">
-                              <li class="active"><a href="#Agentlogin" data-toggle="tab"> Agent Login </a></li>
-                              <li><a href="#SupplierLogin" data-toggle="tab"> Supplier Login</a></li>
+                              <li class="active small-width-100"><a href="#Agentlogin" data-toggle="tab"> Agent Login </a></li>
+                              <li class="hidden-xs"><a href="#SupplierLogin" data-toggle="tab"> Supplier Login</a></li>
                            </ul>
                         </div>
 
@@ -185,7 +185,7 @@ $Hotelsbanner = Hotelsbanner();
                   <!--carosel fade-->
                </section>
                <!--baner-->
-               <section class="baner-botom">
+               <section class="baner-botom hidden-xs">
                   <div class="container">
                      <div class="row">
                         <div class="col-md-4">
@@ -199,7 +199,7 @@ $Hotelsbanner = Hotelsbanner();
                   </div>
                </section>
                <section>
-                  <div class="container">
+                  <div class="container hidden-xs">
                      <div class="row">
                         <?php
                          foreach($HotelsView as $h_value){
@@ -221,7 +221,7 @@ $Hotelsbanner = Hotelsbanner();
                      </div>
                   </div>
                </section>
-               <section>
+               <section class="hidden-xs">
                   <div class="container">
                      <div class="row">
                         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -238,7 +238,7 @@ $Hotelsbanner = Hotelsbanner();
                      </div>
                   </div>
                </section>
-               <section class="midle-sec">
+               <section class="midle-sec hidden-xs">
                   <div class="container">
                      <div class="row">
                         <div class="col-md-6">
@@ -630,4 +630,5 @@ $Hotelsbanner = Hotelsbanner();
 </div>
 </div>
 <!-- Modal -->
+
 <?php init_load_frontend_footer(); ?>

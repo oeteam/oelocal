@@ -3,7 +3,7 @@ $CustomerSupport = CustomerSupport();
 ?>
 </div>
 
-<section class="footer">
+<section class="footer hidden-xs">
    <div class="container">
       <div class="row">
          <div class="col-md-4">
