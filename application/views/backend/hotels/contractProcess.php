@@ -421,7 +421,7 @@
                                 <textarea class="form-control" name="imp_remarks" id="imp_remarks" ><?php echo isset($policy[0]->Important_Remarks_Policies) ? $policy[0]->Important_Remarks_Policies : '' ?></textarea>
                                 </textarea>
                             </div>
-                            <div class="form-group col-md-12 cancel_policy">
+                            <!-- <div class="form-group col-md-12 cancel_policy">
                                 <label for="t5-n1">Cancellation Policy  </label>
                                 <label>
                                     <div class="form-group">
@@ -433,7 +433,7 @@
                                     </div>
                                 </label>
                                 <textarea class="form-control" name="cancel_policy" id="cancel_policy"></textarea>
-                            </div>
+                            </div> -->
                             <div class="form-group col-md-12 imp_notes">
                                 <label for="t5-n1">Important Notes & Conditions</label>
                                 <textarea class="form-control" name="imp_notes" id="imp_notes" ><?php echo isset($policy[0]->Important_Notes_Conditions) ? $policy[0]->Important_Notes_Conditions : '' ?></textarea>

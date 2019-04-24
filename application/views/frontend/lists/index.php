@@ -3,6 +3,7 @@
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/list.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/destination_autocomplete.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/advertisement.js"></script>
 <script>
     FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
 	$(document).ready(function() {
