@@ -169,7 +169,7 @@
           onSelect: function(dateText) {
           var nextDay = new Date(dateText);
           nextDay.setDate(nextDay.getDate() + 1);
-          $("#checkin").datepicker('option', 'minDate', nextDay);
+          $("#checkout").datepicker('option', 'minDate', nextDay);
             setTimeout(function(){
               $( "#datepicker2" ).datepicker('show');
             }, 16);     
@@ -182,13 +182,7 @@
           minDate: 0,
           altField: "#alternate2",
           altFormat: "dd/mm/yy",
-          onSelect: function(dateText) {
-          var nextDay = new Date(dateText);
-          nextDay.setDate(nextDay.getDate() + 1);
-          $("#checkout").datepicker('option', 'minDate', nextDay);
-            setTimeout(function(){
-              $( "#datepicker2" ).datepicker('show');
-            }, 16);     
+          onSelect: function(dateText) {     
           }
       });
       $("#alternate2").click(function() {

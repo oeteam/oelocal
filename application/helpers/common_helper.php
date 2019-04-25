@@ -3190,7 +3190,7 @@ function offlinerequestMailNotification($id,$type) {
       }
       $budget = '';
       if ($booking[0]->budget!="") {
-        $budget = 'Special Request: '.$booking[0]->budget.'<br>';
+        $budget = 'Budget: '.$booking[0]->budget.'<br>';
       }
       $subject = 'NEW OFFLINE REQUEST (Reference ID : PKB'.$booking[0]->id.')';   
       $message = 'Dear '.$agent[0]->First_Name.' '.$agent[0]->Last_Name.',<br><br>
