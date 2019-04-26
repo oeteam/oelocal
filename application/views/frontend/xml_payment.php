@@ -195,7 +195,6 @@ $(document).ready(function() {
 
         /* GUEST TABLE STYLES */
         .guest-table {
-            table-layout: fixed;
             width: 100%;
             margin: 0;
         }
@@ -346,36 +345,51 @@ $(document).ready(function() {
           font-weight: bold;
           border-radius: 0 0 6px 6px;
         }
-        /* Extra small devices (phones, 600px and down) */
-        @media only screen and (max-width: 600px) {
+       /* Extra small devices (phones, 600px and down) */
+        @media(max-width: 600px) {
           .guest-table {
-            width: 100%;
+           width:100%;
           }
+          .container {
+            margin-right: -10px;
+            margin-left: -24px;
+            padding-right: 0px;
+            padding-left: 0px;
+          }
+          .booking-summary {
+            margin-top: 39px;
+          }
+          .container > .navbar-header, .container > .navbar-collapse {
+            margin-right: 31px; 
+            margin-left: 47px; 
+            }
         } 
 
         /* Small devices (portrait tablets and large phones, 600px and up) */
-        @media only screen and (min-width: 600px) {
+        @media(min-width: 600px) {
           .guest-table {
             width: 100%;
+          }
+           .booking-summary {
+            margin-top: 39px;
           }
         } 
 
         /* Medium devices (landscape tablets, 768px and up) */
-        @media only screen and (min-width: 768px) {
+        @media (min-width: 768px) {
           .guest-table {
             width:100%;
           }
         } 
 
         /* Large devices (laptops/desktops, 992px and up) */
-        @media only screen and (min-width: 992px) {
+        @media(min-width: 992px) {
           .guest-table {
             width: 100%;
           }
         } 
-
-        /* Extra large devices (large laptops and desktops, 1200px and up) */
-        @media only screen and (min-width: 1200px) {
+         /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media(min-width: 1200px) {
           .guest-table {
             width: 100%;
           }
@@ -458,7 +472,7 @@ $(document).ready(function() {
 
           <div class="row">
             <div class="col-sm-3">
-              <img src="<?php echo $HotelPicture ?>" class="margtop20" width="100%" alt="">
+              <img src="<?php echo $HotelPicture ?>" class="margtop20  .img-responsive" width="100%" alt="">
               <p><span class="bold"><?php echo $HotelName ?></span></p>
               <?php if ($HotelRating =='OneStar' || $HotelRating =='1') {
               $star = '1';
@@ -578,16 +592,16 @@ $(document).ready(function() {
               <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 table-responsive">
               <table class="table table-bordered guest-table">
                 <thead>
                   <tr>
-                    <th style="width: 8%" class="text-center">#</th>
-                    <th style="width: 35%">Adult/Children</th>
-                    <th style="width: 15%">Title</th>
+                    <th style="width: 50px" class="text-center">#</th>
+                    <th style="width: 150px">Adult/Children</th>
+                    <th style="width: 90px">Title</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th style="width: 12%" class="text-center">Age</th>
+                    <th style="width: 90px" class="text-center">Age</th>
                   </tr>
                 </thead>
                 <tbody class="guesttbody">
