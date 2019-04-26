@@ -975,7 +975,7 @@
 			<br/><br/>
 			<div class="clearfix"></div>
 
-			<div class="itemscontainer offset-1" style="height: 869px;overflow-y: scroll;">
+			<div class="itemscontainer offset-1" style="height: 869px;overflow-y: scroll;padding-bottom: 40px;">
 				<div id="rotateBanner"></div>
 				<div id="result_search" class="shide" >
 					
@@ -1409,7 +1409,7 @@
 				applyfilter();
 			}
 			function filtersmstar(val) {
-				$(".star-filter-sm option").attr("value",val).prop("selected",true);
+				$(".star-filter-sm").find("option[value=" + val +"]").prop("selected",true);
 				applyfilter();
 			}
 			function applyfilter() {
