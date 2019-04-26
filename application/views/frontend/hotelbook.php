@@ -182,6 +182,39 @@
 	  font-weight: bold;
 	  border-radius: 0 0 6px 6px;
 	}
+	 /* Extra small devices (phones, 600px and down) */
+        @media only screen and (max-width: 600px) {
+          .guest-table {
+            width: 100%;
+          }
+        } 
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media only screen and (min-width: 600px) {
+          .guest-table {
+            width: 100%;
+          }
+        } 
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media only screen and (min-width: 768px) {
+          .guest-table {
+            width:100%;
+          }
+        } 
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media only screen and (min-width: 992px) {
+          .guest-table {
+            width: 100%;
+          }
+        } 
+         /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media only screen and (min-width: 1200px) {
+          .guest-table {
+            width: 100%;
+          }
+        }
 </style>
 <script>
 let RoomCombination = new Array();
@@ -355,7 +388,7 @@ $(document).ready(function() {
 <style type="text/css">
 	
 </style>
-	<div class="container breadcrub">
+	<div class="container breadcrub hidden-xs">
 		<ol class="track-progress" data-steps="5">
 	      <li class="done">
 	        <span>Search</span>
@@ -513,12 +546,12 @@ $(document).ready(function() {
 			              <table class="table table-bordered guest-table">
 			                <thead>
 			                  <tr>
-			                    <th style="width: 50px" class="text-center">#</th>
-			                    <th style="width: 150px">Adult/Children</th>
-			                    <th style="width: 90px">Title</th>
+			                    <th style="width: 8%" class="text-center">#</th>
+			                    <th style="width: 35%">Adult/Children</th>
+			                    <th style="width: 15%">Title</th>
 			                    <th>First Name</th>
 			                    <th>Last Name</th>
-			                    <th style="width: 90px" class="text-center">Age</th>
+			                    <th style="width: 12%" class="text-center">Age</th>
 			                  </tr>
 			                </thead>
 			                <tbody class="guesttbody">
