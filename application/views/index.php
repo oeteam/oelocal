@@ -221,23 +221,6 @@ $Hotelsbanner = Hotelsbanner();
                      </div>
                   </div>
                </section>
-               <section class="hidden-xs">
-                  <div class="container">
-                     <div class="row">
-                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                         <!-- otelseasy1 -->
-                         <ins class="adsbygoogle"
-                              style="display:block"
-                              data-ad-client="ca-pub-3420800144798744"
-                              data-ad-slot="2997535336"
-                              data-ad-format="auto"
-                              data-full-width-responsive="true"></ins>
-                         <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                         </script>
-                     </div>
-                  </div>
-               </section>
                <section class="midle-sec hidden-xs">
                   <div class="container">
                      <div class="row">

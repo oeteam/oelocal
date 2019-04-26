@@ -15,6 +15,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
 <!--== BODY INNER CONTAINER ==-->
  <div class="sb2-2 <?php echo count($usersmenu)=="" ? "hide" : '' ?>">
     <!--== DASHBOARD INFO ==-->
+    <div class="row">
     <div class="sb2-2-1">
         <h2>Admin Dashboard </h2>
         <div class="db-2">
@@ -449,6 +450,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
             
         </div>
         
+    </div>
     </div>
 </div>
 

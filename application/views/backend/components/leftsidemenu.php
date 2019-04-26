@@ -1,5 +1,5 @@
 <!--== BODY CONTNAINER ==-->
-    <div class="container-fluid sb2">
+    <div class="container-fluid sb2" style="background: white">
         <div class="row">
             <div style="height:95%" class="sb2-1 fixed_sm">
                 <!--== USER INFO ==-->

@@ -57,6 +57,46 @@ $(document).ready(function() {
 
   });
 
+
+   $("#search_buttonsm").click(function() {
+    var location = $("#locationsm").val();
+    var Nationality = $("#nationalitysm").val();
+    var hotel_name = $("#hotel_namesm").val();
+    var check_in = $("#datepickersm").val();
+    var check_out = $("#datepicker2sm").val();
+    var adults = $("#adultssm").val();
+    var rate = $(".rate:checked").val();
+    var altCheckIn = $("#alternatesm").val();
+    var altCheckOut = $("#alternate2sm").val();
+    if (location=="" && hotel_name=="" && Nationality=="") {
+      $(".dest_err").css("color","red");
+      $(".htl_err").css("color","red");
+      $(".nat_err").css("color","red");
+    }else if(location=="") {
+      $(".dest_err").css("color","red");
+      $(".htl_err").css("color","black");
+      $(".nat_err").css("color","black");
+    } 
+    else if(Nationality=="") {
+      $(".dest_err").css("color","black");
+      $(".htl_err").css("color","black");
+      $(".nat_err").css("color","red");
+    } else if (check_in=="") {
+      $(".chckin_err").css("color","red");
+    } else if (check_out=="") {
+      $(".chckout_err").css("color","red");
+    } else if (adults=="") {
+      $(".adults_err").css("color","red");
+    // } else if (rate==undefined || rate=="") {
+    //  tpj(".rate_err").css("color","red");
+    } else {
+      var req = $("#Mian_search_form_sm").serialize();
+      FullLoading('start', location, altCheckIn, altCheckOut);
+      window.location.href=base_url+'lists/index?'+req;
+    }
+
+  });
+
   search_ajax();
   FullLoading('stop');
   setTimeout(function(){ search_ajax(); }, 3000);

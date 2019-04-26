@@ -159,6 +159,23 @@
 		font-size: 80%;
 		letter-spacing: .5px;
 	}
+	@media only screen and (max-width: 480px) and (min-width: 320px) {
+	     .fl-info-card {
+	        width: 80% ! important;
+		    flex: 1 ! important;
+		    margin-top: 28px ! important;
+	     }
+	     .fl-title {
+     	    font-size: 11px ! important;
+   			margin-top: 62px ! important;
+	     }
+	     .full-loading img {
+    		top: 25px ! important;
+	     }
+	     .fl-info-card .top p {
+     	    font-size: 14px ! important;
+	     }
+	}
 </style>
 <div id="" class="fullscreen-container mtslide sliderbg fixed">
 	<div class="fullscreenbanner">

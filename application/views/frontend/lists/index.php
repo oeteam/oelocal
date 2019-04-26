@@ -1,6 +1,6 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script>
+<!-- <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script> -->
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/list.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/destination_autocomplete.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/advertisement.js"></script>
@@ -37,44 +37,40 @@
 		$("#alternate2").click(function() {
 			$( "#datepicker2" ).trigger('focus');
 		});
-   //  	$('#datepicker').dateRangePicker({
-   //        autoClose: true,
-   //        format: 'MM/DD/YYYY',
-   //        separator : ' to ',
-   //        startDate: '<?php echo date('m/d/Y') ?>',
-   //        endDate: false,
-   //        minDays: 2,
-   //        maxDays: 30,
-   //        getValue: function()
-   //        {
-   //          if ($('#datepicker').val() && $('#datepicker2').val() )
-   //            return $('#datepicker').val() + ' to ' + $('#datepicker2').val();
-   //          else
-   //            return '';
-   //        },
-   //        setValue: function(s,s1,s2)
-   //        {
-   //          altDate = s1.split('/');
-   //          altDate2 = s2.split('/');
-   //          $('#datepicker').val(s1);
-   //          $('#datepicker2').val(s2);
-   //          $("#alternate").val(altDate[1]+'/'+altDate[0]+'/'+altDate[2]);
-   //          $("#alternate2").val(altDate2[1]+'/'+altDate2[0]+'/'+altDate2[2]);
-   //        },
 
+		/*Mobile view*/
 
-   //    });
-		 // $("#alternate").click(function(evt) {
-		 // 	evt.stopPropagation();
-   //      	$('#datepicker').data('dateRangePicker').open();
-	  //   });
-	  //    $("#alternate2").click(function(evt) {
-		 // 	evt.stopPropagation();
-	  //       $('#datepicker').data('dateRangePicker').open();
-	  //   });
-
-	 // var input = document.getElementById('location');
-	 // var autocomplete = new google.maps.places.Autocomplete(input);
+		var nextDay = new Date($("#datepickersm").val());
+		nextDay.setDate(nextDay.getDate() + 1);
+		$("#datepickersm").datepicker({
+			minDate: 0,
+			altField: "#alternatesm",
+			altFormat: "dd/mm/yy",
+			onSelect: function(dateText) {
+				var nextDay = new Date(dateText);
+				nextDay.setDate(nextDay.getDate() + 1);
+				$("#datepicker2sm").datepicker('option', 'minDate', nextDay);
+				total_night_calc1();
+				setTimeout(function(){
+					$( "#datepicker2sm" ).datepicker('show');
+				}, 16);     
+			}
+		});
+		$("#datepicker2sm").datepicker({
+			minDate: nextDay,
+			altField: "#alternate2",
+			altFormat: "dd/mm/yy",
+			onSelect: function(dateText) {
+				total_night_calc1();
+			}
+		});
+		$("#alternatesm").click(function() {
+			$( "#datepickersm" ).trigger('focus');
+		});
+		$("#alternate2sm").click(function() {
+			$( "#datepicker2sm" ).trigger('focus');
+		});
+   
 
 	  <?php for ($l = 1; $l <=11 ; $l++) { ?>
 	  	$(".room<?php echo $l ?> .room<?php echo $l ?>-child").change(function() {
@@ -243,7 +239,7 @@
         .full-loading {
             position: fixed;
             top: 0;
-            right: 0;
+            width: 100%;
             bottom: 0;
             left: 0;
             background-color: #006699;
@@ -400,9 +396,85 @@
     opacity: .8;
     cursor: pointer;
 }
+.bottom-btn-sm {
+	  	    width: 25%;
+		    height: 55px;
+		    background: rgba(0, 102, 153, 0.87);
+		    color: white;
+		    font-size: 21px;
+		    float: left;
+		    margin: 0px;
+		    border: 1px solid white;
+		  }
+@media (max-width: 767px) {
+	.narrow-sm {
+		line-height: 147px ! important;
+	}
+	.listitem4 {
+		height: 111px ! important;
+	}
+	.hotel-rating {
+	  	width: 75px ! important;
+	  	font-size: 11px ! important;
+	  }
+	  .hotel-view-btn {
+	  	font-size: 14px ! important;
+	  }
+	  .review-sm {
+		display: block;
+	}
+}	
+@media only screen and (max-width: 480px) and (min-width: 320px) {
+	     .fl-info-card {
+	        width: 80% ! important;
+		    flex: 1 ! important;
+		    margin-top: 28px ! important;
+	     }
+	     .fl-title {
+     	    font-size: 11px ! important;
+   			margin-top: 62px ! important;
+	     }
+	     .full-loading img {
+    		top: 25px ! important;
+	     }
+	     .fl-info-card .top p {
+     	    font-size: 14px ! important;
+	     }
+	     .fl-data {
+     	    width: 99% ! important;
+    		margin: 0 auto ! important;
+	     }
+	     .container-sm {
+     	    margin: 0px ! important;
+		    padding: 0px ! important;
+		    margin-top: 60px ! important;
+		    /*position: fixed ! important;*/
+	     }
+	     .filtertip {
+	     	height: 32px ! important;
+	     }
+	     .narrow-sm {
+	     	line-height: 32px ! important;
+	     }
+	     .no-records {
+     	    width: 80% ! important;
+    		margin: 0 auto ! important;
+	     }
+	     
+		  .hotel-rating {
+		  	width: 65px ! important;
+		  	font-size: 11px ! important;
+		  }
+		  .hotel-view-btn {
+		  	font-size: 11px ! important;
+		  }
+		  .rightcontent {
+		  	margin-top: -35px ! important;
+		  }
+	}
 </style>
 <div class="clearfix"></div>
-<div class="container breadcrub">
+<div class="container breadcrub hidden-xs">
 	<div>
 		<a class="homebtn left" href="<?php echo base_url(); ?>/hotels"></a>
 		<div class="left">
@@ -426,32 +498,36 @@
 </div>	
 
 <!-- CONTENT -->
-<div class="container">
+<div class="container container-sm">
 	<div class="container pagecontainer offset-0">	
 
 			<!-- FILTERS -->
 			<div class="col-md-3 filters offset-0">
 				<!-- TOP TIP -->
 				<div class="filtertip">
-					<div class="padding20">
+					<div class="padding20 hidden-xs">
 						<p class="size13">
 							Total 
 							<span class="size18 bold counthotel"></span> <span class="htlcnt">Hotels</span> </p>
 							<p class="size13">starting at</p>
 							<p class="size30 bold"><?php echo $agent_currency; ?> <span class="countprice"></span></p>
-							<p class="size13">Narrow results </p>
-						</div>
-						<div class="tip-arrow"></div>
+							<p class="size13">Narrow results 
+						</p>
 					</div>
-					<div class="bookfilters hpadding20">
+					<p class="hidden-lg narrow-sm"> Total <span class="size18 bold counthotel"></span> <span class="htlcnt">Hotels</span>
+						<span class="size13">starting at </span><span class="size18 bold"><?php echo $agent_currency; ?> <span class="countprice"></span></span> <span class="size13">Narrow results</span>
+					</p>
+					<div class="tip-arrow"></div>
+				</div>
+					<div class="bookfilters hpadding20 hidden-xs">
 						<form id="Mian_search_form"  method="get">
-						<input type="hidden" class="citycode" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
-						<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
-						<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
+							<input type="hidden" class="citycode" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
+							<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
+							<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
 
-						<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>">
-						<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
-						<!-- HOTELS TAB -->
+							<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>">
+							<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
+							<!-- HOTELS TAB -->
 						<div class="hotelstab2">
 							<span class="opensans size1 dest_err">Enter Destination</span>
 							<input type="text" name="location" id="location" class="form-control" placeholder="Enter country name" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>" autocomplete="off">
@@ -624,11 +700,11 @@
 							</div>
 							<!-- END OF HOTELS TAB -->
 							</form>
-						</div>
+					</div>
 						<!-- END OF BOOK FILTERS -->	
 
-						<div class="line2"></div>
-						<form id="search_form"  method="post">
+						<div class="line2 hidden-xs"></div>
+						<form id="search_form"  method="post" class="hidden-xs">
 							<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
@@ -697,48 +773,15 @@
 										<input type="hidden" name="room10-childAge[]" value="<?php echo $value; ?>">
 							<?php   }
 							} ?>
-						<div><h3 class="opensans dark">Filter by</h3></div>
-						<div class="line2"></div>
+						<div class="hidden-xs"><h3 class="opensans dark">Filter by</h3></div>
+						<div class="line2 hidden-xs"></div>
 						<!-- Board -->	
-					<!-- 	<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse0">
-							Board <span class="collapsearrow"></span>
-						</button> -->
-
-						<!-- <div id="collapse1" class="collapse in">
-							<div class="hpadding20">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" class="rating"  name="RO" value="RO">
-										Room only
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" class="rating"  name="BB" value="BB">
-										BB
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" class="rating"  name="HB" value="HB">
-										Half board
-									</label>
-								</div>
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" class="rating"  name="FB" value="FB">
-										Full board
-									</label>
-								</div>
-							</div>
-						</div>
-						<div class="line2"></div> -->
 
 						<!-- Star ratings -->	
-						<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse1">
+						<button type="button" class="collapsebtn hidden-xs" data-toggle="collapse" data-target="#collapse1">
 							Star rating <span class="collapsearrow"></span>
 						</button>
-						<div id="collapse1" class="collapse in">
+						<div id="collapse1" class="collapse in hidden-xs">
 							<div class="hpadding20">
 								<div class="checkbox">
 									<label>
@@ -896,7 +939,7 @@
 										</div>
 									</div>					
 						</div>
-						<div class="col-md-4 offset-0">
+						<div class="col-md-4 offset-0 hidden-xs">
 							<button type="button" class="popularbtn left">Most Popular</button>
 							<div class="right">
 								<button type="button" class="gridbtn">&nbsp;</button>
@@ -928,9 +971,18 @@
 				<div id="result_search" class="shide" >
 					
 				</div>
-
-        </div>
+				
+        	</div>
+        	<div class="hidden-lg">
+		        <div class="row" style="position: fixed;width: 100%;display: block;margin: -1.5px;bottom: 0;">
+		        	<button class="bottom-btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fa fa-search"></i></button>
+		        	<button class="bottom-btn-sm"><i class="fa fa-money"></i></button>
+		        	<button class="bottom-btn-sm"><i class="fa fa-star-half-o"></i></button>
+		        	<button class="bottom-btn-sm"><i class="fa fa-filter"></i></button>
+		        </div>	
+		    </div>
     </div>
+    
     <!-- END OF LIST CONTENT-->
 
 
@@ -948,7 +1000,196 @@
 		});
 	});
 </script>
+<div id="searchModal" class="modal bottom fade" role="dialog">
+  <div class="modal-dialog" style="margin: 0;padding: 0;height: 100%;">
 
+    <!-- Modal content-->
+    <div class="modal-content" style="height: 100%;">
+      <div class="modal-header" style="background: #006699;color: white;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Filter Search</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="Mian_search_form_sm">
+      		<input type="hidden" class="citycode" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
+			<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
+			<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
+
+			<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>">
+			<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
+        	<div class="hotelstab2" style="overflow-y: scroll;height: 535px;overflow-x: hidden">
+				<span class="opensans size1 dest_err">Enter Destination</span>
+				<input type="text" name="location" id="locationsm" class="form-control" placeholder="Enter country name" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>" autocomplete="off">
+				
+				<ul class="txtcountry search-dropdown" style="margin-right:0px;display:none;overflow-y: scroll;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountrysm"></ul>
+				<div class="clearfix pbottom15"></div>
+				<span class="opensans size13 nat_err">Nationality</span>
+				<select class="form-control" name="nationality" id="nationalitysm">
+					<?php foreach ($nationality as $key => $value) { ?>
+						<option <?php echo isset($_REQUEST['nationality']) && $value->id==$_REQUEST['nationality'] ? 'selected' : '' ?> value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
+					<?php } ?>
+				</select>
+				<div class="clearfix pbottom15"></div>
+				<span class="opensans size13 htl_err">Hotel Name</span>
+				<input type="text" name="hotel_name" id="hotel_namesm" class="form-control"  value="<?php echo isset($_REQUEST['hotel_name']) ? $_REQUEST['hotel_name'] : '' ?>">
+				<div class="clearfix pbottom15"></div>
+				<div class=" textleft">
+					<span class="opensans size13 chckin_err">Check in date</span>
+					<input type="text"  style="width: 1000%;opacity: 0;height: 36px;"  class="mySelectCalendar" id="datepickersm" name="Check_in" value="<?php echo isset($_REQUEST['Check_in']) ? $_REQUEST['Check_in'] : '' ?>" placeholder="dd/mm/yyyy"/>
+				</div>
+				<div class="input-group" style="transform: translateY(-34px);">
+					<input type="text" name="" class="form-control" id="alternatesm" value="<?php echo isset($_REQUEST['Check_in']) ? date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) : '' ?>">
+					<label for="datepicker" class="input-group-addon" style="padding: 5px"><i class="fa fa-calendar"></i></label>
+				</div>
+				<div class="clearfix pbottom15"></div>
+				<div class=" textleft" style="margin-top:-26px; ">
+					<span class="opensans size13 chckout_err">Check out date</span>
+					<input type="text" style="width: 1000%;opacity: 0;height: 36px;"  class="mySelectCalendar" id="datepicker2sm" name="Check_out" value="<?php echo isset($_REQUEST['Check_out']) ? $_REQUEST['Check_out'] : '' ?>" placeholder="dd/mm/yyyy"/>
+				</div>
+				<div class="input-group" style="transform: translateY(-34px);">
+					<input type="text" name="" class="form-control" id="alternate2sm" value="<?php echo isset($_REQUEST['Check_out']) ? date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) : '' ?>">
+					<label for="datepicker2" class="input-group-addon"  style="padding: 5px"><i class="fa fa-calendar"></i></label>
+				</div>
+				
+				<div class="clearfix pbottom15"></div>
+				<input type="hidden" name="mark_up" value="<?php echo isset($_REQUEST['mark_up']) ? $_REQUEST['mark_up'] :'' ?>" class="form-control"/>
+				
+				<div class="room1" >
+					<div class="w50percent">
+						<div class="wh90percent textleft">
+							<span class="opensans size13"><b>ROOM 1</b></span><br/>
+							
+							<!-- <div class="addroom1 block"><a onclick="addroom2()" class="grey cpointer">+ Add room</a></div> -->
+						</div>
+					</div>
+					<div class="w50percentlast">	
+						<div class="wh90percent textleft right ohidden">
+							<div class="w50percent">
+								<div class="wh90percent textleft left">
+									<span class="opensans size13 adults_err">Adult </span>
+									<?php if(!isset($_REQUEST['adults'][0]))
+									$_REQUEST['adults'][0]="2";
+									?>
+									<select class="form-control mySelectBoxClass" name="adults[]" id="adultssm">
+										<?php for ($i=1; $i <=30 ; $i++) { 
+											if ($_REQUEST['adults'][0]==$i) {?>
+												<option  selected="" value="<?php echo $i?>"><?php echo $i?></option>
+											<?php } else { ?>
+												<option value="<?php echo $i?>"><?php echo $i?></option>
+
+											<?php 	}
+										} ?>
+									</select>
+								</div>
+							</div>							
+							<div class="w50percentlast">
+								<div class="wh90percent textleft right ohidden">
+									<span class="opensans size13">Child</span>
+									<select name="Child[]" class="form-control mySelectBoxClass room1-child">
+										<?php for ($i=0; $i <5 ; $i++) { 
+											if ($_REQUEST['Child'][0]==$i) {?>
+												<option  selected="" value="<?php echo $i?>"><?php echo $i?></option>
+											<?php } else { ?>
+												<option value="<?php echo $i?>"><?php echo $i?></option>
+
+											<?php 	}
+										} ?>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="row room1-childAge <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
+						<p class="room1-child-p" style="padding-left: 15px;">Children Age</p>
+						<?php for ($l=1; $l <= 4 ; $l++) {  ?>
+							<div class="col-xs-3 room1-child<?php echo $l; ?> <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'hide' ?>" style="padding-right: 0;">
+								<select name="room1-childAge[]" class="form-control mySelectBoxClass room1-childAges<?php echo $l; ?>" <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'disabled' ?>  id="room1-childAge<?php echo $l; ?>">
+									<?php for ($i=0; $i <18 ; $i++) { 
+										if ($_REQUEST['room1-childAge'][$l-1]==$i) { ?>
+											<option selected=""  value="<?php echo $i ?>"><?php echo $i ?></option>
+										<?php } else { ?>
+											<option  value="<?php echo $i ?>"><?php echo $i ?></option>
+										<?php } } ?>
+									</select>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="row col-md-12">
+							<div class="addroom1 <?php echo isset($_REQUEST['adults'][1]) ? 'none' : 'block'; ?>"><a onclick="addroomcustom2('2')" class="grey cpointer">+ Add room</a></div>
+						</div>
+					</div>
+
+					<?php 
+					for ($i=2; $i <=10 ; $i++) { ?>
+						<div class="room<?php echo $i; ?> <?php echo isset($_REQUEST['adults'][$i-1]) ? 'block' : 'none' ?>">
+							<div class="clearfix"></div>
+							<div class="line1"></div>
+							<div class="w50percent">
+								<div class="wh90percent textleft">
+									<span class="opensans size13"><b>ROOM <?php echo $i; ?></b></span><br/>
+								</div>
+							</div>
+
+							<div class="w50percentlast">	
+								<div class="wh90percent textleft right">
+									<div class="w50percent">
+										<div class="wh90percent textleft left">
+											<span class="opensans size13">Adult</span>
+											<select name="adults[]" class="form-control mySelectBoxClass" id="room<?php echo $i ?>-adults"  <?php echo isset($_REQUEST['adults'][$i-1]) ? '' : 'disabled' ?>>
+												<?php for ($k=1; $k <=30 ; $k++) { ?>
+													<option <?php echo isset($_REQUEST['adults'][$i-1]) && $_REQUEST['adults'][$i-1]==$k ? 'selected' : '' ?> value="<?php echo $k; ?>"><?php echo $k; ?></option>
+												<?php } ?>
+											</select>
+										</div>
+									</div>							
+									<div class="w50percentlast">
+										<div class="wh90percent textleft right">
+											<span class="opensans size13">Child</span>
+											<select name="Child[]" class="form-control mySelectBoxClass room<?php echo $i ?>-child" <?php echo isset($_REQUEST['Child'][$i-1]) ? '' : 'disabled' ?>>
+												<?php for ($q=0; $q <=4 ; $q++) { ?>
+													<option <?php echo isset($_REQUEST['Child'][$i-1]) && $_REQUEST['Child'][$i-1]==$q ? 'selected' : '' ?>><?php echo $q; ?></option>
+												<?php } ?>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="row room<?php echo $i; ?>-childAge <?php echo  isset($_REQUEST['room'.$i.'-childAge']) ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
+								<p class="room<?php echo $i; ?>-child-p" style="padding-left: 15px;">Children Age</p>
+
+								<?php for ($k=1; $k <=4 ; $k++) { ?>
+									<div class="col-xs-3 room<?php echo $i; ?>-child<?php echo $k; ?> <?php echo isset($_REQUEST['room'.$i.'-childAge'][$k-1]) ? '' : 'hide' ?>" style="padding-right: 0;">
+										<select name="room<?php echo $i; ?>-childAge[]" class="form-control mySelectBoxClass room<?php echo $i; ?>-childAges<?php echo $k ?> " id="room<?php echo $i; ?>-childAge" <?php echo isset($_REQUEST['room'.$i.'-childAge'][$k-1]) ? '' : 'disabled' ?> >
+											<?php for ($j=0; $j <18 ; $j++) { ?>
+												<option <?php echo isset($_REQUEST['room'.$i.'-childAge'][$k-1]) && $_REQUEST['room'.$i.'-childAge'][$k-1]==$j ? 'selected' : '' ?> value="<?php echo $j ?>"><?php echo $j ?></option>
+											<?php } ?>
+										</select>
+									</div>
+								<?php } ?>
+
+							</div>
+							<div class="row col-md-12">
+								<?php if ($i!=10) { ?>
+									<div class="addroom<?php echo $i; ?> <?php echo isset($_REQUEST['adults'][$i]) ? 'none' : 'block' ?>  grey"><a onclick="addroomcustom<?php echo $i+1; ?>(<?php echo $i+1; ?>)" class="grey cpointer">+ Add room</a> | <a onclick="removeroomcustom<?php echo $i; ?>(<?php echo $i; ?>)" class="orange cpointer"><img src="<?php echo base_url(); ?>skin/images/delete.png" alt="delete"/></a></div>
+								<?php } else { ?>
+									<a onclick="removeroomcustom<?php echo $i; ?>(<?php echo $i; ?>)" class="orange cpointer"><img src="<?php echo base_url(); ?>skin/images/delete.png" alt="delete"/></a>
+								<?php } ?>
+							</div>
+						</div>
+					<?php } ?>
+
+					<div class="clearfix pbottom15"></div>
+					<button type="button" id="search_buttonsm" class="btn-search3 pbottom15" style="width: 100%;margin-bottom: 20px">Search</button>
+				</div>
+							<!-- END OF HOTELS TAB -->
+			</form>
+      </div>
+    </div>
+
+  </div>
+</div>
 <?php init_front_black_tail(); ?> 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
 

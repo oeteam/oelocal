@@ -155,4 +155,77 @@ $(document).ready(function() {
       $('.returncountryname').val();
     }
   });
+
+  /*Mobile view*/
+
+  $("#locationsm").keydown(function(e) {
+    if (e.keyCode == '38') {
+          if ($(".search-dropdown li").hasClass("focus-li")) {
+            index = $(".search-dropdown").children('li.focus-li').index();
+            $(".search-dropdown").children('li').eq(index).removeClass('focus-li');
+            $(".search-dropdown").children('li').eq(index-1).addClass('focus-li');
+            if ($(".search-dropdown").children('li').length == index-1) {
+              $(".search-dropdown li:last-child").addClass('focus-li');
+            }
+          } else {
+            $(".search-dropdown li:last-child").addClass('focus-li');
+          }
+      }
+      else if (e.keyCode == '40') {
+          // down arrow
+          if ($(".search-dropdown li").hasClass("focus-li")) {
+            index = $(".search-dropdown").children('li.focus-li').index();
+            $(".search-dropdown").children('li').eq(index).removeClass('focus-li');
+            $(".search-dropdown").children('li').eq(index+1).addClass('focus-li');
+            if ($(".search-dropdown").children('li').length == index+1) {
+              $(".search-dropdown li:first-child").addClass('focus-li');
+            }
+          } else {
+            $(".search-dropdown li:first-child").addClass('focus-li');
+          }
+      }
+      if (e.keyCode  == 13) {
+        $(".focus-li a").trigger('click');
+      }
+  });
+
+  $("#locationsm").bind('input',function(e) {
+      $('#DropdownCountrysm').slideUp('fast');
+      $('.citycode').val("");
+      $('.cityid').val("");
+      $('.cityname').val("");
+      $('.countryname').val("");
+    if (theXRequest) { theXRequest.abort(); }
+    clearTimeout(xhrTimer); // Clear the timer so we don't end up with dupes.
+      xhrTimer = setTimeout(function () { // assign timer a new timeout 
+        $('#DropdownCountrysm li').remove();
+          theXRequest = $.ajax({
+            dataType: 'json',
+            type: 'post',
+            url: base_url+'welcome/GetCountryName?keyword='+$("#locationsm").val(),
+            cache: false,
+            async: true,
+            success: function (data) {
+              $.each(data, function (key,value) {
+                if (data.length >= 0)
+                 $('#DropdownCountrysm').append('<li  role="displayCountries" ><a CityId="'+value.cityid+'" CityCode="'+value.CityCode+'" CountryName="'+value.CountryName+'" CityName="'+value.CityName+'" role="menuitem dropdownCountryli"  class="dropdownlivalue"><i class="fa fa-map-marker"></i>' + value.CityName + ',<span> ' + value.CountryName + '</span></a></li>');
+                    });
+                $('#DropdownCountrysm').show();
+
+            }
+
+          });
+      }, 500); 
+  });
+
+  $('ul.txtcountry').on('click', 'li a', function () {
+      // alert(tpj(this).attr('CityCode'));
+            $('#locationsm').val($(this).text());
+            $('.citycode').val($(this).attr('CityCode'));
+            $('.cityid').val($(this).attr('CityId'));
+            $('.cityname').val($(this).attr('CityName'));
+            $('.countryname').val($(this).attr('CountryName'));
+            $('#DropdownCountrysm').slideUp('fast');
+            $('#DropdownCountrysm li').remove();
+  });
 });

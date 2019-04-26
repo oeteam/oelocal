@@ -1965,18 +1965,27 @@ background:url('../../images/back-icon.png') #222 no-repeat  scroll -16px -31px;
 	opacity: 1;
 	cursor: pointer;
 }
-
-@media (min-width: 992px) {
-	.listitem {
-    	height: 230px;
+.listitem4 {
+	    height: 111px;
 	}
-}
 @media (max-width: 576px) {
 	.listitem {
     	height: 150px;
 	}
 	.itemlabel3 {
 		height: 260px;
+	}
+	.listitem4 {
+	    height: 111px;
+	}
+	.itemlabel4 {
+	    border: 1px solid #eee;
+	    border-bottom: 3px solid #ccc;
+	    width: 100%;
+	    height: 111px ! important;
+	    font-family: "Open Sans";
+	    font-size: 13px;
+	    line-height: 15px;
 	}
 	.labelleft2 h3 {
 		font-size: 18px
