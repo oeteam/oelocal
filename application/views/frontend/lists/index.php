@@ -406,6 +406,14 @@
 		    margin: 0px;
 		    border: 1px solid white;
 		  }
+  .filter-drom-sm {
+  	    float: left;
+	    display: block;
+	    border: 1px solid white;
+	    background: #04557d;
+	    color: white;
+        width: 100%;
+  }
 @media (max-width: 767px) {
 	.narrow-sm {
 		line-height: 147px ! important;
@@ -463,10 +471,11 @@
 	     
 		  .hotel-rating {
 		  	width: 65px ! important;
-		  	font-size: 11px ! important;
+		  	font-size: 9px ! important;
 		  }
 		  .hotel-view-btn {
 		  	font-size: 11px ! important;
+		  	margin-top: 5px ! important;
 		  }
 		  .rightcontent {
 		  	margin-top: -35px ! important;
@@ -514,7 +523,7 @@
 							<p class="size13">Narrow results 
 						</p>
 					</div>
-					<p class="hidden-lg narrow-sm"> Total <span class="size18 bold counthotel"></span> <span class="htlcnt">Hotels</span>
+					<p class="hidden-lg hidden-md narrow-sm"> Total <span class="size18 bold counthotel"></span> <span class="htlcnt">Hotels</span>
 						<span class="size13">starting at </span><span class="size18 bold"><?php echo $agent_currency; ?> <span class="countprice"></span></span> <span class="size13">Narrow results</span>
 					</p>
 					<div class="tip-arrow"></div>
@@ -785,69 +794,69 @@
 							<div class="hpadding20">
 								<div class="checkbox">
 									<label>
-										<?php if(isset($_REQUEST['rating5']) && $_REQUEST['rating5']=="5") { ?>
-											<input type="checkbox" class="rating" checked="" name="rating5" value="5">
-										<?php } else { ?> 
-											<input type="checkbox" class="rating"  name="rating5" value="5">
-											<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
-										</label>
-									</div>
-									<div class="checkbox">
-										<label>
-											<?php if(isset($_REQUEST['rating4']) && $_REQUEST['rating4']=="4") { ?>
-												<input type="checkbox" class="rating" checked="" name="rating4" value="4">
-											<?php } else { ?> 
-												<input type="checkbox" class="rating"  name="rating4" value="4">
-												<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
-											</label>
-										</div>
-										<div class="checkbox">
-											<label>
-												<?php if(isset($_REQUEST['rating3']) && $_REQUEST['rating3']=="3") { ?>
-													<input type="checkbox" class="rating" checked="" name="rating3" value="3">
-												<?php } else { ?> 
-													<input type="checkbox" class="rating"  name="rating3" value="3">
-													<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
-												</label>
-											</div>
-											<div class="checkbox">
-												<label>
-													<?php if(isset($_REQUEST['rating2']) && $_REQUEST['rating2']=="2") { ?>
-														<input type="checkbox" class="rating" checked="" name="rating2" value="2">
-													<?php } else { ?> 
-														<input type="checkbox" class="rating"  name="rating2" value="2">
-														<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
-													</label>
-												</div>
-												<div class="checkbox">
-													<label>
-														<?php if(isset($_REQUEST['rating1']) && $_REQUEST['rating1']=="1") { ?>
-															<input type="checkbox" class="rating" checked="" name="rating1" value="1">
-														<?php } else { ?> 
-															<input type="checkbox" class="rating"  name="rating1" value="1">
-															<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-1.png" class="imgpos1" alt=""/> 1 Star
-														</label>
-													</div>
-													<div class="checkbox">
-														<label>
-															<?php if(isset($_REQUEST['rating10']) && $_REQUEST['rating10']=="10") { ?>
-																<input type="checkbox" class="rating" checked="" name="rating10" value="10">
-															<?php } else { ?> 
-																<input type="checkbox" class="rating"  name="rating10" value="10">
-																<?php }?><i class="fa fa-building" style="margin-left: 10px; color: #1280b7;"></i> Appartment
-															</label>
-														</div>
-													</div>
-													<div class="clearfix"></div>
-												</div>
+									<?php if(isset($_REQUEST['rating5']) && $_REQUEST['rating5']=="5") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating5" value="5">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating5" value="5">
+										<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+									<?php if(isset($_REQUEST['rating4']) && $_REQUEST['rating4']=="4") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating4" value="4">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating4" value="4">
+										<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+									<?php if(isset($_REQUEST['rating3']) && $_REQUEST['rating3']=="3") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating3" value="3">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating3" value="3">
+										<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+									<?php if(isset($_REQUEST['rating2']) && $_REQUEST['rating2']=="2") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating2" value="2">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating2" value="2">
+										<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+									<?php if(isset($_REQUEST['rating1']) && $_REQUEST['rating1']=="1") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating1" value="1">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating1" value="1">
+										<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-1.png" class="imgpos1" alt=""/> 1 Star
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+									<?php if(isset($_REQUEST['rating10']) && $_REQUEST['rating10']=="10") { ?>
+										<input type="checkbox" class="rating" checked="" name="rating10" value="10">
+									<?php } else { ?> 
+										<input type="checkbox" class="rating"  name="rating10" value="10">
+										<?php }?><i class="fa fa-building" style="margin-left: 10px; color: #1280b7;"></i> Appartment
+									</label>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
 												<!-- End of Star ratings -->	
 
-												<div class="line2"></div>
+						<div class="line2"></div>
 
 												<!-- Price range -->					
-												<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse2">
-													Price range <?php echo $agent_currency; ?> <span class="collapsearrow"></span>
-												</button>
+						<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse2">
+							Price range <?php echo $agent_currency; ?> <span class="collapsearrow"></span>
+						</button>
 
 												<div id="collapse2" class="collapse in">
 													<div class="padding20">
@@ -973,12 +982,26 @@
 				</div>
 				
         	</div>
-        	<div class="hidden-lg">
+        	<div class="hidden-lg hidden-md">
 		        <div class="row" style="position: fixed;width: 100%;display: block;margin: -1.5px;bottom: 0;">
 		        	<button class="bottom-btn-sm" data-toggle="modal" data-target="#searchModal"><i class="fa fa-search"></i></button>
-		        	<button class="bottom-btn-sm"><i class="fa fa-money"></i></button>
-		        	<button class="bottom-btn-sm"><i class="fa fa-star-half-o"></i></button>
-		        	<button class="bottom-btn-sm"><i class="fa fa-filter"></i></button>
+		        	<div class="btn-group dropup" style="width: 25%;float: left">
+					  	<button type="button" style="width: 100%" class="bottom-btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    <i class="fa fa-money"></i>
+					  	</button>
+						  <div class="dropdown-menu">
+						    <li class="btn filter-drom-sm" onclick="filtersmrate('1')" style="">Low to High</li>
+						    <li class="btn filter-drom-sm" onclick="filtersmrate('2')" style="">High to Low</li>
+						  </div>
+					</div>
+					<div class="btn-group dropup" style="width: 25%;float: left">
+			        	<button style="width: 100%" class="bottom-btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-star-half-o"></i></button>
+			        	<div class="dropdown-menu">
+						    <li class="btn filter-drom-sm" onclick="filtersmstar('1')">5 to 1</li>
+						    <li class="btn filter-drom-sm" onclick="filtersmstar('1')">1 to 5</li>
+					    </div>
+					</div>
+		        	<button class="bottom-btn-sm" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i></button>
 		        </div>	
 		    </div>
     </div>
@@ -1006,8 +1029,8 @@
     <!-- Modal content-->
     <div class="modal-content" style="height: 100%;">
       <div class="modal-header" style="background: #006699;color: white;">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Filter Search</h4>
+        <button type="button" class="close" data-dismiss="modal" style="opacity: 2;color: white;">&times;</button>
+        <h4 class="modal-title">Search By</h4>
       </div>
       <div class="modal-body">
       	<form id="Mian_search_form_sm">
@@ -1185,6 +1208,255 @@
 				</div>
 							<!-- END OF HOTELS TAB -->
 			</form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="filterModal" class="modal bottom fade" role="dialog">
+  <div class="modal-dialog" style="margin: 0;padding: 0;height: 100%;">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="height: 100%;">
+      <div class="modal-header" style="background: #006699;color: white;">
+        <button type="button" class="close" data-dismiss="modal" style="opacity: 2;color: white;">&times;</button>
+        <h4 class="modal-title">Filter By</h4>
+      </div>
+      <div class="modal-body" style="padding-top: 20px;padding-bottom: 20px;padding-left: 0px;padding-right:0px; ">
+      	<form id="search_form_sm">
+      		<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
+			<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
+			<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
+			<input type="hidden" name="mark_up" value="<?php echo $_REQUEST['mark_up'] ?>">
+			<input type="hidden" name="Check_in" value="<?php echo $_REQUEST['Check_in'] ?>">
+			<input type="hidden" name="Check_out" value="<?php echo $_REQUEST['Check_out'] ?>">
+			<input type="hidden" name="view_type" value="<?php echo $_REQUEST['view_type'] ?>">
+			<input type="hidden" name="location" value="<?php echo $_REQUEST['location'] ?>">
+			<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
+			<input type="hidden" name="hotel_name" value="<?php echo $_REQUEST['hotel_name'] ?>">
+			<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>" id="page">
+			<input type="hidden" name="view_type" id="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
+			<?php foreach ($_REQUEST['adults'] as $key => $value) { ?>
+				<input type="hidden" name="adults[]" value="<?php echo $value ?>">
+			<?php } ?>
+			<?php foreach ($_REQUEST['Child'] as $key => $value) { ?>
+				<input type="hidden" name="Child[]" value="<?php echo $value ?>">
+			<?php } ?>
+			<?php if (isset($_REQUEST['room1-childAge'])) {
+					foreach ($_REQUEST['room1-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room1-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room2-childAge'])) {
+					foreach ($_REQUEST['room2-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room2-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room3-childAge'])) {
+					foreach ($_REQUEST['room3-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room3-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room4-childAge'])) {
+					foreach ($_REQUEST['room4-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room4-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room5-childAge'])) {
+					foreach ($_REQUEST['room5-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room5-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room6-childAge'])) {
+					foreach ($_REQUEST['room6-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room6-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room7-childAge'])) {
+					foreach ($_REQUEST['room7-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room7-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room8-childAge'])) {
+					foreach ($_REQUEST['room8-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room8-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room9-childAge'])) {
+					foreach ($_REQUEST['room9-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room9-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<?php if (isset($_REQUEST['room10-childAge'])) {
+					foreach ($_REQUEST['room10-childAge'] as $key => $value) { ?>
+						<input type="hidden" name="room10-childAge[]" value="<?php echo $value; ?>">
+			<?php   }
+			} ?>
+			<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse6sm">
+				Hotel Name <span class="collapsearrow" style="margin-top: 0px"><i class="fa fa-plus" aria-hidden="true"></i></span>
+			</button>
+			<div id="collapse6sm" class="collapse in">
+				<div class="hpadding20">
+					<input type="text" name="hotel_name_filter" id="hotel_name_filtersm" placeholder="Hotel name" class="form-control" value="" style="margin-top: 10px;margin-bottom: 10px; ">
+				</div>
+			</div>
+			<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse1sm">
+				Star rating <span class="collapsearrow" style="margin-top: 0px"><i class="fa fa-plus" aria-hidden="true"></i></span>
+			</button>
+			<div id="collapse1sm" class="collapse in">
+				<div class="hpadding20">
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating5']) && $_REQUEST['rating5']=="5") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating5" value="5">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating5" value="5">
+							<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating4']) && $_REQUEST['rating4']=="4") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating4" value="4">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating4" value="4">
+							<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating3']) && $_REQUEST['rating3']=="3") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating3" value="3">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating3" value="3">
+							<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating2']) && $_REQUEST['rating2']=="2") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating2" value="2">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating2" value="2">
+							<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating1']) && $_REQUEST['rating1']=="1") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating1" value="1">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating1" value="1">
+							<?php }?><img src="<?php echo base_url(); ?>skin/images/filter-rating-1.png" class="imgpos1" alt=""/> 1 Star
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+						<?php if(isset($_REQUEST['rating10']) && $_REQUEST['rating10']=="10") { ?>
+							<input type="checkbox" class="rating-sm" checked="" name="rating10" value="10">
+						<?php } else { ?> 
+							<input type="checkbox" class="rating-sm"  name="rating10" value="10">
+							<?php }?><i class="fa fa-building" style="margin-left: 10px; color: #1280b7;"></i> Appartment
+						</label>
+					</div>
+				</div>
+			</div>
+			<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse5sm">
+				Sort By <span class="collapsearrow" style="margin-top: 0px"><i class="fa fa-plus" aria-hidden="true"></i></span>
+			</button>
+			<div id="collapse5sm" class="collapse in">
+				<div class="hpadding20">
+					<div style="margin-top:10px ">
+						<select name="name_order" class="name-filter-sm form-control">
+							<option value="">Name</option>
+							<option value="1">A to Z</option>
+							<option value="2">Z to A</option>
+						</select>
+						<select name="guest_rating" class="star-filter-sm form-control" style="margin-top:10px ">
+							<option value="">Stars</option>
+							<option  value="1">stars [5->1]</option>
+							<option  value="2">stars [1->5]</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="col-xs-12">
+			<button type="button"  onclick="applyfilter();" class="btn-search3 pbottom15" style="width: 90%; margin-top: 5%;">Apply Filter</button>
+			<button type="button" onclick="clearfilter();" class="btn-search3 pbottom15" style="width: 90%; margin-top: 21%;background: #006699;border: 1px solid #2376a0;">Clear Filter</button>
+			</div>
+			<input type="hidden" name="hotel_id">
+			<input type="hidden" name="roomIndex">
+			<input type="hidden" name="resultIndex">
+			<input type="hidden" name="Reqtype">
+			<input type="hidden" name="roomName">
+			<input type="hidden" name="temp" value="0">
+			<input type="hidden" name="listarray" value="">
+			<input type="hidden" name="price" value="10;10000000000" />
+			<input type="hidden" id="price_order_sm" name="price_order" value="">
+  		</form>
+  		<script type="text/javascript">
+  			function clearfilter() {
+				$("#hotel_name_filtersm").val("");
+				$(".rating-sm").prop("checked",false);
+				$(".name-filter-sm").prop("selected",true).val("");
+				$(".star-filter-sm").prop("selected",true).val("");
+				$("#price_order_sm").val("");
+			}
+			function filtersmrate(val) {
+				$("#price_order_sm").val(val);
+				applyfilter();
+			}
+			function filtersmstar(val) {
+				$(".star-filter-sm option").attr("value",val).prop("selected",true);
+				applyfilter();
+			}
+			function applyfilter() {
+				$(".close").trigger("click");
+			  hotelLoading('start');
+			  $.ajax({
+			      dataType: 'json',
+			      type: 'post',
+			      url: base_url+'lists/search_list',
+			      data: $('#search_form_sm').serialize(),
+			      cache: false,
+			      // async: false,
+			      success: function (response) {
+			        hotelLoading('stop');
+			        $("#rotateBanner").html(response.rotateHotels);
+			        $("#result_search").html(response.list);
+			        count(response.counthotel,response.countprice);
+			        StartAnime2();
+
+			        $('.hotel-more-btn').click(function() {
+			          var toggled = $(this).closest('.offset-2').find('.more-wrap').hasClass('in');
+			        $('.hotel-more-btn').children('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+			          $('.hotel-more-btn').children('span').text('More Details');
+			          if (toggled) {
+			            $('.more-wrap').removeClass('in');
+			            $('.more-wrap').slideUp();
+			            $(this).children('span').text('More Details');
+			            $(this).children('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+			          }
+			          else {
+			            $('.more-wrap').removeClass('in');
+			            $('.more-wrap').slideUp('fast');
+			            $(this).children('span').text('Hide Details');
+			            $(this).children('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+			            $(this).closest('.offset-2').find('.more-wrap').addClass('in');
+			            $(this).closest('.offset-2').find('.more-wrap').slideDown();
+			          }
+			       });
+			        
+
+			      }/*,
+			       error: function (xhr,status,error) {
+			         alert("Error: " + error);
+			      }*/
+			    });
+			}
+  		</script>
       </div>
     </div>
 

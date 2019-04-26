@@ -323,7 +323,7 @@ class lists extends MY_Controller {
             '.$value->BookBtn.'
             </div>
             <div class="labelleft2">      
-            <a  target="'.$target.'" class="'.$reqClass.'" href="'.$reqDetails.'"><H3 style="font-size:14px;">'.$value->HotelName.'</H3></a>
+            <a  target="'.$target.'" class="'.$reqClass.'" href="'.$reqDetails.'"><H3 style="font-size:11px;">'.$value->HotelName.'</H3></a>
             '.$value->RatingImg.'
             <img src="'.$value->ReviewImg.'" class="review-sm" width="70" alt=""/>
             <ul class="hotelpreferences--search">

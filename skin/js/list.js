@@ -95,6 +95,8 @@ $(document).ready(function() {
       window.location.href=base_url+'lists/index?'+req;
     }
 
+
+    
   });
 
   search_ajax();
