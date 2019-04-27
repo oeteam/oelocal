@@ -76,7 +76,7 @@
 	  transform: translateY(-50%);
 	}
 </style>
-	<div class="container breadcrub">
+	<div class="container breadcrub  hidden-xs">
 		<ol class="track-progress" data-steps="5">
 	      <li class="done">
 	        <span>Search</span>

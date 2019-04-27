@@ -348,7 +348,11 @@ $(document).ready(function() {
        /* Extra small devices (phones, 600px and down) */
         @media(max-width: 600px) {
           .guest-table {
-           width:100%;
+              width: 100%;
+              margin-bottom: 15px;
+              overflow-x: scroll;
+              overflow-y: hidden;
+              border: 1px solid #dddddd
           }
           .container {
             margin-right: -10px;
@@ -362,6 +366,9 @@ $(document).ready(function() {
           .container > .navbar-header, .container > .navbar-collapse {
             margin-right: 31px; 
             margin-left: 47px; 
+            }
+            #book-progress{
+              width:100%;
             }
         } 
 
@@ -592,12 +599,12 @@ $(document).ready(function() {
               <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
           <div class="row">
-            <div class="col-sm-12 table-responsive">
+            <div class="col-sm-12">
               <table class="table table-bordered guest-table">
                 <thead>
                   <tr>
-                    <th style="width: 50px" class="text-center">#</th>
-                    <th style="width: 150px">Adult/Children</th>
+                    <th class="text-center col-1">#</th>
+                    <th class="col-2">Adult/Children</th>
                     <th style="width: 90px">Title</th>
                     <th>First Name</th>
                     <th>Last Name</th>
