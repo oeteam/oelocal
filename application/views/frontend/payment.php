@@ -178,14 +178,67 @@
 	  font-weight: bold;
 	  border-radius: 0 0 6px 6px;
 	}
+	/* Extra small devices (phones, 600px and down) */
+        @media(max-width: 600px) {
+        	.bor-sm {
+            border-right: none ! important;
+          }
+          .guest-table {
+              width: 100%;
+              margin-bottom: 15px;
+              overflow-x: scroll;
+              overflow-y: hidden;
+              border: 1px solid #dddddd
+          }
+          .container {
+            margin-right: -10px;
+            margin-left: -24px;
+            padding-right: 0px;
+            padding-left: 0px;
+          }
+          .booking-summary {
+            margin-top: 39px;
+          }
+          .container > .navbar-header, .container > .navbar-collapse {
+            margin-right: 31px; 
+            margin-left: 47px; 
+            }
+            #book-progress{
+              width:100%;
+            }
+        } 
+
+        /* Small devices (portrait tablets and large phones, 600px and up) */
+        @media(min-width: 600px) {
+          .guest-table {
+            width: 100%;
+          }
+           .booking-summary {
+            margin-top: 39px;
+          }
+        } 
+
+        /* Medium devices (landscape tablets, 768px and up) */
+        @media (min-width: 768px) {
+          .guest-table {
+            width:100%;
+          }
+        } 
+
+        /* Large devices (laptops/desktops, 992px and up) */
+        @media(min-width: 992px) {
+          .guest-table {
+            width: 100%;
+          }
+        } 
+         /* Extra large devices (large laptops and desktops, 1200px and up) */
+        @media(min-width: 1200px) {
+          .guest-table {
+            width: 100%;
+          }
+        }
 </style>
 <script>
-window.onhashchange = function() {
- 	alert("dfg");
-}
-function goBack() {
-    window.history.back();
-}
 defaultRateCheck(); 
 
 function defaultRateCheck() {
@@ -288,7 +341,7 @@ function ConSelectFun(){
 <style type="text/css">
 	
 </style>
-	<div class="container breadcrub">
+	<div class="container breadcrub hidden-xs">
 		<ol class="track-progress" data-steps="5">
 	      <li class="done">
 	        <span>Search</span>
@@ -329,7 +382,7 @@ function ConSelectFun(){
 	<div class="container">
 		<form method="get" name="payment_form" id="payment_form">
 			<div class="col-sm-12 mt25 booking-summary">
-		        <div class="pagecontainer2 padding30 p-t-0">
+		        <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px">
 		          <h3 class="text-green">Booking Summary <span class="right text-right booking-timer">
 		              <small>Time Left : <b id="timeLeft">30:18</b></small>
 		              <progress id="book-progress" value="98" max="100"></progress>
@@ -338,7 +391,7 @@ function ConSelectFun(){
 
 		          <div class="row">
 		            <div class="col-sm-3">
-		              <img src="<?php echo base_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20" width="100%" alt="">
+		              <img src="<?php echo base_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20 hidden-xs" width="100%" alt="">
 		              <p><span class="bold"><?php echo $view[0]->hotel_name ?></span></p>
 		              <p>
 		              	<?php if ($view[0]->rating==10) { ?>
@@ -354,11 +407,11 @@ function ConSelectFun(){
 
 		              <div class="padding20 margtop15" style="background-color: #f0f9ff">
 		                <div class="row booking-details-info">
-		                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+		                  <div class="col-sm-3 col-xs-6 text-center" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check in date</span><br>
 		                    <span class="text-blue"><?php echo $_REQUEST['Check_in']; ?></span>
 		                  </div>
-		                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+		                  <div class="col-sm-3 col-xs-6 text-center bor-sm" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check out date</span><br>
 		                    <span class="text-blue"><?php echo $_REQUEST['Check_out']; ?></span>
 		                  </div>
@@ -371,10 +424,10 @@ function ConSelectFun(){
 		            			}
 		                    	$adultss= array_sum($_REQUEST['adults']); 
 		                    ?>
-		                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+		                  <div class="col-sm-3 col-xs-6 text-center" style="border-right: 1px dashed #bbb">
 		                    <label class="margtop10 text-muted">Adult(s) <span class="badge bg-blue"><?php echo $adultss ?></span></label>
 		                  </div>
-		                  <div class="col-sm-3 text-center">
+		                  <div class="col-sm-3 col-xs-6 text-center">
 		                    <label class="margtop10 text-muted">Children(s) <span class="badge bg-blue"><?php echo $childs ?></span></label>
 		                  </div>
 		                </div>
@@ -442,16 +495,16 @@ function ConSelectFun(){
 	         			<h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
 		              <div class="row">
-			            <div class="col-sm-12">
+			            <div class="col-sm-12 col-xs-12">
 			              <table class="table table-bordered guest-table">
 			                <thead>
 			                  <tr>
-			                    <th style="width: 50px" class="text-center">#</th>
-			                    <th style="width: 150px">Adult/Children</th>
-			                    <th style="width: 90px">Title</th>
-			                    <th>First Name</th>
-			                    <th>Last Name</th>
-			                    <th style="width: 90px" class="text-center">Age</th>
+			                    <th style="width: 5%" class="text-center">#</th>
+	                          <th style="width: 30%">Adult/Children</th>
+	                          <th style="width: 15%">Title</th>
+	                          <th style="width: 25%">First Name</th>
+	                          <th style="width: 25%">Last Name</th>
+	                          <th style="width: 15%"class="text-center">Age</th>
 			                  </tr>
 			                </thead>
 			                <tbody class="guesttbody">

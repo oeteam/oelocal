@@ -604,7 +604,7 @@ $(document).ready(function() {
               <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
           <div class="row">
-            <div class="col-sm-12" style="overflow-x: scroll;">
+            <div class="col-sm-12" >
               <table class="table table-bordered guest-table">
                 <thead>
                   <tr>
@@ -704,7 +704,8 @@ $(document).ready(function() {
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
                        <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?>
-                     <?php if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                     <?php 
+                     if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
                                   $cancelList = $value['CancelPolicies']['CancelPolicy'];
                                 } else {
                                   $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
