@@ -88,7 +88,7 @@
 	}
 
 	.r-type--room ul > li > label > input[type="radio"] + div > h5 > i {
-	  display: none;
+	 /* display: none;*/
 	}  
 
 	.r-type--room ul > li > label > input[type="radio"] + div.availability  > h5 > i:first-child {
@@ -104,23 +104,27 @@
 		border: 1px solid #5cb880 ! important;
 		filter: grayscale(0) ! important;
 	}
-	.r-type--room ul > li > label > input[type="radio"]:checked + div {
-	  border: 1px solid #5cb880;
-	  opacity: 1;
-	  filter: none;
-	}
+    .r-type--room ul > li > label > input[type="radio"]:disabled + div  > h5 > i:first-child {          display: none;
+    }
 
-	.r-type--room ul > li > label > input[type="radio"]:checked + div > h5 > i {
-	  display: inline;
-	  margin-right: 2px;
-	}
+    .r-type--room ul > li > label > input[type="radio"]:checked + div {
+      border: 1px solid #5cb880;
+      opacity: 1;
+      filter: none;
+    }
 
-	.r-type--room ul > li > label > input[type="radio"]:checked + div.availability  > h5 > i:first-child {
-	  display: inline;
-	}
-	.r-type--room ul > li > label > input[type="radio"]:checked + div.availability  > h5 > i:last-child {
-	  display: none;
-	}
+    .r-type--room ul > li > label > input[type="radio"]:checked + div > h5 > i {
+      display: none;
+      margin-right: 2px;
+    }
+
+    .r-type--room ul > li > label > input[type="radio"]:checked + div.availability  > h5 > i:first-child {
+      display: inline;
+    }
+    .r-type--room ul > li > label > input[type="radio"]:checked + div.availability  > h5 > i:last-child {
+      display: none;
+    }
+
 
 	.r-type--name {
 	  font-size: 12px;
@@ -178,9 +182,9 @@
 	  font-weight: bold;
 	  border-radius: 0 0 6px 6px;
 	}
-	/* Extra small devices (phones, 600px and down) */
+	 /* Extra small devices (phones, 600px and down) */
         @media(max-width: 600px) {
-        	.bor-sm {
+    		.bor-sm {
             border-right: none ! important;
           }
           .guest-table {
@@ -336,12 +340,39 @@ function ConSelectFun(){
         }
     });
 }
+$(document).ready(function() {
+	if (window.history && window.history.pushState) {
+
+	    $(window).on('popstate', function() {
+	        	alert(hashName);
+	      var hashLocation = location.hash;
+	      var hashSplit = hashLocation.split("#!/");
+	      var hashName = hashSplit[1];
+
+	      if (hashName !== '') {
+	        var hash = window.location.hash;
+	        if (hash === '') {
+	          window.location = "<?php echo base_url('hotels') ?>";
+	        }
+	      }
+	    });
+
+	    window.history.pushState('forward', null, './payment');
+	  }
+  
+  $(".cancellation-span").hover(function(){
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
+    }, function(){
+    $(this).closest('.av-div').find('.cancellation-table').css("display", "none");
+  });
+})
 </script>
 
 <style type="text/css">
 	
 </style>
 	<div class="container breadcrub hidden-xs">
+
 		<ol class="track-progress" data-steps="5">
 	      <li class="done">
 	        <span>Search</span>
@@ -573,12 +604,41 @@ function ConSelectFun(){
 		                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $value['RoomIndex'] ?>" value="Room<?php echo $value['RoomIndex'] ?>">
 		                    <div class="av-div availability">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - 
-		                      <?php echo $value['board'] ?>
+		                      <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
 	                  		  </h5>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
 		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>
 		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>
 		                  	 <?php } } ?>
+		                  	 	<table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
+                          <thead style="background: #0074b9;color: white;">
+                            <tr>
+                              <td>Cancelled on or After</td>
+                              <td>Cancelled on or Before</td>
+                              <td>Cancellation Charge</td>
+                              <td>Description</td>
+                            </tr>
+                          </thead>
+                         <tbody> 
+
+					    	<?php 
+					    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
+					    	foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
+					    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
+					    			<tr>
+					    				<td colspan="4">This booking is Nonrefundable.</td>
+					    			</tr>
+					    		<?php } else { ?>
+							    	<tr>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
+							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
+							    	</tr>
+							    <?php } 
+							} ?>
+				    	</tbody>
+                        </table>
 		                      <p class="text-green m-0 bold">
 		                      	<input type="hidden" class="RequestType" value="<?php echo $value['RequestType'] ?>">
 		                      	<input type="hidden" class="room_id" value="<?php echo $value['room_id'] ?>">
