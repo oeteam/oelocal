@@ -392,8 +392,15 @@ function getdetails(roomindex,hotelcode,name,adrs,pic,rating,roomName,sessionid,
           strdate = new Date();
           var date = moment(strdate).format('YYYYMMDDHHmmss');
           url = base_url+'payment/payments?'+$('#search_form').serialize();
-          window.open(url+"&&token="+date,'_blank');
-        }
+          window.location = url+"&token="+date;
+          // window.open(url+"&token="+date,'_blank');
+        }, 
+         error: function(xhr,err){
+            strdate = new Date();
+            var date = moment(strdate).format('YYYYMMDDHHmmss');
+            window.location = url+"&token="+date;
+        // window.open(url+"&token="+date,'_blank');
+         }
     });
 }
 function hoteldetails(roomindex,hotelcode,name,adrs,pic,rating,roomName,sessionid,resultindex) {
@@ -411,8 +418,15 @@ function hoteldetails(roomindex,hotelcode,name,adrs,pic,rating,roomName,sessioni
           strdate = new Date();
           var date = moment(strdate).format('YYYYMMDDHHmmss');
           url = base_url+'payment/payments?'+$('#search_form').serialize();
-          window.open(url+"&token="+date,'_blank');
-        }
+          window.location = url+"&token="+date;
+          // window.open(url+"&token="+date,'_blank');
+        }, 
+         error: function(xhr,err){
+            strdate = new Date();
+            var date = moment(strdate).format('YYYYMMDDHHmmss');
+            window.location = url+"&token="+date;
+            // window.open(url+"&token="+date,'_blank');
+         }
     });
 }
 

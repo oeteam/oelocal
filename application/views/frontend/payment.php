@@ -180,6 +180,9 @@
 	}
 </style>
 <script>
+window.onhashchange = function() {
+ 	alert("dfg");
+}
 function goBack() {
     window.history.back();
 }

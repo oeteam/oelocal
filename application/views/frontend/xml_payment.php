@@ -348,6 +348,9 @@ $(document).ready(function() {
         }
        /* Extra small devices (phones, 600px and down) */
         @media(max-width: 600px) {
+          .bor-sm {
+            border-right: none ! important;
+          }
           .guest-table {
               width: 100%;
               margin-bottom: 15px;
@@ -375,6 +378,7 @@ $(document).ready(function() {
 
         /* Small devices (portrait tablets and large phones, 600px and up) */
         @media(min-width: 600px) {
+
           .guest-table {
             width: 100%;
           }
@@ -471,7 +475,7 @@ $(document).ready(function() {
     </form>
   <form method="get" name="xml_payment_form" id="xml_payment_form">
   <div class="col-sm-12 mt25 booking-summary">
-        <div class="pagecontainer2 padding30 p-t-0">
+        <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px;">
           <h3 class="text-green">Booking Summary <span class="right text-right booking-timer">
               <small>Time Left : <b id="timeLeft">30:18</b></small>
               <progress id="book-progress" value="98" max="100"></progress>
@@ -480,7 +484,7 @@ $(document).ready(function() {
 
           <div class="row">
             <div class="col-sm-3">
-              <img src="<?php echo $HotelPicture ?>" class="margtop20  .img-responsive" width="100%" alt="">
+              <img src="<?php echo $HotelPicture ?>" class="margtop20  img-responsive hidden-xs" width="100%" alt="">
               <p><span class="bold"><?php echo $HotelName ?></span></p>
               <?php if ($HotelRating =='OneStar' || $HotelRating =='1') {
               $star = '1';
@@ -501,11 +505,11 @@ $(document).ready(function() {
 
               <div class="padding20 margtop15" style="background-color: #f0f9ff">
                 <div class="row booking-details-info">
-                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+                  <div class="col-sm-3 col-xs-6 text-center" style="border-right: 1px dashed #bbb">
                     <span class="text-muted m-0">Check in date</span><br>
                     <span class="text-blue"><?php echo $viwedate1; ?></span>
                   </div>
-                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+                  <div class="col-sm-3 col-xs-6 text-center bor-sm" style="border-right: 1px dashed #bbb">
                     <span class="text-muted m-0">Check out date</span><br>
                     <span class="text-blue"><?php echo $viwedate2; ?></span>
                   </div>
@@ -518,10 +522,10 @@ $(document).ready(function() {
                   }
                       $adultss= array_sum($_REQUEST['adults']); 
                     ?>
-                  <div class="col-sm-3 text-center" style="border-right: 1px dashed #bbb">
+                  <div class="col-sm-3 col-xs-6 text-center" style="border-right: 1px dashed #bbb">
                     <label class="margtop10 text-muted">Adult(s) <span class="badge bg-blue"><?php echo $adultss ?></span></label>
                   </div>
-                  <div class="col-sm-3 text-center">
+                  <div class="col-sm-3 col-xs-6 text-center">
                     <label class="margtop10 text-muted">Children(s) <span class="badge bg-blue"><?php echo $childs ?></span></label>
                   </div>
                 </div>
@@ -600,7 +604,7 @@ $(document).ready(function() {
               <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
 
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12" style="overflow-x: scroll;">
               <table class="table table-bordered guest-table">
                 <thead>
                   <tr>
@@ -701,16 +705,21 @@ $(document).ready(function() {
                     <div class="av-div">
                        <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?>
                      <?php if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
-                              $cancelList = $value['CancelPolicies']['CancelPolicy'];
+                                  $cancelList = $value['CancelPolicies']['CancelPolicy'];
                                 } else {
-                              $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
+                                  $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
                                } 
-                               if($cancelList[0]['@attributes']['CancellationCharge']==100) { ?>
-                                  <span class="pull-right cancellation-span">cancellation<span></h5>
+                               if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                                  $NoShowPolicy = $value['CancelPolicies']['NoShowPolicy'];
+                                } else {
+                                  $NoShowPolicy[0] = $value['CancelPolicies']['NoShowPolicy'];
+                               } 
+                               if(isset($cancelList[0]['@attributes']) && $cancelList[0]['@attributes']['CancellationCharge']==0) { ?>
+                                <span class="pull-right cancellation-span">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
                                <?php } else { ?>
-                                  <span class="pull-right">Free of Cancellation till<?php echo $cancelList[0]['@attributes']['ToDate']?> <span></h5>
+                                  <span class="pull-right cancellation-span">cancellation<span>
                               <?php } ?>
-                     
+                        </h5>
 
                         <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
@@ -722,7 +731,8 @@ $(document).ready(function() {
                           </thead>
                           <tbody style="background: white;color: black;">
                             <?php 
-                              foreach ($cancelList as $key => $value1) {
+                              if (isset($cancelList[0]['@attributes'])) {
+                                foreach ($cancelList as $key => $value1) {
                             ?>
                             <tr>
                               <td><?php echo $value1['@attributes']['FromDate'] ?></td>
@@ -734,7 +744,22 @@ $(document).ready(function() {
                                 } ?> 
                               </td>
                             </tr>
-                          <?php } ?>
+                          <?php } } ?>
+                          <?php 
+                              if (isset($NoShowPolicy[0]['@attributes'])) {
+                                foreach ($NoShowPolicy as $key => $value1) {
+                            ?>
+                            <tr>
+                              <td><?php echo $value1['@attributes']['FromDate'] ?></td>
+                              <td><?php echo $value1['@attributes']['ToDate'] ?></td>
+                              <td><?php echo $value1['@attributes']['CancellationCharge']; if($value1['@attributes']['ChargeType']=='Percentage') { 
+                                  echo '%' ; 
+                                } else { 
+                                  echo ' USD'; 
+                                } ?> 
+                              </td>
+                            </tr>
+                          <?php } } ?>
                           <tr>
                             <td colspan="3">
                               <?php echo $value['CancelPolicies']['DefaultPolicy']?>

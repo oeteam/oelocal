@@ -113,6 +113,7 @@
 			$('.room<?php echo $i ?>').removeClass('none');
 
 			$("#room"+id+"-adults").removeAttr("disabled");
+			$("#room"+id+"-adultssm").removeAttr("disabled");
 			$(".room"+id+"-child").removeAttr("disabled");
 
 			$('.addroom<?php echo $i-1 ?>').removeClass('block');
@@ -125,6 +126,7 @@
 			$('.addroom<?php echo $i-1 ?>').removeClass('none');
 			$('.addroom<?php echo $i-1 ?>').addClass('block');			
 			$("#room"+id+"-adults").attr("disabled","disabled");
+			$("#room"+id+"-adultssm").attr("disabled","disabled");
 			$(".room"+id+"-child").attr("disabled","disabled");
 		}
 	<?php } ?>
@@ -904,52 +906,52 @@
 											</div>
 											<!-- END OF FILTERS -->
 
-											<!-- LIST CONTENT-->
-											<div class="rightcontent col-md-9 offset-0">
-												<div class="spin-wrapper" style="display: none">
-													<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
-												</div>
-
-												<div class="hpadding20">
-													<!-- Top filters -->
-													<div class="topsortby hidden-xs">
-														<div class="col-md-3 offset-0">
-
-															<div class="left mt7"><b>Sort by:</b></div>
-
-															<div class="right wh70percent">
-																<select name="guest_rating" id="guest_rating" class="form-control mySelectBoxClass ">
-																	<option value="">Stars</option>
-																		<option  value="1">stars [5->1]</option>
-																		<option  value="2">stars [1->5]</option>
-																</select>
-															</div>
-
-														</div>			
-														<div class="col-md-3">
-															<div class="w90percent">
-																<div class="wh90percent">
-																	<select name="name_order" id="name_order" class="form-control mySelectBoxClass ">
-																		<option selected>Name</option>
-																		<option value="1">A to Z</option>
-																		<option value="2">Z to A</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-													<div class="col-md-2">
-									<div class="w90percentlast">
-										<div class="wh100percent">
-											<select name="price_order" id="price_order" class="form-control mySelectBoxClass ">
-											  <option selected>Price</option>
-											  <option value="1">Ascending</option>
-											  <option value="2">Descending</option>
-											</select>
-										</div>
-									</div>					
+					<!-- LIST CONTENT-->
+					<div class="rightcontent col-md-9 offset-0">
+						<div class="spin-wrapper" style="display: none">
+							<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
 						</div>
-						<div class="col-md-4 offset-0 hidden-xs">
-							<button type="button" class="popularbtn left">Most Popular</button>
+
+						<div class="hpadding20">
+							<!-- Top filters -->
+						<div class="topsortby hidden-xs">
+							<div class="col-md-4 col-lg-3 offset-0">
+
+								<div class="left mt7"><b>Sort by:</b></div>
+
+								<div class="right wh70percent">
+									<select name="guest_rating" id="guest_rating" class="form-control mySelectBoxClass ">
+										<option value="">Stars</option>
+											<option  value="1">stars [5->1]</option>
+											<option  value="2">stars [1->5]</option>
+									</select>
+								</div>
+
+						</div>			
+						<div class="col-md-2 col-lg-3">
+							<div class="w90percent">
+								<div class="wh90percent">
+									<select name="name_order" id="name_order" class="form-control mySelectBoxClass ">
+										<option selected>Name</option>
+										<option value="1">A to Z</option>
+										<option value="2">Z to A</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 col-lg-2">
+							<div class="w90percentlast">
+								<div class="wh100percent">
+									<select name="price_order" id="price_order" class="form-control mySelectBoxClass ">
+									  <option selected>Price</option>
+									  <option value="1">Ascending</option>
+									  <option value="2">Descending</option>
+									</select>
+								</div>
+							</div>					
+						</div>
+						<div class="col-md-4 col-lg-4 offset-0 hidden-xs">
+							<button type="button" class="popularbtn left hidden-md">Most Popular</button>
 							<div class="right">
 								<button type="button" class="gridbtn">&nbsp;</button>
 								<button type="button" class="listbtn active">&nbsp;</button>
@@ -1159,7 +1161,7 @@
 									<div class="w50percent">
 										<div class="wh90percent textleft left">
 											<span class="opensans size13">Adult</span>
-											<select name="adults[]" class="form-control mySelectBoxClass" id="room<?php echo $i ?>-adults"  <?php echo isset($_REQUEST['adults'][$i-1]) ? '' : 'disabled' ?>>
+											<select name="adults[]" class="form-control mySelectBoxClass" id="room<?php echo $i ?>-adultssm"  <?php echo isset($_REQUEST['adults'][$i-1]) ? '' : 'disabled' ?>>
 												<?php for ($k=1; $k <=30 ; $k++) { ?>
 													<option <?php echo isset($_REQUEST['adults'][$i-1]) && $_REQUEST['adults'][$i-1]==$k ? 'selected' : '' ?> value="<?php echo $k; ?>"><?php echo $k; ?></option>
 												<?php } ?>

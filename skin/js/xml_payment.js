@@ -34,6 +34,8 @@ $(document).ready(function() {
                 $(this).removeClass('validated');
                 err += 1;
                 $("#email").focus();
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             } else {
                 $(this).addClass('validated');
             }
@@ -46,6 +48,8 @@ $(document).ready(function() {
                 $(this).removeClass('validated');
                 err += 1;
                 $("#email").focus();
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             } else {
                 if($(this).val().match(letters)) {
                     if ($(this).val().length < 3) {
@@ -58,6 +62,8 @@ $(document).ready(function() {
                     err += 1;
                     $(".traveller-validate").text('Please check alphabets only accepted in First name and Last name!');
                     $("#email").focus();
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
                 }
             }
          })
