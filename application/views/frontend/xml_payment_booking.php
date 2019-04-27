@@ -75,6 +75,11 @@
 	  top: 50%;
 	  transform: translateY(-50%);
 	}
+	@media(min-width: 600px) {
+      .paymentbox {
+      	margin-top: 45px;
+      }
+    } 
 </style>
 	<div class="container breadcrub  hidden-xs">
 		<ol class="track-progress" data-steps="5">
@@ -123,7 +128,7 @@
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
 						<!-- <span class="opensans size18 dark bold">Book Hotel Details</span> <br> <br> -->
-						<img src="<?php echo $HotelPicture ?>" class="left margright20" width="100%" alt=""/>
+						<img src="<?php echo $HotelPicture ?>" class="left margright20 hidden-xs" width="100%" alt=""/>
 						
 						
 					<div class="clearfix"></div>

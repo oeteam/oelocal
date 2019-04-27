@@ -2,6 +2,7 @@
 <?php init_front_head_menu(); 
   $CustomerSupport = CustomerSupport();
 ?> 
+
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
 <script>
   let RoomCombination = new Array();
@@ -698,7 +699,19 @@ $(document).ready(function() {
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
-                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> <span class="pull-right cancellation-span">cancellation<span></h5>
+                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?>
+                     <?php if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                              $cancelList = $value['CancelPolicies']['CancelPolicy'];
+                                } else {
+                              $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
+                               } 
+                               if($cancelList[0]['@attributes']['CancellationCharge']==100) { ?>
+                                  <span class="pull-right cancellation-span">cancellation<span></h5>
+                               <?php } else { ?>
+                                  <span class="pull-right">Free of Cancellation till<?php echo $cancelList[0]['@attributes']['ToDate']?> <span></h5>
+                              <?php } ?>
+                     
+
                         <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
@@ -708,11 +721,7 @@ $(document).ready(function() {
                             </tr>
                           </thead>
                           <tbody style="background: white;color: black;">
-                            <?php if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
-                              $cancelList = $value['CancelPolicies']['CancelPolicy'];
-                                } else {
-                              $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
-                               } 
+                            <?php 
                               foreach ($cancelList as $key => $value1) {
                             ?>
                             <tr>
