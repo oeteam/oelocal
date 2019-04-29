@@ -177,28 +177,11 @@ function StateSelectFun(){
 }
 
 $(document).ready(function() {
-  // if (window.history && window.history.pushState) {
-
-  //   $(window).on('popstate', function() {
-  //     var hashLocation = location.hash;
-  //     var hashSplit = hashLocation.split("#!/");
-  //     var hashName = hashSplit[1];
-
-  //     if (hashName !== '') {
-  //       var hash = window.location.hash;
-  //       if (hash === '') {
-  //         window.location = "<?php echo base_url('hotels') ?>";
-  //       }
-  //     }
-  //   });
-
-  //   window.history.pushState('forward', null, './payment');
-  // }
   if (window.history && window.history.pushState) {
     addEventListener('load', function() {
         history.pushState(null, null, null); // creates new history entry with same URL
         addEventListener('popstate', function() {
-            var stayOnPage = confirm("Do you want to leave this page and search again?");
+            var stayOnPage = confirm("Do you want to leave this page and search again with same keywords?");
             if (!stayOnPage) {
                 window.location = "<?php echo base_url('hotels') ?>";
             } else {

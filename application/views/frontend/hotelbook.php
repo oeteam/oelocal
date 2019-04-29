@@ -442,7 +442,7 @@ $(document).ready(function() {
 	    addEventListener('load', function() {
 	        history.pushState(null, null, null); // creates new history entry with same URL
 	        addEventListener('popstate', function() {
-	            var stayOnPage = confirm("Do you want to leave this page and search again?");
+	            var stayOnPage = confirm("Do you want to leave this page and search again with same keywords?");
 	            if (!stayOnPage) {
 	                window.location = "<?php echo base_url('hotels') ?>";
 	            } else {
