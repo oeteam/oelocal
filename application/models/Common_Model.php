@@ -772,5 +772,11 @@ class Common_Model extends CI_Model {
     }
     return true;
   }
+  public function get_currencyapi() {
+    $this->db->select('currency_api');
+    $this->db->from('hotel_tbl_general_settings');
+    $result = $this->db->get()->result();
+    return $result;
+  }
 }
 

@@ -319,6 +319,22 @@ $('#icons_form_button').click(function (e) {
       }, 1000);
     // }
   });
+   $("#currencyapi_test_button").click(function(e) {
+    e.preventDefault();
+      $.ajax({
+        dataType: 'json',
+        type: 'post',
+        url: base_url+'backend/common/test_currency_api',
+        cache: false,
+        success: function (response) {
+         $("#testapi_status").text("Response: "+response.value);
+        },
+         error: function (xhr,status,error) {
+           alert("Error: " + error);
+        }
+      });
+
+  });
 
 
    
