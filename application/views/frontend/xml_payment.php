@@ -5,6 +5,25 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
 <script>
+  function FullLoading(flag, dest, from, to) {
+    const fullLoading = document.querySelector('#fullLoading');
+    let destination = dest || 'Dubai';
+    let fromDate = from || '12/05/2018';
+    let toDate = to || '16/05/2018';
+
+    function startLoading() {
+        let html = `<div id="fullLoading" class="full-loading">
+        <p><img src="`+base_url+`/assets/images/logo-white.png" style="width: 128px;top: 75px;"></p>
+        <img src="`+base_url+`skin/images/fullloading.gif" alt=""><div class="fl-data"><h2 class="fl-title">Searching the best prices<small style="color:white"> for you...</small></h2><div class="fl-info-card"><div class="top"><span>- Destination -</span><p>${destination}</p></div><div class="mid"><div><span>From</span><p>${fromDate}</p></div><div><span>To</span><p>${toDate}</p></div></div></div></div></div>`;
+        document.body.innerHTML += html;
+    }
+
+    function stopLoading() {
+      document.body.removeChild(fullLoading);
+    }
+
+    flag == 'start' ? startLoading() : stopLoading();
+}
   let RoomCombination = new Array();
   RoomCombination = <?php echo json_encode($RoomCombination) ?>;
    $(".xml-default").remove();
@@ -181,9 +200,11 @@ $(document).ready(function() {
         addEventListener('popstate', function() {
             var stayOnPage = confirm("Do you want to leave this page and search again?");
             if (!stayOnPage) {
-               history.pushState(null, null, null);
+                window.location = "<?php echo base_url('hotels') ?>";
             } else {
+               FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
                history.back() 
+
             }
         });    
     });
@@ -437,6 +458,106 @@ $(document).ready(function() {
             width: 100%;
           }
         }
+        .full-loading {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            background-color: #006699;
+            text-align: center;
+            /*font-family: 'Titillium Web';*/
+            z-index: 9999999;
+        }
+        
+        .full-loading img {
+            width: 30vw;
+            position: relative;
+            top: -3em;
+        }
+        
+        .fl-data {
+            position: relative;
+            top: -9vw;
+        }
+        
+        .fl-title {
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 2px;
+            color: white;
+        }
+        
+        .fl-subtext {
+            margin: 0;
+            color: white;
+        }
+        
+        .fl-info-card {
+            height: 170px;
+            width: 450px;
+            margin: 1.5em auto 0;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 1px 0 #ccc;
+            overflow: hidden;
+        }
+        
+        .fl-info-card .top {
+            height: 70px;
+            background-color: #0784ff;
+            padding: 0 15px;
+        }
+        
+        .fl-info-card .top>p {
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 20px;
+            line-height: 1.5;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .fl-info-card .top>span {
+            display: block;
+            text-transform: uppercase;
+            font-size: 12px;
+            padding-top: 10px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .fl-info-card .mid {
+            display: flex;
+            border-bottom: 2px solid #F5F5F5;
+        }
+        
+        .fl-info-card .mid>div {
+            flex: 1;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .fl-info-card .mid>div:first-child::after {
+            content: "";
+            height: 60%;
+            background-color: #F5F5F5;
+            width: 2px;
+            position: absolute;
+            right: 0;
+            top: 20%;
+        }
+        
+        .fl-info-card .mid>div>p {
+            margin: 0;
+            color: #0784ff;
+        }
+        
+        .fl-info-card .mid>div>span {
+            color: #9E9E9E;
+            font-size: 14px;
+        }
+
       </style>
   <div class="container breadcrub hidden-xs">
     <ol class="track-progress" data-steps="5">
