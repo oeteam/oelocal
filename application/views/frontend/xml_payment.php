@@ -158,23 +158,36 @@ function StateSelectFun(){
 }
 
 $(document).ready(function() {
+  // if (window.history && window.history.pushState) {
+
+  //   $(window).on('popstate', function() {
+  //     var hashLocation = location.hash;
+  //     var hashSplit = hashLocation.split("#!/");
+  //     var hashName = hashSplit[1];
+
+  //     if (hashName !== '') {
+  //       var hash = window.location.hash;
+  //       if (hash === '') {
+  //         window.location = "<?php echo base_url('hotels') ?>";
+  //       }
+  //     }
+  //   });
+
+  //   window.history.pushState('forward', null, './payment');
+  // }
   if (window.history && window.history.pushState) {
-
-    $(window).on('popstate', function() {
-      var hashLocation = location.hash;
-      var hashSplit = hashLocation.split("#!/");
-      var hashName = hashSplit[1];
-
-      if (hashName !== '') {
-        var hash = window.location.hash;
-        if (hash === '') {
-          window.location = "<?php echo base_url('hotels') ?>";
-        }
-      }
+    addEventListener('load', function() {
+        history.pushState(null, null, null); // creates new history entry with same URL
+        addEventListener('popstate', function() {
+            var stayOnPage = confirm("Do you want to leave this page and search again?");
+            if (!stayOnPage) {
+               history.pushState(null, null, null);
+            } else {
+               history.back() 
+            }
+        });    
     });
-
-    window.history.pushState('forward', null, './payment');
-  }
+}
 
   $(".cancellation-span").hover(function(){
     $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
