@@ -1136,6 +1136,30 @@ class Common extends MY_Controller {
     AdminlogActivity($description); 
     redirect('../backend/common/payment');
   }
+  public function test_currency_api() {
+    if ($this->session->userdata('name')=="") {
+     redirect("../backend/logout");
+    }
+    $api = $this->Common_Model->get_currencyapi();
+    $arrContextOptions=array(
+    "ssl"=>array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false,
+      ),
+    "http" =>array(
+        "ignore_errors" => true,
+    ),
+  );
+    $resultKey = 'AED_INR';
+    $get = file_get_contents("http://free.currencyconverterapi.com/api/v6/convert?q=".$resultKey."&&compact=ultra&apiKey=".$api[0]->currency_api, false, stream_context_create($arrContextOptions));
+    $get = json_decode($get);
+    if(isset($get->error)){
+     $return['value'] = $get->error;
+    } else {
+      $return['value'] =  $get->AED_INR;
+    }  
+    echo json_encode($return);
+  }
 }
 
 

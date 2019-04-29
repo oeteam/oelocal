@@ -111,7 +111,12 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                                  <div class="row">
                                     <div class="col-md-12">
                                     <div class="form-group col-md-12">
-                                    <button type="button" id="currencyapi_form_button" class="waves-effect waves-light btn-sm btn-success pull-right">update</button>
+                                    <button type="button" id="currencyapi_test_button" class="waves-effect waves-light btn-sm btn-success pull-right" style="margin-left: 5px">Test API</button>
+                                    <button type="button" id="currencyapi_form_button" class="waves-effect waves-light btn-sm btn-success pull-right">Update</button>
+                                    </div>
+                                    <div class="col-md-12" id="testapi_status">
+
+                                    
                                     </div>
                                     </div>
                                  </div> 
