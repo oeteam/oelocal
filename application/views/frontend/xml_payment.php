@@ -833,7 +833,9 @@ $(document).ready(function() {
                   if ($key==0 && $i==0) {
                     $checked ='checked';
                   }
-                ?>
+                foreach ($RoomCombination as $combination) {
+                  if($combination['RoomIndex'][$i]==$value['RoomIndex']) {
+                ?> 
                 <li>
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
@@ -934,7 +936,9 @@ $(document).ready(function() {
                     </div>
                   </label>
                 </li>
-                <?php } ?>
+                <?php }
+                } 
+              }?>
               </ul>
             </div>
             <?php } ?>

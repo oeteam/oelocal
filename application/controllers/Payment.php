@@ -1724,6 +1724,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $data['HotelRating'] = $bookbuttondata['hotelrating'];
       $data['HotelRoom'] = $HotelRoom;
       $data['RoomCombination'] = $RoomCombination;
+      // print_r($RoomCombination);exit;
       $data['AvailableRooms'] = $AvailableRooms;
       $data['agent_markup'] = mark_up_get();
       $data['admin_markup'] = general_mark_up_get();
