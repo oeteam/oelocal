@@ -171,7 +171,7 @@ function search_ajax() {
         hotelLoading('stop');
         $("#rotateBanner").html(response.rotateHotels);
         $("#result_search").html(response.list);
-        count(response.counthotel,response.countprice);
+        count(response.counthotel,response.countprice);        
         StartAnime2();
 
         $('.hotel-more-btn').click(function() {

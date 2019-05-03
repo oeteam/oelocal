@@ -1429,6 +1429,8 @@
 			        $("#rotateBanner").html(response.rotateHotels);
 			        $("#result_search").html(response.list);
 			        count(response.counthotel,response.countprice);
+			        $("#Slider1").val("10:"+response.maxprice);
+					$("#Slider1").slider({ from: <?php echo ceil(currency_type1(agent_currency(),"10")) ?>, to: '"'+response.maxprice+'"' , step: 5, smooth: true, round: 0, dimension: "&nbsp;<?php echo agent_currency(); ?>", skin: "round" });
 			        StartAnime2();
 
 			        $('.hotel-more-btn').click(function() {
