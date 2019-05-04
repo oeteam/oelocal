@@ -748,7 +748,7 @@ $(document).ready(function() {
                     <th style="width: 90px">Title</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th style="width: 90px" class="text-center">Age</th>
+                    <th style="width: 110px" class="text-center">Age</th>
                   </tr>
                 </thead>
                 <tbody class="guesttbody">
@@ -772,7 +772,7 @@ $(document).ready(function() {
                       <small class="required-msg">*required</small></td>
                     <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
                       <small class="required-msg">*required</small></td>
-                    <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+                    <td class="text-center"><input type="number" style="width: 65px" class="form-control validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
                       <small class="required-msg">*required</small></td>
                   </tr>
                 <?php } ?>
@@ -840,7 +840,7 @@ $(document).ready(function() {
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
-                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?>
+                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
                      <?php 
                      if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
                                   $cancelList = $value['CancelPolicies']['CancelPolicy'];
@@ -936,7 +936,8 @@ $(document).ready(function() {
                     </div>
                   </label>
                 </li>
-                <?php }
+                <?php 
+              }
                 } 
               }?>
               </ul>

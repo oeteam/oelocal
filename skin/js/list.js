@@ -173,7 +173,11 @@ function search_ajax() {
         $("#result_search").html(response.list);
         count(response.counthotel,response.countprice);        
         StartAnime2();
-
+        var random = Math.floor((Math.random() * 10) + 1);
+        if (response.maxprice!=undefined) {
+          $(".Slider-class").html('<input id="Slider'+random+'" type="slider" name="price" value="10;'+response.maxprice+'" />');
+          $("#Slider"+random).slider({ from: 10, to: response.maxprice, step: 5, smooth: true, round: 0, dimension: response.currency, skin: "round" });
+        }
         $('.hotel-more-btn').click(function() {
           var toggled = $(this).closest('.offset-2').find('.more-wrap').hasClass('in');
         $('.hotel-more-btn').children('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');

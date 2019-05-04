@@ -863,12 +863,14 @@
 												<div id="collapse2" class="collapse in">
 													<div class="padding20">
 														<div class="layout-slider wh100percent">
-															<span class="cstyle09"><input id="Slider1" type="slider" name="price" value="10;10000" /></span>
+															<span class="cstyle09 Slider-class">
+																<!-- <input id="Slider1" type="slider" name="price" value="10;10000" /> -->
+															</span>
 														</div>
 														<script type="text/javascript" >
-															$(document).ready(function(){
-																$("#Slider1").slider({ from: <?php echo ceil(currency_type1(agent_currency(),"10")) ?>, to: <?php echo ceil(currency_type1(agent_currency(),"10000")) ?>, step: 5, smooth: true, round: 0, dimension: "&nbsp;<?php echo agent_currency(); ?>", skin: "round" });
-															})
+															// $(document).ready(function(){
+															// 	$("#Slider1").slider({ from: <?php echo ceil(currency_type1(agent_currency(),"10")) ?>, to: <?php echo ceil(currency_type1(agent_currency(),"10000")) ?>, step: 5, smooth: true, round: 0, dimension: "&nbsp;<?php echo agent_currency(); ?>", skin: "round" });
+															// })
 														</script>
 													</div>
 												</div>

@@ -376,9 +376,13 @@ class lists extends MY_Controller {
     //   </ul>
     //   </div></div>';
     $minAmount = $this->db->query("SELECT IF(MIN(round(TotalPrice))='',0,min(round(TotalPrice))) as MinAmount FROM ci_sessions where TotalPrice != 0 AND ip_add = '".get_client_ip()."' AND agent_id = '".$this->session->userdata('agent_id')."'")->result();
-    $maxAmount = $this->db->query("SELECT IF(MAX(round(TotalPrice))='',0,max(round(TotalPrice))) as MaxAmount FROM ci_sessions where TotalPrice != 0 AND ip_add = '".get_client_ip()."' AND agent_id = '".$this->session->userdata('agent_id')."'")->result();
+    
     $data['countprice'][] = $config['total_rows']==0 ? 0 : $minAmount[0]->MinAmount;
-    $data['maxprice'][] = $config['total_rows']==0 ? 0 : ceil(currency_type1(agent_currency() ,$maxAmount[0]->MaxAmount));
+    if ($_REQUEST['temp']==1) {
+      $maxAmount = $this->db->query("SELECT IF(MAX(round(TotalPrice))='',0,max(round(TotalPrice))) as MaxAmount FROM ci_sessions where TotalPrice != 0 AND ip_add = '".get_client_ip()."' AND agent_id = '".$this->session->userdata('agent_id')."'")->result();
+      $data['maxprice'][] = $config['total_rows']==0 ? 10 : ceil(currency_type1(agent_currency() ,$maxAmount[0]->MaxAmount+1000));
+    }
+    $data['currency'] = agent_currency(); 
     $data['counthotel'][] = $config['total_rows'];
     echo json_encode($data);
   }

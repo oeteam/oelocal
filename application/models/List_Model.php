@@ -3811,10 +3811,12 @@ public function loadRequest($action,$arr_value) {
         return $query->result();
   }
   public function SearchListDataFetchcount() {
-    $expPrice = explode(";", $_REQUEST['price']);
-    $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
-    $price2 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[1]) ));
-    /*Rating filter start*/
+    if (isset($_REQUEST['price'])) {
+      $expPrice = explode(";", $_REQUEST['price']);
+      $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
+      $price2 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[1]) ));
+    }
+      /*Rating filter start*/
     $rating = array();
     if (isset($_REQUEST["rating5"])) {
       $rating[] = "5";
@@ -3857,8 +3859,11 @@ public function loadRequest($action,$arr_value) {
     $this->db->select('count(*) as count');
     $this->db->from('ci_sessions');
     $this->db->where('agent_id',$this->session->userdata('agent_id'));
-    $this->db->where('TotalPrice >',$price1);
-    $this->db->where('TotalPrice <',$price2);
+    if (isset($_REQUEST['price'])) {
+      $this->db->where('TotalPrice >',$price1);
+      $this->db->where('TotalPrice <',$price2);
+    }
+    $this->db->where('TotalPrice !=',0);
     $this->db->where('ip_add',get_client_ip());
     $this->db->where('searchDate', date("Y-m-d"));
     if (count($rating)!=0) {
@@ -3872,10 +3877,12 @@ public function loadRequest($action,$arr_value) {
   }
 
   public function SearchListDataFetch($limit, $start,$order) {
-    $expPrice = explode(";", $_REQUEST['price']);
-    $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
-    $price2 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[1]) ));
+    if (isset($_REQUEST['price'])) {
+      $expPrice = explode(";", $_REQUEST['price']);
+      $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
+      $price2 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[1]) ));
     
+    }
 
     /*Rating filter start*/
     $rating = array();
@@ -3920,8 +3927,11 @@ public function loadRequest($action,$arr_value) {
     $this->db->select('*');
     $this->db->from('ci_sessions');
     $this->db->where('agent_id',$this->session->userdata('agent_id'));
-    $this->db->where('TotalPrice >',$price1);
-    $this->db->where('TotalPrice <',$price2);
+    if (isset($_REQUEST['price'])) {
+      $this->db->where('TotalPrice >',$price1);
+      $this->db->where('TotalPrice <',$price2);
+    }
+    $this->db->where('TotalPrice !=',0);
     $this->db->where('ip_add',get_client_ip());
     $this->db->where('searchDate', date("Y-m-d"));
     if (count($rating)!=0) {
