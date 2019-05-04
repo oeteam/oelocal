@@ -32,9 +32,11 @@ function RoomCombinationinitCheck() {
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
       $('#Room'+1+v.RoomIndex).prop('disabled',false);
+      $('#listRoom'+1+v.RoomIndex).removeClass("hide");
       $('#Room'+1+v.RoomIndex).closest('li').find('.av-div').addClass('availability');
     } else {
       $('#Room'+1+RoomCombination.RoomIndex).prop('disabled',false);
+      $('#listRoom'+1+RoomCombination.RoomIndex).removeClass("hide");
       $('#Room'+1+RoomCombination.RoomIndex).closest('li').find('.av-div').addClass('availability');
     }
     
@@ -53,6 +55,16 @@ function RoomCombinationCheck() {
     $(".r-type").find('input[name="Room'+i+'"]').prop('checked',false);
 
   }
+   $.each(RoomCombination,function(j,v) {
+    for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+      if (isNaN(RoomCombination.RoomIndex)) {       
+        $('#listRoom'+i+v.RoomIndex[i-1]).removeClass("hide");   
+      } else {
+        $('#listRoom'+i+RoomCombination.RoomIndex[i-1]).removeClass("hide");
+      }
+    }
+  });
+
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
       if (v.RoomIndex[0]==room1) {
@@ -833,10 +845,10 @@ $(document).ready(function() {
                   if ($key==0 && $i==0) {
                     $checked ='checked';
                   }
-                foreach ($RoomCombination as $combination) {
-                  if($combination['RoomIndex'][$i]==$value['RoomIndex']) {
+                // foreach ($RoomCombination as $combination) {
+                //   if($combination['RoomIndex'][$i]==$value['RoomIndex']) {
                 ?> 
-                <li>
+                <li id="listRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="hide">
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
@@ -936,9 +948,8 @@ $(document).ready(function() {
                     </div>
                   </label>
                 </li>
-                <?php 
-              }
-                } 
+                 <?php //}
+                // } 
               }?>
               </ul>
             </div>
@@ -969,7 +980,7 @@ $(document).ready(function() {
     <!-- END OF RIGHT CONTENT -->
   </div>
 </div>
-<?php   } ?>
+<?php  } ?>
 <!-- END OF CONTENT -->
   
   <!-- Central Modal Medium Warning -->
