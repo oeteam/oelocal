@@ -58,9 +58,9 @@ function RoomCombinationCheck() {
    $.each(RoomCombination,function(j,v) {
     for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
       if (isNaN(RoomCombination.RoomIndex)) {       
-        $('#listRoom'+i+v.RoomIndex[1]).removeClass("hide");   
+        $('#listRoom'+i+v.RoomIndex[i-1]).removeClass("hide");   
       } else {
-        $('#listRoom'+i+RoomCombination.RoomIndex[1]).removeClass("hide");
+        $('#listRoom'+i+RoomCombination.RoomIndex[i-1]).removeClass("hide");
       }
     }
   });
