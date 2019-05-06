@@ -49,8 +49,7 @@ function RoomCombinationinitCheck() {
       $('#Room'+1+RoomCombination.RoomIndex).prop('disabled',false);
       $('#listRoom'+1+RoomCombination.RoomIndex).removeClass("hide");
       $('#Room'+1+RoomCombination.RoomIndex).closest('li').find('.av-div').addClass('availability');
-    }
-    
+    }    
   });
   // var availableRooms = $('.r-type--room:first-child').find('.availability').closest('li');
   // $.each(availableRooms, function(){
@@ -123,7 +122,6 @@ $(document).ready(function() {
   var maxTime = (30*60)*1000;
   var timeoutVal = Math.floor(maxTime/100);
   animateUpdate();
-
   function updateProgress(percentage) {
     $("#book-progress").val((100-percentage));
   }
@@ -199,7 +197,6 @@ function StateSelectFun(){
         }
     });
 }
-
 $(document).ready(function() {
   if (window.history && window.history.pushState) {
     addEventListener('load', function() {
@@ -772,7 +769,7 @@ $(document).ready(function() {
                     <th style="width: 90px">Title</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th style="width: 110px" class="text-center">Age</th>
+                    <th style="width: 90px" class="text-center">Age</th>
                   </tr>
                 </thead>
                 <tbody class="guesttbody">
@@ -796,7 +793,7 @@ $(document).ready(function() {
                       <small class="required-msg">*required</small></td>
                     <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
                       <small class="required-msg">*required</small></td>
-                    <td class="text-center"><input type="number" style="width: 65px" class="form-control validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+                    <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
                       <small class="required-msg">*required</small></td>
                   </tr>
                 <?php } ?>
@@ -835,6 +832,9 @@ $(document).ready(function() {
             }
           ?>
           <div class="row r-type margtop10">
+            <div class="spin-wrapper" style="display: none">
+              <img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+            </div>
             <?php
             $total_markup = $agent_markup+$admin_markup;
             if ($revenue_markup!='') {
@@ -864,7 +864,7 @@ $(document).ready(function() {
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
-                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
+                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?>
                      <?php 
                      if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
                                   $cancelList = $value['CancelPolicies']['CancelPolicy'];
