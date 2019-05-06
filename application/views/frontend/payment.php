@@ -341,6 +341,7 @@ function ConSelectFun(){
     });
 }
 $(document).ready(function() {
+	<?php if (isset($_REQUEST['location']) && $_REQUEST['location']!="") { ?> 
 	if (window.history && window.history.pushState) {
 	    addEventListener('load', function() {
 	        history.pushState(null, null, null); // creates new history entry with same URL
@@ -356,7 +357,7 @@ $(document).ready(function() {
 	        });    
 	    });
 	}
-  
+  	<?php } ?>
   $(".cancellation-span").hover(function(){
     $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
     }, function(){

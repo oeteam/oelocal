@@ -5,6 +5,17 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
 <script>
+  function divLoading(flag) {
+  var spinWrapper = $('.spin-wrapper');
+    if (flag === 'start') {
+        spinWrapper.show();
+    }
+    if (flag === 'stop') {
+        spinWrapper.fadeOut();
+    }
+  }
+  divLoading("start");
+
   function FullLoading(flag, dest, from, to) {
     const fullLoading = document.querySelector('#fullLoading');
     let destination = dest || 'Dubai';
@@ -87,6 +98,7 @@ function RoomCombinationCheck() {
   });
   $(".b-rates--grand-total").text(sum);
 }
+divLoading("stop");
 function goBack() {
     window.history.back();
 }
@@ -954,6 +966,11 @@ $(document).ready(function() {
               </ul>
             </div>
             <?php } ?>
+            <div class="col-md-2 col-md-offset-5">
+              <div class="spin-wrapper" style="display: none">
+                <img style="width: 100px;" src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+              </div>
+            </div>
           </div>
     
           <h4 class="text-green margtop25">Booking Total</h4>

@@ -302,6 +302,7 @@
 							<p class="dark">Your travel rates</p>
 							<div class="row">
 								<div class="col-sm-2">
+										<input type="hidden" name="location" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>">
 										<input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['search_id'] ?>">
 										<input type="hidden" name="contract_id" id="contract_id" value="">
 										<input type="hidden" name="max_child_age" id="max_child_age" value="">

@@ -7,7 +7,7 @@ $data = title();
 <head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oteleasy | Login</title>
+  <title><?php echo $data[0]->Title ?></title>
   <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
   <!-- Fonts -->  
   <link  href="<?php echo base_url(); ?>agentLoginStyle/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">

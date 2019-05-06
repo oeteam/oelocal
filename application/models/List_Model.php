@@ -1679,12 +1679,12 @@ public function moreDetailsFetch($hotel_id) {
             $leftStyle = '<small class="color-red"></small>';
             $styles = '';
             $btn_name = 'On Request';
-            $Reloadrequest = 'RequestType=On Request&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'];
+            $Reloadrequest = 'RequestType=On Request&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'];
           } else {
             $leftStyle = '<small class="color-red">'.$data['count'][$value01->id][$key02].' left!</small>';
             $styles = 'style="background:green;border-bottom: 2px solid green;"';
             $btn_name = 'Book';
-            $Reloadrequest = 'RequestType=Book&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'];
+            $Reloadrequest = 'RequestType=Book&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'];
           }
 
           $style.= '<div class="col-md-12">
@@ -3876,7 +3876,7 @@ public function loadRequest($action,$arr_value) {
     return $query[0]->count; 
   }
 
-  public function SearchListDataFetch($limit, $start,$order) {
+  public function SearchListDataFetch($limit, $start,$order=NULL) {
     if (isset($_REQUEST['price'])) {
       $expPrice = explode(";", $_REQUEST['price']);
       $price1 = floatval(preg_replace('/[^\d.]/', '', currency_type(agent_currency(),$expPrice[0]) ));
@@ -3942,7 +3942,8 @@ public function loadRequest($action,$arr_value) {
     }
     if($order=="direct") {
       $this->db->order_by('DataType','asc');
-    } else {
+    } 
+    if($order=="tbo") {
       $this->db->order_by('DataType','desc');
     }
     if ($_REQUEST['guest_rating']==1) {

@@ -82,8 +82,7 @@ class lists extends MY_Controller {
                     $request = 'RequestType=Book&hotel_id='.$value['HotelCode'].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'];    
                     $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment/hotelBook?'.$request.'\',\''.str_replace("'", "", $value['HotelName']).'\',\''.str_replace("'", "", $value['HotelAddress']).'\',\''.$value['HotelPicture'].'\',\''.$value['HotelCode'].'\','.$value['Rating'].')" style="background:green;border-bottom: 2px solid green;cursor:pointer" href="#" class="hotel-view-btn">Book</a>';
 
-                    $HotelRequest = base_url().'details?search_id='.$value['HotelCode'].'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'; 
-
+                    $HotelRequest = base_url().'details?search_id='.$value['HotelCode'].'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'.'&location='.$_REQUEST['location'];
                     $revenue_markup = revenue_markup($value['HotelCode'],$value['contract_id'],$this->session->userdata('agent_id'));
                     $total_markup = mark_up_get()+general_mark_up_get();
                     if ($revenue_markup!="") {
@@ -94,6 +93,7 @@ class lists extends MY_Controller {
                     }
                     $OriginalPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
                     $oldPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
+                    $TotalPrice = (($value['TotalPrice']*$total_markup)/100+$value['TotalPrice'])*count($_REQUEST['adults']);
                 } else {
                     $RatingImg = $value['RatingImg'];
                     $ReviewImg = $value['ReviewImg'];
@@ -101,6 +101,7 @@ class lists extends MY_Controller {
                     $HotelRequest = $value['HotelRequest'];
                     $OriginalPrice = $value['OriginalPrice'];
                     $oldPrice = $value['oldPrice'];
+                    $TotalPrice = $value['TotalPrice'];
                 }
                 $array = array(
                         'HotelCode' =>$value['HotelCode'],
@@ -108,7 +109,7 @@ class lists extends MY_Controller {
                         'HotelPicture' =>$value['HotelPicture'],
                         'HotelDescription' =>$value['HotelDescription'],
                         'Rating' =>$value['Rating'],
-                        'TotalPrice' => floatval(preg_replace('/[^\d.]/', '', $value['TotalPrice'])),
+                        'TotalPrice' => floatval(preg_replace('/[^\d.]/', '', $TotalPrice)),
                         'Currency' =>$value['Currency'],
                         'OriginalPrice' =>$OriginalPrice,
                         'oldPrice' => $oldPrice,
@@ -195,12 +196,14 @@ class lists extends MY_Controller {
     }
     $result["links"] = $this->ajax_pagination->create_links();
     $displayOrder =$this->List_Model->getDisplayOrder();
+    $order = "";
     if(count($displayOrder)!=0 && $displayOrder[0]->directhotels=='1') {
-        $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"direct");
-     } else {
-        $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,"tbo");
-     }
-    // $HotelIdList = array_slice($HotelCode,$page,$config['per_page'],true);
+      $order = "direct";
+    }
+    if(count($displayOrder)!=0 && $displayOrder[0]->tbohotels=='1') {
+      $order = "tbo";
+    }
+    $HotelList = $this->List_Model->SearchListDataFetch($config['per_page'],$page,$order);
 
     $checkin_date=date_create($_REQUEST['Check_in']);
     $checkout_date=date_create($_REQUEST['Check_out']);
