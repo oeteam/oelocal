@@ -46,7 +46,7 @@ $data = title();
       <span>Agent Registration</span>
     </div>
   </div>
-  <form method="post" id="agent_reg">
+  <form method="post" id="agent_reg" enctype="multipart/form-data">
    <input type="hidden" id="existing_mail_check" value="2">
    <div class="container-fluid">
     <div class="mainformdivreg">
@@ -315,29 +315,18 @@ $data = title();
     </div>
   </div>
 </div>
- <div class="col-sm-5">
-  <div class=form-horizondal>
-   <div class="form-group">
-    <br>
-    <label for="iata_status" class="col-sm-3 control-label fontstyl" >IATA Status <span class="starcolor">*</span></label>
-    <p>
-      <!-- <?php  if (isset($edit[0]->Iata_Status) && $edit[0]->Iata_Status=="Approved") { ?> -->
-      <input name="iata_status" type="radio" id="test1" checked="" value="Approved" onclick="iata_check('1')" />
-      <label for="test1" class="col-sm-3 control-label">Approved</label>
-      <input name="iata_status" type="radio" id="test2"  value="Not Approved" onclick="iata_check('2')" />
-      <label for="test2" class="col-sm-3 control-label">Not Approved</label>
-      <!-- <?php } else { ?> -->
-      <input name="iata_status" type="radio" id="test1" value="Approved" onclick="iata_check('1')"/>
-      <label for="test1" class="control-label fontstyl">Approved</label>
-      <input name="iata_status" type="radio" id="test2" checked  value="Not Approved" onclick="iata_check('2')" />
-      <label for="test2" class="control-label fontstyl">Not Approved</label>
-      <!-- <?php } ?> -->
-    </p>
-    <!-- <div class="col-sm-1"></div> -->
-
-  </div> 
-</div>
-</div>
+<div class="col-sm-5 trade-licence">
+              <div class=form-horizondal>
+                <div class="form-group">
+                  <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<span class="starcolor">*</span></label>
+                  <div class="col-sm-9">
+                    <input type="file" class="form-control" id="tradefile" name="tradefile">
+                    <span class="tradelicence_err popup_err blink_me"></span>
+                  </div>
+                </div>
+              </div             >
+            </div>
+ 
             <!-- <div class="col-sm-5">
         		<div class=form-horizondal>
             		<div class="form-group">
@@ -353,8 +342,31 @@ $data = title();
               <div class="col-sm-1"></div>
             </div>
             <div class="row">
-             <div class="col-sm-1"></div>
-             <div class="col-sm-5 iata_number hide">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+              <div class=form-horizondal>
+               <div class="form-group">
+                <br>
+                <label for="iata_status" class="col-sm-3 control-label fontstyl" >IATA Status <span class="starcolor">*</span></label>
+                <p>
+                  <!-- <?php  if (isset($edit[0]->Iata_Status) && $edit[0]->Iata_Status=="Approved") { ?> -->
+                  <input name="iata_status" type="radio" id="test1" checked="" value="Approved" onclick="iata_check('1')" />
+                  <label for="test1" class="col-sm-3 control-label">Approved</label>
+                  <input name="iata_status" type="radio" id="test2"  value="Not Approved" onclick="iata_check('2')" />
+                  <label for="test2" class="col-sm-3 control-label">Not Approved</label>
+                  <!-- <?php } else { ?> -->
+                  <input name="iata_status" type="radio" id="test1" value="Approved" onclick="iata_check('1')"/>
+                  <label for="test1" class="control-label fontstyl">Approved</label>
+                  <input name="iata_status" type="radio" id="test2" checked  value="Not Approved" onclick="iata_check('2')" />
+                  <label for="test2" class="control-label fontstyl">Not Approved</label>
+                  <!-- <?php } ?> -->
+                </p>
+                <!-- <div class="col-sm-1"></div> -->
+
+              </div> 
+             </div>
+            </div>
+            <div class="col-sm-5 iata_number hide">
               <div class=form-horizondal>
                 <div class="form-group">
                   <label for="iata_reg" class="col-sm-3 control-label fontstyl" style="">IATA Reg Number<span class="starcolor">*</span></label>
@@ -366,8 +378,7 @@ $data = title();
                 </div>
               </div>
             </div>
-            <div class="col-sm-1"></div>
-          </div>	            
+          </div>
         </div>
       </div>
       <div class="col-sm-12">
@@ -493,7 +504,10 @@ $data = title();
   </div>
   <div class="modal-footer regclassfooter"></div>
   <div class="col-sm-12">
-   <div class="text-right">
+  <div class="text-left">
+    <span><a href="<?php echo base_url(); ?>profile/downloadfile" ><i class="fa fa-download"></i>Click to download  the Otelseasy agreement.</a></span>
+  </div>
+  <div class="text-right">
     <button type="button" class="btn btn-warning" id="login_form_agent_reg" name="login_form_agent_reg">Send</button>
   </div>
 </div>

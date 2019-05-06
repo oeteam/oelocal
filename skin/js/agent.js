@@ -22,6 +22,7 @@ $(document).ready(function() {
       var business_type = $("#business_type").val();
       var city = $("#city").val();
       var fax = $("#fax").val();
+      var tradefile = $("#tradefile").val();
       // var markup = $("#markup").val();
       var iata_reg = $("#iata_reg").val();
       var username = $("#username").val();
@@ -140,6 +141,11 @@ $(document).ready(function() {
            $(".fax_err").text("Fax field is required!");
           } else {
             $(".fax_err").text("");
+          }
+          if (tradefile=="")    {
+           $(".tradelicence_err").text("Trade Licence is required!");
+          } else {
+            $(".tradelicence_err").text("");
           }
           if (iata_reg=="")    {
            $(".iata_reg_err").text("IATA Registration field is required!");

@@ -103,10 +103,11 @@ class Profile extends MY_Controller {
         $data['agent_max_id'] = "HA00".$agent_id;
       }
 	  $result = $this->Profile_Model->agent_reg_insert($_REQUEST,$data['agent_max_id']);
+    handle_license_upload($result);
     OtherlogActivity('New agent registered [ID: '.$result.', Agent ID: '.$data['agent_max_id'].']');
 	  RegisteringMail($result,'agent');
     	// $data = $this->Profile_Model->agent_reg_insert($_REQUEST);
-      redirect("../profile/agent_registered");
+    redirect("../profile/agent_registered");
 
   }
   public function agent_validation() {
@@ -129,4 +130,9 @@ class Profile extends MY_Controller {
       $data = $this->Profile_Model->SelectState($_REQUEST['Conid']);
       echo json_encode($data);
   }
+  public function downloadFile(){
+      $this->load->helper('download');
+      $data = file_get_contents(base_url('uploads/OTELSEASYAgreement.pdf'));
+      force_download('OTELSEASYAgreement.pdf', $data);
+  }       
 }
