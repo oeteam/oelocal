@@ -316,16 +316,16 @@ $data = title();
   </div>
 </div>
 <div class="col-sm-5 trade-licence">
-              <div class=form-horizondal>
-                <div class="form-group">
-                  <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<span class="starcolor">*</span></label>
-                  <div class="col-sm-9">
-                    <input type="file" class="form-control" id="tradefile" name="tradefile">
-                    <span class="tradelicence_err popup_err blink_me"></span>
-                  </div>
-                </div>
-              </div             >
-            </div>
+  <div class=form-horizondal>
+    <div class="form-group">
+      <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<span class="starcolor">*</span></label>
+      <div class="col-sm-9">
+        <input type="file" class="form-control" id="tradefile" name="tradefile">
+        <span class="tradelicence_err popup_err blink_me"></span>
+      </div>
+    </div>
+  </div>
+</div>
  
             <!-- <div class="col-sm-5">
         		<div class=form-horizondal>
@@ -505,7 +505,7 @@ $data = title();
   <div class="modal-footer regclassfooter"></div>
   <div class="col-sm-12">
   <div class="text-left">
-    <span><a href="<?php echo base_url(); ?>profile/downloadfile" ><i class="fa fa-download"></i>Click to download  the Otelseasy agreement.</a></span>
+    <span><a href="<?php echo base_url(); ?>uploads/OTELSEASYAgreement.pdf" download><i class="fa fa-download"></i> Click to download  the Otelseasy agreement.</a></span>
   </div>
   <div class="text-right">
     <button type="button" class="btn btn-warning" id="login_form_agent_reg" name="login_form_agent_reg">Send</button>

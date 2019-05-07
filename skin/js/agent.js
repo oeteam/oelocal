@@ -45,7 +45,7 @@ $(document).ready(function() {
       if (agency_name=="" || agency_email=="" || first_name=="" || last_name=="" || 
         designation=="" || nature_business=="" ||country=="" || website=="" || 
         address=="" || pincode=="" || telephone=="" || mobile=="" || preferred_currency=="" || 
-        business_type=="" || city=="" || fax==""  || username=="" || password=="" || 
+        business_type=="" || city=="" || fax==""  || tradefile=="" || username=="" || password=="" || 
         confirm_password=="" || accounts_name=="" || accounts_email=="" || accounts_number=="" || accounts_password=="" || reservation_name=="" || 
         reservation_email=="" || reservation_number=="" || reservation_password==""|| management_name=="" || management_email=="" || management_number=="" || management_password==""|| existing_mail_check==0) {
             agency_email_already_registered();

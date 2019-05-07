@@ -719,41 +719,13 @@ function FullLoading(flag, dest, from, to) {
 		                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $value['RoomIndex'] ?>" value="Room<?php echo $value['RoomIndex'] ?>">
 		                    <div class="av-div availability">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - 
-		                      <?php echo $value['board'] ?> <span class="pull-right cancellation-span">cancellation<span>
+		                      <?php echo $value['board'] ?> <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
 	                  		  </h5>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
 		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>
 		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>
 		                  	 <?php } } ?>
-		                  	 	<table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
-                          <thead style="background: #0074b9;color: white;">
-                            <tr>
-                              <td>Cancelled on or After</td>
-                              <td>Cancelled on or Before</td>
-                              <td>Cancellation Charge</td>
-                              <td>Description</td>
-                            </tr>
-                          </thead>
-                         <tbody> 
-
-					    	<?php 
-					    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
-					    	foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
-					    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
-					    			<tr>
-					    				<td colspan="4">This booking is Nonrefundable.</td>
-					    			</tr>
-					    		<?php } else { ?>
-							    	<tr>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
-							    	</tr>
-							    <?php } 
-							} ?>
-				    	</tbody>
-                        </table>
+		                  	
 		                      <p class="text-green m-0 bold">
 		                      	<input type="hidden" class="RequestType" value="<?php echo $value['RequestType'] ?>">
 		                      	<input type="hidden" class="room_id" value="<?php echo $value['room_id'] ?>">
@@ -764,6 +736,49 @@ function FullLoading(flag, dest, from, to) {
 		                    </div>
 		                  </label>
 		                </li>
+		                <div id="myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
+				                  <div class="modal-dialog modal-sm">
+
+				                  <!-- Modal content-->
+				                 <div class="modal-content">
+				                    <div class="modal-header">
+				                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+				                      <h4 class="modal-title">Cancellation Policies</h4>
+				                    </div>
+				                    <div class="modal-body">
+				                  	 	<table class="table table-bordered table-hover cancellation-table">
+				                          <thead style="background: #0074b9;color: white;">
+				                            <tr>
+				                              <td>Cancelled on or After</td>
+				                              <td>Cancelled on or Before</td>
+				                              <td>Cancellation Charge</td>
+				                              <td>Description</td>
+				                            </tr>
+				                          </thead>
+				                         <tbody> 
+
+									    	<?php 
+									    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
+									    	foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
+									    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
+									    			<tr>
+									    				<td colspan="4">This booking is Nonrefundable.</td>
+									    			</tr>
+									    		<?php } else { ?>
+											    	<tr>
+											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
+											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
+											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
+											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
+											    	</tr>
+											    <?php } 
+											} ?>
+								    	</tbody>
+				                        </table>
+				                    </div>
+	                			</div>
+		            			</div>
+		            		 </div>
 		              	<?php } ?>
 		              </ul>
 		            </div>

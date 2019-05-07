@@ -130,9 +130,4 @@ class Profile extends MY_Controller {
       $data = $this->Profile_Model->SelectState($_REQUEST['Conid']);
       echo json_encode($data);
   }
-  public function downloadFile(){
-      $this->load->helper('download');
-      $data = file_get_contents(base_url('uploads/OTELSEASYAgreement.pdf'));
-      force_download('OTELSEASYAgreement.pdf', $data);
-  }       
 }
