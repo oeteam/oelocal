@@ -638,8 +638,8 @@ $(document).ready(function() {
               <small>Time Left : <b id="timeLeft">30:18</b></small>
               <progress id="book-progress" value="98" max="100"></progress>
             </span>
-          </h3>
-
+          </h3>          
+          <div class="clearfix pbottom15"></div>
           <div class="row">
             <div class="col-sm-3">
               <img src="<?php echo $HotelPicture ?>" class="margtop20  img-responsive hidden-xs" width="100%" alt="">
@@ -822,8 +822,14 @@ $(document).ready(function() {
 
           </div>
 
-          
-          <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
+          <div class="row b-rates margtop10">
+            <div class="col-sm-12 ">
+              <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
+              <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button class="bluebtn" id="Continue_book_xml" type="button" name="Continue_book_xml" style="margin-left: 5px">Continue</button><span>
+            </h5>
+            </div>
+          </div>
+          <h4 class="text-green margtop10">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
           <?php
            if (isset($HotelRoom[0])) {
               $RoomTypeName = $HotelRoom[0]['RoomTypeName'];
@@ -985,22 +991,6 @@ $(document).ready(function() {
               </div>
             </div>
           </div>
-    
-          <h4 class="text-green margtop25">Booking Total</h4>
-
-          <div class="row b-rates margtop10">
-            <div class="col-sm-12">
-              <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
-              <h5 class="b-rates--grand">GRAND TOTAL : <span class="right"><?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span></span></h5>
-            </div>
-          </div>
-          
-          <div class="clearfix pbottom15"></div>
-      <div class="form-group">
-        <br>
-        <button class="bluebtn pull-right margbottom20" id="Continue_book_xml" type="button" name="Continue_book_xml">Continue Booking</button>
-        <br>
-      </div>
         </div>
   </div>
 
