@@ -701,7 +701,13 @@ function FullLoading(flag, dest, from, to) {
 
 		          </div>
 
-
+		          <div class="col-sm-12 ">
+		            <div class="row b-rates margtop10" style="background: #f0f9ff;">
+		              <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
+		              <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button id="Continue_book" type="button" name="Continue_book"class="bluebtn" style="margin-left: 5px">Continue</button><span>
+		            </h5>
+		            </div>
+		          </div>
 		          
 		          <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
 		          <div class="row r-type margtop10">
@@ -784,21 +790,20 @@ function FullLoading(flag, dest, from, to) {
 		            </div>
 		          </div>
 				
-		          <h4 class="text-green margtop25">Booking Total</h4>
+		         <!--  <h4 class="text-green margtop25">Booking Total</h4>
 
 		          <div class="row b-rates margtop10">
 		            <div class="col-sm-12">
-		              <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
 		              <h5 class="b-rates--grand">GRAND TOTAL : <span class="right"><?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span></span></h5>
 		            </div>
-		          </div>
+		          </div> -->
 		          
 		          <div class="clearfix pbottom15"></div>
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<br>
 						<button class="bluebtn pull-right margbottom20" id="Continue_book" type="button" name="Continue_book">Continue Booking</button>
 						<br>
-					</div>
+					</div> -->
 		        </div>
 		  </div>
 		  <input type="hidden" name="token" value="<?php echo $_REQUEST['token'] ?>">

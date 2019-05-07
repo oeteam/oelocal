@@ -1997,7 +1997,7 @@ class Payment_Model extends CI_Model {
       $query=$this->db->get();
       return $query->result();
     }
-    public function TBOBookingConfirm($agent_id,$ClientReferenceNumber,$BookingId,$TripId,$ConfirmationNo,$BookingStatus,$hotel_name,$RoomTypeName,$Check_in,$Check_out,$total_amount,$no_of_days,$no_of_rooms,$Hotel_id,$PriceChange,$admin_markup) {
+    public function TBOBookingConfirm($agent_id,$ClientReferenceNumber,$BookingId,$TripId,$ConfirmationNo,$BookingStatus,$hotel_name,$RoomTypeName,$Check_in,$Check_out,$total_amount,$no_of_days,$no_of_rooms,$Hotel_id,$PriceChange,$admin_markup,$guestfname,$guestlname) {
       $data = array(
                     'XMLProvider' => 'TBO',
                     'agent_id'    => $agent_id,
@@ -2020,6 +2020,8 @@ class Payment_Model extends CI_Model {
                     'CreatedBy'    => $agent_id,
                     'Bookingdate'    => date('m/d/Y'),
                     'PriceChange' => $PriceChange,
+                    'bk_contact_fname' => $guestfname,
+                    'bk_contact_lname' => $guestlname,
       );
       $this->db->insert('xml_hotel_booking',$data);
       $id = $this->db->insert_id();

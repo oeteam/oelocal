@@ -510,8 +510,9 @@
 		              	<span class="right"><?php echo agent_currency(); ?> 
 		              	<span class="b-rates--grand-total"><?php
 							$total_amount = xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,'AED');
+							$finalAmount  = $TotalAmount+$taxAmount;
 						 echo xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,agent_currency()); ?></span></span></h5>
-						 <input type="hidden" name="tot" value="<?php echo $total_amount ?>">
+						 <input type="hidden" name="tot" value="<?php echo $finalAmount ?>">
 		            </div>
 	            </div>
 	          </div>
@@ -571,7 +572,7 @@
 			</div>
 			<?php } ?>
 
-			<?php $check_tot = $total_amount; ?>
+			<?php $check_tot = $finalAmount; ?>
 				<div class="clearfix"></div>
 				<div class="row">
 				<div class="col-md-12">
@@ -579,7 +580,6 @@
 						<h4 class="hpadding20 dark bold">Choose a Payment Option<small class="pay_error"></small></h4>
 						<div class="hpadding20">
 						<?php 
-						$check_tot = $finalAmount;
 						if ($check_tot <= $agent_credit_amount) { ?>
 							<div class="payment-radio-group clearfix">
 				                <input type="radio" id="credit" name="paymenttype" value="credit" class="hidden payment-radio__btn">

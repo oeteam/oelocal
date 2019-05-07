@@ -1599,6 +1599,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       echo json_encode(true);
     }
     public function dummy() {
+      xmlbookingMailNotification(1);
      // emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'56','56','167','0','On Requst');
     }
     public function offlineRequest() {
@@ -3197,7 +3198,12 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
          $BookingId =  $Bookingresponse['BookingId'];          
         }
          $PriceChange = $Bookingresponse['PriceChange']['@attributes']['Status'];
-         $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup);
+
+         $guestfname = $_REQUEST['Room1AdultFirstName'][0];
+         $guestlname =  $_REQUEST['Room1AdultLastName'][0];
+
+
+         $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup,$guestfname,$guestlname);
          if($type=='Credit') {
           $agent_credit_get = $this->Payment_Model->agent_credit_get();
           $agent_amount = $agent_credit_get-$_REQUEST['tot'];

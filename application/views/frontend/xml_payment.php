@@ -822,8 +822,8 @@ $(document).ready(function() {
 
           </div>
 
-          <div class="row b-rates margtop10">
             <div class="col-sm-12 ">
+              <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button class="bluebtn" id="Continue_book_xml" type="button" name="Continue_book_xml" style="margin-left: 5px">Continue</button><span>
             </h5>

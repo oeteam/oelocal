@@ -3786,7 +3786,7 @@ function xmlbookingMailNotification($id) {
     $board = "";
     $total_markup = $booking[0]->agent_markup+$booking[0]->admin_markup;
 
-    $subject = 'YOUR BOOKING IS CONFIRMED (BOOKING ID : '.$booking[0]->BookingId.')';     
+    $subject = 'YOUR BOOKING IS CONFIRMED (CONFIRMATION No : '.$booking[0]->ConfirmationNo.')';     
     $BookingMsg = 'YOUR BOOKING IS CONFIRMED';
     $bookingTypeTag = '**(UNDER ALLOTMENT/FREESALE)**';
 
@@ -3800,9 +3800,9 @@ function xmlbookingMailNotification($id) {
             Thank you for booking with Otelseasy.com<br><br>
             '.$BookingMsg.'<br><br>
             Booking Details : <br>
-            Reference Number : '.$booking[0]->booking_id.'<br>
+            Reference Number : '.$booking[0]->ConfirmationNo.'<br>
             Hotel Name : '.$booking[0]->hotel_name.'<br>
-            Room Type : '.$hotel[0]->RoomTypeName.'<br>
+            Room Type : '.$booking[0]->RoomTypeName.'<br>
             No. of Room(s) : '.$booking[0]->no_of_rooms.'<br>
             Check-In Date : '.date('d/m/Y',strtotime($booking[0]->Check_in)).'<br>
             Check-Out Date : '.date('d/m/Y',strtotime($booking[0]->Check_out)).'<br>
