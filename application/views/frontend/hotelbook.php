@@ -538,11 +538,18 @@ function ConSelectFun(){
 }
 $(document).ready(function() {
 	$(".cancellation-span").hover(function(){
-    $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
-    }, function(){
-    $(this).closest('.av-div').find('.cancellation-table').css("display", "none");
+    $(this).closest('.roomlist').find('.cancellation-table').css("display", "block");
+    }, function() {
+    $(this).closest('.roomlist').find('.cancellation-table').css("display", "none");
   });
 })
+// function cancellationModal() {
+//   $("#myModal").load(base_url+'OfflineRequests/OfflineTourRequestModal');
+//   $('#myModal').modal({
+//       backdrop: 'static',
+//       keyboard: false
+//   });
+// }
 </script>
 
 <style type="text/css">
@@ -777,13 +784,12 @@ $(document).ready(function() {
 		              			$checked ='checked';
 		              		}
 		              	?>
-		                <li>
-        
-		                  <label for="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">
+		                <li class="roomlist">
+                    <label for="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>" value="<?php echo $rooms[$i]['RoomIndex'][$key] ?>">
 		                    
 		                    <div class="av-div">
-		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right cancellation-span">cancellation<span>
+		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right" data-toggle="modal" data-target="#myModal">cancellation<span>
 	                  		  </h5>
 	                  		   <?php foreach($rooms[$i]['extrabed'][$key] as $extrabed) { ?>
 	                  		   	<small class="r-type-includes">
@@ -794,32 +800,7 @@ $(document).ready(function() {
 		                      	foreach ($rooms[$i]['generalsupplementType'][$key] as $key1 => $value1) {  ?>
 		                      	<small class="r-type-includes"><?php echo $value1 ?></small><br>
 		                  	 <?php } } ?>
-	                  		  <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
-                          <thead style="background: #0074b9;color: white;">
-                            <tr>
-                              <td>Cancelled on or After</td>
-                              <td>Cancelled on or Before</td>
-                              <td>Cancellation Charge</td>
-                              <td>Description</td>
-                            </tr>
-                          </thead>
-                         <tbody> 
-					    	<?php foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
-					    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
-					    			<tr>
-					    				<td colspan="4">This booking is Nonrefundable.</td>
-					    			</tr>
-					    		<?php } else { ?>
-							    	<tr>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
-							    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
-							    	</tr>
-							    <?php } 
-							} ?>
-				    	</tbody>
-                        </table>
+	                  		  
 		                      <p class="text-green m-0 bold">
 		                      	<input type="hidden" class="RequestType" value="<?php echo $rooms[$i]['RequestType'][$key] ?>">
 		                      	<input type="hidden" class="room_id" value="<?php echo $rooms[$i]['room_id'][$key] ?>">
@@ -833,6 +814,46 @@ $(document).ready(function() {
 		              	<?php } ?>
 		              </ul>
 		            </div>
+                <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog modal-sm">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Cancellation Policies</h4>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-bordered table-responsive cancellation-table">
+                        <thead style="background: #0074b9;color: white;">
+                          <tr>
+                            <td>Cancelled on or After</td>
+                            <td>Cancelled on or Before</td>
+                            <td>Cancellation Charge</td>
+                            <td>Description</td>
+                          </tr>
+                        </thead>
+                        <tbody> 
+                          <?php foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
+                            if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
+                              <tr>
+                                <td colspan="4">This booking is Nonrefundable.</td>
+                              </tr>
+                            <?php } else { ?>
+                              <tr>
+                                <td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
+                                <td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
+                                <td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
+                                <td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
+                              </tr>
+                            <?php } 
+                          } ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                 </div>
+                </div>
 		        <?php } ?>
 		          </div>
 				
@@ -866,6 +887,7 @@ $(document).ready(function() {
   
   </div>
   <!-- Central Modal Medium Warning-->
+  
   
 
 <?php init_front_black_tail(); ?> 
