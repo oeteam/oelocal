@@ -789,7 +789,7 @@ $(document).ready(function() {
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>" value="<?php echo $rooms[$i]['RoomIndex'][$key] ?>">
 		                    
 		                    <div class="av-div">
-		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right" data-toggle="modal" data-target="#myModal">cancellation<span>
+		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">cancellation<span>
 	                  		  </h5>
 	                  		   <?php foreach($rooms[$i]['extrabed'][$key] as $extrabed) { ?>
 	                  		   	<small class="r-type-includes">
@@ -811,10 +811,7 @@ $(document).ready(function() {
 		                    </div>
 		                  </label>
 		                </li>
-		              	<?php } ?>
-		              </ul>
-		            </div>
-                <div id="myModal" class="modal fade" role="dialog">
+                    <div id="myModalRoom<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">
 
                   <!-- Modal content-->
@@ -854,6 +851,9 @@ $(document).ready(function() {
                   </div>
                  </div>
                 </div>
+		              	<?php } ?>
+		              </ul>
+		            </div>
 		        <?php } ?>
 		          </div>
 				

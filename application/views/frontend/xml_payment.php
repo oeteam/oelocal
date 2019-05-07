@@ -213,15 +213,7 @@ $(document).ready(function() {
         });    
     });
 }
-
-  $(".cancellation-span").hover(function(){
-    $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
-    }, function(){
-    $(this).closest('.av-div').find('.cancellation-table').css("display", "none");
-  });
-})
-
-
+});
 </script>
 
 <style>
@@ -857,8 +849,6 @@ $(document).ready(function() {
                   if ($key==0 && $i==0) {
                     $checked ='checked';
                   }
-                // foreach ($RoomCombination as $combination) {
-                //   if($combination['RoomIndex'][$i]==$value['RoomIndex']) {
                 ?> 
                 <li id="listRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="hide">
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
@@ -877,13 +867,52 @@ $(document).ready(function() {
                                   $NoShowPolicy[0] = $value['CancelPolicies']['NoShowPolicy'];
                                } 
                                if(isset($cancelList[0]['@attributes']) && $cancelList[0]['@attributes']['CancellationCharge']==0) { ?>
-                                <span class="pull-right cancellation-span">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
+                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
                                <?php } else { ?>
-                                  <span class="pull-right cancellation-span">cancellation<span>
+                                  <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
                               <?php } ?>
                         </h5>
+                      <?php if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
+                      <small class="r-type-includes"><?php echo is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'] ?></small><br>
+                     <?php } ?>
+                      <?php 
+                      if (isset($value['Supplements']['Supplement'][0])) {
+                        $Supplements = $value['Supplements']['Supplement'];
+                      } else {
+                        $Supplements[0] = $value['Supplements']['Supplement'];
+                      }
+                      foreach ($Supplements as $key1 => $value1) {
+                        if (isset($value1['@attributes']['SuppName'])) { 
+                            ?>
+                            <p class="m-0" style="color: hsl(240, 8%, 69%)">
+                            <small><?php echo $value1['@attributes']['SuppName'] ?> - <?php echo $value1['@attributes']['SuppChargeType']=="AtProperty" ? '<span style="color: #0074b9;" title="Exclusive">Excl.</span> ' : '<span style="color: #0074b9;" title="Inclusive">Incl.</span> '  ?> <?php 
+                          $suppl = $value1['@attributes']['Price'];
+                          $supplAmnt = ($suppl*$total_markup)/100+$suppl;
+                          echo $value1['@attributes']['CurrencyCode'].' '.$suppl; ?></small>
+                          </p>
 
-                        <table style="display: none;position: absolute;left: 55%;width: 45%;bottom: 60px;font-size: 11px;" class="table table-bordered table-hover cancellation-table">
+                      <?php  }
+                      } ?>
+                      <?php $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
+                        $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
+                      <p class="text-green m-0 bold">
+                        <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">
+                        <small><?php echo agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?></small>
+                      </p>
+                    </div>
+                  </label>
+                </li>
+                <div id="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
+                  <div class="modal-dialog modal-sm">
+
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Cancellation Policies</h4>
+                    </div>
+                    <div class="modal-body">
+                     <table class="table table-bordered table-responsive cancellation-table">
                           <thead style="background: #0074b9;color: white;">
                             <tr>
                               <td>Cancelled on or After</td>
@@ -929,40 +958,12 @@ $(document).ready(function() {
                           </tr>
                           </tbody>
                         </table>
-                      
-                      <?php if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
-                      <small class="r-type-includes"><?php echo is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'] ?></small><br>
-                     <?php } ?>
-                      <?php 
-                      if (isset($value['Supplements']['Supplement'][0])) {
-                        $Supplements = $value['Supplements']['Supplement'];
-                      } else {
-                        $Supplements[0] = $value['Supplements']['Supplement'];
-                      }
-                      foreach ($Supplements as $key1 => $value1) {
-                        if (isset($value1['@attributes']['SuppName'])) { 
-                            ?>
-                            <p class="m-0" style="color: hsl(240, 8%, 69%)">
-                            <small><?php echo $value1['@attributes']['SuppName'] ?> - <?php echo $value1['@attributes']['SuppChargeType']=="AtProperty" ? '<span style="color: #0074b9;" title="Exclusive">Excl.</span> ' : '<span style="color: #0074b9;" title="Inclusive">Incl.</span> '  ?> <?php 
-                          $suppl = $value1['@attributes']['Price'];
-                          $supplAmnt = ($suppl*$total_markup)/100+$suppl;
-                          echo $value1['@attributes']['CurrencyCode'].' '.$suppl; ?></small>
-                          </p>
-
-                      <?php  }
-                      } ?>
-                      <?php $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
-                        $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
-                      <p class="text-green m-0 bold">
-                        <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">
-                        <small><?php echo agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?></small>
-                      </p>
                     </div>
-                  </label>
-                </li>
-                 <?php //}
-                // } 
-              }?>
+                  </div>
+                 </div>
+                </div>
+                <?php 
+                 }?>
               </ul>
             </div>
             <?php } ?>
