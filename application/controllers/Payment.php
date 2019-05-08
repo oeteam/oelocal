@@ -2034,6 +2034,10 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           </tr>
           <tr>
             <td style="text-indent:5px;"></td>
+            <td style="text-align:right;">Confirmation Number : '.$confirmationNumber.'</td>
+          </tr>
+          <tr>
+            <td style="text-indent:5px;"></td>
             <td style="text-align:right;">Hotel name : '.$invoice_company_name.'</td>
           </tr>
         </tbody>
@@ -2475,6 +2479,10 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           </tr>
           <tr>
             <td style="font-size:10px;">Booking reference number :'.$booking_id.'</td>
+            <td style="text-align:right;font-size:10px;"></td>
+          </tr>
+          <tr>
+            <td style="font-size:10px;">Confirmation number :'.$confirmationNumber.'</td>
             <td style="text-align:right;font-size:10px;"></td>
           </tr>
           <tr>
