@@ -1906,7 +1906,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $view1 = $output;
       if ($xmlData['Status']['StatusCode']==01) {
         if ($output[0]->BookingId=="" || $output[0]->InvoiceNumber=="") {
-          $insertXMlBookingId = $this->Booking_Model->updateXMlBookingId($_REQUEST['id'],$xmlData['BookingDetail']['@attributes']['BookingId'],$xmlData['BookingDetail']['@attributes']['InvoiceNumber']);
+          $insertXMlBookingId = $this->Booking_Model->updateXMlBookingId($_REQUEST['id'],$xmlData['BookingDetail']['@attributes']['BookingId'],$xmlData['BookingDetail']['@attributes']['InvoiceNumber'],$xmlData['BookingDetail']['@attributes']['BookingStatus']);
         }
         $view = $xmlData['BookingDetail'];
       }
@@ -2333,7 +2333,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $view1 = $output;
       if ($xmlData['Status']['StatusCode']==01) {
         if ($output[0]->BookingId=="" || $output[0]->InvoiceNumber=="") {
-          $insertXMlBookingId = $this->Booking_Model->updateXMlBookingId($_REQUEST['id'],$xmlData['BookingDetail']['@attributes']['BookingId'],$xmlData['BookingDetail']['@attributes']['InvoiceNumber']);
+          $insertXMlBookingId = $this->Booking_Model->updateXMlBookingId($_REQUEST['id'],$xmlData['BookingDetail']['@attributes']['BookingId'],$xmlData['BookingDetail']['@attributes']['InvoiceNumber'],$xmlData['BookingDetail']['@attributes']['BookingStatus']);
         }
         $view = $xmlData['BookingDetail'];
       }
