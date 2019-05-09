@@ -1,7 +1,5 @@
-<div class="modal-content modal-content  col-md-6 col-md-offset-3">
+<div class="modal-content modal-content  col-md-6 col-md-offset-3" id="confirmModal">
   <form id="offlineVisaRequestActionForm" method="post">
-    <input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>">
-    <input type="hidden" name="val" value="<?php echo $_REQUEST['val']; ?>">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>
@@ -12,6 +10,8 @@
       <h4>Do you want to accept this request!</h4>
       <br>
         <div class="row">
+          <input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>">
+          <input type="hidden" name="val" value="<?php echo $_REQUEST['val']; ?>">
             <input type="hidden" name="sellingprice" id="sellingprice" value="<?php echo $view[0]->sellingprice; ?>">
           <div class="col-md-6 form-group">
             <input type="number" name="conNumber" id="conNumber" class="form-control" placeholder="Confirmation Number">
@@ -48,6 +48,7 @@
         addToast("Confirmation Name field is required!","orange");
         $("#conName").focus();
       } else {
+        addToast("Mail is sending. Please wait for few moments","green");
         $.ajax({
             dataType: 'json',
             type: "POST",

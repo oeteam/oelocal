@@ -724,6 +724,7 @@ class Offlinerequest extends MY_Controller {
   // update the status of the offline visa request
   public function OfflineVisaActionSubmit() {
     $this->OfflineModel->OfflineVisaActionupdate($_REQUEST);
+
     $data = $this->OfflineModel->Offlinevisarequest_details($_REQUEST['id']);
     if ($_REQUEST['val']==1) {
       $this->load->library('email');

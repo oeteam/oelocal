@@ -49,7 +49,7 @@
                
                 <h2>New Visa Requests</h2>
                
-                <span class="pull-right"><a href="<?php echo base_url(); ?>backend/offlinerequests/visa_requests" class="btn-sm btn-primary">Back</a></span>
+                <span class="pull-right"><a href="<?php echo base_url(); ?>backend/offlinerequest/visa_requests" class="btn-sm btn-primary">Back</a></span>
             </div>
             <form action="<?php echo base_url(); ?>backend/offlinerequest/OfflineVisaRequestSubmit" name="add_visa_requests_form" id="add_visa_requests_form" method="post" enctype="multipart/form-data">
             </br>
