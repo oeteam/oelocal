@@ -1920,7 +1920,6 @@ class Offlinerequest extends MY_Controller {
     <div  style="font-size:12px ">Issued to : </div>
     ';
     $pdf->writeHTML($html, false, false, false, false, '');
-
     //INVOICE DETAILS
     $invoice_data_date= date("d-m-Y");
     $invoice_number = "Invoice00".$data[0]->requestid;
@@ -1953,7 +1952,6 @@ class Offlinerequest extends MY_Controller {
     ';
 
     $pdf->writeHTML($tb2, true, false, false, false, '');
-   
     //AMOUNT DETAILS START
 
     $tb5=
