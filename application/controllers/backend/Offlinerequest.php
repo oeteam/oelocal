@@ -1915,7 +1915,6 @@ class Offlinerequest extends MY_Controller {
     ';
 
     $pdf->writeHTML($tbl_header . $tbl . $tbl_footer, true, false, false, false, '');
-
     $html='
     <div  style="font-size:14px ;font-weight:bold;color:#337ab7;">INVOICE</div>
     <div  style="font-size:12px ">Issued to : </div>
@@ -1952,6 +1951,7 @@ class Offlinerequest extends MY_Controller {
       </tbody>
       </table>
     ';
+
     $pdf->writeHTML($tb2, true, false, false, false, '');
    
     //AMOUNT DETAILS START

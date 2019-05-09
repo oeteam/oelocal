@@ -83,6 +83,9 @@ function RoomCombinationCheck() {
         for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
           $('#Room'+i+v.RoomIndex[i-1]).prop('disabled',false);
           $('#Room'+i+v.RoomIndex[i-1]).closest('li').find('.av-div').addClass('availability');
+          if (j==0) {
+            $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
+          }
         }
       }
     }
@@ -823,13 +826,16 @@ $(document).ready(function() {
             </div>
 
           </div>
-            <div class="rowmargtop10">
-            <div class="col-md-2 col-md-offset-5">
-                <div class="spin-wrapper" style="">
-                  <img style="width: 100px;" src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
-                </div>
+            <div class="row margtop10">
+              <div class="col-md-12">
+                <p class="text-center spin-wrapper"><strong>We are fetching the rates.Please wait few moments..</strong></p>
+              </div>
+              <div class="col-md-2 col-md-offset-5">
+                  <div class="spin-wrapper" style="">
+                    <img style="width: 100px;" src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+                  </div>
+              </div>
             </div>
-           </div>
             <div class="col-sm-12 pre-page hide">
               <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
