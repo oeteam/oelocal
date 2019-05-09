@@ -413,7 +413,10 @@
             		}
         	    ?>
         	    <?php 
-        	    if (isset($PriceChanged['HotelRooms']) && count($PriceChanged['HotelRooms'])!=0) { ?>
+        	    if (isset($PriceChanged['HotelRooms']) && count($PriceChanged['HotelRooms'])!=0) {
+        	    	$tax = array();
+        	    	$Amount = array();
+        	     ?>
 				<h4 class="opensans dark bold">Changed New Price</h4>
 				<?php foreach ($_REQUEST['adults'] as $RAkey => $RAvalue) { ?>
         	    	<div class="row payment-table-wrap">
@@ -493,7 +496,11 @@
 	            			</table>
 	            		</div>
 	            	</div>
-        	    <?php } } ?>
+        	    <?php } 
+
+        	    	$taxAmount =  (array_sum($tax)*$total_markup)/100+array_sum($tax);
+	        		$TotalAmount =  (array_sum($Amount)*$total_markup)/100+array_sum($Amount);
+        	} ?>
 
 
                 </div>

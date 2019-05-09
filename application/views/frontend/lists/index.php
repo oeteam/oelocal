@@ -856,11 +856,11 @@
 						<div class="line2"></div>
 
 												<!-- Price range -->					
-						<button type="button" class="collapsebtn" data-toggle="collapse" data-target="#collapse2">
+						<button type="button" class="collapsebtn hide" data-toggle="collapse" data-target="#collapse2">
 							Price range <?php echo $agent_currency; ?> <span class="collapsearrow"></span>
 						</button>
 
-												<div id="collapse2" class="collapse in">
+												<div id="collapse2" class="collapse in hide">
 													<div class="padding20">
 														<div class="layout-slider wh100percent">
 															<span class="cstyle09 Slider-class">
