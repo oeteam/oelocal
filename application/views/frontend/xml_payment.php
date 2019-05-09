@@ -12,9 +12,10 @@
     }
     if (flag === 'stop') {
         spinWrapper.fadeOut();
+        $(".pre-page").removeClass("hide");
+
     }
   }
-  divLoading("start");
   function FullLoading(flag, dest, from, to) {
     const fullLoading = document.querySelector('#fullLoading');
     let destination = dest || 'Dubai';
@@ -56,6 +57,7 @@ function RoomCombinationinitCheck() {
   //    $(this).closest('ul').prepend($(this).closest('li'));
   // })
   RoomCombinationCheck();
+  divLoading("stop");
 } 
 function RoomCombinationCheck() {
   var room1 =  $('input[name="Room1"]:checked').val();
@@ -97,12 +99,12 @@ function RoomCombinationCheck() {
   });
   $(".b-rates--grand-total").text(sum);
 }
-divLoading("stop");
 function goBack() {
     window.history.back();
 }
 
 $(document).ready(function() {
+  divLoading("start");
   $('input[name="Room1"]').on('change',function() {
     RoomCombinationCheck();
   });
@@ -821,15 +823,21 @@ $(document).ready(function() {
             </div>
 
           </div>
-
-            <div class="col-sm-12 ">
+            <div class="rowmargtop10">
+            <div class="col-md-2 col-md-offset-5">
+                <div class="spin-wrapper" style="">
+                  <img style="width: 100px;" src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+                </div>
+            </div>
+           </div>
+            <div class="col-sm-12 pre-page hide">
               <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button class="bluebtn" id="Continue_book_xml" type="button" name="Continue_book_xml" style="margin-left: 5px">Continue</button><span>
             </h5>
             </div>
           </div>
-          <h4 class="text-green margtop10">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
+          <h4 class="text-green margtop10 pre-page hide">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
           <?php
            if (isset($HotelRoom[0])) {
               $RoomTypeName = $HotelRoom[0]['RoomTypeName'];
@@ -839,7 +847,7 @@ $(document).ready(function() {
               $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
             }
           ?>
-          <div class="row r-type margtop10">
+          <div class="row r-type margtop10 pre-page hide">
             <?php
             $total_markup = $agent_markup+$admin_markup;
             if ($revenue_markup!='') {
@@ -985,12 +993,9 @@ $(document).ready(function() {
               </ul>
             </div>
             <?php } ?>
-            <div class="col-md-2 col-md-offset-5">
-              <div class="spin-wrapper" style="display: none">
-                <img style="width: 100px;" src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
-              </div>
-            </div>
+            
           </div>
+          
         </div>
   </div>
 

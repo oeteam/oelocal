@@ -1707,7 +1707,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             "value" => true
           ],
           "ResponseTime" => [
-            "value" => 0
+            "value" => 2
           ],
         ];
           
@@ -1769,7 +1769,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             "value" => $_REQUEST['hotel_id']
           ],
           "ResponseTime" => [
-            "value" => 0
+            "value" => 2
           ],
         ];
           

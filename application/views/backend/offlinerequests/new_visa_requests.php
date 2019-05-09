@@ -65,7 +65,7 @@
                                 <option value="">Select Agent</option>
                                <?php $count=count($agents);
                                     for ($i=0; $i <$count ; $i++) {  ?>
-                                        <option value="<?php echo $agents[$i]->id; ?>"><?php echo $agents[$i]->First_Name.' '.$agents[$i]->Last_Name; ?></option>
+                                        <option value="<?php echo $agents[$i]->id; ?>"><?php echo $agents[$i]->Agency_Name; ?></option>
                                 <?php  } ?> 
                             </select>
                         </div> 
