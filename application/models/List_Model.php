@@ -241,7 +241,7 @@ class List_Model extends CI_Model {
     }
 
     if ($data['hotel_name']!="") {
-      $hotelName = " hotel_name  LIKE '%".$data['hotel_name']."%' AND ";
+      $hotelName = " hotel_name  LIKE '%".$this->db->escape_like_str($data['hotel_name'])."%' AND ";
     }
     $adults = max($data['adults']);
     $child = max($data['Child']);
