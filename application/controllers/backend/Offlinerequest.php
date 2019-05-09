@@ -1950,6 +1950,7 @@ class Offlinerequest extends MY_Controller {
       </tbody>
       </table>
     ';
+
     $pdf->writeHTML($tb2, true, false, false, false, '');
     //AMOUNT DETAILS START
 
