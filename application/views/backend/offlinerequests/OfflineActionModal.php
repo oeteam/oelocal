@@ -52,6 +52,7 @@
         addToast("Confirmation Name field is required!","orange");
         $("#conName").focus();
       } else {
+        addToast("Mail is sending. Please wait for few moments","green");
         $.ajax({
             dataType: 'json',
             type: "POST",
