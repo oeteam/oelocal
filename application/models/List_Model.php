@@ -2809,7 +2809,7 @@ public function xmlrequest($request) {
           ]
       ],
       "ResponseTime" => [
-            "value" => 7
+            "value" => 0
         ]
   ];
   $return = array();

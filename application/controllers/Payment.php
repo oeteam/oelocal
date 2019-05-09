@@ -1707,7 +1707,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             "value" => true
           ],
           "ResponseTime" => [
-            "value" => 7
+            "value" => 0
           ],
         ];
           
