@@ -90,7 +90,7 @@
                                       } else {
                                         $valueprice = '';
                                       } ?>
-                                      <input id="value_price" name="value_price" type="range" class="form-control"  min="0" max="5" step="0.1" value ="<?php echo isset($edit[0]->Value_Price) ? $edit[0]->Value_Price : '' ?>">
+                                      <input id="value_price" name="value_price" type="range" class="validate"  min="0" max="5" step="0.1" value ="<?php echo isset($edit[0]->Value_Price) ? $edit[0]->Value_Price : '' ?>">
                                </div>
                             </div>
                     </div>
@@ -99,5 +99,9 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+  $(window).load(function() {
+    $(".validate").trigger("change");
+  })
+</script>
 <?php init_tail(); ?>
