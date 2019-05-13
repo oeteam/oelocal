@@ -16,6 +16,22 @@
         transform: translate(-50%, -50%);
         font-size: 5em;
   }
+  .desc {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2em;
+      color: white;
+  }
+  .title {
+      color: #fff;
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4em;
+  }
   .aboutus-content {
         color: #fff;
         position: absolute;
@@ -25,7 +41,7 @@
         font-size: 2em;
   }
   .aboutus-desc {
-      margin: 7em auto 8em;
+      /*margin: 7em auto 8em;*/
   }
   .aboutus-desc p::first-letter {
     /*font-size: 200%;*/
@@ -41,58 +57,59 @@
     margin:17px 0 15px 0;
     padding:0; display:block;
   }
+  .content-title {
+      font-size: 4em;
+  }
   ul.jslidetext{
-width:100px;
-list-style:none;
-padding-left:0px;
-padding-top:10px;
-text-align:right;
-margin:0 auto;
-}
-.jslidetext li{
-margin-top:10px;
-}
+    width:100px;
+    list-style:none;
+    padding-left:0px;
+    padding-top:10px;
+    text-align:right;
+    margin:0 auto;
+  }
+  .jslidetext li{
+    margin-top:10px;
+  }
 
-ul.jslidetext2{
-  width:100px;
-  list-style:none;
-  padding-left:0px;
-  text-align:right;
-  margin:-5px auto 0 auto;
-}
-.jslidetext2 li{
-  margin-top:22px;
-}
-.cstyle01{
-  display: inline-block; 
-  width: 100%;
-  font-size:13px;
-}/*CUSTOM COLUMNS*/
-.w50percent{width:50%; float:left;}
-.w40percent{width:40%; float:left;}
-.w45percent{width:45%; float:left;}
-.w50percentlast{width:50%; float:right;}
-.wh33percentlast{width:33%;float: right;}
-.wh40percentlast{width:40%;float: right;}
+  ul.jslidetext2{
+    width:100px;
+    list-style:none;
+    padding-left:0px;
+    text-align:right;
+    margin:-5px auto 0 auto;
+  }
+  .jslidetext2 li{
+    margin-top:22px;
+  }
+  .cstyle01{
+    display: inline-block; 
+    width: 100%;
+    font-size:13px;
+  }
+  /*CUSTOM COLUMNS*/
+  .w50percent{width:50%; float:left;}
+  .w40percent{width:40%; float:left;}
+  .w45percent{width:45%; float:left;}
+  .w50percentlast{width:50%; float:right;}
+  .wh33percentlast{width:33%;float: right;}
+  .wh40percentlast{width:40%;float: right;}
 
-.wh33percent{width:33%; float: left;}
-.wh66percent{width:66%;float:left;}
+  .wh33percent{width:33%; float: left;}
+  .wh66percent{width:66%;float:left;}
 
-/*PERCENTAGES*/
-.wh10percent{width:10%;}
-.wh20percent{width:20%;}
-.wh30percent{width:30%;}
-.wh40percent{width:40%;}
-.wh50percent{width:50%;}
-.wh60percent{width:60%;}
-.wh70percent{width:70%;}
-.wh75percent{width:75%;}
-.wh80percent{width:80%;}
-.wh90percent{width:90%;}
-.wh100percent{width:100%;}
-
-
-
+  /*PERCENTAGES*/
+  .wh10percent{width:10%;}
+  .wh20percent{width:20%;}
+  .wh30percent{width:30%;}
+  .wh40percent{width:40%;}
+  .wh50percent{width:50%;}
+  .wh60percent{width:60%;}
+  .wh70percent{width:70%;}
+  .wh75percent{width:75%;}
+  .wh80percent{width:80%;}
+  .wh90percent{width:90%;}
+  .wh100percent{width:100%;}
 </style>
  <link href="<?php echo base_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="<?php echo base_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
@@ -108,55 +125,48 @@ ul.jslidetext2{
         <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>  
 
       
-      <section class="banner-bottom" style="background-image: url(<?php echo base_url()?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>)";>
-        <p class="aboutus-title"><?php echo $view[0]->hotel_name ?></p>
-        
+      <section class="banner-bottom" style="background-image: url('<?php echo base_url() ?>agentLoginStyle/img/hotelheader.jpg');">
+        <p class="title">Hotels</p>
+        <div class="desc text-center">Amazing Services, <br>Locations & Facilities </div>
       </section>
-       <section class="aboutus-desc">
-         <div class="container aboutus-desc">
-            <div class="row">
-               <div class="col-lg-12">
-                  <h1><?php echo $view[0]->hotel_name ?></h1>
-                  <p  style="text-align: justify;"><?php echo $view[0]->hotel_description ?></p>  
-                 
-                    <div class="hpadding20">
-                       <h3>Near by places</h3>
-                      <?php echo $view[0]->city_near_by ?>
-                    </div>
-                    <div class="line4"></div> 
-                    <div class="hpadding20">
-                      <h3>Complimentary Wi-Fi </h3>
-                      <?php echo $view[0]->wifi=='on' ? 'Yes' : 'No' ?>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="line4"></div> 
-                    <div class="hpadding20">
-                      <h3>Internet</h3>
-                      <?php echo $view[0]->internet=='on' ? 'Internet is available. Wireless internet on site.' : 'No' ?>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="line4"></div> 
-                    <div class="hpadding20">
-                      <h3>Parking</h3>
-                      <?php echo $view[0]->parking=='on' ? 'Yes' : 'No' ?>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="line4"></div> 
-                <div class="hpadding20">
-                  <h3>Hotel Facilities</h3>
-                  <ul class="checklist">
-                    <?php foreach ($hotel_facilities as $key => $value) {
-                                            if (isset($value[0]->Hotel_Facility)) {
-                                            ?>
-                                            <li><?php echo $value[0]->Hotel_Facility ?></li>
-                                        <?php } else {
-                                          echo  "No Records";
-                                        }
-                                    } ?>
-                  </ul>
+      <div class="row">
+        <p class="text-center content-title"><?php echo $view[0]->hotel_name ?></p>
+        <div class="col-md-6">
+          <img src="<?php echo base_url()?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" style="width: 100%" class="img-responsive">
+        </div>
+        <div class="col-md-6">
+          <div class="aboutus-desc">
+            <p  style="text-align: justify;"><?php echo $view[0]->hotel_description ?></p>
+            <h3>Near by places</h3>
+            <?php echo $view[0]->city_near_by ?>
+            <h3>Complimentary Wi-Fi </h3>
+            <?php echo $view[0]->wifi=='on' ? 'Yes' : 'No' ?>
+            <h3>Internet</h3>
+            <?php echo $view[0]->internet=='on' ? 'Internet is available. Wireless internet on site.' : 'No' ?>
+            <h3>Parking</h3>
+            <?php echo $view[0]->parking=='on' ? 'Yes' : 'No' ?>
+          </div>
+        </div>
+      </div>
+      <div class="container aboutus-desc">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="hpadding20">
+                    <h3>Hotel Facilities</h3>
+                    <ul class="checklist">
+                      <?php foreach ($hotel_facilities as $key => $value) {
+                                              if (isset($value[0]->Hotel_Facility)) {
+                                              ?>
+                                              <li><?php echo $value[0]->Hotel_Facility ?></li>
+                                          <?php } else {
+                                            echo  "No Records";
+                                          }
+                                      } ?>
+                    </ul>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
-              <div class="clearfix"></div>
-               <div class="line4"></div> 
+                               <div class="line4"></div> 
 
             <div class="hpadding20">
               <div id="review_rating"></div>    
@@ -293,6 +303,12 @@ ul.jslidetext2{
          </div>
          
       </section>
+              </div>
+            </div>
+      
+
+      
+
       <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>
   
     <!-- Bootstrap   -->
