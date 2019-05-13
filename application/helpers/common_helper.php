@@ -3910,3 +3910,13 @@ function Alldiscount($startdate,$enddate,$hotel_id,$room_id,$contract_id,$type) 
     }
  return $discount;
 }
+function tbosearchpermission() {
+  $ci =& get_instance();
+
+  $agent_id = $ci->session->userdata('agent_id');
+  $ci->db->select('tboStatus'); 
+  $ci->db->from('hotel_tbl_agents'); 
+  $ci->db->where('id',$agent_id);
+  $query = $ci->db->get()->result(); 
+  return $query[0]->tboStatus;
+}

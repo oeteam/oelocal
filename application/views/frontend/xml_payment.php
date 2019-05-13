@@ -1,6 +1,7 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); 
   $CustomerSupport = CustomerSupport();
+
 ?> 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
@@ -39,16 +40,35 @@
   RoomCombination = <?php echo json_encode($RoomCombination) ?>;
    $(".xml-default").remove();
 function RoomCombinationinitCheck() {
+  for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+    $(".ulRoom"+i).html($(".ulRoom1").html());
+
+    $(".ulRoom"+i+" .roomval").each(function(){
+      $(this).attr("id","Room"+i+$(this).val());
+      $(this).attr("name","Room"+i);
+      $(this).closest('li').removeAttr('id').attr('id','listRoom'+i+$(this).val());
+      $(this).closest('label').removeAttr('for').attr('for','Room'+i+$(this).val());
+    });
+  }
+
+
+
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
       $('#Room'+1+v.RoomIndex).prop('disabled',false);
       $('#listRoom'+1+v.RoomIndex).removeClass("hide");
       $('#Room'+1+v.RoomIndex).closest('li').find('.av-div').addClass('availability');
+      if(j==0) {
+        $('#Room'+1+v.RoomIndex).prop('checked',true);
+      }
     } else {
       $('#Room'+1+RoomCombination.RoomIndex).prop('disabled',false);
       $('#listRoom'+1+RoomCombination.RoomIndex).removeClass("hide");
       $('#Room'+1+RoomCombination.RoomIndex).closest('li').find('.av-div').addClass('availability');
+      if(j==0) {
+        $('#Room'+1+RoomCombination.RoomIndex).prop('checked',true);
+      }
     }
     
   });
@@ -108,11 +128,11 @@ function goBack() {
 
 $(document).ready(function() {
   divLoading("start");
-  $('input[name="Room1"]').on('change',function() {
+  $(document).on('change','input[name="Room1"]',function(){
     RoomCombinationCheck();
   });
 
-  $('input[type="radio"]').on('change',function() {
+  $(document).on('change','input[type="radio"]',function(){
     var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
     var sum = 0
     $.each(comAmnt,function(i,v) {
@@ -863,8 +883,9 @@ $(document).ready(function() {
              for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
             <div class="col-sm-<?php echo $div ?> r-type--room">
               <h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
-              <ul class="list-unstyled r-type--list">
+              <ul class="list-unstyled r-type--list ulRoom<?php echo $i+1 ?>">
                 <?php 
+                if ($i==0) { 
                  if (isset($HotelRoom[0])) {
                   $HotelRooms = $HotelRoom;
                 } else {
@@ -876,12 +897,10 @@ $(document).ready(function() {
                   if ($key==0 && $i==0) {
                     $checked ='checked';
                   }
-                // foreach ($RoomCombination as $combination) {
-                //   if($combination['RoomIndex'][$i]==$value['RoomIndex']) {
                 ?> 
                 <li id="listRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="hide">
                   <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
-                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" value="<?php echo $value['RoomIndex'] ?>">
+                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="roomval" value="<?php echo $value['RoomIndex'] ?>">
                     <div class="av-div">
                        <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
                      <?php 
@@ -896,9 +915,9 @@ $(document).ready(function() {
                                   $NoShowPolicy[0] = $value['CancelPolicies']['NoShowPolicy'];
                                } 
                                if(isset($cancelList[0]['@attributes']) && $cancelList[0]['@attributes']['CancellationCharge']==0) { ?>
-                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
+                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
                                <?php } else { ?>
-                                  <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
+                                  <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">cancellation<span>
                               <?php } ?>
                         </h5>
 
@@ -933,7 +952,7 @@ $(document).ready(function() {
                     </div>
                   </label>
                 </li>
-                <div id="myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
+                <div id="myModalRoom-<?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
                           <div class="modal-dialog modal-sm">
 
                           <!-- Modal content-->
@@ -993,8 +1012,7 @@ $(document).ready(function() {
                             </div>
                           </div>
                 </div>
-                 <?php //}
-                // } 
+                 <?php }
               }?>
               </ul>
             </div>
@@ -1019,7 +1037,7 @@ $(document).ready(function() {
   
   </div>
   <!-- Central Modal Medium Warning-->
-  
+
 
 <?php init_front_black_tail(); ?> 
 

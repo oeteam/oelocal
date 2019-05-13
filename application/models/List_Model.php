@@ -207,7 +207,10 @@ class List_Model extends CI_Model {
      WHERE a.allotement_date IN ('".$implode_data."') AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.amount !=0 AND a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND a.contract_id IN ('".$implode_data2."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off  GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") m group by HotelCode")->result();
     }
     $TBOHotels = array();
-    $TBOHotels = $this->xmlrequest($data);
+    $per = tbosearchpermission();
+    if ($per!=0) {
+      $TBOHotels = $this->xmlrequest($data);
+    }
     /*Allotment check end*/
     $return['OtelseasyHotels'] = $OtelseasyHotels;
     $return['TBOHotels'] = $TBOHotels;

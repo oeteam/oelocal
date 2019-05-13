@@ -17,6 +17,7 @@ class Payment extends MY_Controller {
           $this->load->helper('html');
           $this->load->library('email');
           $this->load->helper('common');
+          $this->load->helper('upload');
           $this->load->library('session');
           $this->load->library('gateways/App_gateway', '', 'App_gateway');
           $this->load->library('gateways/Paypal_gateway', '', 'Paypal_gateway');
@@ -1685,6 +1686,9 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $this->load->view('frontend/booking/Offlinebooking_view',$data);
     }
     public function payments() {
+      if ($this->session->userdata('agent_id')=="") {
+        redirect(base_url());
+      }
       $bookbuttondata = $this->session->userdata('hoteldata'.$_REQUEST['hotel_id']);
       $nationality = $this->db->query('SELECT sortname FROM countries where id = '.$_REQUEST['nationality'].'')->result();
        $nationality = $nationality[0]->sortname;   
@@ -1716,6 +1720,18 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         // Available hotel rooms request end
           $data['sessionId'] = $bookbuttondata['sessionid'];
           $Rooms=$AvailableRooms['HotelRooms']['HotelRoom'];
+          // $path  = get_upload_path_by_type('searchRoomdata') . $this->session->userdata('agent_id') . '/';
+          //  _maybe_create_upload_path($path);
+          //  $myFile = $path.date('Ymd').'-'.$_REQUEST['hotel_id'].'.txt';
+          //  if (file_exists($myFile)) {
+          //   file_put_contents($myFile, "");
+          //   $fh = fopen($myFile, 'a');
+          //   fwrite($fh, json_encode($Rooms));
+          // } else {
+          //   $fh = fopen($myFile, 'w');
+          //   fwrite($fh, json_encode($Rooms));
+          // }
+          $Rooms = array_slice($Rooms, 0, 100); 
           $HotelRoom = $Rooms;
           $RoomCombination = $AvailableRooms['OptionsForBooking']['RoomCombination'];
           }
@@ -1725,7 +1741,6 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $data['HotelRating'] = $bookbuttondata['hotelrating'];
       $data['HotelRoom'] = $HotelRoom;
       $data['RoomCombination'] = $RoomCombination;
-      // print_r($RoomCombination);exit;
       $data['AvailableRooms'] = $AvailableRooms;
       $data['agent_markup'] = mark_up_get();
       $data['admin_markup'] = general_mark_up_get();
@@ -1769,7 +1784,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             "value" => $_REQUEST['hotel_id']
           ],
           "ResponseTime" => [
-            "value" => 2
+            "value" => 0
           ],
         ];
           
@@ -1820,6 +1835,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           // if ($HotelCancellation['Status']['StatusCode']==01) {
           //   $cancelinfo = $HotelCancellation['HotelCancellationPolicies'];
           // }
+          $PriceChanged =array();
           $CancellationPolicy = $this->List_Model->AvailabilityAndPricing($inp_arr);
           if ($CancellationPolicy['Status']['StatusCode']==01) {
             $cancelinfo = $CancellationPolicy['HotelCancellationPolicies'];
@@ -3294,6 +3310,148 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $data['RoomCombination'] = $RoomCombination[0];
       $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/hotelbook',$data);
+    }
+    public function searchRoomdata() {
+      $agent_markup = mark_up_get();
+      $admin_markup = general_mark_up_get();
+      $revenue_markup =  xmlrevenue_markup('tbo',$this->session->userdata('agent_id'));
+
+      $total_markup = $agent_markup+$admin_markup;
+      if ($revenue_markup!='') {
+        $total_markup = $agent_markup+$revenue_markup;
+      }
+      $path  = get_upload_path_by_type('searchRoomdata') . $this->session->userdata('agent_id') . '/';
+      $myFile = $path.date('Ymd').'-'.$_REQUEST['hotel_id'].'.txt';
+      $temparray = file_get_contents($myFile);
+      $HotelRoom = json_decode($temparray,true);
+      $return = array_slice($HotelRoom, ($_REQUEST['offset']*$_REQUEST['perpage']), $_REQUEST['perpage']); 
+      if (count($return)!=0) {
+      
+      if (isset($return[0])) {
+        $HotelRooms = $return;
+      } else {
+        $HotelRooms[0] = $return;
+      }
+      $data = '';
+      foreach ($HotelRooms as $key => $value) {
+        $board = count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only';
+        if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+            $cancelList = $value['CancelPolicies']['CancelPolicy'];
+          } else {
+            $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
+         } 
+         $NoShowPolicy = array();
+         if (isset($value['CancelPolicies']['NoShowPolicy'])) {
+           if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+              $NoShowPolicy = $value['CancelPolicies']['NoShowPolicy'];
+            } else {
+              $NoShowPolicy[0] = $value['CancelPolicies']['NoShowPolicy'];
+           } 
+         } 
+
+        if(isset($cancelList[0]['@attributes']) && $cancelList[0]['@attributes']['CancellationCharge']==0) {
+           $cancellationTab = '<span class="pull-right" data-toggle="modal" data-target="#myModalRoom-'.$value['RoomIndex'].'">Free of Cancellation till '.$cancelList[0]['@attributes']['ToDate'].' <span>';
+         } else { 
+            $cancellationTab = '<span class="pull-right" data-toggle="modal" data-target="#myModalRoom-'.$value['RoomIndex'].'">cancellation<span>';
+          } 
+
+        $data .= '<li id="listRoom1'.$value['RoomIndex'].'" class="hide">
+                  <label for="Room1'.$value['RoomIndex'].'">
+                    <input type="radio" name="Room1" id="Room1'.$value['RoomIndex'].'" class="roomval" value="'.$value['RoomIndex'].'">
+                    <div class="av-div">
+                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i>'.$value['RoomTypeName'].' - '.$board.$cancellationTab.'
+                        </h5>';
+
+                      
+                       if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) {
+                        $data .= '<small class="r-type-includes">'.is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'].'</small><br>';
+                      } 
+                      if (isset($value['Supplements']['Supplement'][0])) {
+                        $Supplements = $value['Supplements']['Supplement'];
+                      } else {
+                        $Supplements[0] = $value['Supplements']['Supplement'];
+                      }
+                      foreach ($Supplements as $key1 => $value1) {
+                        if (isset($value1['@attributes']['SuppName'])) { 
+                          $suppl = $value1['@attributes']['Price'];
+                          $supplAmnt = ($suppl*$total_markup)/100+$suppl;
+                          $suptype = $value1['@attributes']['SuppChargeType']=="AtProperty" ? '<span style="color: #0074b9;" title="Exclusive">Excl.</span> ' : '<span style="color: #0074b9;" title="Inclusive">Incl.</span>'.$value1['@attributes']['CurrencyCode'];
+                            $data .= '<p class="m-0" style="color: hsl(240, 8%, 69%)">
+                            <small>'.$value1['@attributes']['SuppName'].' - '.$suptype.' '.$suppl.'</small>
+                          </p>';
+
+                       }
+                      } 
+                      $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
+                        $DayRates = ($DayRates*$total_markup)/100+$DayRates; 
+                       $data .= '<p class="text-green m-0 bold">
+                        <input type="hidden" class="com-amnt" value="'.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()).'">
+                        <small>'.agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()).'</small>
+                      </p>
+                    </div>
+                  </label>
+                </li>
+                <div id="myModalRoom-'.$value['RoomIndex'].'" class="modal fade" role="dialog">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Cancellation Policies</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <table class="table table-bordered table-hover cancellation-table">
+                                    <thead style="background: #0074b9;color: white;">
+                                      <tr>
+                                        <td>Cancelled on or After</td>
+                                        <td>Cancelled on or Before</td>
+                                        <td>Cancellation Charge</td>
+                                      </tr>
+                                    </thead>
+                                    <tbody style="background: white;color: black;">';
+                                        if (isset($cancelList[0]['@attributes'])) {
+                                          foreach ($cancelList as $key => $value1) {
+                                            if($value1['@attributes']['ChargeType']=='Percentage') { 
+                                              $disType =  ' %'; 
+                                            } else { 
+                                               $disType = ' USD'; 
+                                            }
+
+                                        $data .= '<tr>
+                                          <td>'.$value1['@attributes']['FromDate'].'</td>
+                                          <td>'.$value1['@attributes']['ToDate'].'</td>
+                                          <td>'.$value1['@attributes']['CancellationCharge'].$disType.'</td>
+                                        </tr>';
+                                     } } 
+                                    
+                                        if (isset($NoShowPolicy[0]['@attributes'])) {
+                                          foreach ($NoShowPolicy as $key => $value1) {
+                                          if($value1['@attributes']['ChargeType']=='Percentage') { 
+                                            $disType =  ' %'; 
+                                          } else { 
+                                             $disType = ' USD'; 
+                                          }
+                                      $data .= '<tr>
+                                        <td>'.$value1['@attributes']['FromDate'].'</td>
+                                        <td>'.$value1['@attributes']['ToDate'].'</td>
+                                        <td>'.$value1['@attributes']['CancellationCharge'].'</td>
+                                      </tr>';
+                                     } } 
+                                    $data .= '<tr>
+                                      <td colspan="3">
+                                        '.$value['CancelPolicies']['DefaultPolicy'].'
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                            </div>
+                          </div>
+                </div>';
+        }
+        echo $data;
+      } else {
+        echo 0;
+      }
     }
 }
 

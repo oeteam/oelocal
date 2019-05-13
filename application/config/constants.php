@@ -101,3 +101,4 @@ define('VEHICLE_IMAGES_FOLDER',FCPATH.'uploads/vehicle_images'.'/');
 define('INVOICE_PDF_FOLDER',FCPATH.'uploads/attached_invoice_pdfs'.'/');
 define('BACKUPS_FOLDER',FCPATH.'backups'.'/');
 define('SEARCH_FOLDER',FCPATH.'uploads/search'.'/');
+define('SEARCH_ROOM_FOLDER',FCPATH.'uploads/searchroom'.'/');

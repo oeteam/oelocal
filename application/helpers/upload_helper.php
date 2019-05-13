@@ -600,6 +600,9 @@ function get_upload_path_by_type($type)
         case 'searchdata':
             return SEARCH_FOLDER;
         break;
+        case 'searchRoomdata':
+            return SEARCH_ROOM_FOLDER;
+        break;
         default:
         return false;
     }
