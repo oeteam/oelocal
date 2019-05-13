@@ -55,6 +55,7 @@
         <p class="title">Events</p>
         <div class="desc">Dont miss the oppurtunity to be part of this events.</div>
       </section>
+      <div class="container">
       <div class="row">
         <p class="text-center content-title"><?php echo $view[0]->event_name ?></p>
         <div class="col-md-6">
@@ -76,7 +77,7 @@
           </section> -->
         </div>
       </div>
-      
+      </div>
         
        
        

@@ -129,6 +129,7 @@
         <p class="title">Hotels</p>
         <div class="desc text-center">Amazing Services, <br>Locations & Facilities </div>
       </section>
+      <div class="container ">
       <div class="row">
         <p class="text-center content-title"><?php echo $view[0]->hotel_name ?></p>
         <div class="col-md-6">
@@ -147,6 +148,7 @@
             <?php echo $view[0]->parking=='on' ? 'Yes' : 'No' ?>
           </div>
         </div>
+      </div>
       </div>
       <div class="container aboutus-desc">
               <div class="row">
