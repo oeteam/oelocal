@@ -3426,6 +3426,72 @@ class Hotels extends MY_Controller {
 		}
         echo json_encode($Return);
 	}
+	public function providedList() {
+		if ($this->session->userdata('name')=="") {
+			redirect("../backend/");
+		}
+		$listMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Provided List'); 
+		if (count($listMenu)!=0 && $listMenu[0]->view==1) {
+     		$this->load->view('backend/hotels/providedList');
+    	} else {
+      		redirect(base_url().'backend/dashboard');
+    	}  		
+	}
+	public function providedDetailsList() {
+		if ($this->session->userdata('name')==""){
+			redirect("../backend/");
+		}
+		$data = array();
+		// Datatables Variables
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+		$providedList = $this->Hotels_Model->provided_list();
+		foreach($providedList->result() as $key => $r) {
+			if ($r->tboStatus==1) {
+				$switch = '<div class="switch">
+		              <label>
+		                  <input type="checkbox"  checked="checked" id="tboStatus'.$r->id.'"  onchange="tboStatus('."'$r->id'".');" >
+		                  <span class="lever"></span>
+		                </label>
+		          	</div>';
+		    } else {
+		        	$switch = '<div class="switch">
+		              <label>
+		                  <input type="checkbox"   id="tboStatus'.$r->id.'"  onchange="tboStatus('."'$r->id'".');" >
+		                  <span class="lever"></span>
+		                </label>
+		          	</div>';
+		    }
+			$data[] = array(
+				$key+1,
+				$r->First_Name.' '.$r->Last_Name,
+				$r->Agency_Name,
+				$switch
+			);
+      	}
+		$output = array(
+		   	"draw" 			=> $draw,
+			"recordsTotal" 	=> $providedList->num_rows(),
+			"recordsFiltered" => $providedList->num_rows(),
+			"data" => $data
+		);
+	  echo json_encode($output);
+	  exit();
+	}
+	public function tboStatus() {
+		$array = array('tboStatus' => $_REQUEST['status']);
+		$this->db->where('id',$_REQUEST['id']);
+		$this->db->update('hotel_tbl_agents',$array);
+		$id = $_REQUEST['id'];
+		if ($_REQUEST['status']==0) {
+			$description = 'TBO Status Disabled [Agent id:'.$id.']';
+		} else {
+			$description = 'TBO Enabled [Agent id:'.$id.']';
+		}
+		AdminlogActivity($description);
+		echo json_encode(true);
+	}
 }
 
 

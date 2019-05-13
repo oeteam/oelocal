@@ -3,21 +3,25 @@
 
 <style>
   .banner-bottom {
-    background-image: url("<?php echo base_url() ?>agentLoginStyle/img/baner3.jpg");
-    height: 60%;
+    background-image: url("<?php echo base_url() ?>agentLoginStyle/img/hotelheader.jpg");
+    height: 79%;
     position: relative;
   }
   .aboutus-title {
         color: #fff;
         position: absolute;
-        top: 50%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 5em;
   }
   .aboutus-desc {
-    height: 50%;
-    margin: 7em auto 8em;
+   position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    color: white;
   }
   .aboutus-desc p::first-letter {
     /*font-size: 200%;*/
@@ -28,11 +32,12 @@
     margin-left: 20px;
   li{
     display:inline;
-  }d  
+  } 
 
 </style>    
       <section class="banner-bottom">
         <p class="aboutus-title">Hotels</p>
+        <div class="aboutus-desc text-center">Amazing Services, <br>Locations & Facilities </div>
       </section>
       <br><br>
       <section>

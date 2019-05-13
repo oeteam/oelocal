@@ -5366,6 +5366,12 @@ class Hotels_Model extends CI_Model {
 		$this->db->delete('hotel_tbl_displaymanage');
 		return true;
 	}
+	public function provided_list() {
+    	$this->db->select('*');
+    	$this->db->from('hotel_tbl_agents');
+    	$query = $this->db->get();
+    	return $query;
+    }
 }		
 
 

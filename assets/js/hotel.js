@@ -692,7 +692,7 @@ var hotel_id = $("#hotel_id").val();
                   $('[data-toggle="tooltip"]').tooltip();          
                 }
               });
-          }else if(response.table == "Display_list_table") {
+          } else if(response.table == "Display_list_table") {
             var Display_list_table = $("#Display_list_table").dataTable({
                     "bDestroy": true,
                     "ajax": {

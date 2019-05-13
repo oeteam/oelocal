@@ -40,7 +40,8 @@
                         $RoomType = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Type');
                         $Facilities = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotel Facilities'); 
                         $RoomFacility  = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Facilities');
-                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($revenueList)!=0 && $revenueList[0]->view!=0) || (count($displayManage)!=0 && $displayManage[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
+                        $providedList = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Provided List'); 
+                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($revenueList)!=0 && $revenueList[0]->view!=0) || (count($displayManage)!=0 && $displayManage[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($providedList)!=0 && $providedList[0]->view!=0) ||(count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
                             <li class="hotels"><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-building" aria-hidden="true"></i></i>Hotels</a>
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>                                    
@@ -72,7 +73,12 @@
                                     <li>
                                         <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/Ranking">Hotel Ranking</a>
                                     </li>
-                                    <?php }                             
+                                    <?php }  
+                                    if (count($providedList)!=0 && isset($providedList[0]->view) && $providedList[0]->view!=0) { ?>
+                                    <li>
+                                        <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/providedList">Provided List</a>
+                                    </li>
+                                    <?php }                           
                                     if (count($RoomType)!=0 && isset($RoomType[0]->view) && $RoomType[0]->view!=0) { ?>
                                     <li>
                                         <a class= "room_type_menu" href="<?php echo base_url(); ?>backend/hotels/room_type">Room Type</a>

@@ -82,6 +82,8 @@
                                     $CEDdisabled = 'disabled';
                                 }  else if(isset($value->main_menu) && $value->main_menu=="Error Logs") {
                                     $CEDdisabled = "disabled";
+                                } else if(isset($value->sub_menu) && $value->sub_menu=="Provided List") {
+                                    $CEDdisabled = "disabled";
                                 } else {
                                     $CEDdisabled = '';
                                 }
