@@ -272,7 +272,8 @@ function total_night_calc1() {
 		        tpj(this).prop("selected", true);
 		    }
 		});
-		tpj(".night_custom_class span:last-child").text(total_date);
+		//tpj(".night_custom_class span:last-child").text(total_date);
+		tpj("#nights").val(total_date);
 	}
 }
 function parseDate(str) {

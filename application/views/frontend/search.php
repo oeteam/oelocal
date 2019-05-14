@@ -445,7 +445,7 @@ function currency_change(type){
 										<label for="" class="control-label htl_err text-white">Search by Hotel Name</label>
 										<input type="text" id="hotel_name" name="hotel_name" class="form-control b-r-40" placeholder="Enter hotel name" />
 									</div>	
-									<div class="col-xs-12 col-md-3">
+									<div class="col-xs-12 col-md-2">
 										<div class=" textleft">
 											<label for="" class="chckin_err control-label text-white">Check In</label>
 											<input type="text" style="width: 100% ! important;opacity: 0" class="mySelectCalendar" id="datepicker3" name="Check_in" placeholder="mm/dd/yyyy" value="<?php echo date('m/d/Y') ?>" />
@@ -455,8 +455,11 @@ function currency_change(type){
 											<label for="datepicker3" class="input-group-addon"><i class="fa fa-calendar"></i></label>
 										</div>
 									</div>
-									
-									<div class="col-xs-12 col-md-3">
+									<div class="col-xs-12 col-md-2">
+										<label for="" class="control-label nights_err text-white">Nights</label>
+										<input type="text" id="nights" name="nights" class="form-control b-r-40" placeholder="Nights" value="1" />
+									</div>
+									<div class="col-xs-12 col-md-2">
 										<div class=" textleft">
 											<label for="" class="chckout_err control-label text-white">Check Out</label>
 											<input type="text" style="width: 0px ! important;opacity: 0" class=" mySelectCalendar" id="datepicker2" name="Check_out" placeholder="mm/dd/yyyy" value="<?php echo $date; ?>" />
