@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
           $this->load->helper('url');
           $this->load->helper('html');
           $this->load->helper('common');
+          $this->load->helper('upload');
           $this->load->model('Hotels_Model');
           $this->load->model('List_Model');
           $this->load->model('Common_Model');
@@ -153,5 +154,20 @@ class Welcome extends CI_Controller {
 
     $description = 'Expired data removed automatically [Time : '.date('H:i:s').']';
     OtherlogActivity($description);
+  }
+  public function getFiles() {
+    $d = date('Ymd');
+    $cfile = $d."search.txt";
+    $this->load->helper('directory');
+    $map = directory_map('./uploads/search');
+    $path = get_upload_path_by_type('searchdata');
+    foreach ($map as $key => $value) {
+     foreach($value as $d){
+      if($cfile!=$d) {
+          unlink($path.$key.$d);
+          //echo "deleted";  
+      }
+     }
+    }
   }
 }
