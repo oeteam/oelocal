@@ -202,9 +202,39 @@ class List_Model extends CI_Model {
     $implode_data = implode("','", $dateAlt);
     $implode_data1 = implode("','", array_unique($contractHotelId));
     $implode_data2 = implode("','", array_unique($contractConId));
+
+
+    $room1 = "";
+    $room2 = "";
+    $room3 = "";
+    $room4 = "";
+    $room5 = "";
+    $room6 = "";
+    if (isset($data['adults'][0])) {
+      $room1 =" (f.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND f.occupancy >= ".$data['adults'][0]." AND f.occupancy_child > ".$data['Child'][0].")";
+    }
+
+    if (isset($data['adults'][1])) {
+      $room2 =" OR (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child > ".$data['Child'][1].")";
+    }
+    if (isset($data['adults'][2])) {
+      $room3 =" OR (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child > ".$data['Child'][2].")";
+    }
+    if (isset($data['adults'][3])) {
+      $room4 =" OR (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child > ".$data['Child'][3].")";
+    }
+    if (isset($data['adults'][4])) {
+      $room5 =" OR (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child > ".$data['Child'][4].")";
+    }
+    if (isset($data['adults'][5])) {
+      $room6 =" OR (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child > ".$data['Child'][5].")";
+    }
+    
+
     $OtelseasyHotels = $this->db->query("select *,min(TtlPrice) as TotalPrice,min(OrgPrice) as OriginalPrice  from (SELECT a.contract_id, a.hotel_id as HotelCode,b.hotel_name as HotelName,b.location as HotelAddress,concat('".base_url()."uploads/gallery/',a.hotel_id,'/',b.Image1) as HotelPicture,b.hotel_description as HotelDescription,b.rating as Rating,sum(a.amount) as TtlPrice,'".agent_currency()."' as Currency,sum(a.amount) as OrgPrice,' ' as oldPrice,'otelseasy' as DataType,b.rating as RatingImg,b.starsrating as  ReviewImg,b.starsrating as reviews ,'' as BookBtn ,'' as HotelRequest,'' as Inclusion,count(*) as counts FROM hotel_tbl_allotement a 
-      INNER JOIN hotel_tbl_hotels b ON b.id = a.hotel_id 
-     WHERE a.allotement_date IN ('".$implode_data."') AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.amount !=0 AND a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND a.contract_id IN ('".$implode_data2."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off  GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") m group by HotelCode")->result();
+      INNER JOIN hotel_tbl_hotels b ON b.id = a.hotel_id INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id
+     WHERE (".$room1.$room2.$room3.$room4.$room5.$room6.") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.amount !=0 AND a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND a.contract_id IN ('".$implode_data2."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off  GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") m group by HotelCode")->result();
+
     }
     $TBOHotels = array();
     $per = tbosearchpermission();
@@ -246,14 +276,32 @@ class List_Model extends CI_Model {
     if ($data['hotel_name']!="") {
       $hotelName = " hotel_name  LIKE '%".$this->db->escape_like_str($data['hotel_name'])."%' AND ";
     }
-    $adults = max($data['adults']);
-    $child = max($data['Child']);
-    foreach ($data['adults'] as $key77 => $value77) {
-      $max_total[] = ($value77+$data['Child'][$key77]);
-    }
-    $maxTotal = max($max_total);
 
-    $query =  $this->db->query("SELECT a.id FROM hotel_tbl_hotels a INNER JOIN states b ON  b.id = IF(a.state!='',a.state,3798) INNER JOIN hotel_tbl_hotel_room_type c ON c.hotel_id = a.id WHERE ".$search.$hotelName."  a.delflg = 1 and (c.max_total >= ".$maxTotal." or c.occupancy >= ".$adults." or c.occupancy_child > ".$child.")  and c.delflg = 1")->result();
+    $room2 = "";
+    $room3 = "";
+    $room4 = "";
+    $room5 = "";
+    $room6 = "";
+
+    if (isset($data['adults'][1])) {
+      $room2 =" OR (c.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND c.occupancy >= ".$data['adults'][1]." AND c.occupancy_child > ".$data['Child'][1].")";
+    }
+    if (isset($data['adults'][2])) {
+      $room3 =" OR (c.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND c.occupancy >= ".$data['adults'][2]." AND c.occupancy_child > ".$data['Child'][2].")";
+    }
+    if (isset($data['adults'][3])) {
+      $room4 =" OR (c.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND c.occupancy >= ".$data['adults'][3]." AND c.occupancy_child > ".$data['Child'][3].")";
+    }
+    if (isset($data['adults'][4])) {
+      $room5 =" OR (c.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND c.occupancy >= ".$data['adults'][4]." AND c.occupancy_child > ".$data['Child'][4].")";
+    }
+    if (isset($data['adults'][5])) {
+      $room6 =" OR (c.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND c.occupancy >= ".$data['adults'][5]." AND c.occupancy_child > ".$data['Child'][5].")";
+    }
+    
+
+    $query =  $this->db->query("SELECT a.id FROM hotel_tbl_hotels a INNER JOIN states b ON  b.id = IF(a.state!='',a.state,3798) INNER JOIN hotel_tbl_hotel_room_type c ON c.hotel_id = a.id WHERE ".$search.$hotelName."  a.delflg = 1 and ((c.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND c.occupancy >= ".$data['adults'][0]." AND c.occupancy_child > ".$data['Child'][0].") ".$room2.$room3.$room4.$room5.$room6.")  and c.delflg = 1")->result();
+
     return $query;
   }
   public function contract_markup($hotel_id,$contract_id) {  
@@ -969,6 +1017,7 @@ if (count($query)!=0) {
       $rtrn[$key77] = 0;
     }
   }
+
   if (array_sum($rtrn) == 0 && $cut_off_msg=="") {
     $data['allotement'] = min($allotement);
   } else {
@@ -1532,8 +1581,8 @@ public function ContractBasedFetchData($hotel_id,$Adroom=null,$Adcontract=null) 
       $occupancy_child[$value->id][] = $value->occupancy_child;
       if (substr($room_current_count[$key][$key1]['allotement'], 0, 1)=="-") {
         $count[$value->id][] = 0;
-        $avail[$value->id][] = 0;
-      } else {
+      //   $avail[$value->id][] = 0;
+      } 
                 // $count[$value->id][] = $room_current_count[$key][$key1]['allotement']-$room_booked[$key][$key1];
         $count[$value->id][] = $room_current_count[$key][$key1]['allotement'];
         if ($room_current_count[$key][$key1]['condition']=='false' || round($room_current_count[$key][$key1]['price'])==0) {
@@ -1541,7 +1590,6 @@ public function ContractBasedFetchData($hotel_id,$Adroom=null,$Adcontract=null) 
        } else {
         $avail[$value->id][] = 1;
       }
-    }
     
     if (round($room_current_count[$key][$key1]['price'])!=0) {
       $condition[$value->id][] = $room_current_count[$key][$key1]['condition'];

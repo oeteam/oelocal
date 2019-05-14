@@ -647,7 +647,7 @@
 								</div>
 
 								<?php 
-								for ($i=2; $i <=10 ; $i++) { ?>
+								for ($i=2; $i <=6 ; $i++) { ?>
 									<div class="room<?php echo $i; ?> <?php echo isset($_REQUEST['adults'][$i-1]) ? 'block' : 'none' ?>">
 										<div class="clearfix"></div>
 										<div class="line1"></div>
@@ -697,7 +697,7 @@
 
 										</div>
 										<div class="row col-md-12">
-											<?php if ($i!=10) { ?>
+											<?php if ($i!=6) { ?>
 												<div class="addroom<?php echo $i; ?> <?php echo isset($_REQUEST['adults'][$i]) ? 'none' : 'block' ?>  grey"><a onclick="addroomcustom<?php echo $i+1; ?>(<?php echo $i+1; ?>)" class="grey cpointer">+ Add room</a> | <a onclick="removeroomcustom<?php echo $i; ?>(<?php echo $i; ?>)" class="orange cpointer"><img src="<?php echo base_url(); ?>skin/images/delete.png" alt="delete"/></a></div>
 											<?php } else { ?>
 												<a onclick="removeroomcustom<?php echo $i; ?>(<?php echo $i; ?>)" class="orange cpointer"><img src="<?php echo base_url(); ?>skin/images/delete.png" alt="delete"/></a>

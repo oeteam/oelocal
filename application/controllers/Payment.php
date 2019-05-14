@@ -36,13 +36,14 @@ class Payment extends MY_Controller {
       if (!isset($_REQUEST['adults'][0])) {
         redirect('../hotels');
       }
+
       $bookbuttondata = $this->session->userdata('hoteldata');
       $data['additionalfoodrequest'] = array();
       $data['board'] = array();
       $data['general'] = array();
       $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
       $data['tax'] = $this->Payment_Model->general_tax($_REQUEST['hotel_id']);
-
+      $rooms  =array();
       $contracts =$this->List_Model->contractchecking($_REQUEST);
       $Rooms = $this->Hotels_Model->select_hotel_room($_REQUEST['hotel_id'])->result();
       $agent_markup = mark_up_get()+general_mark_up_get();
@@ -59,7 +60,7 @@ class Payment extends MY_Controller {
           $room_current_count = $this->List_Model->room_current_count($value->room_id,$_REQUEST['Check_in'],$_REQUEST['Check_out'],$value1,$_REQUEST['adults'],$_REQUEST['Child'],$_REQUEST,$total_markup,$value1);
           $room_closedout = $this->List_Model->all_closedout_room($_REQUEST['hotel_id'],$value1,$_REQUEST,$value);
           $minimumStay = $this->List_Model->minimumStayCheckAvailability($_REQUEST,$value->room_id);
-          if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count['price']!=0) {
+          if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count['price']!=0 && $room_current_count['condition']!="false") {
             $rooms[$i]['RoomName'] = $value->room_name.' '.$value->Room_Type;
             $rooms[$i]['RoomIndex'] = $value->room_id.'-'.$value1;
             $rooms[$i]['room_id'] = $value->room_id;
@@ -3265,6 +3266,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
 
       // print_r($_REQUEST['adults']);
       // exit();
+      $rooms = array();
       for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
         foreach ($Rooms as $key => $value) {
           foreach ($contracts['contract_id'] as $key1 => $value1) {
@@ -3277,7 +3279,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             $room_current_count_price = $this->List_Model->room_current_count_price($value->room_id,$_REQUEST['Check_in'],$_REQUEST['Check_out'],$value1,$_REQUEST['adults'][$i],$_REQUEST['Child'][$i],$_REQUEST,$total_markup,$value1,$i+1);
             $room_closedout = $this->List_Model->all_closedout_room($_REQUEST['hotel_id'],$value1,$_REQUEST,$value);
             $minimumStay = $this->List_Model->minimumStayCheckAvailability($_REQUEST,$value->room_id);
-              if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count_price['price']!=0) {
+              if($room_closedout['condition']!=1 && $minimumStay=="true" && $room_current_count_price['price']!=0 && $room_current_count_price['condition']!="false") {
                 $rooms[$i]['RoomName'][] = $value->room_name.' '.$value->Room_Type;
                 $index = array();
                 for($m=0;$m<count($_REQUEST['adults']);$m++){
@@ -3307,7 +3309,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $data['rooms'] = $rooms; 
       //print_r(array_column($data['rooms'], 'generalsupplementType'));exit;
       $RoomCombination = array_column($data['rooms'], 'Index');
-      $data['RoomCombination'] = $RoomCombination[0];
+      $data['RoomCombination'] = count($rooms)!=0 ? $RoomCombination[0] : '';
       $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/hotelbook',$data);
     }

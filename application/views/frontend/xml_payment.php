@@ -904,25 +904,23 @@ $(document).ready(function() {
                     <div class="av-div">
                        <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
                      <?php 
-                     if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
-                                  $cancelList = $value['CancelPolicies']['CancelPolicy'];
+                              if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                                  $cancelList[$key] = $value['CancelPolicies']['CancelPolicy'];
                                 } else {
-                                  $cancelList[0] = $value['CancelPolicies']['CancelPolicy'];
+                                  $cancelList[$key][0] = $value['CancelPolicies']['CancelPolicy'];
                                } 
-                               if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
-                                  $NoShowPolicy = $value['CancelPolicies']['NoShowPolicy'];
-                                } else {
-                                  $NoShowPolicy[0] = $value['CancelPolicies']['NoShowPolicy'];
-                               } 
-                               if(isset($cancelList[0]['@attributes']) && $cancelList[0]['@attributes']['CancellationCharge']==0) { ?>
-                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[0]['@attributes']['ToDate']?> <span>
+                               
+                               if(isset($cancelList[$key][0]['@attributes']) && $cancelList[$key][0]['@attributes']['CancellationCharge']==0) { ?>
+                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[$key][0]['@attributes']['ToDate']?> <span>
                                <?php } else { ?>
                                   <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">cancellation<span>
                               <?php } ?>
                         </h5>
 
                       
-                      <?php if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
+                      <?php 
+
+                                  if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
                       <small class="r-type-includes"><?php echo is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'] ?></small><br>
                      <?php } ?>
                       <?php 
@@ -972,8 +970,9 @@ $(document).ready(function() {
                                     </thead>
                                     <tbody style="background: white;color: black;">
                                       <?php 
-                                        if (isset($cancelList[0]['@attributes'])) {
-                                          foreach ($cancelList as $key => $value1) {
+                                        
+                                        if (isset($cancelList[$key][0]['@attributes'])) {
+                                          foreach ($cancelList[$key] as $key => $value1) {
                                       ?>
                                       <tr>
                                         <td><?php echo $value1['@attributes']['FromDate'] ?></td>
@@ -987,20 +986,26 @@ $(document).ready(function() {
                                       </tr>
                                     <?php } } ?>
                                     <?php 
-                                        if (isset($NoShowPolicy[0]['@attributes'])) {
-                                          foreach ($NoShowPolicy as $key => $value1) {
+                                      if (isset($value['CancelPolicies']['NoShowPolicy'][0])) {
+                                        $NoShowPolicy[$key] = $value['CancelPolicies']['NoShowPolicy'];
+                                      } else {
+                                        $NoShowPolicy[$key][0] = $value['CancelPolicies']['NoShowPolicy'];
+                                      } 
+
+                                        if (isset($NoShowPolicy[$key][0]['@attributes'])) {
                                       ?>
                                       <tr>
-                                        <td><?php echo $value1['@attributes']['FromDate'] ?></td>
-                                        <td><?php echo $value1['@attributes']['ToDate'] ?></td>
-                                        <td><?php echo $value1['@attributes']['CancellationCharge']; if($value1['@attributes']['ChargeType']=='Percentage') { 
-                                            echo '%' ; 
+                                        <td colspan="3"><?php if($NoShowPolicy[$key][0]['@attributes']['ChargeType']=='Percentage') { 
+                                            echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].'% of Booking Amount' ; 
                                           } else { 
-                                            echo ' USD'; 
-                                          } ?> 
-                                        </td>
+                                            echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].' USD'; 
+                                          } ?> </td>
                                       </tr>
-                                    <?php } } ?>
+                                    <?php  } else { ?>
+                                      <tr>
+                                        <td colspan="3">No Show will attract full cancellation charge unless otherwise specified</td>
+                                      </tr>
+                                    <?php } ?>
                                     <tr>
                                       <td colspan="3">
                                         <?php echo $value['CancelPolicies']['DefaultPolicy']?>

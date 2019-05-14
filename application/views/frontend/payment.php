@@ -505,8 +505,29 @@ function FullLoading(flag, dest, from, to) {
 	      </li>
 	    </ol>
 	</div>	
-	<!-- CONTENT -->
-	<?php 
+	<?php
+    if (count($rooms)==0) { ?>
+      <style>
+    .empty-state {position: relative;padding: 3em 0}
+    .empty-state > img {
+      left: 50%;
+      position: relative;
+      transform: translateX(-50%);
+      opacity: .7;
+      width: 100%;
+      max-width: 30em;
+    }
+    .empty-state > .empty-state__message, .empty-state > .empty-state__info {text-align: center}
+    .empty-state > .empty-state__info {color: #b3b3b3}
+
+  </style>
+  <div class="empty-state">
+    <img src="<?php echo base_url(); ?>skin/images/empty-state.png" alt="No Records">
+    <h4 class="empty-state__message">No results found!</h4>
+    <p class="empty-state__info">This service is temporary unavailable !</p>
+  </div>
+    <?php } else {
+
 	$start = $_REQUEST['Check_in'];
 		$end = $_REQUEST['Check_out'];
 		$first_date = strtotime($start);
@@ -821,7 +842,7 @@ function FullLoading(flag, dest, from, to) {
   <!-- Central Modal Medium Warning-->
   
 
-<?php init_front_black_tail(); ?> 
+<?php } init_front_black_tail(); ?> 
 
 	
 

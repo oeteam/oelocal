@@ -75,13 +75,8 @@
 	  top: 50%;
 	  transform: translateY(-50%);
 	}
-	@media(min-width: 600px) {
-      .paymentbox {
-      	margin-top: 45px;
-      }
-    } 
 </style>
-	<div class="container breadcrub  hidden-xs">
+	<div class="container breadcrub">
 		<ol class="track-progress" data-steps="5">
 	      <li class="done">
 	        <span>Search</span>
@@ -128,7 +123,7 @@
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
 						<!-- <span class="opensans size18 dark bold">Book Hotel Details</span> <br> <br> -->
-						<img src="<?php echo $HotelPicture ?>" class="left margright20 hidden-xs" width="100%" alt=""/>
+						<img src="<?php echo $HotelPicture ?>" class="left margright20" width="100%" alt=""/>
 						
 						
 					<div class="clearfix"></div>
@@ -318,7 +313,7 @@
             	$Amount = array();
             	$HotelRooms = array();
             	$total_markup = $agent_markup+$admin_markup;
-	            if ($revenue_markup!='') {
+	            if ($revenue_markup!="") {
 	              $total_markup = $agent_markup+$revenue_markup;
 	            }
             	foreach ($_REQUEST['adults'] as $RAkey => $RAvalue) { ?>
@@ -497,7 +492,6 @@
 	            		</div>
 	            	</div>
         	    <?php } 
-
         	    	$taxAmount =  (array_sum($tax)*$total_markup)/100+array_sum($tax);
 	        		$TotalAmount =  (array_sum($Amount)*$total_markup)/100+array_sum($Amount);
         	} ?>
@@ -517,7 +511,7 @@
 		              	<span class="right"><?php echo agent_currency(); ?> 
 		              	<span class="b-rates--grand-total"><?php
 							$total_amount = xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,'AED');
-							$finalAmount  = $TotalAmount+$taxAmount;
+							$finalAmount = $TotalAmount+$taxAmount;
 						 echo xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,agent_currency()); ?></span></span></h5>
 						 <input type="hidden" name="tot" value="<?php echo $finalAmount ?>">
 		            </div>
@@ -538,9 +532,14 @@
 			<div class="clear-fix"></div>
 			<br>
 			<?php } ?>
-			<div class="alert alert-info padding30 col-md-12"  style="float: left;">
+			<div class="col-md-12">
+			<div class="col-md-12">
 				<span class="opensans size18 blue bold">Cancellation Policy *</span><br><br>
-				<div>
+				<?php
+					for ($i=1; $i <= count($_REQUEST['adults']); $i++) { 
+				 ?>
+				<div class="payment-table-wrap">
+					<h4 class="room-name">Room <?php echo $i ?></h4>
 					<table class="table table-bordered table-hover">
 						<thead>
 					      <tr>
@@ -556,6 +555,7 @@
 					    		$cancelList[0] = $cancelinfo['CancelPolicies']['CancelPolicy'];
 					    	   } 
 					    	  foreach ($cancelList as $key => $value) {
+					    	  	if ($_REQUEST['Room'.$i]==$value['@attributes']['RoomIndex']) {
 					    	?>
 					    	<tr>
 					    		<td><?php echo $value['@attributes']['FromDate'] ?></td>
@@ -567,12 +567,44 @@
 					    			} ?> 
 					    		</td>
 					    	</tr>
-					      <?php } ?>
+					      <?php } } ?>
+					      <?php 
+                              if (isset($cancelinfo['CancelPolicies']['NoShowPolicy'][0])) {
+                                $NoShowPolicy = $cancelinfo['CancelPolicies']['NoShowPolicy'];
+                              } else {
+                                $NoShowPolicy[0] = $cancelinfo['CancelPolicies']['NoShowPolicy'];
+                              } 
+
+                                if (isset($NoShowPolicy[0]['@attributes'])) {
+                                	foreach ($NoShowPolicy as $key => $value) {
+					    	  		if ($value['@attributes']['RoomIndex']==$_REQUEST['Room'.$i]) {
+                              ?>
+                              <tr>
+                                <td colspan="3"><?php if($value['@attributes']['ChargeType']=='Percentage') { 
+                                    echo 'No Show Charges : '.$value['@attributes']['CancellationCharge'].'% of Booking Amount' ; 
+                                  } else { 
+                                    echo 'No Show Charges : '.$value['@attributes']['CancellationCharge'].' USD'; 
+                                  } ?> </td>
+                              </tr>
+                            <?php } } } else { ?>
+                              <tr>
+                                <td colspan="3">No Show will attract full cancellation charge unless otherwise specified</td>
+                              </tr>
+                            <?php } ?>
+                            <tr>
+                              <td colspan="3">
+                                <?php echo $cancelinfo['CancelPolicies']['DefaultPolicy']?>
+                              </td>
+                            </tr>
 				    	</tbody>
 					</table>
 					
 				</div> 
+				<?php } ?>
 				<br>
+			</div>
+			</div>
+			<div class="alert alert-info padding30 col-md-12"  style="float: left;">
 				<input type="checkbox" name="cancel_agree" id="cancel_agree" >
 						<span id="check_box_cancellation_err blink_me"></span>
 				 	<label class="opensans size12 blue bold" for="cancel_agree">If you agree to the cancellation policy, kindly select the checkbox and proceed.</label>
