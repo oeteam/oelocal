@@ -433,8 +433,8 @@
 		            					} else {
 		            						$HotelRooms = $PriceChanged['HotelRooms']['HotelRoom'];
 		            					}
-		            					$tax[$RAkey] = $PriceChanged['HotelRooms']['HotelRoom']['RoomRate']['@attributes']['RoomTax'];
-		            					$Amount[$RAkey] = $PriceChanged['HotelRooms']['HotelRoom']['RoomRate']['@attributes']['RoomFare'];
+		            					$tax[$RAkey] = $HotelRooms['RoomRate']['@attributes']['RoomTax'];
+		            					$Amount[$RAkey] = $HotelRooms['RoomRate']['@attributes']['RoomFare'];
 	            					 ?>
 
 	            					 <input type="hidden" name="RoomIndex[]" value="<?php echo $HotelRooms['RoomIndex'] ?>">
@@ -537,9 +537,19 @@
 				<span class="opensans size18 blue bold">Cancellation Policy *</span><br><br>
 				<?php
 					for ($i=1; $i <= count($_REQUEST['adults']); $i++) { 
+					   if (isset($cancelinfo['CancelPolicies']['CancelPolicy'][0])) {
+			    			$cancelList = $cancelinfo['CancelPolicies']['CancelPolicy'];
+			    	   } else {
+			    			$cancelList[0] = $cancelinfo['CancelPolicies']['CancelPolicy'];
+			    	   } 
+			    	   foreach ($cancelList as $key => $value) {
+				    	  	if ($_REQUEST['Room'.$i]==$value['@attributes']['RoomIndex']) {
+				    	  		$roomname = $value['@attributes']['RoomTypeName'];
+			    	  		}
+		    	  		}
 				 ?>
 				<div class="payment-table-wrap">
-					<h4 class="room-name">Room <?php echo $i ?></h4>
+					<h4 class="room-name">Room <?php echo $i ?><?php echo isset($roomname) ? ' - '.$roomname : ''?></h4>
 					<table class="table table-bordered table-hover">
 						<thead>
 					      <tr>
@@ -549,11 +559,7 @@
 					      </tr>
 					    </thead>
 					    <tbody> 
-					    	<?php if (isset($cancelinfo['CancelPolicies']['CancelPolicy'][0])) {
-					    		$cancelList = $cancelinfo['CancelPolicies']['CancelPolicy'];
-					    	    } else {
-					    		$cancelList[0] = $cancelinfo['CancelPolicies']['CancelPolicy'];
-					    	   } 
+					    	<?php 
 					    	  foreach ($cancelList as $key => $value) {
 					    	  	if ($_REQUEST['Room'.$i]==$value['@attributes']['RoomIndex']) {
 					    	?>
