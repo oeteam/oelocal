@@ -1848,6 +1848,9 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             }
             $HotelNorms = $CancellationPolicy['HotelCancellationPolicies'];
             $PriceChanged = $CancellationPolicy['PriceVerification'];
+            if ($PriceChanged['@attributes']['Status']=="Successful" && $PriceChanged['@attributes']['PriceChanged']=="true" && $PriceChanged['@attributes']['AvailableOnNewPrice']=="Successful") {
+              $availablity = 0;
+            }
           } else {
             if ($CancellationPolicy['AvailableForBook']=='false' && $CancellationPolicy['AvailableForConfirmBook']=='false') {
                $availablity += 1;

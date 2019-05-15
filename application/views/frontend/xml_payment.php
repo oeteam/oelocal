@@ -81,6 +81,8 @@ function RoomCombinationinitCheck() {
 } 
 function RoomCombinationCheck() {
   var room1 =  $('input[name="Room1"]:checked').val();
+  var room1amnt =  $("input[name='Room1']:checked").closest("li").find(".com-amnt").val();
+  var room1name =  $("input[name='Room1']:checked").closest("li").find(".com-name").val();
   for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
     $(".r-type").find('input[name="Room'+i+'"]').prop('disabled',true);
     $(".r-type").find('input[name="Room'+i+'"]').closest('li').find('.av-div').removeClass('availability');
@@ -103,9 +105,7 @@ function RoomCombinationCheck() {
         for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
           $('#Room'+i+v.RoomIndex[i-1]).prop('disabled',false);
           $('#Room'+i+v.RoomIndex[i-1]).closest('li').find('.av-div').addClass('availability');
-          if (j==0) {
-            $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
-          }
+          
         }
       }
     }
@@ -121,11 +121,38 @@ function RoomCombinationCheck() {
     sum += Number($(this).val().replace(/,/g , '')); 
   });
   $(".b-rates--grand-total").text(sum);
+  defaultcheck();
 }
 function goBack() {
     window.history.back();
 }
+function defaultcheck() {
+  var room1 =  $('input[name="Room1"]:checked').val();
+  var room1amnt =  $("input[name='Room1']:checked").closest("li").find(".com-amnt").val();
+  var room1name =  $("input[name='Room1']:checked").closest("li").find(".com-name").val();
+  $.each(RoomCombination,function(j,v) {
+    if (isNaN(RoomCombination.RoomIndex)) {
+      if (v.RoomIndex[0]==room1) {
+        for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+           if (j==0) {
+            var temp  = 0;
+            $( "input[name='Room"+i+"']" ).each(function( index ) {
+              if($(this).closest('li').find('.com-amnt').val()==room1amnt && $(this).closest('li').find('.com-name').val()==room1name  && $(this).prop("disabled")==false) {
+                $( this ).trigger("click");
+                temp = 1;
+              }
+              
+            });
+            if (temp==0) {
+              $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
+            }
+          }
+        }
+      }
+    }
+  });
 
+}
 $(document).ready(function() {
   divLoading("start");
   $(document).on('change','input[name="Room1"]',function(){
@@ -820,7 +847,7 @@ $(document).ready(function() {
                       <small class="required-msg">*required</small></td>
                     <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
                       <small class="required-msg">*required</small></td>
-                    <td class="text-center"><input type="number" style="width: 65px" class="form-control validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+                    <td class="text-center"><input type="number" style="width: 65px" class="form-control validater validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
                       <small class="required-msg">*required</small></td>
                   </tr>
                 <?php } ?>
@@ -945,6 +972,7 @@ $(document).ready(function() {
                         $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
                       <p class="text-green m-0 bold">
                         <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">
+                        <input type="hidden" class="com-name" value="<?php echo $value['RoomTypeName'] ?>">
                         <small><?php echo agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?></small>
                       </p>
                     </div>

@@ -268,7 +268,7 @@
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>Adulttitle[]" value="<?php echo $_REQUEST['Room'.($x+1).'Adulttitle'][$i] ?>">
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultFirstName[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] ?>">
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultLastName[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultLastName'][$i] ?>">
-								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultAge[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultAge'][$i] ?>">
+								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultAge[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultAge'][$i]!="" ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '24' ?>">
 
 								<?php } ?>
 								<?php for ($i=0; $i < $_REQUEST['Child'][$x] ; $i++) { ?>
@@ -511,7 +511,7 @@
 		              	<span class="right"><?php echo agent_currency(); ?> 
 		              	<span class="b-rates--grand-total"><?php
 							$total_amount = xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,'AED');
-							$finalAmount = $TotalAmount+$taxAmount;
+							$finalAmount = floatval(preg_replace('/[^\d.]/', '', $total_amount));
 						 echo xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,agent_currency()); ?></span></span></h5>
 						 <input type="hidden" name="tot" value="<?php echo $finalAmount ?>">
 		            </div>
