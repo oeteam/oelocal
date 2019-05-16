@@ -105,6 +105,12 @@
 		$('#result_search').on('click','.hotel-more-btn1', function(e){
 			$(e.target).closest('.labelright').find('.hotel-view-btn').trigger('click');
 		})
+
+
+		$(document).on('click','.hotel-details' ,function() {
+		    $(this).closest('.itemlabel3').find(".hotel-view-btn").trigger("click");
+		})
+
 	})
 
 	<?php for ($i = 1; $i <= 10; $i++) {  ?>

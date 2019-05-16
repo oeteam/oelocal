@@ -268,7 +268,7 @@
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>Adulttitle[]" value="<?php echo $_REQUEST['Room'.($x+1).'Adulttitle'][$i] ?>">
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultFirstName[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] ?>">
 								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultLastName[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultLastName'][$i] ?>">
-								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultAge[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultAge'][$i] ?>">
+								<input type="hidden" name="Room<?php echo ($x+1)  ?>AdultAge[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultAge'][$i]!="" ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '24' ?>">
 
 								<?php } ?>
 								<?php for ($i=0; $i < $_REQUEST['Child'][$x] ; $i++) { ?>
@@ -433,8 +433,8 @@
 		            					} else {
 		            						$HotelRooms = $PriceChanged['HotelRooms']['HotelRoom'];
 		            					}
-		            					$tax[$RAkey] = $PriceChanged['HotelRooms']['HotelRoom']['RoomRate']['@attributes']['RoomTax'];
-		            					$Amount[$RAkey] = $PriceChanged['HotelRooms']['HotelRoom']['RoomRate']['@attributes']['RoomFare'];
+		            					$tax[$RAkey] = $HotelRooms['RoomRate']['@attributes']['RoomTax'];
+		            					$Amount[$RAkey] = $HotelRooms['RoomRate']['@attributes']['RoomFare'];
 	            					 ?>
 
 	            					 <input type="hidden" name="RoomIndex[]" value="<?php echo $HotelRooms['RoomIndex'] ?>">
@@ -511,7 +511,7 @@
 		              	<span class="right"><?php echo agent_currency(); ?> 
 		              	<span class="b-rates--grand-total"><?php
 							$total_amount = xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,'AED');
-							$finalAmount = $TotalAmount+$taxAmount;
+							$finalAmount = floatval(preg_replace('/[^\d.]/', '', $total_amount));
 						 echo xml_currency_change($TotalAmount+$taxAmount,$xmlCurrency,agent_currency()); ?></span></span></h5>
 						 <input type="hidden" name="tot" value="<?php echo $finalAmount ?>">
 		            </div>
@@ -537,9 +537,19 @@
 				<span class="opensans size18 blue bold">Cancellation Policy *</span><br><br>
 				<?php
 					for ($i=1; $i <= count($_REQUEST['adults']); $i++) { 
+					   if (isset($cancelinfo['CancelPolicies']['CancelPolicy'][0])) {
+			    			$cancelList = $cancelinfo['CancelPolicies']['CancelPolicy'];
+			    	   } else {
+			    			$cancelList[0] = $cancelinfo['CancelPolicies']['CancelPolicy'];
+			    	   } 
+			    	   foreach ($cancelList as $key => $value) {
+				    	  	if ($_REQUEST['Room'.$i]==$value['@attributes']['RoomIndex']) {
+				    	  		$roomname = $value['@attributes']['RoomTypeName'];
+			    	  		}
+		    	  		}
 				 ?>
 				<div class="payment-table-wrap">
-					<h4 class="room-name">Room <?php echo $i ?></h4>
+					<h4 class="room-name">Room <?php echo $i ?><?php echo isset($roomname) ? ' - '.$roomname : ''?></h4>
 					<table class="table table-bordered table-hover">
 						<thead>
 					      <tr>
@@ -549,11 +559,7 @@
 					      </tr>
 					    </thead>
 					    <tbody> 
-					    	<?php if (isset($cancelinfo['CancelPolicies']['CancelPolicy'][0])) {
-					    		$cancelList = $cancelinfo['CancelPolicies']['CancelPolicy'];
-					    	    } else {
-					    		$cancelList[0] = $cancelinfo['CancelPolicies']['CancelPolicy'];
-					    	   } 
+					    	<?php 
 					    	  foreach ($cancelList as $key => $value) {
 					    	  	if ($_REQUEST['Room'.$i]==$value['@attributes']['RoomIndex']) {
 					    	?>
