@@ -339,8 +339,13 @@
  });
  tpj("#nights").change(function() {
  	var night = tpj("#nights").val();
- 	var nextDay = new Date(tpj("#datepicker3").val());
- 	tpj("#datepicker2").datepicker('option', 'minDate', nextDay); 
+ 	if (night<1) {
+		alert("Total nights should be greater than 0");
+		tpj("#nights").val('1');
+	} else {
+		var nextDay = new Date(tpj("#datepicker3").val());
+ 		tpj("#datepicker2").datepicker('option', 'minDate', nextDay); 
+	}
  });
 /* var input = document.getElementById('location');
  var autocomplete = new google.maps.places.Autocomplete(input);*/
