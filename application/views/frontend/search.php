@@ -337,6 +337,11 @@
  tpj("#alternate3").click(function() {
  	tpj( "#datepicker3" ).trigger('focus');
  });
+ tpj("#nights").change(function() {
+ 	var night = tpj("#nights").val();
+ 	var nextDay = new Date(tpj("#datepicker3").val());
+ 	tpj("#datepicker2").datepicker('option', 'minDate', nextDay); 
+ });
 /* var input = document.getElementById('location');
  var autocomplete = new google.maps.places.Autocomplete(input);*/
 
