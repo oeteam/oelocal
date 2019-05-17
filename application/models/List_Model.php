@@ -3179,6 +3179,10 @@ public function loadRequest($action,$arr_value) {
       $this->responseTemplate(__FUNCTION__,$arg);
       return $this->result;
   }
+  public function HotelDetails($arg){
+      $this->responseTemplate(__FUNCTION__,$arg);
+      return $this->result;
+  }
   public function singleHotelDetails($hotelid) {
     $Room1ChildAges='';
     $Room2ChildAges='';

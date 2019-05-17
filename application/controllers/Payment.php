@@ -1694,6 +1694,19 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $nationality = $this->db->query('SELECT sortname FROM countries where id = '.$_REQUEST['nationality'].'')->result();
        $nationality = $nationality[0]->sortname;   
       $HotelInfo = array();
+       $inp_arr_hotel = [
+          "ResultIndex" => [
+            "value" => $bookbuttondata['resultindex']
+          ],
+          "SessionId" => [
+            "value" => $bookbuttondata['sessionid']
+          ],
+          "HotelCode" => [
+            "value" => $_REQUEST['hotel_id']
+          ],
+        ];
+      $data['HotelInfo'] = $this->List_Model->HotelDetails($inp_arr_hotel);
+     // print_r($HotelInfo['HotelDetails']['Description']);exit;
       $HotelRoom = array();
       $cancelinfo = array();
       $data['nationality'] = $this->List_Model->getNationality();
