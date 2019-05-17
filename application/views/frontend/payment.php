@@ -746,7 +746,15 @@ function FullLoading(flag, dest, from, to) {
 		                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $value['RoomIndex'] ?>" value="Room<?php echo $value['RoomIndex'] ?>">
 		                    <div class="av-div availability">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value['RoomName'] ?> - 
-		                      <?php echo $value['board'] ?> <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
+		                      <?php echo $value['board'] ?> 
+		                      <?php 
+					    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
+		                      	if ($rooms[$i]['CancellationPolicy'][$key][0]['application']=="FREE OF CHARGE") { ?>
+		                      		<span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $rooms[$i]['CancellationPolicy'][$key][0]['before'] ?> <span>
+		                      	<?php } else {
+		                       ?>
+	                      		<span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
+		                      <?php } ?>
 	                  		  </h5>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
 		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>
@@ -757,8 +765,8 @@ function FullLoading(flag, dest, from, to) {
 		                      	<input type="hidden" class="RequestType" value="<?php echo $value['RequestType'] ?>">
 		                      	<input type="hidden" class="room_id" value="<?php echo $value['room_id'] ?>">
 		                      	<input type="hidden" class="contract_id" value="<?php echo $value['contract_id'] ?>">
-		                      	<input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($value['price'],agent_currency(),agent_currency()); ?>">
-		                      	<small><?php echo agent_currency().' '.xml_currency_change($value['price'],agent_currency(),agent_currency()); ?></small>
+		                      	<input type="hidden" class="com-amnt" value="<?php echo currency_type(agent_currency(),$value['price']); ?>">
+		                      	<small><?php echo agent_currency().' '.currency_type(agent_currency(),$value['price']); ?></small>
 		                      </p>
 		                    </div>
 		                  </label>
@@ -779,24 +787,33 @@ function FullLoading(flag, dest, from, to) {
 				                              <td>Cancelled on or After</td>
 				                              <td>Cancelled on or Before</td>
 				                              <td>Cancellation Charge</td>
-				                              <td>Description</td>
 				                            </tr>
 				                          </thead>
 				                         <tbody> 
 
 									    	<?php 
-									    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
+
 									    	foreach ($rooms[$i]['CancellationPolicy'][$key] as $Canckey => $Cancvalue) { 
 									    		if($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] == "Nonrefundable") { ?>
 									    			<tr>
 									    				<td colspan="4">This booking is Nonrefundable.</td>
 									    			</tr>
-									    		<?php } else { ?>
+									    		<?php } else { 
+									    			$finalAmount = $value['price'];
+									    			if ($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application']=="FIRST NIGHT") {
+										    			$finalAmount = ($value['price']/$tot_days);
+										    		}
+
+										    		if ($rooms[$i]['CancellationPolicy'][$key][$Canckey]['application']=="FREE OF CHARGE") {
+										    			$finalAmount = 0;
+										    		}
+									    			$charge = $finalAmount*($rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage']/100);	
+									    			?>
 											    	<tr>
 											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['after'] ?></td>
 											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['before'] ?></td>
-											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['percentage'] ?> </td>
-											    		<td><?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['description'] ?></td>
+											    		<td><?php echo currency_type(agent_currency(),$charge)." ".agent_currency()
+					    		// echo $CancellationPolicy[$Canckey]['percentage'] ?> (<?php echo $rooms[$i]['CancellationPolicy'][$key][$Canckey]['application'] ?>) </td>
 											    	</tr>
 											    <?php } 
 											} ?>

@@ -1488,7 +1488,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>
@@ -1704,7 +1704,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>
@@ -1908,7 +1908,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>
@@ -2101,7 +2101,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>
@@ -2291,7 +2291,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>
@@ -2501,7 +2501,7 @@ class Offlinerequest extends MY_Controller {
     $tbl .= 
     '
       <tr>
-        <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+        <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
         <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
         </td>
       </tr>

@@ -66,7 +66,7 @@ class Payment extends MY_Controller {
             $rooms[$i]['room_id'] = $value->room_id;
             $rooms[$i]['board'] = $contractBoardget->board;
             $rooms[$i]['contract_id'] = $value1;
-            $rooms[$i]['price'] = $room_current_count['price'];
+            $rooms[$i]['price'] = currency_type(agent_currency(),$room_current_count['price']);
             $rooms[$i]['generalsupplementType'] = count($room_current_count['generalsupplementType'])!=0 ? array_unique($room_current_count['generalsupplementType']) : array();
             if ($room_current_count['allotement']> 0) {
               $rooms[$i]['RequestType'] = 'Book';
@@ -555,7 +555,7 @@ class Payment extends MY_Controller {
       $tbl .= 
         '
           <tr>
-            <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+            <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
             <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
             </td>
           </tr>
@@ -1209,7 +1209,7 @@ class Payment extends MY_Controller {
       if ($a_logo!="") {
         $tbl1 .= 
         ' <tr >
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
              <td width="60%" style="text-align:right;"><span  style="float:left" >'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email.'</span>
             </td>
             '.$a_logo.'
@@ -1219,7 +1219,7 @@ class Payment extends MY_Controller {
         $tbl1 .= 
         '
           <tr >
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
              <td width="70%" style="text-align:right;"><span  style="float:left" >'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email.'</span>
             </td>
           </tr>
@@ -1228,7 +1228,7 @@ class Payment extends MY_Controller {
        $tbl .= 
         '
           <tr>
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
             <td width="70%" style="text-align:right;">
               <div  style="font-size:14px ;font-weight:bold;color:#337ab7;">VOUCHER</div>
               <span style="font-size:8px;"># VOUCHER_0'.$_REQUEST['id'].'</span>
@@ -1848,7 +1848,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             }
             $HotelNorms = $CancellationPolicy['HotelCancellationPolicies'];
             $PriceChanged = $CancellationPolicy['PriceVerification'];
-            if ($PriceChanged['@attributes']['Status']=="Successful" && $PriceChanged['@attributes']['PriceChanged']=="true" && $PriceChanged['@attributes']['AvailableOnNewPrice']=="Successful") {
+            if ($PriceChanged['@attributes']['Status']=="Successful" && $PriceChanged['@attributes']['PriceChanged']=="true" && $PriceChanged['@attributes']['AvailableOnNewPrice']=="true") {
               $availablity = 0;
             }
           } else {
@@ -1985,7 +1985,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $tbl .= 
         '
           <tr>
-            <td><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td>
+            <td><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td>
             <td style="text-align:right;">'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email. '
             </td>
           </tr>
@@ -2406,7 +2406,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       if ($a_logo!="") {
         $tbl1 .= 
         ' <tr >
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
              <td width="60%" style="text-align:right;"><span  style="float:left" >'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email.'</span>
             </td>
             '.$a_logo.'
@@ -2416,7 +2416,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $tbl1 .= 
         '
           <tr >
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
              <td width="70%" style="text-align:right;"><span  style="float:left" >'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email.'</span>
             </td>
           </tr>
@@ -2425,7 +2425,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
        $tbl .= 
         '
           <tr>
-            <td width="30%"><img width="100" src="'.base_url().'skin/images/dash/logo.png" /></td> 
+            <td width="30%"><img width="100" src="http://otelseasy.com/skin/images/dash/logo.png" /></td> 
             <td width="70%" style="text-align:right;"><span  style="float:left" >'.$agent_name.'<br>'.$agent_number.'<br>'.$agent_email.'</span></td>
 
           </tr>';

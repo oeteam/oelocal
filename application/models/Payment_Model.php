@@ -2118,7 +2118,7 @@ class Payment_Model extends CI_Model {
 
         for($i = 0; $i < $tot_days; $i++) {
           $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
-          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
+          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysFrom desc")->result();
           if (count($CancellationPolicyCheck[$i])!=0) {
             foreach ($CancellationPolicyCheck[$i] as $key => $value) {
                 $exploderoomType[$key] = explode(",", $value->roomType);

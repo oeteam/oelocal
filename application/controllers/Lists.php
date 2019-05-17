@@ -91,9 +91,9 @@ class lists extends MY_Controller {
                     if (!is_numeric($value['oldPrice'])) {
                       $value['oldPrice'] = 0;
                     }
-                    $OriginalPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
-                    $oldPrice = (($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']);
-                    $TotalPrice = (($value['TotalPrice']*$total_markup)/100+$value['TotalPrice'])*count($_REQUEST['adults']);
+                    $OriginalPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']));
+                    $oldPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']));
+                    $TotalPrice = currency_type(agent_currency(),(($value['TotalPrice']*$total_markup)/100+$value['TotalPrice'])*count($_REQUEST['adults']));
                 } else {
                     $RatingImg = $value['RatingImg'];
                     $ReviewImg = $value['ReviewImg'];

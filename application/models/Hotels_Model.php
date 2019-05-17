@@ -278,6 +278,8 @@ class Hotels_Model extends CI_Model {
 					  'property_name' => $data['property_name'], 
 					  'brand_name' => $data['brand_name'], 
 					  // 'board' => $data['board'], 
+					  'country' => $data['ConSelect'],
+					  'state'=> $data['stateSelect'], 
 					  'city' => $data['city'], 
 					  'city_near_by' => $data['citynearby'], 
 					  'city_description' => $data['citydes'], 
@@ -663,7 +665,7 @@ class Hotels_Model extends CI_Model {
 				);
 
 		$this->db->where('id',$hotel_id);
-		$this->db->update('hotel_tbl_hotels',$data);
+		$result = $this->db->update('hotel_tbl_hotels',$data);
 		return $result; 
 	}
 	public function hotel_login_details($hotel_log_id) {

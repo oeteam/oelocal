@@ -123,9 +123,9 @@ class Profile extends MY_Controller {
   public function agent_registered() {
   	$this->load->view('frontend/agent_registered');
   }
-  // public function dummmy() {
-  // 	RegisteringMail('2');
-  // }
+  public function dummmy() {
+  	RegisteringMail('77','agent');
+  }
   public function StateSelect() {
       $data = $this->Profile_Model->SelectState($_REQUEST['Conid']);
       echo json_encode($data);
