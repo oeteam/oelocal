@@ -3,7 +3,6 @@
   $CustomerSupport = CustomerSupport();
 
 ?> 
-
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
 <script>
   function divLoading(flag) {
@@ -14,7 +13,6 @@
     if (flag === 'stop') {
         spinWrapper.fadeOut();
         $(".pre-page").removeClass("hide");
-
     }
   }
   function FullLoading(flag, dest, from, to) {
@@ -22,18 +20,15 @@
     let destination = dest || 'Dubai';
     let fromDate = from || '12/05/2018';
     let toDate = to || '16/05/2018';
-
-    function startLoading() {
+  function startLoading() {
         let html = `<div id="fullLoading" class="full-loading">
         <p><img src="`+base_url+`/assets/images/logo-white.png" style="width: 128px;top: 75px;"></p>
         <img src="`+base_url+`skin/images/fullloading.gif" alt=""><div class="fl-data"><h2 class="fl-title">Searching the best prices<small style="color:white"> for you...</small></h2><div class="fl-info-card"><div class="top"><span>- Destination -</span><p>${destination}</p></div><div class="mid"><div><span>From</span><p>${fromDate}</p></div><div><span>To</span><p>${toDate}</p></div></div></div></div></div>`;
         document.body.innerHTML += html;
     }
-
     function stopLoading() {
       document.body.removeChild(fullLoading);
     }
-
     flag == 'start' ? startLoading() : stopLoading();
 }
   let RoomCombination = new Array();
@@ -50,9 +45,6 @@ function RoomCombinationinitCheck() {
       $(this).closest('label').removeAttr('for').attr('for','Room'+i+$(this).val());
     });
   }
-
-
-
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
@@ -69,8 +61,7 @@ function RoomCombinationinitCheck() {
       if(j==0) {
         $('#Room'+1+RoomCombination.RoomIndex).prop('checked',true);
       }
-    }
-    
+    }  
   });
   // var availableRooms = $('.r-type--room:first-child').find('.availability').closest('li');
   // $.each(availableRooms, function(){
@@ -252,6 +243,7 @@ function StateSelectFun(){
 }
 
 $(document).ready(function() {
+  loadScript();
   if (window.history && window.history.pushState) {
     addEventListener('load', function() {
         history.pushState(null, null, null); // creates new history entry with same URL
@@ -267,6 +259,15 @@ $(document).ready(function() {
         });    
     });
 }
+$(".details").on("click", function( e ) {
+    
+    e.preventDefault();
+
+    $("body, html").animate({ 
+        scrollTop: $( $(this).attr('href') ).offset().top 
+    }, 600);
+    
+});
 
   $(".cancellation-span").hover(function(){
     $(this).closest('.av-div').find('.cancellation-table').css("display", "block");
@@ -615,6 +616,53 @@ $(document).ready(function() {
             color: #9E9E9E;
             font-size: 14px;
         }
+        .htlbutton {
+          width: 19%;
+          background: white;
+          line-height: 3;
+          border: 1px #d0e9fd solid;
+        }
+        img {vertical-align: middle;}
+
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 16px;
+          margin-top: -22px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1.5s;
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
 
       </style>
   <div class="container breadcrub hidden-xs">
@@ -769,6 +817,28 @@ $(document).ready(function() {
             $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
           }
         ?>
+              <div class="row">
+                <div class="padding20 margtop15">
+                  <div class="row booking-details-info">
+                    <button class="htlbutton">
+                      <a class="details" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
+                    </button>
+                    <button class="htlbutton">
+                      <a class="details" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                    </button>
+                    <button class="htlbutton">
+                     <a class="details" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                    </button>
+                    <button class="htlbutton">
+                     <a class="details" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                    </button>
+                    <button class="htlbutton">
+                     <a class="details" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <div class="row hide">
                 <div class="col-sm-12">
                   <h5 class="margtop15">Address Information</h5>
@@ -810,9 +880,11 @@ $(document).ready(function() {
                 <div class="col-sm-3"><input type="text" class="form-control zipcode validate validated" name="zipcode" id="zipcode" value="<?php echo $agent_info[0]->Pincode ?>" 
                     placeholder="Zip Code"><small class="required-msg">*required</small></div>
               </div>
-
-              <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
-
+          <div class="row">
+              <div class="col-sm-12"> 
+              </div>
+          </div>
+          <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
           <div class="row">
             <div class="col-sm-12" >
               <table class="table table-bordered guest-table">
@@ -900,7 +972,7 @@ $(document).ready(function() {
               $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
             }
           ?>
-          <div class="row r-type margtop10 pre-page hide">
+          <div class="row r-type margtop10 pre-page hide" id="hrooms">
             <?php
             $total_markup = $agent_markup+$admin_markup;
             if ($revenue_markup!='') {
@@ -1052,13 +1124,67 @@ $(document).ready(function() {
             <?php } ?>
             
           </div>
-          
+          <div class="row margtop10">
+          <div class="col-md-12" id="details">
+            <h4 class="text-green margtop25 text-justify">Hotel Details<small class="right traveller-validate validated"></small></h4>
+            <p><?php echo ($HotelInfo['HotelDetails']['Description']); ?></p>
+          </div>
+          <div class="col-md-12" id="other">
+            <h4 class="text-green margtop25 text-justify">Basic Aminities<small class="right traveller-validate validated"></small></h4>
+            <ul class="checklist">                 
+              <?php foreach($HotelInfo['HotelDetails']['HotelFacilities']['HotelFacility'] as $facility) { ?>
+                <li><?php echo $facility; ?></li> 
+              <?php }
+              ?>
+            </ul>
+          </div>
+          <div class="col-md-12" id="gallery"><br><br>
+            <h4 class="text-green margtop25 text-justify">Image Gallery<small class="right traveller-validate validated"></small></h4>
+            <div class="slideshow-container">
+              <div class="col-md-12 details-slider">
+                <div id="c-carousel">
+                  <div id="wrapper">
+                  <div id="inner">
+                    <div id="caroufredsel_wrapper2">
+                      <div id="carousel">
+                        <?php 
+                          foreach($HotelInfo['HotelDetails']['ImageUrls']['ImageUrl'] as $image) { 
+                           ?>
+                          <img src="<?php echo $image ?>" alt=""/>
+                        <?php } ?>          
+                      </div>
+                    </div>
+                    <div id="pager-wrapper">
+                      <div id="pager">
+                        <?php  foreach($HotelInfo['HotelDetails']['ImageUrls']['ImageUrl'] as $image) {  
+                         ?>
+                          <img src="<?php echo $image ?>" width="120" height="68" alt=""/>
+                        <?php } ?>            
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <button id="prev_btn2" class="prev2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>
+                  <button id="next_btn2" class="next2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>   
+                    
+                  </div>
+                </div> <!-- /c-carousel -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12" id="map">
+            <h4 class="text-green margtop25 text-justify">Map<small class="right traveller-validate validated"></small></h4>
+            <?php $mapdetails = explode('|',$HotelInfo['HotelDetails']['Map']) ?>
+            <input type="hidden" id="lat_val" value="<?php echo $mapdetails[0]?>">
+            <input type="hidden" id="long_val" value="<?php echo $mapdetails[1]?>">
+            <div id="map-canvas"></div>
+          </div>
+        </div>
         </div>
   </div>
 
   </div>
-  </form>
-    
+  </form>    
     <!-- END OF RIGHT CONTENT -->
   </div>
 </div>
