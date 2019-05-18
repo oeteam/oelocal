@@ -9,7 +9,14 @@
     	top: 840px ! important;
 	}
 </style>
-<?php $adults = $_REQUEST['adults'] ?>
+<?php 
+if (!isset($_REQUEST['nationality'])) {
+	$_REQUEST['nationality'] = '';
+} 
+if (!isset($_REQUEST['Child'])) {
+	$_REQUEST['Child'][] = 0;
+} 
+$adults = $_REQUEST['adults'] ?>
 <?php $child = $_REQUEST['Child'] ?>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -103,7 +110,7 @@
 </div>
 <div class="container">
 	<input type="hidden" id="currencyPic" value="<?php echo $this->session->userdata('currency') ?>">
-	<input type="hidden" id="providers" value="<?php echo $_REQUEST['providers'] ?>">
+	<input type="hidden" id="providers" value="<?php echo isset($_REQUEST['providers']) ? $_REQUEST['providers'] : 'otelseasy' ?>">
 	<div class="container pagecontainer offset-0">	
 			<!-- SLIDER -->
 			<div class="col-md-8 details-slider">

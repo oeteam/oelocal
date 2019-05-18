@@ -255,7 +255,7 @@
               </ul>
             </li>
             <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $all_count ?></span></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $notify_count ?></span></a>
                             <ul class="dropdown-menu">
                               <li role="presentation">
                                 <a href="#" class="dropdown-menu-header">Notifications</a>
@@ -284,7 +284,7 @@
                                       <?php } ?>
                                     <?php }  ?>
                                   </ul>
-                                     <li class='text-center viewmore'><a href='<?php echo base_url(); ?>Payment/all_notification'>view more</a></li>
+                                  <!--    <li class='text-center viewmore'><a href='<?php echo base_url(); ?>Payment/all_notification'>view more</a></li> -->
                                 <?php }  else { ?>
                                    <li class='text-center viewmore'><a href="#">No Notifications</a></li> 
                                <?php } ?>

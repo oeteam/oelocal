@@ -891,7 +891,7 @@ class Dashboard extends MY_Controller {
           $image[$key]=explode(",", $value->gallery_images);
           $html1.= ' <li><a href="'.base_url().'details?search_id='.$value->fav_hotel_id.'&&mark_up='.''.'&&Check_in='.$date.'&&Check_out='.$date1.'&&adults=2&&child=0&&Room1ChildAges=&&Room2ChildAges=&&Room3ChildAges=&&Room4ChildAges=&&Room5ChildAges=&&Room6ChildAges=&&Room7ChildAges=&&Room8ChildAges=&&Room9ChildAges=&&Room10ChildAges=&&contract_id='.$contract_id.'"><img class="left margright10 roundav" width="25" height="25" src='.base_url().'uploads/gallery/'.$value->fav_hotel_id.'/'.str_replace(" ","%20",$image[$key][0]).'> '.$value->hotel_name.'</li>';
         }
-      $html1.='<li><div class="text-center view-more"><a href="'.base_url().'Dashboard/all_favourites">view more</a></div></li>';
+      // $html1.='<li><div class="text-center view-more"><a href="'.base_url().'Dashboard/all_favourites">view more</a></div></li>';
       }
       else{
       $html1.= '<li>No favourites added!</li>';

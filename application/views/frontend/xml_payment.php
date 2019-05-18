@@ -872,21 +872,11 @@ $(".details").on("click", function( e ) {
         ?>
                 <div class="margtop15 col-sm-12">
                   <div class="row booking-details-info" style="margin-right: -40px">
-                    <button class="htlbutton">
-                      <a class="details" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
-                    </button>
-                    <button class="htlbutton">
-                      <a class="details" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
-                    </button>
-                    <button class="htlbutton">
-                     <a class="details" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
-                    </button>
-                    <button class="htlbutton">
-                     <a class="details" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
-                    </button>
-                    <button class="htlbutton">
-                     <a class="details" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
-                    </button>
+                    <a class="details htlbutton btn btn-sm" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
+                        <a class="details  htlbutton btn btn-sm" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn btn-sm" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                       <a class="details  htlbutton btn btn-sm" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                       <a class="details  htlbutton btn btn-sm" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
                   </div>
                 </div>
 
