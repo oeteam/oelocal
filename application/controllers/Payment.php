@@ -42,6 +42,15 @@ class Payment extends MY_Controller {
       $data['board'] = array();
       $data['general'] = array();
       $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
+       $hotel_facilities = explode(",",$data['view'][0]->hotel_facilities); 
+      foreach ($hotel_facilities as $key => $value) {
+        $data['hotel_facilities'][$key] = $this->List_Model->hotel_facilities_data($value);
+      }
+
+      $room_facilities = explode(",",$data['view'][0]->room_facilities); 
+      foreach ($room_facilities as $key => $value) {
+        $data['room_facilities'][$key] = $this->List_Model->room_facilities_data($value);
+      }
       $data['tax'] = $this->Payment_Model->general_tax($_REQUEST['hotel_id']);
       $rooms  =array();
       $contracts =$this->List_Model->contractchecking($_REQUEST);
