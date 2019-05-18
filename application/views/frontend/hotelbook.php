@@ -340,6 +340,89 @@
             color: #9E9E9E;
             font-size: 14px;
         }
+        .htlbutton {
+          width: 19%;
+          background: white;
+          line-height: 3;
+          border: 1px #d0e9fd solid;
+        }
+        img {vertical-align: middle;}
+
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 16px;
+          margin-top: -22px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 1.5s;
+          animation-name: fade;
+          animation-duration: 1.5s;
+        }
+        #button {
+        display: inline-block;
+        background-color: #39aeba;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 71px;
+        right: 30px;
+        transition: background-color .3s, 
+          opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+      }
+      #button::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+      }
+      #button:hover {
+        cursor: pointer;
+        background-color: #333;
+      }
+      #button:active {
+        background-color: #555;
+      }
+      #button.show {
+        opacity: 1;
+        visibility: visible;
+      }
 
 </style>
 <script>
@@ -438,6 +521,21 @@ function defaultRateCheck() {
     $(".b-rates--grand-total").text(sum);
 }
 $(document).ready(function() {
+  loadScript();
+  var btn = $('#button');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '300');
+});
 	if (window.history && window.history.pushState) {
 	    addEventListener('load', function() {
 	        history.pushState(null, null, null); // creates new history entry with same URL
@@ -537,6 +635,15 @@ function ConSelectFun(){
     });
 }
 $(document).ready(function() {
+   $(".details").on("click", function( e ) {
+    
+    e.preventDefault();
+
+    $("body, html").animate({ 
+        scrollTop: $( $(this).attr('href') ).offset().top 
+    }, 600);
+    
+});
 	$(".cancellation-span").hover(function(){
     $(this).closest('.roomlist').find('.cancellation-table').css("display", "block");
     }, function() {
@@ -614,6 +721,7 @@ $(document).ready(function() {
 	<input type="hidden" id="def_rid" value="<?php echo isset($_REQUEST['room_id']) ? $_REQUEST['room_id'] : '' ?>">
 	<input type="hidden" id="def_cid" value="<?php echo isset($_REQUEST['contract_id']) ? $_REQUEST['contract_id'] : '' ?>">
 	<div class="container">
+     <a id="button"></a>
 		<form method="get" name="payment_form" id="payment_form">
 			<div class="col-sm-12 mt25 booking-summary">
 		        <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px">
@@ -684,7 +792,25 @@ $(document).ready(function() {
 						<input type="hidden" name="no_of_rooms" id="no_of_rooms" value="<?php echo count($_REQUEST['adults']); ?>">				
 						<input type="hidden" name="Check_in" value="<?php echo isset($_REQUEST['Check_in']) ? $_REQUEST['Check_in'] : '' ?>">
 						<input type="hidden"  name="Check_out"  value="<?php echo isset($_REQUEST['Check_out']) ? $_REQUEST['Check_out'] : '' ?>" />
-						
+						      <div class="margtop15 col-sm-12">
+                    <div class="row booking-details-info" style="margin-right: -40px">
+                      <button class="htlbutton">
+                        <a class="details" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
+                      </button>
+                      <button class="htlbutton">
+                        <a class="details" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                      </button>
+                      <button class="htlbutton">
+                       <a class="details" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                      </button>
+                      <button class="htlbutton">
+                       <a class="details" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                      </button>
+                      <button class="htlbutton">
+                       <a class="details" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                      </button>
+                    </div>
+                  </div>
 		              <div class="row hide">
 		                <div class="col-sm-12">
 		                  <h5 class="margtop15">Address Information</h5>
@@ -797,7 +923,7 @@ $(document).ready(function() {
             </div>
           </div>
 		          <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
-		          <div class="row r-type margtop10">
+		          <div class="row r-type margtop10" id="hrooms">
 		          	<?php $div = 12/count($_REQUEST['adults']);
              		for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
 		            <div class="col-sm-<?php echo $div ?> r-type--room">
@@ -900,8 +1026,74 @@ $(document).ready(function() {
 		              </ul>
 		            </div>
 		        <?php } ?>
+            <div class="row margtop10">
+          <div class="col-md-12" id="details">
+            <h4 class="text-green margtop25 text-justify">Hotel Details<small class="right traveller-validate validated"></small></h4>
+            <p style="text-align: justify"><?php echo isset($view[0]->hotel_description)?($view[0]->hotel_description):"" ?></p>
+          </div>
+         
+          <div class="clearfix"></div>
+          <div class="col-md-12" id="gallery">
+            <h4 class="text-green margtop25 text-justify">Image Gallery<small class="right traveller-validate validated"></small></h4>
+            <div class="slideshow-container">
+              <div class="col-md-12 details-slider">
+                <div id="c-carousel">
+                  <div id="wrapper">
+                  <div id="inner">
+                    <div id="caroufredsel_wrapper2">
+                      <div id="carousel">
+                        <?php 
+                          for ($q=1; $q <= 5; $q++) { 
+                            $image = 'Image'.$q;
+                           ?>
+                          
+                          <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
+                        <?php } ?>          
+                      </div>
+                    </div>
+                    <div id="pager-wrapper">
+                      <div id="pager">
+                        <?php for ($q=1; $q <= 5; $q++) { 
+                            $image = 'Image'.$q;
+                         ?>
+                          <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
+                       <?php } ?>              
+                      </div>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <button id="prev_btn2" class="prev2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>
+                  <button id="next_btn2" class="next2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>   
+                    
+                  </div>
+                </div> <!-- /c-carousel -->
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-md-12" id="map">
+            <h4 class="text-green margtop25 text-justify">Map<small class="right traveller-validate validated"></small></h4>
+            <input type="hidden" id="lat_val" value="<?php echo isset($view[0]->lattitude)?$view[0]->lattitude:''?>">
+            <input type="hidden" id="long_val" value="<?php echo isset($view[0]->longitude)?$view[0]->longitude:''?>">
+            <div id="map-canvas"></div>
+          </div>
+          <div class="clearfix"></div>
+           <div class="col-md-12" id="other">
+            <h4 class="text-green margtop25 text-justify">Basic Aminities<small class="right traveller-validate validated"></small></h4>
+            <ul class="checklist" style="margin:15px">                 
+              <?php if (count($hotel_facilities[0])!=0) {
+                      foreach ($hotel_facilities as $key1 => $value3) {
+                      ?>
+                      <li><?php echo $value3[0]->Hotel_Facility; ?></li>
+                    <?php } } ?>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
+        </div>
 		          </div>
 		        </div>
+
+        </div>
 		  </div>
 		  <input type="hidden" name="token" value="<?php echo $_REQUEST['token'] ?>">
 		</form>

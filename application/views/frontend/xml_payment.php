@@ -244,6 +244,23 @@ function StateSelectFun(){
 
 $(document).ready(function() {
   loadScript();
+  var btn = $('#button');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '300');
+});
+
+
+
   if (window.history && window.history.pushState) {
     addEventListener('load', function() {
         history.pushState(null, null, null); // creates new history entry with same URL
@@ -663,7 +680,42 @@ $(".details").on("click", function( e ) {
           animation-name: fade;
           animation-duration: 1.5s;
         }
-
+        #button {
+        display: inline-block;
+        background-color: #39aeba;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 71px;
+        right: 30px;
+        transition: background-color .3s, 
+          opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+      }
+      #button::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+      }
+      #button:hover {
+        cursor: pointer;
+        background-color: #333;
+      }
+      #button:active {
+        background-color: #555;
+      }
+      #button.show {
+        opacity: 1;
+        visibility: visible;
+      }
       </style>
   <div class="container breadcrub hidden-xs">
     <ol class="track-progress" data-steps="5">
@@ -724,6 +776,7 @@ $(".details").on("click", function( e ) {
         $viwedate2 = date("d/m/Y", strtotime(isset($_REQUEST['Check_out']) ? $_REQUEST['Check_out'] : ''));
   ?>
   <div class="container">
+    <a id="button"></a>
     <form id="roomdataform" name="roomdataform">
       <input type="hidden" name="hotel_id"  value="<?php echo $_REQUEST['hotel_id'] ?>">
       <textarea class="hide" name="RoomData" 
@@ -817,9 +870,8 @@ $(".details").on("click", function( e ) {
             $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
           }
         ?>
-              <div class="row">
-                <div class="padding20 margtop15">
-                  <div class="row booking-details-info">
+                <div class="margtop15 col-sm-12">
+                  <div class="row booking-details-info" style="margin-right: -40px">
                     <button class="htlbutton">
                       <a class="details" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
                     </button>
@@ -837,7 +889,6 @@ $(".details").on("click", function( e ) {
                     </button>
                   </div>
                 </div>
-              </div>
 
               <div class="row hide">
                 <div class="col-sm-12">
@@ -1127,18 +1178,10 @@ $(".details").on("click", function( e ) {
           <div class="row margtop10">
           <div class="col-md-12" id="details">
             <h4 class="text-green margtop25 text-justify">Hotel Details<small class="right traveller-validate validated"></small></h4>
-            <p><?php echo ($HotelInfo['HotelDetails']['Description']); ?></p>
+            <p style="text-align: justify"><?php echo ($HotelInfo['HotelDetails']['Description']); ?></p>
           </div>
-          <div class="col-md-12" id="other">
-            <h4 class="text-green margtop25 text-justify">Basic Aminities<small class="right traveller-validate validated"></small></h4>
-            <ul class="checklist">                 
-              <?php foreach($HotelInfo['HotelDetails']['HotelFacilities']['HotelFacility'] as $facility) { ?>
-                <li><?php echo $facility; ?></li> 
-              <?php }
-              ?>
-            </ul>
-          </div>
-          <div class="col-md-12" id="gallery"><br><br>
+          <div class="clearfix"></div>
+          <div class="col-md-12" id="gallery">
             <h4 class="text-green margtop25 text-justify">Image Gallery<small class="right traveller-validate validated"></small></h4>
             <div class="slideshow-container">
               <div class="col-md-12 details-slider">
@@ -1172,6 +1215,7 @@ $(".details").on("click", function( e ) {
               </div>
             </div>
           </div>
+          <div class="clearfix"></div>
           <div class="col-md-12" id="map">
             <h4 class="text-green margtop25 text-justify">Map<small class="right traveller-validate validated"></small></h4>
             <?php $mapdetails = explode('|',$HotelInfo['HotelDetails']['Map']) ?>
@@ -1179,6 +1223,17 @@ $(".details").on("click", function( e ) {
             <input type="hidden" id="long_val" value="<?php echo $mapdetails[1]?>">
             <div id="map-canvas"></div>
           </div>
+          <div class="clearfix"></div>
+           <div class="col-md-12" id="other">
+            <h4 class="text-green margtop25 text-justify">Basic Aminities<small class="right traveller-validate validated"></small></h4>
+            <ul class="checklist" style="margin:15px">                 
+              <?php foreach($HotelInfo['HotelDetails']['HotelFacilities']['HotelFacility'] as $facility) { ?>
+                <li><?php echo $facility; ?></li> 
+              <?php }
+              ?>
+            </ul>
+          </div>
+          <div class="clearfix"></div>
         </div>
         </div>
   </div>

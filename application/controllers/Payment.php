@@ -3276,6 +3276,15 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       }
       $bookbuttondata = $this->session->userdata('hoteldata');
       $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
+      $hotel_facilities = explode(",",$data['view'][0]->hotel_facilities); 
+      foreach ($hotel_facilities as $key => $value) {
+        $data['hotel_facilities'][$key] = $this->List_Model->hotel_facilities_data($value);
+      }
+
+      $room_facilities = explode(",",$data['view'][0]->room_facilities); 
+      foreach ($room_facilities as $key => $value) {
+        $data['room_facilities'][$key] = $this->List_Model->room_facilities_data($value);
+      }
       $contracts =$this->List_Model->contractchecking($_REQUEST);
       $Rooms = $this->Hotels_Model->select_hotel_room($_REQUEST['hotel_id'])->result();
       $agent_markup = mark_up_get()+general_mark_up_get();
