@@ -366,7 +366,8 @@ $(document).ready(function() {
 	                window.location = "<?php echo base_url('hotels') ?>";
 	            } else {
 	               FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
-	               history.back() 
+                 window.location = "<?php echo base_url('lists') ?>?"+window.location.search.substr(1);
+	               // history.back() 
 
 	            }
 	        });    
