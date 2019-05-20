@@ -145,7 +145,7 @@ function defaultcheck() {
 
 }
 $(document).ready(function() {
-    divLoading('start');
+  divLoading("start");
   $(document).on('change','input[name="Room1"]',function(){
     RoomCombinationCheck();
   });
@@ -735,22 +735,29 @@ $(".details").on("click", function( e ) {
         </li>
       </ol>
   </div>  
-  <style>
-    .empty-state {position: relative;padding: 3em 0}
-    .empty-state > img {
-      left: 50%;
-      position: relative;
-      transform: translateX(-50%);
-      opacity: .7;
-      width: 100%;
-      max-width: 30em;
-    }
-    .empty-state > .empty-state__message, .empty-state > .empty-state__info {text-align: center}
-    .empty-state > .empty-state__info {color: #b3b3b3}
-
-  </style>
   <!-- CONTENT -->
-  <?php
+    <?php
+          if ($HotelInfo['StatusCode']!=01) { ?>
+            <style>
+          .empty-state {position: relative;padding: 3em 0}
+          .empty-state > img {
+            left: 50%;
+            position: relative;
+            transform: translateX(-50%);
+            opacity: .7;
+            width: 100%;
+            max-width: 30em;
+          }
+          .empty-state > .empty-state__message, .empty-state > .empty-state__info {text-align: center}
+          .empty-state > .empty-state__info {color: #b3b3b3}
+
+        </style>
+        <div class="empty-state">
+          <img src="<?php echo base_url(); ?>skin/images/empty-state.png" alt="No Records">
+          <h4 class="empty-state__message">No results found!</h4>
+          <p class="empty-state__info">This service is temporary unavailable !</p>
+        </div>
+      <?php } else { 
           
     $start = $_REQUEST['Check_in'];
     $end = $_REQUEST['Check_out'];
@@ -836,7 +843,6 @@ $(".details").on("click", function( e ) {
 
               </div>
     <input type="hidden" id="startTime" value="<?php echo date('D M d Y H:i:s',strtotime($_REQUEST['token'])); ?>">
-    <input type="hidden" id="token" name="token" value="<?php echo $_REQUEST['token'] ?>">
 
           
         <input type="hidden" name="sessionID"  value="<?php echo $sessionId ?>">
@@ -919,6 +925,7 @@ $(".details").on("click", function( e ) {
               <div class="col-sm-12"> 
               </div>
           </div>
+          <?php  if (count($HotelRoom)!=0) { ?>
           <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
           <div class="row">
             <div class="col-sm-12" >
@@ -976,20 +983,36 @@ $(".details").on("click", function( e ) {
               </table>
             </div>
           </div>
-          
+          <?php } ?>
             </div>
 
           </div>
-          <?php
-            if (count($HotelRoom)==0) { ?>
-           <h4 class="text-green margtop10 pre-page">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>   
-          <div class="empty-state"  id="hrooms">
-            <img src="<?php echo base_url(); ?>skin/images/empty-state.png" alt="No Records">
-            <h4 class="empty-state__message">No rooms available!</h4>
-            <p class="empty-state__info">Please try another roomgroup/hotel.</p>
-          </div>
-            <?php } else { ?>
-               <div class="row margtop10">
+            <div class="row margtop10">
+                <?php
+                  if (count($HotelRoom)==0) { ?>
+                    <style>
+                  .empty-state {position: relative;padding: 3em 0}
+                  .empty-state > img {
+                    left: 50%;
+                    position: relative;
+                    transform: translateX(-50%);
+                    opacity: .7;
+                    width: 100%;
+                    max-width: 30em;
+                  }
+                  .empty-state > .empty-state__message, .empty-state > .empty-state__info {text-align: center}
+                  .empty-state > .empty-state__info {color: #b3b3b3}
+
+                </style>
+                <div class="empty-state">
+                  <h4 class="text-green margtop10">Room Types</h4>
+                  <img src="<?php echo base_url(); ?>skin/images/empty-state.png" alt="No Records">
+                  <h4 class="empty-state__message">No rooms available!</h4>
+                  <p class="empty-state__info">Please try another roomgroup/hotel.</p>
+                </div>
+              <?php } else { ?>
+
+
               <div class="col-md-12">
                 <p class="text-center spin-wrapper"><strong>We are fetching the rates.Please wait few moments..</strong></p>
               </div>
@@ -999,176 +1022,176 @@ $(".details").on("click", function( e ) {
                   </div>
               </div>
             </div>
-              <div class="col-sm-12 pre-page hide">
+            <div class="col-sm-12 pre-page hide">
               <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button class="bluebtn" id="Continue_book_xml" type="button" name="Continue_book_xml" style="margin-left: 5px">Continue</button><span>
             </h5>
             </div>
           </div>
-            <h4 class="text-green margtop10 pre-page hide">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
+          <h4 class="text-green margtop10 pre-page hide">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
+          <?php
+           if (isset($HotelRoom[0])) {
+              $RoomTypeName = $HotelRoom[0]['RoomTypeName'];
+              $xmlCurrency = $HotelRoom[0]['RoomRate']['@attributes']['Currency'];
+            } else {
+              $RoomTypeName = $HotelRoom['RoomTypeName'];
+              $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
+            }
+          ?>
+          <div class="row r-type margtop10 pre-page hide" id="hrooms">
             <?php
-             if (isset($HotelRoom[0])) {
-                $RoomTypeName = $HotelRoom[0]['RoomTypeName'];
-                $xmlCurrency = $HotelRoom[0]['RoomRate']['@attributes']['Currency'];
-              } else {
-                $RoomTypeName = $HotelRoom['RoomTypeName'];
-                $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
-              }
-            ?>
-            <div class="row r-type margtop10 pre-page hide" id="hrooms">
-              <?php
-              $total_markup = $agent_markup+$admin_markup;
-              if ($revenue_markup!='') {
-                $total_markup = $agent_markup+$revenue_markup;
-              }
-              $div = 12/count($_REQUEST['adults']);
-               for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
-              <div class="col-sm-<?php echo $div ?> r-type--room">
-                <h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
-                <ul class="list-unstyled r-type--list ulRoom<?php echo $i+1 ?>">
-                  <?php 
-                  if ($i==0) { 
-                   if (isset($HotelRoom[0])) {
-                    $HotelRooms = $HotelRoom;
-                  } else {
-                    $HotelRooms[0] = $HotelRoom;
+            $total_markup = $agent_markup+$admin_markup;
+            if ($revenue_markup!='') {
+              $total_markup = $agent_markup+$revenue_markup;
+            }
+            $div = 12/count($_REQUEST['adults']);
+             for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
+            <div class="col-sm-<?php echo $div ?> r-type--room">
+              <h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
+              <ul class="list-unstyled r-type--list ulRoom<?php echo $i+1 ?>">
+                <?php 
+                if ($i==0) { 
+                 if (isset($HotelRoom[0])) {
+                  $HotelRooms = $HotelRoom;
+                } else {
+                  $HotelRooms[0] = $HotelRoom;
+                }
+                foreach ($HotelRooms as $key => $value) { 
+                  // print_r($value['CancelPolicies']);
+                  $checked = '';
+                  if ($key==0 && $i==0) {
+                    $checked ='checked';
                   }
-                  foreach ($HotelRooms as $key => $value) { 
-                    // print_r($value['CancelPolicies']);
-                    $checked = '';
-                    if ($key==0 && $i==0) {
-                      $checked ='checked';
-                    }
-                  ?> 
-                  <li id="listRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="hide">
-                    <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
-                      <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="roomval" value="<?php echo $value['RoomIndex'] ?>">
-                      <div class="av-div">
-                         <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
-                       <?php 
-                                if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
-                                    $cancelList[$key] = $value['CancelPolicies']['CancelPolicy'];
-                                  } else {
-                                    $cancelList[$key][0] = $value['CancelPolicies']['CancelPolicy'];
-                                 } 
-                                 
-                                 if(isset($cancelList[$key][0]['@attributes']) && $cancelList[$key][0]['@attributes']['CancellationCharge']==0) { ?>
-                                  <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[$key][0]['@attributes']['ToDate']?> <span>
-                                 <?php } else { ?>
-                                    <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">cancellation<span>
-                                <?php } ?>
-                          </h5>
+                ?> 
+                <li id="listRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="hide">
+                  <label for="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">
+                    <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>" class="roomval" value="<?php echo $value['RoomIndex'] ?>">
+                    <div class="av-div">
+                       <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
+                     <?php 
+                              if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                                  $cancelList[$key] = $value['CancelPolicies']['CancelPolicy'];
+                                } else {
+                                  $cancelList[$key][0] = $value['CancelPolicies']['CancelPolicy'];
+                               } 
+                               
+                               if(isset($cancelList[$key][0]['@attributes']) && $cancelList[$key][0]['@attributes']['CancellationCharge']==0) { ?>
+                                <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[$key][0]['@attributes']['ToDate']?> <span>
+                               <?php } else { ?>
+                                  <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">cancellation<span>
+                              <?php } ?>
+                        </h5>
 
-                        
-                        <?php 
+                      
+                      <?php 
 
-                                    if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
-                        <small class="r-type-includes"><?php echo is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'] ?></small><br>
-                       <?php } ?>
-                        <?php 
-                        if (isset($value['Supplements']['Supplement'][0])) {
-                          $Supplements = $value['Supplements']['Supplement'];
-                        } else {
-                          $Supplements[0] = $value['Supplements']['Supplement'];
-                        }
-                        foreach ($Supplements as $key1 => $value1) {
-                          if (isset($value1['@attributes']['SuppName'])) { 
-                              ?>
-                              <p class="m-0" style="color: hsl(240, 8%, 69%)">
-                              <small><?php echo $value1['@attributes']['SuppName'] ?> - <?php echo $value1['@attributes']['SuppChargeType']=="AtProperty" ? '<span style="color: #0074b9;" title="Exclusive">Excl.</span> ' : '<span style="color: #0074b9;" title="Inclusive">Incl.</span> '  ?> <?php 
-                            $suppl = $value1['@attributes']['Price'];
-                            $supplAmnt = ($suppl*$total_markup)/100+$suppl;
-                            echo $value1['@attributes']['CurrencyCode'].' '.$suppl; ?></small>
-                            </p>
+                                  if(!is_array($value['Inclusion']) && count($value['Inclusion'])!=0) { ?>
+                      <small class="r-type-includes"><?php echo is_array($value['Inclusion']) && count($value['Inclusion'])==0 ? '' : $value['Inclusion'] ?></small><br>
+                     <?php } ?>
+                      <?php 
+                      if (isset($value['Supplements']['Supplement'][0])) {
+                        $Supplements = $value['Supplements']['Supplement'];
+                      } else {
+                        $Supplements[0] = $value['Supplements']['Supplement'];
+                      }
+                      foreach ($Supplements as $key1 => $value1) {
+                        if (isset($value1['@attributes']['SuppName'])) { 
+                            ?>
+                            <p class="m-0" style="color: hsl(240, 8%, 69%)">
+                            <small><?php echo $value1['@attributes']['SuppName'] ?> - <?php echo $value1['@attributes']['SuppChargeType']=="AtProperty" ? '<span style="color: #0074b9;" title="Exclusive">Excl.</span> ' : '<span style="color: #0074b9;" title="Inclusive">Incl.</span> '  ?> <?php 
+                          $suppl = $value1['@attributes']['Price'];
+                          $supplAmnt = ($suppl*$total_markup)/100+$suppl;
+                          echo $value1['@attributes']['CurrencyCode'].' '.$suppl; ?></small>
+                          </p>
 
-                        <?php  }
-                        } ?>
-                        <?php $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
-                          $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
-                        <p class="text-green m-0 bold">
-                          <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">
-                          <input type="hidden" class="com-name" value="<?php echo $value['RoomTypeName'] ?>">
-                          <small><?php echo agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?></small>
-                        </p>
-                      </div>
-                    </label>
-                  </li>
-                  <div id="myModalRoom-<?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
-                            <div class="modal-dialog modal-sm">
+                      <?php  }
+                      } ?>
+                      <?php $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
+                        $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
+                      <p class="text-green m-0 bold">
+                        <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">
+                        <input type="hidden" class="com-name" value="<?php echo $value['RoomTypeName'] ?>">
+                        <small><?php echo agent_currency().' '.xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?></small>
+                      </p>
+                    </div>
+                  </label>
+                </li>
+                <div id="myModalRoom-<?php echo $value['RoomIndex'] ?>" class="modal fade" role="dialog">
+                          <div class="modal-dialog modal-sm">
 
-                            <!-- Modal content-->
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  <h4 class="modal-title">Cancellation Policies</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-bordered table-hover cancellation-table">
-                                      <thead style="background: #0074b9;color: white;">
-                                        <tr>
-                                          <td>Cancelled on or After</td>
-                                          <td>Cancelled on or Before</td>
-                                          <td>Cancellation Charge</td>
-                                        </tr>
-                                      </thead>
-                                      <tbody style="background: white;color: black;">
-                                        <?php 
-                                          
-                                          if (isset($cancelList[$key][0]['@attributes'])) {
-                                            foreach ($cancelList[$key] as $key => $value1) {
-                                        ?>
-                                        <tr>
-                                          <td><?php echo $value1['@attributes']['FromDate'] ?></td>
-                                          <td><?php echo $value1['@attributes']['ToDate'] ?></td>
-                                          <td><?php echo $value1['@attributes']['CancellationCharge']; if($value1['@attributes']['ChargeType']=='Percentage') { 
-                                              echo '%' ; 
-                                            } else { 
-                                              echo ' USD'; 
-                                            } ?> 
-                                          </td>
-                                        </tr>
-                                      <?php } } ?>
-                                      <?php 
-                                        if (isset($value['CancelPolicies']['NoShowPolicy'][0])) {
-                                          $NoShowPolicy[$key] = $value['CancelPolicies']['NoShowPolicy'];
-                                        } else {
-                                          $NoShowPolicy[$key][0] = $value['CancelPolicies']['NoShowPolicy'];
-                                        } 
-
-                                          if (isset($NoShowPolicy[$key][0]['@attributes'])) {
-                                        ?>
-                                        <tr>
-                                          <td colspan="3"><?php if($NoShowPolicy[$key][0]['@attributes']['ChargeType']=='Percentage') { 
-                                              echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].'% of Booking Amount' ; 
-                                            } else { 
-                                              echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].' USD'; 
-                                            } ?> </td>
-                                        </tr>
-                                      <?php  } else { ?>
-                                        <tr>
-                                          <td colspan="3">No Show will attract full cancellation charge unless otherwise specified</td>
-                                        </tr>
-                                      <?php } ?>
+                          <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Cancellation Policies</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <table class="table table-bordered table-hover cancellation-table">
+                                    <thead style="background: #0074b9;color: white;">
                                       <tr>
-                                        <td colspan="3">
-                                          <?php echo $value['CancelPolicies']['DefaultPolicy']?>
+                                        <td>Cancelled on or After</td>
+                                        <td>Cancelled on or Before</td>
+                                        <td>Cancellation Charge</td>
+                                      </tr>
+                                    </thead>
+                                    <tbody style="background: white;color: black;">
+                                      <?php 
+                                        
+                                        if (isset($cancelList[$key][0]['@attributes'])) {
+                                          foreach ($cancelList[$key] as $key => $value1) {
+                                      ?>
+                                      <tr>
+                                        <td><?php echo $value1['@attributes']['FromDate'] ?></td>
+                                        <td><?php echo $value1['@attributes']['ToDate'] ?></td>
+                                        <td><?php echo $value1['@attributes']['CancellationCharge']; if($value1['@attributes']['ChargeType']=='Percentage') { 
+                                            echo '%' ; 
+                                          } else { 
+                                            echo ' USD'; 
+                                          } ?> 
                                         </td>
                                       </tr>
-                                      </tbody>
-                                    </table>
-                                </div>
+                                    <?php } } ?>
+                                    <?php 
+                                      if (isset($value['CancelPolicies']['NoShowPolicy'][0])) {
+                                        $NoShowPolicy[$key] = $value['CancelPolicies']['NoShowPolicy'];
+                                      } else {
+                                        $NoShowPolicy[$key][0] = $value['CancelPolicies']['NoShowPolicy'];
+                                      } 
+
+                                        if (isset($NoShowPolicy[$key][0]['@attributes'])) {
+                                      ?>
+                                      <tr>
+                                        <td colspan="3"><?php if($NoShowPolicy[$key][0]['@attributes']['ChargeType']=='Percentage') { 
+                                            echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].'% of Booking Amount' ; 
+                                          } else { 
+                                            echo 'No Show Charges : '.$NoShowPolicy[$key][0]['@attributes']['CancellationCharge'].' USD'; 
+                                          } ?> </td>
+                                      </tr>
+                                    <?php  } else { ?>
+                                      <tr>
+                                        <td colspan="3">No Show will attract full cancellation charge unless otherwise specified</td>
+                                      </tr>
+                                    <?php } ?>
+                                    <tr>
+                                      <td colspan="3">
+                                        <?php echo $value['CancelPolicies']['DefaultPolicy']?>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                                  </table>
                               </div>
                             </div>
-                  </div>
-                   <?php }
-                }?>
-                </ul>
-              </div>
-              <?php } ?>
-              
+                          </div>
+                </div>
+                 <?php }
+              }?>
+              </ul>
             </div>
-          <?php } ?>
+            <?php } ?>
+            
+          </div>
+        <?php } ?>
           <div class="row margtop10">
           <div class="col-md-12" id="details">
             <h4 class="text-green margtop25 text-justify">Hotel Details<small class="right traveller-validate validated"></small></h4>
@@ -1237,9 +1260,8 @@ $(".details").on("click", function( e ) {
     <!-- END OF RIGHT CONTENT -->
   </div>
 </div>
-
 <!-- END OF CONTENT -->
-  
+  <?php } ?>
   <!-- Central Modal Medium Warning -->
   <div class="modal fade " id="boardAllocation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   
