@@ -843,6 +843,7 @@ $(".details").on("click", function( e ) {
 
               </div>
     <input type="hidden" id="startTime" value="<?php echo date('D M d Y H:i:s',strtotime($_REQUEST['token'])); ?>">
+    <input type="hidden" id="token" name="token" value="<?php echo $_REQUEST['token'] ?>">
 
           
         <input type="hidden" name="sessionID"  value="<?php echo $sessionId ?>">
