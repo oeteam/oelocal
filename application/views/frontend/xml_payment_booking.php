@@ -3,6 +3,55 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/xml_payment.js"></script>
 <script type="text/javascript">
 	$(".xml-default").remove();
+	$(document).ready(function() {
+	  var startStamp = new Date($("#startTime").val()).getTime();
+	  var start = new Date($("#startTime").val());
+	  var maxTime = (30*60)*1000;
+	  var timeoutVal = Math.floor(maxTime/100);
+	  animateUpdate();
+
+		  function updateProgress(percentage) {
+		    $("#book-progress").val((100-percentage));
+		  }
+
+		  function animateUpdate() {
+		      var now = new Date();
+		      var timeDiff = now.getTime() - start.getTime();
+		      var perc = Math.round((timeDiff/maxTime)*100);
+		        if (perc <= 100) {
+		         updateProgress(perc);
+		         setTimeout(animateUpdate, timeoutVal);
+		        } else {
+		        	alert("Your Session has been timeout. You are not able to continue your booking process.");
+		            window.location = base_url+"hotels";
+		        }
+		  }
+		  function updateClock() {
+		    var now = new Date();
+		      var timeDiff = now.getTime() - start.getTime();
+		    var nowTime = new Date().getTime();
+
+		    var diff = Math.round((nowTime-startStamp)/1000);
+
+		    var d = Math.floor(diff/(24*60*60)); /* though I hope she won't be working for consecutive days :) */
+		    diff = diff-(d*24*60*60);
+		    var h = Math.floor(diff/(60*60));
+		    diff = diff-(h*60*60);
+		    var m = Math.floor(diff/(60));
+		    diff = diff-(m*60);
+		    var s = diff;
+		        if(m<=30) {
+		          if (s<10) {
+		            s = '0'+s;
+		          }
+		          if (m<10) {
+		            m = '0'+m;
+		          }
+		          $("#timeLeft").text((30-m)+":"+(60-s));		          
+		        }
+		  }
+		  setInterval(updateClock, 1000);
+		});
 </script>
 <style type="text/css">
 	.b-rates--tax {
@@ -75,6 +124,9 @@
 	  top: 50%;
 	  transform: translateY(-50%);
 	}
+	.booking-timer {
+	  transform: translateY(-15px);
+	}
 </style>
 	<div class="container breadcrub">
 		<ol class="track-progress" data-steps="5">
@@ -118,7 +170,9 @@
 		</div>
 	<?php } else { ?>
 	<div class="container">
-		<div class="container mt25 offset-0">
+					
+		          <div class="container mt25 offset-0">
+
 			<!-- LEFT CONTENT -->
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
@@ -208,7 +262,8 @@
 				<input type="hidden" name="no_of_rooms" id="no_of_rooms" value="<?php echo count($_REQUEST['adults']) ?>">	
 				<input type="hidden" name="countryname" id="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
 				<input type="hidden" name="cityname" id="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
-				<input type="hidden" name="citycode" id="citycode" value="<?php echo $_REQUEST['citycode'] ?>">		
+				<input type="hidden" name="citycode" id="citycode" value="<?php echo $_REQUEST['citycode'] ?>">	
+				 <input type="hidden" id="startTime" value="<?php echo date('D M d Y H:i:s',strtotime($_REQUEST['token'])); ?>">	
 
         		<?php if (isset($HotelRoom[0])) {
 						$RoomTypeName = $HotelRoom[0]['RoomTypeName'];
@@ -219,6 +274,11 @@
 					}
 				?>
 				<div class="padding30 grey">
+					<h3 class="text-green"><span class="right text-right booking-timer">
+		              <small>Time Left : <b id="timeLeft">30:18</b></small>
+		              <progress id="book-progress" value="98" max="100"></progress>
+		            </span>
+		        </h3>
 					<span class="opensans size18 dark bold"><?php echo $RoomTypeName;  ?></span>
 					<div class="clearfix"></div>
 					<div class="line4"></div>
