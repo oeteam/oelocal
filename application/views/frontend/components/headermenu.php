@@ -1,6 +1,7 @@
 <?php  
   $this->load->helper("common");
   $id=$this->session->userdata('agent_id');
+  $name=$this->session->userdata('agent_name');
   $flag=$this->session->userdata('currency');
   $view = agent_image();
   $contry = contry_image();
@@ -321,9 +322,8 @@
                   <?php  } ?>
               </ul>
             </li>
-
 					  <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account<b class="lightcaret mt-2"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#"><?php echo $name ?><b class="lightcaret mt-2"></b></a>
               <ul class="dropdown-menu">
                   <li class="dropdown-header" style="background: url('<?php echo base_url().'skin/images/dash/no-avatar.jpg' ?>'); height: 122px; background-size: cover;   width: 110px;"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar img_size_custom" alt=""/></li> 
                   <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
