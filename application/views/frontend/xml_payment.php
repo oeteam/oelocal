@@ -272,6 +272,7 @@ $(document).ready(function() {
                FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
                history.back() 
 
+
             }
         });    
     });
@@ -737,7 +738,7 @@ $(".details").on("click", function( e ) {
   </div>  
   <!-- CONTENT -->
     <?php
-          if ($HotelInfo['StatusCode']!=01) { ?>
+          if ($HotelInfo['Status']['StatusCode']!="01") { ?>
             <style>
           .empty-state {position: relative;padding: 3em 0}
           .empty-state > img {
