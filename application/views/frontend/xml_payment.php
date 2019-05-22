@@ -634,11 +634,11 @@ $(".details").on("click", function( e ) {
             font-size: 14px;
         }
         .htlbutton {
-          width: 19%;
+          /*width: 19%;*/
           background: white;
-          line-height: 1;
+          line-height: 3;
           border: 1px #d0e9fd solid;
-          white-space: normal;
+          margin: 0px 1px 1px 1px;
         }
         img {vertical-align: middle;}
 
@@ -716,6 +716,9 @@ $(".details").on("click", function( e ) {
       #button.show {
         opacity: 1;
         visibility: visible;
+      }
+      @media (min-width: 992px) .col-sm-2 {
+          width: 19.5%;
       }
       </style>
   <div class="container breadcrub hidden-xs">
@@ -871,13 +874,22 @@ $(".details").on("click", function( e ) {
             $xmlCurrency = $HotelRoom['RoomRate']['@attributes']['Currency'];
           }
         ?>
-                <div class="margtop15 col-sm-12">
-                  <div class="row booking-details-info" style="margin-right: -40px">
-                    <a class="details htlbutton btn btn-sm" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
-                        <a class="details  htlbutton btn btn-sm" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
-                        <a class="details htlbutton btn btn-sm" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
-                       <a class="details  htlbutton btn btn-sm" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
-                       <a class="details  htlbutton btn btn-sm" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                <div class="margtop15">
+                  <div class="row booking-details-info">
+                      <div class="col-sm-12 hidden-lg hidden-md">
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                        <a class="details htlbutton btn col-sm-4 col-xs-12" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                        <a class="details htlbutton btn col-sm-4 col-xs-12" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                      </div>
+                      <div class="hidden-xs">
+                        <a class="details htlbutton btn" href="#hrooms" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn" href="#details" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn" href="#gallery" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                        <a class="details htlbutton btn" href="#map" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                        <a class="details htlbutton btn" href="#other" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                      </div>
                   </div>
                 </div>
 

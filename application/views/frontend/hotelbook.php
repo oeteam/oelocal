@@ -343,8 +343,9 @@
         .htlbutton {
           width: 19%;
           background: white;
-          line-height: 3;
+          line-height: 1;
           border: 1px #d0e9fd solid;
+          white-space: normal;
         }
         img {vertical-align: middle;}
 

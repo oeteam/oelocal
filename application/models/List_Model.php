@@ -1734,7 +1734,7 @@ public function moreDetailsFetch($hotel_id) {
             $leftStyle = '<small class="color-red">'.$data['count'][$value01->id][$key02].' left!</small>';
             $styles = 'style="background:green;border-bottom: 2px solid green;"';
             $btn_name = 'Book';
-            $Reloadrequest = 'RequestType=Book&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'];
+            $Reloadrequest = 'RequestType=Book&room_id='.$value01->id.'&hotel_id='.$data['hotel_val'][$value01->id][$key02].'&mark_up=&contract_id='.$data['contract_val'][$value01->id][$key02].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&max_child_age='.$this->max_child_age_get($data['contract_val'][$value01->id][$key02]).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'].'&countryname='.$_REQUEST['countryname'].'&hotel_name='.$_REQUEST['hotel_name'].'&citycode='.$_REQUEST['citycode'].'&cityname='.$_REQUEST['cityname'];
           }
 
           $style.= '<div class="col-md-12">
