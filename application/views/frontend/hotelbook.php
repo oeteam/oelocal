@@ -341,11 +341,10 @@
             font-size: 14px;
         }
         .htlbutton {
-          width: 19%;
           background: white;
-          line-height: 1;
+          line-height: 3;
           border: 1px #d0e9fd solid;
-          white-space: normal;
+          margin: 0px 1px 1px 1px;          
         }
         img {vertical-align: middle;}
 
@@ -794,25 +793,24 @@ $(document).ready(function() {
 						<input type="hidden" name="no_of_rooms" id="no_of_rooms" value="<?php echo count($_REQUEST['adults']); ?>">				
 						<input type="hidden" name="Check_in" value="<?php echo isset($_REQUEST['Check_in']) ? $_REQUEST['Check_in'] : '' ?>">
 						<input type="hidden"  name="Check_out"  value="<?php echo isset($_REQUEST['Check_out']) ? $_REQUEST['Check_out'] : '' ?>" />
-						      <div class="margtop15 col-sm-12">
-                    <div class="row booking-details-info" style="margin-right: -40px">
-                      <button class="htlbutton">
-                        <a class="details" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Availabe Rooms</span></a>
-                      </button>
-                      <button class="htlbutton">
-                        <a class="details" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
-                      </button>
-                      <button class="htlbutton">
-                       <a class="details" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
-                      </button>
-                      <button class="htlbutton">
-                       <a class="details" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
-                      </button>
-                      <button class="htlbutton">
-                       <a class="details" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
-                      </button>
-                    </div>
+						      <div class="margtop15">
+                  <div class="row booking-details-info">
+                      <div class="col-sm-12 hidden-lg hidden-md">
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#hrooms"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#details"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn col-sm-3 col-xs-12" href="#gallery"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                        <a class="details htlbutton btn col-sm-4 col-xs-12" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                        <a class="details htlbutton btn col-sm-4 col-xs-12" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                      </div>
+                      <div class="hidden-xs">
+                        <a class="details htlbutton btn" href="#hrooms" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn" href="#details" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn" href="#gallery" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
+                        <a class="details htlbutton btn" href="#map" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
+                        <a class="details htlbutton btn" href="#other" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
+                      </div>
                   </div>
+                </div>
 		              <div class="row hide">
 		                <div class="col-sm-12">
 		                  <h5 class="margtop15">Address Information</h5>
