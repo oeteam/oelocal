@@ -211,23 +211,23 @@ class List_Model extends CI_Model {
     $room5 = "";
     $room6 = "";
     if (isset($data['adults'][0])) {
-      $room1 =" (f.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND f.occupancy >= ".$data['adults'][0]." AND f.occupancy_child > ".$data['Child'][0].")";
+      $room1 =" (f.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND f.occupancy >= ".$data['adults'][0]." AND f.occupancy_child >= ".$data['Child'][0].")";
     }
 
     if (isset($data['adults'][1])) {
-      $room2 =" OR (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child > ".$data['Child'][1].")";
+      $room2 =" OR (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child >= ".$data['Child'][1].")";
     }
     if (isset($data['adults'][2])) {
-      $room3 =" OR (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child > ".$data['Child'][2].")";
+      $room3 =" OR (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].")";
     }
     if (isset($data['adults'][3])) {
-      $room4 =" OR (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child > ".$data['Child'][3].")";
+      $room4 =" OR (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].")";
     }
     if (isset($data['adults'][4])) {
-      $room5 =" OR (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child > ".$data['Child'][4].")";
+      $room5 =" OR (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].")";
     }
     if (isset($data['adults'][5])) {
-      $room6 =" OR (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child > ".$data['Child'][5].")";
+      $room6 =" OR (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].")";
     }
     
 

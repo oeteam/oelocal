@@ -1,6 +1,7 @@
 <?php 
   $this->load->helper("common");
   $id=$this->session->userdata('agent_id');
+  $name=$this->session->userdata('agent_name');
   $flag=$this->session->userdata('currency');
   $view = agent_image();
   $contry = contry_image();
@@ -412,7 +413,7 @@ s0.parentNode.insertBefore(s1,s0);
                             </ul>
                           </li>
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $all_count ?></span></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $notify_count ?></span></a>
                             <ul class="dropdown-menu">
                               <li role="presentation">
                                 <a href="#" class="dropdown-menu-header">Notifications</a>
@@ -477,7 +478,7 @@ s0.parentNode.insertBefore(s1,s0);
                             </ul>
                           </li>
                            <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo base_url(); ?>dashboard">My Account<b class="lightcaret mt-2"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo base_url(); ?>dashboard"><?php echo $name ?> <b class="lightcaret mt-2"></b></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></li> 
                                 <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
