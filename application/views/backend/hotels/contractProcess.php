@@ -124,9 +124,11 @@
                                         <?php
                                             
                                         for ($i=$startYear; $i <=$endYear ; $i++) { 
-                                            if (isset($_REQUEST['year']) && $_REQUEST['year']==$i) { ?>
-                                                <option selected="" value="<?php echo $i ?>"><?php echo $i ?></option>
-                                            <?php   } else { ?>
+                                            if (isset($_REQUEST['year']) && $i==$_REQUEST['year']) { ?>
+                                                <option selected="selected" value="<?php echo $i ?>"><?php echo $i ?></option>
+                                            <?php   } else if(date('Y')==$i) { ?>
+                                                <option selected="selected" value="<?php echo $i ?>"><?php echo $i ?></option>
+                                            <?php } else { ?>
                                                 <option value="<?php echo $i ?>"><?php echo $i ?></option>
                                             <?php } } ?>
                                     </select>

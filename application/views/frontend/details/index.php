@@ -311,10 +311,10 @@ $adults = $_REQUEST['adults'] ?>
 								<div class="col-sm-2">
 										<input type="hidden" name="location" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>">
 										<input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['search_id'] ?>">
-										<input type="hidden" name="countryname" id="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
-										<input type="hidden" name="hotel_name" id="hotel_name" value="<?php echo $_REQUEST['hotel_name'] ?>">
-										<input type="hidden" name="cityname" id="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
-										<input type="hidden" name="citycode" id="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
+										<input type="hidden" name="countryname" id="countryname" value="<?php echo isset($_REQUEST['countryname']) ? $_REQUEST['countryname'] : '' ?>">
+										<input type="hidden" name="hotel_name" id="hotel_name" value="<?php echo isset($_REQUEST['hotel_name']) ? $_REQUEST['hotel_name'] : '' ?>">
+										<input type="hidden" name="cityname" id="cityname" value="<?php echo isset($_REQUEST['cityname']) ? $_REQUEST['cityname'] : '' ?>">
+										<input type="hidden" name="citycode" id="citycode" value="<?php echo isset($_REQUEST['citycode']) ? $_REQUEST['citycode'] : '' ?>">
 										<input type="hidden" name="contract_id" id="contract_id" value="">
 										<input type="hidden" name="max_child_age" id="max_child_age" value="">
 									<div class=" textleft">

@@ -545,8 +545,11 @@ btn.on('click', function(e) {
 	                window.location = "<?php echo base_url('hotels') ?>";
 	            } else {
 	               FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
-                 window.location = "<?php echo base_url('lists') ?>?"+window.location.search.substr(1);
-	               // history.back() 
+                 <?php if (isset($_REQUEST['citycode']) && $_REQUEST['citycode']!="") { ?> 
+                  window.location = "<?php echo base_url('lists') ?>?"+window.location.search.substr(1);
+                <?php } else { ?> 
+                   history.back() 
+                <?php } ?>
 
 	            }
 	        });    
