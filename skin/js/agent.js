@@ -142,7 +142,7 @@ $(document).ready(function() {
           } else {
             $(".fax_err").text("");
           }
-          if (tradefile=="")    {
+          if (tradefile=="" && country!=101)    {
            $(".tradelicence_err").text("Trade Licence is required!");
           } else {
             $(".tradelicence_err").text("");
