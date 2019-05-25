@@ -1714,6 +1714,11 @@ class Hotels_Model extends CI_Model {
     }
     public function add_contract($request){
     	$id=$request['id'];
+    	$nationality = '';
+    	if (isset($request['nationality_to']) && count($request['nationality_to'])!=0) {
+    		$nationality = implode(",", $request['nationality_to']);
+    	}
+    	print_r($nationality);exit;
 		if ($request['contract_id']!="") {
 	    	$this->db->select('*');
 	    	$this->db->from('hotel_tbl_contract');
@@ -1737,6 +1742,7 @@ class Hotels_Model extends CI_Model {
     	if (isset($request['nationality_to']) && count($request['nationality_to'])!=0) {
     		$nationality = implode(",", $request['nationality_to']);
     	}
+    	print_r($nationality);exit;
     	$array= array(	
 			        	'tax_percentage' 	=> $request['tax'],
 			        	'max_child_age' 	=> $request['max_age'],
@@ -5373,6 +5379,35 @@ class Hotels_Model extends CI_Model {
     	$this->db->from('hotel_tbl_agents');
     	$query = $this->db->get();
     	return $query;
+    }
+    public function getMarket() {
+        $query=$this->db->query('select distinct continent from countries where continent!=""');
+        return $query->result();
+	}
+	public function SelectCon($request){
+		$data['country_id'] = array();
+		$market = explode(",", $request['market']);
+    	foreach ($market as $key => $value) {
+    		$this->db->select('*');
+        	$this->db->from('countries');
+        	$this->db->where('continent',$value);
+        	$query=$this->db->get()->result();
+        	if (count($query)!=0) {
+        		foreach ($query as $CGkey => $Cgvalue) {
+        			$data['country_id'][$Cgvalue->continent][] = $Cgvalue->id;
+        			$data['country'][$Cgvalue->continent][] = $Cgvalue->name;
+        		}
+        	}
+    	}
+    	$dropdown = '';
+    	if (count($data['country_id'])!=0) {
+    		foreach ($data['country_id'] as $CVGkey => $CVGvalue) {
+    				foreach ($CVGvalue as $Conkey => $Convalue) {
+    					$dropdown .= '<option value="'.$Convalue.'">'.$data['country'][$CVGkey][$Conkey].'</option>';
+    				}
+    		}
+    	}
+    	return $dropdown;
     }
 }		
 

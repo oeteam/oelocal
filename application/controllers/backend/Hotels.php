@@ -1481,6 +1481,7 @@ class Hotels extends MY_Controller {
     	$contractMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Contract'); 
     	$data['view'] = array();
     	$data['nationality'] = $this->Hotels_Model->nationalityList();
+    	$data['market'] = $this->Hotels_Model->getMarket();
     	if (isset($_REQUEST['id'])) {
     		$data['view'] = $this->Hotels_Model->contractdetails($_REQUEST['id']);
     		if (count($contractMenu)!=0 && $contractMenu[0]->view==1 && $contractMenu[0]->edit==1) {
@@ -3491,6 +3492,10 @@ class Hotels extends MY_Controller {
 		}
 		AdminlogActivity($description);
 		echo json_encode(true);
+	}
+	public function CountrySel() {
+      $data = $this->Hotels_Model->SelectCon($_REQUEST);
+      echo $data;
 	}
 }
 
