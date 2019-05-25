@@ -284,23 +284,23 @@ class List_Model extends CI_Model {
     $room6 = "";
 
     if (isset($data['adults'][1])) {
-      $room2 =" OR (c.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND c.occupancy >= ".$data['adults'][1]." AND c.occupancy_child > ".$data['Child'][1].")";
+      $room2 =" OR (c.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND c.occupancy >= ".$data['adults'][1]." AND c.occupancy_child >= ".$data['Child'][1].")";
     }
     if (isset($data['adults'][2])) {
-      $room3 =" OR (c.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND c.occupancy >= ".$data['adults'][2]." AND c.occupancy_child > ".$data['Child'][2].")";
+      $room3 =" OR (c.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND c.occupancy >= ".$data['adults'][2]." AND c.occupancy_child >= ".$data['Child'][2].")";
     }
     if (isset($data['adults'][3])) {
-      $room4 =" OR (c.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND c.occupancy >= ".$data['adults'][3]." AND c.occupancy_child > ".$data['Child'][3].")";
+      $room4 =" OR (c.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND c.occupancy >= ".$data['adults'][3]." AND c.occupancy_child >= ".$data['Child'][3].")";
     }
     if (isset($data['adults'][4])) {
-      $room5 =" OR (c.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND c.occupancy >= ".$data['adults'][4]." AND c.occupancy_child > ".$data['Child'][4].")";
+      $room5 =" OR (c.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND c.occupancy >= ".$data['adults'][4]." AND c.occupancy_child >= ".$data['Child'][4].")";
     }
     if (isset($data['adults'][5])) {
-      $room6 =" OR (c.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND c.occupancy >= ".$data['adults'][5]." AND c.occupancy_child > ".$data['Child'][5].")";
+      $room6 =" OR (c.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND c.occupancy >= ".$data['adults'][5]." AND c.occupancy_child >= ".$data['Child'][5].")";
     }
     
 
-    $query =  $this->db->query("SELECT a.id FROM hotel_tbl_hotels a INNER JOIN states b ON  b.id = IF(a.state!='',a.state,3798) INNER JOIN hotel_tbl_hotel_room_type c ON c.hotel_id = a.id WHERE ".$search.$hotelName."  a.delflg = 1 and ((c.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND c.occupancy >= ".$data['adults'][0]." AND c.occupancy_child > ".$data['Child'][0].") ".$room2.$room3.$room4.$room5.$room6.")  and c.delflg = 1")->result();
+    $query =  $this->db->query("SELECT a.id FROM hotel_tbl_hotels a INNER JOIN states b ON  b.id = IF(a.state!='',a.state,3798) INNER JOIN hotel_tbl_hotel_room_type c ON c.hotel_id = a.id WHERE ".$search.$hotelName."  a.delflg = 1 and ((c.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND c.occupancy >= ".$data['adults'][0]." AND c.occupancy_child >= ".$data['Child'][0].") ".$room2.$room3.$room4.$room5.$room6.")  and c.delflg = 1")->result();
 
     return $query;
   }

@@ -3065,8 +3065,13 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
        $CountryCode =$nationality[0]->phonecode;
        // $city = $this->db->query('SELECT name FROM cities where id = '.$_REQUEST['citySelect'].'')->result();
        $cityname = $_REQUEST['citySelect'];
-       $state = $this->db->query('SELECT name FROM states where id = '.$_REQUEST['stateSelect'].'')->result();
-       $statename = $state[0]->name;
+       if (isset($_REQUEST['stateSelect']) && $_REQUEST['stateSelect']!="") {
+          $state = $this->db->query('SELECT name FROM states where id = '.$_REQUEST['stateSelect'].'')->result();
+          $statename = $state[0]->name;
+       } else {
+        $statename = "";
+       }
+       
        for($x=0;$x<$_REQUEST['no_of_rooms'];$x++){
           for ($i=0; $i < $_REQUEST['adults'][$x] ; $i++) { 
             $Guest[] = [

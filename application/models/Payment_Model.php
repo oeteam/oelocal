@@ -2027,7 +2027,7 @@ class Payment_Model extends CI_Model {
       $id = $this->db->insert_id();
       $description = 'New hotel booking added [BookingID: '.$BookingId.' ,HotelID: '.$Hotel_id.' ,Provider: TBO]';
       AgentlogActivity($description);
-      xmlbookingMailNotification($id);
+      // xmlbookingMailNotification($id);
       return $id;
     }
     public function xml_booking_list($filter) {

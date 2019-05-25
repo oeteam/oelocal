@@ -342,7 +342,7 @@ $adults = $_REQUEST['adults'] ?>
 								<?php if($_REQUEST['nationality']=="") { ?>
 								<div class="col-sm-2">
 									<label class="nat_err control-label">Nationality</label>
-									<select class="form-control" id="Nationality" name="nationality">
+									<select class="form-control" id="Nationality" name="nationality" onchange="available_check();">
 										<option value="">--select--</option>
 										<?php foreach ($nationality as $key => $value) { ?>
 											<option  value="<?php echo $value->id ?>"><?php echo $value->name ?></option>

@@ -8,7 +8,7 @@
 	  var start = new Date($("#startTime").val());
 	  var maxTime = (30*60)*1000;
 	  var timeoutVal = Math.floor(maxTime/100);
-	  animateUpdate();
+	  // animateUpdate();
 
 		  function updateProgress(percentage) {
 		    $("#book-progress").val((100-percentage));
