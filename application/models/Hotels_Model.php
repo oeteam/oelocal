@@ -4931,6 +4931,7 @@ class Hotels_Model extends CI_Model {
 			 'CreatedDate' 	  => date('Y-m-d H:i:s'),
 			 'CreatedBy' 	  => $this->session->userdata('id'),
 			 'contract_agreement' => $request['contract_agreement'],
+			 'Markuptype' => $request['Markuptype'],
 			 'tbo' => $tbo
 			);
 			$this->db->insert('hotel_tbl_revenue',$data);
@@ -4949,6 +4950,7 @@ class Hotels_Model extends CI_Model {
 			 'UpdatedDate' 	  => date('Y-m-d H:i:s'),
 			 'UpdatedBy' 	  => $this->session->userdata('id'),
 			 'contract_agreement' => $request['contract_agreement'],
+			 'Markuptype' => $request['Markuptype'],
 			 'tbo' => $tbo
 			);
 			$this->db->where('id',$request['id']);

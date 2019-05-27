@@ -206,7 +206,16 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="Markup">Markup%</label>
+                                        <label for="Markuptype">Markup Type</label>
+                                        <select class="" id="Markuptype" name="Markuptype">
+                                            <option <?php echo isset($edit[0]->Markuptype) && $edit[0]->Markuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
+                                            <option <?php echo isset($edit[0]->Markuptype) && $edit[0]->Markuptype=="Flate Rate"  ? 'selected' : ''; ?> value="Flate Rate">Flate Rate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Markup">Markup</label>
                                         <input id="Markup" name="Markup" type="number" class="form-control" value="<?php echo isset($edit[0]->Markup) ? $edit[0]->Markup : ''; ?>">
                                     </div>
                                 </div>
