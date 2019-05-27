@@ -122,12 +122,18 @@
             </div>
             <div class="form-group col-md-4">        
                 <span>Active Markets</span>
+                <?php
+                $tempmarket = array();
+                if (isset($view[0]->market) && $view[0]->market!="") {
+                    $tempmarket = explode(",", $view[0]->market);
+                }
+                ?>
+                <input type="hidden" id="market_check" value="<?php echo isset($view[0]->market) ? $view[0]->market : '' ?>">
                 <div class="multi-select-mod">
                 <select name="market[]" id="market" class="form-control"  multiple="" onchange="selectCountry();">
                     <?php foreach ($market as $key => $value) { ?>
-                        <option value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
+                        <option <?php echo  array_search($value->continent,$tempmarket)!='' ? 'selected' : '' ?>  value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
                     <?php } ?>
-                        <option value="other">other</option>
                 </select>     
                 </div>
             </div>
@@ -143,7 +149,6 @@
                     <div class="col-xs-5">
                         <span>Active Nationality</span>
                         <select name="nationality_from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
-                            
                         </select>
                     </div>
                     
@@ -164,6 +169,7 @@
                                 <option value="<?php echo $value->id ?>" continent="<?php echo $value->continent!="" ? $value->continent : 'other' ?>"><?php echo $value->name ?></option>
                             <?php } ?>
                         </select>
+                         
                           <input type="hidden" name="context" id="context"></p>
                         </form>
                     </div>
@@ -192,6 +198,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
+    selectCountry();
     var nextDay = new Date($("#date_picker1").val());
     nextDay.setDate(nextDay.getDate() + 1);
     $("#date_picker").datepicker({
@@ -235,17 +242,17 @@
         }
     });
 
-    <?php if (isset($view[0]->nationalityPermission)) { ?>
-    var permission_check = $("#permission_check").val().split(",");
-    $.each(permission_check, function(i, v) {
-    $('#undo_redo option[value='+v+']').attr('selected','selected');
-    });
-    <?php } ?>
+    // <?php if (isset($view[0]->nationalityPermission)) { ?>
+    // var permission_check = $("#permission_check").val().split(",");
+    // $.each(permission_check, function(i, v) {
+    //  $('#undo_redo_to option[value='+v+']').attr('selected','selected');
+    // });
+    // <?php } ?>
 
-    <?php if (isset($view[0]->nationalityPermission)) { ?>
-    $("#undo_redo_rightSelected").trigger('click');
-    $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
-    <?php } ?>
+    // <?php if (isset($view[0]->nationalityPermission)) { ?>
+    // $("#undo_redo_rightSelected").trigger('click');
+    // $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
+    // <?php } ?>
 
 // });
     function maincontractCheck() {
@@ -292,6 +299,8 @@
             $("#undo_redo_rightSelected").trigger('click'); 
         });
     }
+
+
 
 </script>
 
