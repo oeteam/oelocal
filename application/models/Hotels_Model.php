@@ -5403,7 +5403,7 @@ class Hotels_Model extends CI_Model {
     	if (count($data['country_id'])!=0) {
     		foreach ($data['country_id'] as $CVGkey => $CVGvalue) {
     				foreach ($CVGvalue as $Conkey => $Convalue) {
-    					$dropdown .= '<option value="'.$Convalue.'">'.$data['country'][$CVGkey][$Conkey].'</option>';
+    					$dropdown .= '<option value="'.$Convalue.'" continent="'.$Convalue.'">'.$data['country'][$CVGkey][$Conkey].'</option>';
     				}
     		}
     	}
