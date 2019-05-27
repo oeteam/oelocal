@@ -4670,7 +4670,7 @@ class Hotels_Model extends CI_Model {
         return $query->result();
 	}
 	public function nationalityList() {
-		$this->db->select('id,name');
+		$this->db->select('id,name,continent');
         $this->db->from('countries');
         $query=$this->db->get();
         return $query->result();

@@ -1,6 +1,10 @@
 <script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/prettify.css" />
-
+<style type="text/css">
+    .multi-select-mod .btn-group, .multi-select-mod button, .multi-select-mod .dropdown-menu {
+        top: 0px ! important;
+    }
+</style>
  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -118,11 +122,14 @@
             </div>
             <div class="form-group col-md-4">        
                 <span>Active Markets</span>
-                <select name="market[]" id="market" class="form-control" size="8" multiple="multiple" onchange="selectCountry();">
+                <div class="multi-select-mod">
+                <select name="market[]" id="market" class="form-control"  multiple="" onchange="selectCountry();">
                     <?php foreach ($market as $key => $value) { ?>
                         <option value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
                     <?php } ?>
+                        <option value="other">other</option>
                 </select>     
+                </div>
             </div>
         </div>
         <div class="row">
@@ -136,9 +143,7 @@
                     <div class="col-xs-5">
                         <span>Active Nationality</span>
                         <select name="nationality_from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
-                            <?php foreach ($nationality as $key => $value) { ?>
-                                <option value="<?php echo $value->id ?>" continent="<?php echo $value->id ?>"><?php echo $value->name ?></option>
-                            <?php } ?>
+                            
                         </select>
                     </div>
                     
@@ -154,7 +159,11 @@
                     <div class="col-xs-5">
                         <span>Inactive Nationality</span>
                         <form id="country_permission_form" method="post">
-                        <select name="nationality_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
+                        <select name="nationality_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
+                            <?php foreach ($nationality as $key => $value) { ?>
+                                <option value="<?php echo $value->id ?>" continent="<?php echo $value->continent!="" ? $value->continent : 'other' ?>"><?php echo $value->name ?></option>
+                            <?php } ?>
+                        </select>
                           <input type="hidden" name="context" id="context"></p>
                         </form>
                     </div>
@@ -174,6 +183,12 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+    $('#market').multiselect({
+            includeSelectAllOption: true,
+            selectAllValue: 0
+    });
+</script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
@@ -266,27 +281,15 @@
         }
     }
     function selectCountry() {
-        var marketValues = [];
-        $('#undo_redo option').remove();
-        $('#undo_redo optgroup').remove();
-        $('#undo_redo_to option').remove();
-        $('#undo_redo_to optgroup').remove();
-        $.each($("#market option:selected"), function(){            
-            marketValues.push($(this).val());
+        $.each($("#market option:selected"), function(){ 
+        console.log($(this).val());       
+            $('#undo_redo_to option[continent="'+$(this).val()+'"]').prop('selected',true); 
+            $("#undo_redo_leftSelected").trigger('click'); 
         });
-        $.ajax({
-          url: base_url+'/backend/hotels/CountrySel?market='+marketValues,
-          type: "POST",
-          success:function(data) {
-            $('#undo_redo').append(data);
-            //alert(data);
-            //var context = $("#context").val().split(",");
-            // $.each(context, function(i, v) {
-            //     $('#undo_redo_to option[value='+v+']').attr('selected','selected');
-            //  });
-            // $("#undo_redo_rightSelected").trigger('click');
-            // $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
-          }
+
+        $.each($("#market option:not(:selected)"), function(){   
+            $('#undo_redo option[continent="'+$(this).val()+'"]').prop('selected',true); 
+            $("#undo_redo_rightSelected").trigger('click'); 
         });
     }
 
