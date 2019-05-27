@@ -1496,9 +1496,6 @@ class Hotels extends MY_Controller {
 	      		redirect(base_url().'backend/dashboard');
 	    	}
     	}
-    	
-		
-
     }
     public function update_contract(){
    	    $view = $this->Hotels_Model->update_contract($_REQUEST);
