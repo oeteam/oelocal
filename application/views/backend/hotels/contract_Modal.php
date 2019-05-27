@@ -132,7 +132,7 @@
                 <div class="multi-select-mod">
                 <select name="market[]" id="market" class="form-control"  multiple="" onchange="selectCountry();">
                     <?php foreach ($market as $key => $value) { ?>
-                        <option <?php echo  array_search($value->continent,$tempmarket)!='' ? 'selected' : '' ?>  value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
+                        <option <?php echo in_array($value->continent,$tempmarket)!='' ? 'selected' : '' ?>  value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
                     <?php } ?>
                 </select>     
                 </div>
@@ -198,7 +198,6 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
-    selectCountry();
     var nextDay = new Date($("#date_picker1").val());
     nextDay.setDate(nextDay.getDate() + 1);
     $("#date_picker").datepicker({
@@ -301,6 +300,7 @@
     }
 
 
+        selectCountry();
 
 </script>
 

@@ -2327,6 +2327,11 @@ class Hotels_Model extends CI_Model {
     	if (isset($request['nationality_to']) && count($request['nationality_to'])!=0) {
     		$nationality = implode(",", $request['nationality_to']);
     	}
+    	$market = '';
+    	if (isset($request['market']) && count($request['market'])!=0) {
+    		$market = implode(",", $request['market']);
+    	}
+    	
 		$array= array(	
         	'tax_percentage'  => $request['tax'],
         	'max_child_age'   => $request['max_age'],
@@ -2339,6 +2344,7 @@ class Hotels_Model extends CI_Model {
         	'linkedContract'  => $request['linked_contract'],
         	'nonRefundable'   => $nonRefundable,
         	'nationalityPermission' => $nationality,
+        	'market'			=> $market,
         	'BookingCode' => $request['BookingCode'],
         	'Updated_Date' => date("Y-m-d H:i:s"),
 			'Updated_By' =>  $this->session->userdata('id'),
