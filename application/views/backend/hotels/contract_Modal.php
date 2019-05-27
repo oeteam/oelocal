@@ -116,35 +116,13 @@
                   <label for="non-refundable">Non Refundable</label>
                 </p>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-12">
-                <div class="col-md-12">
-                    <div class="col-xs-5">
-                        <span>Active Markets</span>
-                        <select name="market_from[]" id="market_undo_redo" class="form-control" size="8" multiple="multiple">
-                            <?php foreach ($market as $key => $value) { ?>
-                                <option value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    
-                    <div class="col-xs-2" style="margin-top: -51px;">
-                        <button type="button" id="market_undo_redo_undo" class="mt-6 no-border btn-sm btn-primary btn-block">Undo</button>
-                        <button type="button" id="market_undo_redo_rightAll" class="no-border btn-sm btn-default btn-block"><i class="fa fa-forward"></i></button>
-                        <button type="button" id="market_undo_redo_rightSelected" class="no-border btn-sm btn-default btn-block"><i class="fa fa-chevron-right"></i></button>
-                        <button type="button" id="market_undo_redo_leftSelected" class="no-border btn-sm btn-default btn-block"><i class="fa fa-chevron-left"></i></button>
-                        <button type="button" id="market_undo_redo_leftAll" class="no-border btn-sm btn-default btn-block"><i class="fa fa-backward"></i></button>
-                        <button type="button" id="market_undo_redo_redo" class="no-border btn-sm btn-primary btn-block">Redo</button>
-                    </div>
-                    
-                    <div class="col-xs-5">
-                        <span>Inactive Markets</span>
-                        <select name="market_to[]" id="market_undo_redo_to" class="form-control" size="8" multiple="multiple"></select>
-                        <input type="hidden" name="markettext" id="markettext" value="<?php echo isset($edit[0]->market) ? $edit[0]->market : ''; ?>">
-                        </form>
-                    </div>
-                </div>
+            <div class="form-group col-md-4">        
+                <span>Active Markets</span>
+                <select name="market[]" id="market" class="form-control" size="8" multiple="multiple" onchange="selectCountry();">
+                    <?php foreach ($market as $key => $value) { ?>
+                        <option value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
+                    <?php } ?>
+                </select>     
             </div>
         </div>
         <div class="row">
@@ -159,7 +137,7 @@
                         <span>Active Nationality</span>
                         <select name="nationality_from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
                             <?php foreach ($nationality as $key => $value) { ?>
-                                <option value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
+                                <option value="<?php echo $value->id ?>" continent="<?php echo $value->id ?>"><?php echo $value->name ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -232,24 +210,6 @@
     // $(document).ready(function() {
     maincontractCheck();
     window.prettyPrint && prettyPrint();
-     $('#market_undo_redo').multiselect({
-            submitAllRight : true,
-            search: {
-                left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-                right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-            },
-            fireSearch: function(value) {
-                return value.length = 1;
-            },
-            afterMoveToLeft: function($left, $right, $options) { 
-               selectCountry();
-             },
-             afterMoveToRight: function($left, $right, $options) { 
-               selectCountry();
-             }
-
-
-        });
     $('#undo_redo').multiselect({
         search: {
             left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -307,15 +267,18 @@
     }
     function selectCountry() {
         var marketValues = [];
-        $('#market_undo_redo_to option').each(function() {
-              marketValues.push($(this).val());
+        $('#undo_redo option').remove();
+        $('#undo_redo optgroup').remove();
+        $('#undo_redo_to option').remove();
+        $('#undo_redo_to optgroup').remove();
+        $.each($("#market option:selected"), function(){            
+            marketValues.push($(this).val());
         });
-        $('[name="market"]').val(marketValues);
         $.ajax({
           url: base_url+'/backend/hotels/CountrySel?market='+marketValues,
           type: "POST",
           success:function(data) {
-            $('#undo_redo_to').append(data);
+            $('#undo_redo').append(data);
             //alert(data);
             //var context = $("#context").val().split(",");
             // $.each(context, function(i, v) {
