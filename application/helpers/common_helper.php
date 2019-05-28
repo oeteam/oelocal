@@ -2362,6 +2362,18 @@ function revenue_markup($hotel_id,$contract_id,$agent_id) {
   $query = $ci->db->query("SELECT IFNULL(MAX(Markup),'') as Markup FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
   return $query[0]->Markup;
 }
+function revenue_markup1($hotel_id,$contract_id,$agent_id) {  
+  $ci =& get_instance();
+  $query = $ci->db->query("SELECT Markup,Markuptype FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
+  if (count($query)!=0) {
+    $return['Markup'] = $query[0]->Markup;
+    $return['Markuptype'] = $query[0]->Markuptype;
+  } else {
+    $return['Markup'] = '';
+    $return['Markuptype'] = '';
+  }
+  return $return;
+}
 function profile($id = null)
 {
     $CI =& get_instance();

@@ -617,6 +617,11 @@ class List_Model extends CI_Model {
       return $out;
     }
     public function room_current_count($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id) {
+      
+      $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contract_ajax_id,$this->session->userdata('agent_id'));
+      if ($revenue_markup['Markup']!='') {
+        $markup = mark_up_get();
+      }
       /*Tax percentage grt from contract start*/
       $request['contract_id']  = $contract_ajax_id;
       if ($contract_ajax_id!="") {
@@ -891,8 +896,6 @@ $extrabedTotalAmount = array_sum($extrabedAmount);
     //     echo "<br>";
 
 if ($markup!=0) {
-      // $totalAdultBoardSumData = (($totalAdultBoardSumData*$markup)/100)+$totalAdultBoardSumData;
-      // $totalChildBoardSumData = (($totalChildBoardSumData*$markup)/100)+$totalChildBoardSumData;
   $array_sumAdultAmount = (($array_sumAdultAmount*$markup)/100)+$array_sumAdultAmount;
   $array_sumChildAmount = (($array_sumChildAmount*$markup)/100)+$array_sumChildAmount;
   $manGenarray_sumAdultAmount = (($manGenarray_sumAdultAmount*$markup)/100)+$manGenarray_sumAdultAmount;
@@ -918,9 +921,25 @@ if (count($query)!=0) {
     }
 
     if ($markup!=0) {
-      $ramount = (($ramount*$markup)/100)+$ramount;
+      $rmamount = 0;
+      if ($revenue_markup['Markup']!='') {
+        if ($revenue_markup['Markuptype']=="Percentage") {
+          $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+        } else {
+          $rmamount = $revenue_markup['Markup'];
+        }
+      }
+      $ramount = (($ramount*$markup)/100)+$rmamount+$ramount;
     } else {
-      $ramount = $ramount;
+      $rmamount = 0;
+      if ($revenue_markup['Markup']!='') {
+        if ($revenue_markup['Markuptype']=="Percentage") {
+          $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+        } else {
+          $rmamount = $revenue_markup['Markup'];
+        }
+      }
+      $ramount = $ramount+$rmamount;
     }
     if (is_numeric($RMdiscount['discount'])) {
       $RMdiscount = $RMdiscount['discount'];
@@ -4458,7 +4477,10 @@ public function loadRequest($action,$arr_value) {
   }
   public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$contract_ajax_id,$index) {
       /*Tax percentage grt from contract start*/
-
+      $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contract_ajax_id,$this->session->userdata('agent_id'));
+      if ($revenue_markup['Markup']!='') {
+        $markup = mark_up_get();
+      }
       $request['contract_id']  = $contract_ajax_id;
       if ($contract_ajax_id!="") {
        $contract_id = $contract_ajax_id;
@@ -4751,9 +4773,25 @@ if (count($query)!=0) {
     }
 
     if ($markup!=0) {
-      $ramount = (($ramount*$markup)/100)+$ramount;
+      $rmamount = 0;
+      if ($revenue_markup['Markup']!='') {
+        if ($revenue_markup['Markuptype']=="Percentage") {
+          $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+        } else {
+          $rmamount = $revenue_markup['Markup'];
+        }
+      }
+      $ramount = (($ramount*$markup)/100)+$rmamount+$ramount;
     } else {
-      $ramount = $ramount;
+      $rmamount = 0;
+      if ($revenue_markup['Markup']!='') {
+        if ($revenue_markup['Markuptype']=="Percentage") {
+          $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+        } else {
+          $rmamount = $revenue_markup['Markup'];
+        }
+      }
+      $ramount = $ramount+$rmamount;
     }
     if (is_numeric($RMdiscount['discount'])) {
       $RMdiscount = $RMdiscount['discount'];

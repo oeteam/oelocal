@@ -394,6 +394,8 @@
 				    $discountGet['pay'];
 				    // array_splice($amount, $Fdays);
 				  }
+        		$revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$_REQUEST['contract_index'],$this->session->userdata('agent_id'));
+
 				foreach ($_REQUEST['reqadults'] as $RAkey => $RAvalue) { ?>
 	            	<div class="row payment-table-wrap">
 	            		<div class="col-md-12">
@@ -435,7 +437,15 @@
 		            					<td><?php echo $view[0]->room_name ?> <?php echo $view[0]->Room_Type ?></td>
 		            					<td style="text-align: center"><?php echo $boardName ?></td>
 		            					<td style="text-align: right"><?php 
-		            					$roomAmount[$i]  = (($result[$i]['amount']*$total_markup)/100)+$result[$i]['amount'];
+		            					$rmamount = 0;
+		            					if ($revenue_markup['Markup']!='') {
+									        if ($revenue_markup['Markuptype']=="Percentage") {
+									          $rmamount = (($result[$i]['amount']*$revenue_markup['Markup'])/100);
+									        } else {
+									          $rmamount = $revenue_markup['Markup'];
+									        }
+									      }
+		            					$roomAmount[$i]  = (($result[$i]['amount']*$total_markup)/100)+$result[$i]['amount']+$rmamount;
 		            					$DisroomAmount[$i] = $roomAmount[$i]-($roomAmount[$i]*$RMdiscount['discount'])/100;
             							$WiDisroomAmount[$i] = $roomAmount[$i];
 
