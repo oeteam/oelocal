@@ -1721,9 +1721,15 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
 
           $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
           $ci->email->to($agent[0]->Email);
-          $ci->email->Bcc($agent[0]->Email_Accounts);
-          $ci->email->Bcc($agent[0]->Email_Reservation);
-          $ci->email->Bcc($agent[0]->Email_Management);
+          if ($agent[0]->Email_Accounts!="") {
+            $ci->email->Bcc($agent[0]->Email_Accounts);
+          }
+          if ($agent[0]->Email_Reservation!="") {
+            $ci->email->Bcc($agent[0]->Email_Reservation);
+          }
+          if ($agent[0]->Email_Management!="") {
+            $ci->email->Bcc($agent[0]->Email_Management);
+          }
           $ci->email->Bcc($mail_settings[0]->smtp_user);
           
           $ci->email->subject($subject);
@@ -3473,9 +3479,15 @@ function offlinerequestMailNotification($id,$type) {
             <strong><a style="color:blue;" href="'.base_url().'">www.otelseasy.com</a></strong><br>.';  
           $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
           $ci->email->to($agent[0]->Email);
-          $ci->email->Bcc($agent[0]->Email_Accounts);
-          $ci->email->Bcc($agent[0]->Email_Reservation);
-          $ci->email->Bcc($agent[0]->Email_Management);
+          if ($agent[0]->Email_Accounts!="") {
+            $ci->email->Bcc($agent[0]->Email_Accounts);
+          }
+          if ($agent[0]->Email_Reservation!="") {
+            $ci->email->Bcc($agent[0]->Email_Reservation);
+          }
+          if ($agent[0]->Email_Management!="") {
+            $ci->email->Bcc($agent[0]->Email_Management);
+          }
           $ci->email->Bcc($mail_settings[0]->smtp_user);
           
           $ci->email->subject($subject);
@@ -3576,9 +3588,15 @@ function touremailNotification($mailTYpe , $MailProcess, $agent_id,$booking_id,$
             <strong><a style="color:blue;" href="'.base_url().'">www.otelseasy.com</a></strong><br>.';  
           $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
           $ci->email->to($agent[0]->Email);
-          $ci->email->Bcc($agent[0]->Email_Accounts);
-          $ci->email->Bcc($agent[0]->Email_Reservation);
-          $ci->email->Bcc($agent[0]->Email_Management);
+          if ($agent[0]->Email_Accounts!="") {
+            $ci->email->Bcc($agent[0]->Email_Accounts);
+          }
+          if ($agent[0]->Email_Reservation!="") {
+            $ci->email->Bcc($agent[0]->Email_Reservation);
+          }
+          if ($agent[0]->Email_Management!="") {
+            $ci->email->Bcc($agent[0]->Email_Management);
+          }
           $ci->email->Bcc($mail_settings[0]->smtp_user);
           
           $ci->email->subject($subject);
@@ -3842,9 +3860,15 @@ function xmlbookingMailNotification($id) {
 
           $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
           $ci->email->to($agent[0]->Email);
-          $ci->email->Bcc($agent[0]->Email_Accounts);
-          $ci->email->Bcc($agent[0]->Email_Reservation);
-          $ci->email->Bcc($agent[0]->Email_Management);
+          if ($agent[0]->Email_Accounts!="") {
+            $ci->email->Bcc($agent[0]->Email_Accounts);
+          }
+          if ($agent[0]->Email_Reservation!="") {
+            $ci->email->Bcc($agent[0]->Email_Reservation);
+          }
+          if ($agent[0]->Email_Management!="") {
+            $ci->email->Bcc($agent[0]->Email_Management);
+          }
           $ci->email->Bcc($mail_settings[0]->smtp_user);
           
           $ci->email->subject($subject);

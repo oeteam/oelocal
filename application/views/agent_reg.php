@@ -6,9 +6,9 @@ $data = title();
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo $data[0]->Title ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?php echo $data[0]->Title ?></title>
   <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
   
   <!-- Bootstrap -->
@@ -20,20 +20,20 @@ $data = title();
   
   <link href="<?php echo base_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="assets/js/html5shiv.js"></script>
-	  <script src="assets/js/respond.min.js"></script>
-	<![endif]-->
-	
-	<!-- Fonts -->	
-	<link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>	
-	<!-- Font-Awesome -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
-	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
-	
-	<!-- Load jQuery -->
-	<script src="<?php echo base_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+  <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+  <![endif]-->
+  
+  <!-- Fonts -->  
+  <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>  
+  <!-- Font-Awesome -->
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
+  <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
+  
+  <!-- Load jQuery -->
+  <script src="<?php echo base_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
   <script src="<?php echo base_url(); ?>skin/js/agent.js"></script>
   <script type="text/javascript">
     var base_url = "<?php  echo base_url();?>"; 
@@ -81,9 +81,9 @@ $data = title();
           </div>
         </div>
         <div class="col-sm-1"></div>
-      </div>	
+      </div>  
       <div class="row">
-      	<div class="col-sm-1"></div>
+        <div class="col-sm-1"></div>
        <div class="col-sm-5">
         <div class=form-horizondal>
           <div class="form-group">
@@ -112,7 +112,7 @@ $data = title();
         </div>
       </div>
       <div class="col-sm-1"></div>
-    </div>	
+    </div>  
     <div class="row">
      <div class="col-sm-1"></div>
      <div class="col-sm-5">
@@ -141,7 +141,7 @@ $data = title();
       </div>
     </div>
     <div class="col-sm-1"></div>
-  </div>	
+  </div>  
   <div class="row">
    <div class="col-sm-1"></div>
    <div class="col-sm-5">
@@ -170,70 +170,7 @@ $data = title();
       </div>
     </div>
   </div>
-</div>	
-<div class="row">
- <div class="col-sm-1"></div>
-
- <div class="col-sm-5">
-  <div class=form-horizondal>
-    <div class="form-group">
-      <label for="designation" class="col-sm-3 control-label fontstyl" style="">Designation<span class="starcolor">*</span></label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="designation" name="designation">
-        <span class="designation_err popup_err blink_me"></span>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-sm-5">
-  <div class=form-horizondal>
-    <div class="form-group">
-      <label for="preferred_currency" class="col-sm-3 control-label fontstyl" style="">Preferred Currency<span class="starcolor">*</span></label>
-      <div class="col-sm-9">
-        <select name="preferred_currency" class="form-control" id="preferred_currency">
-          <?php foreach ($currency_list as $key => $value) { 
-            if($view[0]->currency_type==$value->currency_type) {?>
-              <option selected="" value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
-            <?php } else { ?>
-              <option  value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
-            <?php  } } ?>
-            
-          </select>
-          <!-- </div> -->
-          <span class="preferred_currency_err popup_err blink_me"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-1"></div>
-</div>	
-<div class="row">
- <div class="col-sm-1"></div>
- <div class="col-sm-5">
-  <div class=form-horizondal>
-    <div class="form-group">
-      <label for="nature_business" class="col-sm-3 control-label fontstyl" style="">Nature Of Business<span class="starcolor">*</span></label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="nature_business" name="nature_business">
-        <span class="nature_business_err popup_err blink_me"></span>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-sm-5">
-  <div class=form-horizondal>
-    <div class="form-group">
-      <label for="business_type" class="col-sm-3 control-label fontstyl" style="">Business Type<span class="starcolor">*</span></label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="business_type" name="business_type">
-        <span class="business_type_err popup_err blink_me"></span>
-
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-sm-1"></div>
-</div>	
+</div>  
 <div class="row">
  <div class="col-sm-1"></div>
  <div class="col-sm-5">
@@ -276,7 +213,7 @@ $data = title();
 </div>
 <div class="row">
  <div class="col-sm-1"></div>
- <div class="col-sm-5">
+<div class="col-sm-5">
    <div class=form-horizondal>
      <div class="form-group">
        <label for="city" class="col-sm-3 control-label fontstyl" style="">City<span class="starcolor">*</span></label>
@@ -288,10 +225,73 @@ $data = title();
      </div>
    </div>
  </div>
+<div class="col-sm-5">
+  <div class=form-horizondal>
+    <div class="form-group">
+      <label for="preferred_currency" class="col-sm-3 control-label fontstyl" style="">Preferred Currency<span class="starcolor">*</span></label>
+      <div class="col-sm-9">
+        <select name="preferred_currency" class="form-control" id="preferred_currency">
+          <?php foreach ($currency_list as $key => $value) { 
+            if($view[0]->currency_type==$value->currency_type) {?>
+              <option selected="" value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
+            <?php } else { ?>
+              <option  value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
+            <?php  } } ?>
+            
+          </select>
+          <!-- </div> -->
+          <span class="preferred_currency_err popup_err blink_me"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-1"></div>
+</div>  
+<div class="row">
+ <div class="col-sm-1"></div>
  <div class="col-sm-5">
   <div class=form-horizondal>
     <div class="form-group">
-      <label for="website" class="col-sm-3 control-label fontstyl" style="">Website<span class="starcolor">*</span></label>
+      <label for="nature_business" class="col-sm-3 control-label fontstyl" style="">Nature Of Business</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="nature_business" name="nature_business">
+        <span class="nature_business_err popup_err blink_me"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-5">
+  <div class=form-horizondal>
+    <div class="form-group">
+      <label for="business_type" class="col-sm-3 control-label fontstyl" style="">Business Type</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="business_type" name="business_type">
+        <span class="business_type_err popup_err blink_me"></span>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-1"></div>
+</div>  
+
+<div class="row">
+ <div class="col-sm-1"></div>
+ <div class="col-sm-5">
+  <div class=form-horizondal>
+    <div class="form-group">
+      <label for="designation" class="col-sm-3 control-label fontstyl" style="">Designation</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="designation" name="designation">
+        <span class="designation_err popup_err blink_me"></span>
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="col-sm-5">
+  <div class=form-horizondal>
+    <div class="form-group">
+      <label for="website" class="col-sm-3 control-label fontstyl" style="">Website</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" id="website" name="website">
         <span class="website_err popup_err blink_me"></span>
@@ -307,7 +307,7 @@ $data = title();
 <div class="col-sm-5">
   <div class=form-horizondal>
     <div class="form-group">
-      <label for="fax" class="col-sm-3 control-label fontstyl" style="">Fax<span class="starcolor">*</span></label>
+      <label for="fax" class="col-sm-3 control-label fontstyl" style="">Fax</label>
       <div class="col-sm-9">
         <input type="text" class="form-control" id="fax" name="fax">
         <span class="fax_err popup_err blink_me"></span>
@@ -318,7 +318,7 @@ $data = title();
 <div class="col-sm-5 trade-licence">
   <div class=form-horizondal>
     <div class="form-group">
-      <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<span class="starcolor">*</span></label>
+      <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<!-- <span class="starcolor">*</span> --></label>
       <div class="col-sm-9">
         <input type="file" class="form-control" id="tradefile" name="tradefile">
         <span class="tradelicence_err popup_err blink_me"></span>
@@ -326,47 +326,49 @@ $data = title();
     </div>
   </div>
 </div>
- 
+</div>
+ <div class="row">
+<div class="col-sm-1"></div>
+ <div class="col-sm-5">
+  <div class=form-horizondal>
+   <div class="form-group">
+    <br>
+    <label for="iata_status" class="col-sm-3 control-label fontstyl" >IATA Status <span class="starcolor">*</span></label>
+    <p>
+      <!-- <?php  if (isset($edit[0]->Iata_Status) && $edit[0]->Iata_Status=="Approved") { ?> -->
+      <input name="iata_status" type="radio" id="test1" checked="" value="Approved" onclick="iata_check('1')" />
+      <label for="test1" class="col-sm-3 control-label">Approved</label>
+      <input name="iata_status" type="radio" id="test2"  value="Not Approved" onclick="iata_check('2')" />
+      <label for="test2" class="col-sm-3 control-label">Not Approved</label>
+      <!-- <?php } else { ?> -->
+      <input name="iata_status" type="radio" id="test1" value="Approved" onclick="iata_check('1')"/>
+      <label for="test1" class="control-label fontstyl">Approved</label>
+      <input name="iata_status" type="radio" id="test2" checked  value="Not Approved" onclick="iata_check('2')" />
+      <label for="test2" class="control-label fontstyl">Not Approved</label>
+      <!-- <?php } ?> -->
+    </p>
+    <!-- <div class="col-sm-1"></div> -->
+
+  </div> 
+</div>
+</div>
             <!-- <div class="col-sm-5">
-        		<div class=form-horizondal>
-            		<div class="form-group">
+            <div class=form-horizondal>
+                <div class="form-group">
                         <label for="markup" class="col-sm-3 control-label fontstyl" style="">Markup<span class="starcolor">*</span></label>
                         <div class="col-sm-9">
                           <input type="text" class="form-control" id="markup" name="markup">
                   <span class="markup_err popup_err blink_me"></span>
 
                         </div>
-            		</div>
+                </div>
                 </div>
               </div> -->
               <div class="col-sm-1"></div>
             </div>
             <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-5">
-              <div class=form-horizondal>
-               <div class="form-group">
-                <br>
-                <label for="iata_status" class="col-sm-3 control-label fontstyl" >IATA Status <span class="starcolor">*</span></label>
-                <p>
-                  <!-- <?php  if (isset($edit[0]->Iata_Status) && $edit[0]->Iata_Status=="Approved") { ?> -->
-                  <input name="iata_status" type="radio" id="test1" checked="" value="Approved" onclick="iata_check('1')" />
-                  <label for="test1" class="col-sm-3 control-label">Approved</label>
-                  <input name="iata_status" type="radio" id="test2"  value="Not Approved" onclick="iata_check('2')" />
-                  <label for="test2" class="col-sm-3 control-label">Not Approved</label>
-                  <!-- <?php } else { ?> -->
-                  <input name="iata_status" type="radio" id="test1" value="Approved" onclick="iata_check('1')"/>
-                  <label for="test1" class="control-label fontstyl">Approved</label>
-                  <input name="iata_status" type="radio" id="test2" checked  value="Not Approved" onclick="iata_check('2')" />
-                  <label for="test2" class="control-label fontstyl">Not Approved</label>
-                  <!-- <?php } ?> -->
-                </p>
-                <!-- <div class="col-sm-1"></div> -->
-
-              </div> 
-             </div>
-            </div>
-            <div class="col-sm-5 iata_number hide">
+             <div class="col-sm-1"></div>
+             <div class="col-sm-5 iata_number hide">
               <div class=form-horizondal>
                 <div class="form-group">
                   <label for="iata_reg" class="col-sm-3 control-label fontstyl" style="">IATA Reg Number<span class="starcolor">*</span></label>
@@ -378,7 +380,8 @@ $data = title();
                 </div>
               </div>
             </div>
-          </div>
+            <div class="col-sm-1"></div>
+          </div>              
         </div>
       </div>
       <div class="col-sm-12">
@@ -416,7 +419,7 @@ $data = title();
                 <br>
               </div>
             </div>
-          </div>	  
+          </div>    
           <div class=form-horizondal>
             <div class="form-group">
               <label for="confirm_password" class="col-sm-3 control-label fontstyl" style="">Confirm Password<span class="starcolor">*</span></label>
@@ -428,11 +431,11 @@ $data = title();
                 <br>
               </div>
             </div>
-          </div>   		                        
+          </div>                              
         </div>
         <div class="col-sm-6">
         </div>
-      </div>	
+      </div>  
       <div class="modal-footer regclassfooter">
       </div>
       <h3 class="formheadingrg"><span></span> Contact Details</h3><br>
@@ -440,14 +443,14 @@ $data = title();
       <div class="row">
         <div class="col-sm-2">
           <br> <br>
-          <label for="name" class="col-sm-3 control-label fontstyl">Name<span class="starcolor">*</span></label> <br> <br> 
-          <label for="email" class="col-sm-3 control-label fontstyl">Email<span class="starcolor">*</span></label> <br> <br> 
-          <label for="number" class="col-sm-3 control-label fontstyl">Number<span class="starcolor">*</span></label><br> <br> <br>
-          <label for="password" class="col-sm-3 control-label fontstyl">Password<span class="starcolor">*</span></label>
+          <label for="name" class="col-sm-3 control-label fontstyl">Name</label> <br> <br> 
+          <label for="email" class="col-sm-3 control-label fontstyl">Email</label> <br> <br> 
+          <label for="number" class="col-sm-3 control-label fontstyl">Number</label><br> <br> <br>
+          <label for="password" class="col-sm-3 control-label fontstyl">Password</label>
         </div>
         <div class="col-sm-2">
          <div class="form-group">
-           <label for="accounts"  class="col-sm-3 control-label fontstyl">Accounts<span class="starcolor">*</span></label>
+           <label for="accounts"  class="col-sm-3 control-label fontstyl">Accounts</label>
            <br>
            <input type="text" class="form-control " id="first_name_accounts" name="first_name_accounts" placeholder="User Name">
            <span class="accounts_name_err popup_err blink_me"></span>
@@ -466,7 +469,7 @@ $data = title();
        </div>
        <div class="col-sm-2">
          <div class="form-group">
-          <label for="reservation/operation"  class="col-sm-3 control-label fontstyl">Reservation/Operations<span class="starcolor">*</span></label>
+          <label for="reservation/operation"  class="col-sm-3 control-label fontstyl">Reservation/Operations</label>
           <input type="text" class="form-control" id="first_name_reservation" placeholder="User Name" name="first_name_reservation">
           <span class="reservation_name_err popup_err blink_me"></span>
           <br>
@@ -485,7 +488,7 @@ $data = title();
       </div>
       <div class="col-sm-3">
        <div class="form-group">
-        <label for="management"  class="col-sm-3 control-label fontstyl">Management<span class="starcolor">*</span></label>
+        <label for="management"  class="col-sm-3 control-label fontstyl">Management</label>
         <input type="text" class="form-control" id="first_name_management" name="first_name_management" placeholder="User Name">
         <span class="management_name_err popup_err blink_me"></span>
         <br>
@@ -504,10 +507,10 @@ $data = title();
   </div>
   <div class="modal-footer regclassfooter"></div>
   <div class="col-sm-12">
-  <div class="text-left">
+    <div class="text-left">
     <span><a href="<?php echo base_url(); ?>uploads/OTELSEASYAgreement.pdf" download><i class="fa fa-download"></i> Click to download  the Otelseasy agreement.</a></span>
   </div>
-  <div class="text-right">
+   <div class="text-right">
     <button type="button" class="btn btn-warning" id="login_form_agent_reg" name="login_form_agent_reg">Send</button>
   </div>
 </div>
@@ -526,9 +529,9 @@ $data = title();
 <!-- Load Animo -->
 <script src="<?php echo base_url(); ?>skin/plugins/animo/animo.js"></script>
 <script>
-	function errorMessage(){
-		$('.login-wrap').animo( { animation: 'tada' } );
-	}
+  function errorMessage(){
+    $('.login-wrap').animo( { animation: 'tada' } );
+  }
 </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->

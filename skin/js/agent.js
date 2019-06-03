@@ -1,9 +1,9 @@
 $(document).ready(function() {
      // alert("data");
 
-	$('#login_form_agent_reg').click(function () {
+  $('#login_form_agent_reg').click(function () {
     // var url = $("#agent_reg").attr("action");
-   	 // alert("data");
+     // alert("data");
     // });
       var agency_name      = $("#agency_name").val();
       var agency_email = $("#email").val();
@@ -42,12 +42,9 @@ $(document).ready(function() {
       var management_password = $("#password_management").val();
       var existing_mail_check = $("#existing_mail_check").val();
       var filter        = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      if (agency_name=="" || agency_email=="" || first_name=="" || last_name=="" || 
-        designation=="" || nature_business=="" ||country=="" || website=="" || 
-        address=="" || pincode=="" || telephone=="" || mobile=="" || preferred_currency=="" || 
-        business_type=="" || city=="" || fax==""  || (tradefile=="" && country!=101) || username=="" || password=="" || 
-        confirm_password=="" || accounts_name=="" || accounts_email=="" || accounts_number=="" || accounts_password=="" || reservation_name=="" || 
-        reservation_email=="" || reservation_number=="" || reservation_password==""|| management_name=="" || management_email=="" || management_number=="" || management_password==""|| existing_mail_check==0) {
+      if (agency_name=="" || agency_email=="" || first_name=="" || last_name=="" || country=="" || 
+        address=="" || pincode=="" || telephone=="" || mobile=="" || preferred_currency==""  || city=="" || username=="" || password=="" || 
+        confirm_password=="" || existing_mail_check==0) {
             agency_email_already_registered();
           if (agency_name=="") {
             $(".agency_name_err").text("Agency Name field is required!");
@@ -82,16 +79,16 @@ $(document).ready(function() {
           } else {
             $(".last_name_err").text("");
           }
-          if (designation=="")      {
-           $(".designation_err").text("Designation field is required!");
-          } else {
-            $(".designation_err").text("");
-          }
-          if (nature_business=="")    {
-           $(".nature_business_err").text("Nature Of Business field is required!");
-          } else {
-            $(".nature_business_err").text("");
-          } 
+          // if (designation=="")      {
+          //  $(".designation_err").text("Designation field is required!");
+          // } else {
+          //   $(".designation_err").text("");
+          // }
+          // if (nature_business=="")    {
+          //  $(".nature_business_err").text("Nature Of Business field is required!");
+          // } else {
+          //   $(".nature_business_err").text("");
+          // }
           if (country=="")    {
            $(".country_err").text("Country field is required!");
           } else {
@@ -102,11 +99,11 @@ $(document).ready(function() {
           } else {
             $(".state_err").text("");
           }
-          if (website=="")    {
-           $(".website_err").text("Website field is required!");
-          } else {
-            $(".website_err").text("");
-          }
+          // if (website=="")    {
+          //  $(".website_err").text("Website field is required!");
+          // } else {
+          //   $(".website_err").text("");
+          // }
           if (address=="")    {
            $(".address_err").text("Address field is required!");
           } else {
@@ -127,26 +124,27 @@ $(document).ready(function() {
           } else {
             $(".mobile_err").text("");
           }
-          if (business_type=="")    {
-           $(".business_type_err").text("Business Type field is required!");
-          } else {
-            $(".business_type_err").text("");
-          }
+          // if (business_type=="")    {
+          //  $(".business_type_err").text("Business Type field is required!");
+          // } else {
+          //   $(".business_type_err").text("");
+          // }
           if (city=="")    {
            $(".city_err").text("City field is required!");
           } else {
             $(".city_err").text("");
           }
-          if (fax=="")    {
-           $(".fax_err").text("Fax field is required!");
-          } else {
-            $(".fax_err").text("");
-          }
-          if (tradefile=="" && country!=101)    {
-           $(".tradelicence_err").text("Trade Licence is required!");
-          } else {
-            $(".tradelicence_err").text("");
-          }
+          // if (fax=="")    {
+          //  $(".fax_err").text("Fax field is required!");
+          // } else {
+          //   $(".fax_err").text("");
+          // }
+          // if (tradefile=="" && country!=101)    {
+          //  $(".tradelicence_err").text("Trade Licence is required!");
+          // } else {
+          //   $(".tradelicence_err").text("");
+          // }
+
           if (iata_reg=="")    {
            $(".iata_reg_err").text("IATA Registration field is required!");
           } else {
@@ -172,81 +170,81 @@ $(document).ready(function() {
           }else {
             $(".password_check_err").text("");
           }
-          if (accounts_name=="")    {
-           $(".accounts_name_err").text("Name in Accounts field is required!");
-          } else {
-            $(".accounts_name_err").text("");
-          }
-          if (accounts_email=="")    {
-           $(".accounts_email_err").text("Email in Accounts field is required!");
-          } else {
-            $(".accounts_email_err").text("");
-          }
-          if (!filter.test(accounts_email)) {
-            $(".accounts_email_test_err").text("Please enter a valid email address!");
-          } else {
-            $(".accounts_email_test_err").text("");
-          }
-          if (accounts_number=="")    {
-           $(".accounts_number_err").text("Number in Accounts field is required!");
-          } else {
-            $(".accounts_number_err").text("");
-          }
-          if (reservation_name=="")    {
-           $(".reservation_name_err").text("Name in Reservation/Operations field is required!");
-          } else {
-            $(".reservation_name_err").text("");
-          }
-          if (reservation_email=="")    {
-           $(".reservation_email_err").text("Email in Reservation/Operations field is required!");
-          } else {
-            $(".reservation_email_err").text("");
-          }
-          if (!filter.test(reservation_email)) {
-            $(".reservation_email_test_err").text("Please enter a valid email address!");
-          } else {
-            $(".reservation_email_test_err").text("");
-          }
-          if (reservation_number=="")    {
-           $(".reservation_number_err").text("Number in Reservation/Operations field is required!");
-          } else {
-            $(".reservation_number_err").text("");
-          }
-          if (management_name=="")    {
-           $(".management_name_err").text("Name in Management field is required!");
-          } else {
-            $(".management_name_err").text("");
-          }
-          if (management_email=="")    {
-           $(".management_email_err").text("Email in Management field is required!");
-          } else {
-            $(".management_email_err").text("");
-          }
-          if (!filter.test(management_email)) {
-            $(".management_email_test_err").text("Please enter a valid email address!");
-          } else {
-            $(".management_email_test_err").text("");
-          }
-          if (management_number=="")    {
-           $(".management_number_err").text("Number in Management field is required!");
-          } else {
-            $(".management_number_err").text("");
-          }
-          if (accounts_password=="")    {
-           $(".accounts_password_err").text("Password in Accounts field is required!");
-          } else {
-            $(".accounts_password_err").text("");
-          }
-          if (reservation_password=="")    {
-           $(".reservation_password_err").text("Password in Reservation field is required!");
-          } else {
-            $(".reservation_password_err").text("");
-          }
-          if (management_password=="")    {
-           $(".management_password_err").text("Password in Management field is required!");
-          } else {
-            $(".management_password_err").text("");
-          }
+          // if (accounts_name=="")    {
+          //  $(".accounts_name_err").text("Name in Accounts field is required!");
+          // } else {
+          //   $(".accounts_name_err").text("");
+          // }
+          // if (accounts_email=="")    {
+          //  $(".accounts_email_err").text("Email in Accounts field is required!");
+          // } else {
+          //   $(".accounts_email_err").text("");
+          // }
+          // if (!filter.test(accounts_email)) {
+          //   $(".accounts_email_test_err").text("Please enter a valid email address!");
+          // } else {
+          //   $(".accounts_email_test_err").text("");
+          // }
+          // if (accounts_number=="")    {
+          //  $(".accounts_number_err").text("Number in Accounts field is required!");
+          // } else {
+          //   $(".accounts_number_err").text("");
+          // }
+          // if (reservation_name=="")    {
+          //  $(".reservation_name_err").text("Name in Reservation/Operations field is required!");
+          // } else {
+          //   $(".reservation_name_err").text("");
+          // }
+          // if (reservation_email=="")    {
+          //  $(".reservation_email_err").text("Email in Reservation/Operations field is required!");
+          // } else {
+          //   $(".reservation_email_err").text("");
+          // }
+          // if (!filter.test(reservation_email)) {
+          //   $(".reservation_email_test_err").text("Please enter a valid email address!");
+          // } else {
+          //   $(".reservation_email_test_err").text("");
+          // }
+          // if (reservation_number=="")    {
+          //  $(".reservation_number_err").text("Number in Reservation/Operations field is required!");
+          // } else {
+          //   $(".reservation_number_err").text("");
+          // }
+          // if (management_name=="")    {
+          //  $(".management_name_err").text("Name in Management field is required!");
+          // } else {
+          //   $(".management_name_err").text("");
+          // }
+          // if (management_email=="")    {
+          //  $(".management_email_err").text("Email in Management field is required!");
+          // } else {
+          //   $(".management_email_err").text("");
+          // }
+          // if (!filter.test(management_email)) {
+          //   $(".management_email_test_err").text("Please enter a valid email address!");
+          // } else {
+          //   $(".management_email_test_err").text("");
+          // }
+          // if (management_number=="")    {
+          //  $(".management_number_err").text("Number in Management field is required!");
+          // } else {
+          //   $(".management_number_err").text("");
+          // }
+          // if (accounts_password=="")    {
+          //  $(".accounts_password_err").text("Password in Accounts field is required!");
+          // } else {
+          //   $(".accounts_password_err").text("");
+          // }
+          // if (reservation_password=="")    {
+          //  $(".reservation_password_err").text("Password in Reservation field is required!");
+          // } else {
+          //   $(".reservation_password_err").text("");
+          // }
+          // if (management_password=="")    {
+          //  $(".management_password_err").text("Password in Management field is required!");
+          // } else {
+          //   $(".management_password_err").text("");
+          // }
 
 
     } else {
@@ -274,6 +272,7 @@ function agency_email_already_registered() {
       }
     });
 }
+
 function ConSelectFun(){
       $('#stateSelect option').remove();
         var ConSelect = $('#ConSelect').val();
