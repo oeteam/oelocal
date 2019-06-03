@@ -1,5 +1,7 @@
 <?php init_front_head(); ?> 
-<?php init_front_head_menu(); ?> 
+<?php init_front_head_menu(); 
+$defaultNationality = defaultNationalityGET(); 
+?> 
 <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/search.js"></script>
 <!-- id="dajy" was here -->
 <style>
@@ -444,8 +446,15 @@ function currency_change(type){
 										<label class="nat_err control-label text-white">Nationality</label>
 										<select class="form-control" name="nationality" id="Nationality">
 											<option value="">--select--</option>
-											<?php foreach ($nationality as $key => $value) { ?>
-												<option  value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
+											<?php 
+											foreach ($nationality as $key => $value) { 
+												if ($defaultNationality!=" " && $defaultNationality==$value->id) {
+													$selected = "selected";
+												} else {
+													$selected = "";
+												}
+												?>
+												<option <?php echo $selected ?> value="<?php echo $value->id ?>"><?php echo $value->name ?></option>
 											<?php } ?>
 										</select>
 									</div>
