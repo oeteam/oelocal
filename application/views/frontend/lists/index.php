@@ -952,8 +952,8 @@
 								<div class="wh100percent">
 									<select name="price_order" id="price_order" class="form-control mySelectBoxClass ">
 									  <option selected>Price</option>
-									  <option value="1">Ascending</option>
-									  <option value="2">Descending</option>
+									  <option value="1">Low - High</option>
+									  <option value="2">High - Low</option>
 									</select>
 								</div>
 							</div>					

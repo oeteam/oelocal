@@ -83,17 +83,29 @@ class lists extends MY_Controller {
                     $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment/hotelBook?'.$request.'\',\''.str_replace("'", "", $value['HotelName']).'\',\''.str_replace("'", "", $value['HotelAddress']).'\',\''.$value['HotelPicture'].'\',\''.$value['HotelCode'].'\','.$value['Rating'].')" style="background:green;border-bottom: 2px solid green;cursor:pointer" href="#" class="hotel-view-btn">Book</a>';
 
                     $HotelRequest = base_url().'details?search_id='.$value['HotelCode'].'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'.'&location='.$_REQUEST['location'].'&countryname='.$_REQUEST['countryname'].'&hotel_name='.$_REQUEST['hotel_name'].'&citycode='.$_REQUEST['citycode'].'&cityname='.$_REQUEST['cityname'];
-                    $revenue_markup = revenue_markup($value['HotelCode'],$value['contract_id'],$this->session->userdata('agent_id'));
+                    $revenue_markup = revenue_markup1($value['HotelCode'],$value['contract_id'],$this->session->userdata('agent_id'));
                     $total_markup = mark_up_get()+general_mark_up_get();
-                    if ($revenue_markup!="") {
-                       $total_markup = $revenue_markup+mark_up_get();
+                    if ($revenue_markup['Markup']!='') {
+                       $total_markup = mark_up_get();
                     }  
                     if (!is_numeric($value['oldPrice'])) {
                       $value['oldPrice'] = 0;
                     }
-                    $OriginalPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']));
-                    $oldPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice'])*count($_REQUEST['adults']));
-                    $TotalPrice = currency_type(agent_currency(),(($value['TotalPrice']*$total_markup)/100+$value['TotalPrice'])*count($_REQUEST['adults']));
+                    $rmamount = 0;
+                    $rmTamount = 0;
+                    if ($revenue_markup['Markup']!='') {
+                      if ($revenue_markup['Markuptype']=="Percentage") {
+                        $rmamount = (($value['OriginalPrice']*$revenue_markup['Markup'])/100);
+                        $rmTamount = (($value['TotalPrice']*$revenue_markup['Markup'])/100);
+                      } else {
+                        $rmamount = $revenue_markup['Markup'];
+                        $rmTamount = $revenue_markup['Markup'];
+                      }
+                    }
+
+                    $OriginalPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice']+$rmamount)*count($_REQUEST['adults']));
+                    $oldPrice = currency_type(agent_currency(),(($value['OriginalPrice']*$total_markup)/100+$value['OriginalPrice']+$rmamount)*count($_REQUEST['adults']));
+                    $TotalPrice = currency_type(agent_currency(),(($value['TotalPrice']*$total_markup)/100+$value['TotalPrice']+$rmTamount)*count($_REQUEST['adults']));
                 } else {
                     $RatingImg = $value['RatingImg'];
                     $ReviewImg = $value['ReviewImg'];

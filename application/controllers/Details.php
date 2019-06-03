@@ -333,11 +333,11 @@ class Details extends MY_Controller {
       foreach ($_REQUEST['room_ajax_id'] as $key => $value) {
         foreach ($_REQUEST['contract_ajax_id'] as $key1 => $value1) {
           $contract_markup[$key1] = $this->List_Model->contract_markup($_REQUEST['hotel_id'],$value1);
-          $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
+          // $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$value1,$this->session->userdata('agent_id'));
           $total_markup[$key1] = $contract_markup[$key1]+$agent_markup;
-          if ($revenue_markup!=0) {
-            $total_markup[$key1] = $revenue_markup+mark_up_get();
-          }
+          // if ($revenue_markup!=0) {
+          //   $total_markup[$key1] = $revenue_markup+mark_up_get();
+          // }
           $roomDetails = $this->List_Model->roomDetails($value);
 
           $contractBoardget = $this->List_Model->contractBoardget($_REQUEST['hotel_id'],$value1);

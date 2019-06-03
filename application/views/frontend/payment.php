@@ -880,12 +880,13 @@ function FullLoading(flag, dest, from, to) {
 		                      <?php echo $value['board'] ?> 
 		                      <?php 
 					    		$rooms[$i]['CancellationPolicy'][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value['contract_id'],$value['room_id']);
+                  if (isset($rooms[$i]['CancellationPolicy'][$key][0]['application'])) {
 		                      	if ($rooms[$i]['CancellationPolicy'][$key][0]['application']=="FREE OF CHARGE") { ?>
 		                      		<span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $rooms[$i]['CancellationPolicy'][$key][0]['before'] ?> <span>
 		                      	<?php } else {
 		                       ?>
 	                      		<span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $value['RoomIndex'] ?>">cancellation<span>
-		                      <?php } ?>
+		                      <?php } } ?>
 	                  		  </h5>
 		                      <?php if(is_array($value['generalsupplementType']) && count($value['generalsupplementType'])!=0) { 
 		                      	foreach ($value['generalsupplementType'] as $key1 => $value1) {  ?>

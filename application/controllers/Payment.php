@@ -75,7 +75,7 @@ class Payment extends MY_Controller {
             $rooms[$i]['room_id'] = $value->room_id;
             $rooms[$i]['board'] = $contractBoardget->board;
             $rooms[$i]['contract_id'] = $value1;
-            $rooms[$i]['price'] = currency_type(agent_currency(),$room_current_count['price']);
+            $rooms[$i]['price'] = $room_current_count['price'];
             $rooms[$i]['generalsupplementType'] = count($room_current_count['generalsupplementType'])!=0 ? array_unique($room_current_count['generalsupplementType']) : array();
             if ($room_current_count['allotement']> 0) {
               $rooms[$i]['RequestType'] = 'Book';
@@ -102,10 +102,10 @@ class Payment extends MY_Controller {
         $id = $_REQUEST['room_id'];
         $data['tax'] = $this->Payment_Model->general_tax($_REQUEST['hotel_id']);
         $data['view'] = $this->Payment_Model->hotel_details_view($id);
-        $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$_REQUEST['contract_index'],$this->session->userdata('agent_id'));
+        $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$_REQUEST['contract_index'],$this->session->userdata('agent_id'));
         $total_markup = mark_up_get()+general_mark_up_get();
-        if ($revenue_markup!='') {
-          $total_markup = $revenue_markup+mark_up_get();
+        if ($revenue_markup['Markup']!='') {
+          $total_markup = mark_up_get();
         }
         $data['contract'] = $this->Payment_Model->get_policy_contract($_REQUEST['hotel_id'],$_REQUEST['contract_id']);
         $data['CancellationPolicy'] = $this->Payment_Model->get_CancellationPolicy_tableFlow($_REQUEST);
