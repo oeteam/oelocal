@@ -386,6 +386,15 @@ s0.parentNode.insertBefore(s1,s0);
                             <li><a href="<?php echo base_url(); ?>OfflineRequests/agentpark_requests">Park Requests</a></li>
                           </ul>
                         </li>
+                        <li>
+                          <a href="<?php echo base_url(); ?>hotelSupplier">
+                            <div class="dash-ct">
+                              <span class="dashboard-icon left"></span> 
+                              <span class="dtxt">Hotel Supplier</span>
+                            </div>
+                          </a>
+                        </li>         
+                        <li>
                         <!-- <li>
                           <a href="<?php echo base_url(); ?>Payment/offlineRequest">
                             <div class="dash-ct">

@@ -502,3 +502,8 @@ function init_load_chat_list()
     $CI =& get_instance();
     // $CI->load->view('backend/chat/chat');
 }
+function init_front_head_supplier($aside = true)
+{
+    $CI =& get_instance();
+    $CI->load->view('frontend/components/supplier_header');
+}
