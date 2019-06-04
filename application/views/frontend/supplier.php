@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-12">
                 <div class="col-md-2 form-group">
-                  <label>Co</label>
+                  <label>Country</label>
                   <input type="text" name="co" class="form-control" id="co">
                 </div>
                 <div class="col-md-2 form-group">

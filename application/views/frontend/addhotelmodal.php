@@ -132,9 +132,14 @@
     .tab-content {
       background-color: white;
     }
+    .tab-list li {
+        width: 20%;
+        text-align: center;
+    }
 </style>
-<div class="modal-dialog" style="overflow-y:auto;height: 100%">
+<div class="modal-dialog" style="overflow-y:auto;height: 100%;width: 70%;">
     <!-- Modal content-->
+
     	<div class="modal-content">
       		<div class="modal-body">
             <ul class="nav nav-tabs tab-list">
@@ -193,7 +198,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="button" class="waves-effect waves-light btn-sm teal darken-3 col_white pull-right" id="hotel_tab_1" value="Next">
+                                    
+                                    <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_tab_1" style="margin-left: 5px;" value="Next"> 
+                                    <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
                         </div>
@@ -411,8 +418,9 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="button" id="hotel_tab_2" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" value="Next">
-                                    <input type="button" id="hotel_tab_2_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                    <input type="button" id="hotel_tab_2" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" style="margin-left: 5px;" value="Next">
+                                    <input type="button" id="hotel_tab_2_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" style="margin-left: 5px;" value="Previous">
+                                    <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
                     </div>
@@ -507,8 +515,9 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <input type="button" class="waves-effect waves-light btn-sm  teal darken-3 col_white mar_left_5 pull-right" id="hotel_tab_4" value="Next">
-                                <input type="button" id="hotel_tab_4_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                <input type="button" class="waves-effect waves-light btn-sm  teal darken-3 col_white mar_left_5 pull-right" id="hotel_tab_4" style="margin-left:5px; " value="Next">
+                                <input type="button" id="hotel_tab_4_prev" style="margin-left:5px; " class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                             </div>
                         </div>
                     </div>
@@ -553,8 +562,9 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="button" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" id="hotel_tab_5" value="Next">
-                                    <input type="button" id="hotel_tab_5_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                    <input type="button" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" id="hotel_tab_5" style="margin-left:5px " value="Next">
+                                    <input type="button" id="hotel_tab_5_prev" style="margin-left:5px " class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                    <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
                     </div>
