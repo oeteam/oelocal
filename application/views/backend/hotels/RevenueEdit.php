@@ -209,7 +209,7 @@
                                         <label for="Markuptype">Markup Type</label>
                                         <select class="" id="Markuptype" name="Markuptype">
                                             <option <?php echo isset($edit[0]->Markuptype) && $edit[0]->Markuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
-                                            <option <?php echo isset($edit[0]->Markuptype) && $edit[0]->Markuptype=="Flate Rate"  ? 'selected' : ''; ?> value="Flate Rate">Flate Rate</option>
+                                            <option <?php echo isset($edit[0]->Markuptype) && $edit[0]->Markuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
                                         </select>
                                     </div>
                                 </div>

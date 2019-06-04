@@ -7,17 +7,6 @@
   .modal {
     z-index: 501;
   }
-  #room_add_table tbody {
-        display:block;
-        max-height:425px;
-        overflow-y:auto;
-    }
-    #room_add_table thead, tbody tr {
-        display:table;
-        width:100%;
-        table-layout:fixed;
-    }
-
     #sales_password + .fa {
         cursor: pointer;
         pointer-events: all;
