@@ -330,7 +330,6 @@
                                     <p><label>Star Rating</label></p>
                                    <input type="radio" class="with-gap" id="5" name="rating" <?php echo isset($view[0]->rating) && $view[0]->rating=="5" ? "checked" : '' ?>  value="5" />
                                     <label for="5">5</label>
-                                    <label for="5">5</label>
                                     &nbsp&nbsp
                                     <input type="radio" class="with-gap" id="4" name="rating" <?php echo isset($view[0]->rating) && $view[0]->rating=="4" ? "checked" : '' ?>value="4" />
                                     <label for="4">4</label>
@@ -418,8 +417,8 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="button" id="hotel_tab_2" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" style="margin-left: 5px;" value="Next">
-                                    <input type="button" id="hotel_tab_2_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" style="margin-left: 5px;" value="Previous">
+                                    <input type="button" id="hotel_tab_2" class="waves-effect mar_left_5 waves-light btn-sm btn-primary teal darken-3 col_white pull-right" style="margin-left: 5px;" value="Next">
+                                    <input type="button" id="hotel_tab_2_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white btn-primary pull-right" style="margin-left: 5px;" value="Previous">
                                     <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
@@ -515,8 +514,8 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <input type="button" class="waves-effect waves-light btn-sm  teal darken-3 col_white mar_left_5 pull-right" id="hotel_tab_4" style="margin-left:5px; " value="Next">
-                                <input type="button" id="hotel_tab_4_prev" style="margin-left:5px; " class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                <input type="button" class="waves-effect waves-light btn-sm  teal darken-3 col_white mar_left_5 pull-right btn-primary" id="hotel_tab_4" style="margin-left:5px; " value="Next">
+                                <input type="button" id="hotel_tab_4_prev" style="margin-left:5px; " class="waves-effect  waves-light btn-sm btn-primary  teal darken-3 col_white pull-right" value="Previous">
                                 <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                             </div>
                         </div>
@@ -562,8 +561,8 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="button" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" id="hotel_tab_5" style="margin-left:5px " value="Next">
-                                    <input type="button" id="hotel_tab_5_prev" style="margin-left:5px " class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                    <input type="button" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right btn-primary" id="hotel_tab_5" style="margin-left:5px " value="Next">
+                                    <input type="button" id="hotel_tab_5_prev" style="margin-left:5px " class="waves-effect btn-primary waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
                                     <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
