@@ -2889,6 +2889,8 @@ class Hotels extends MY_Controller {
 	       			$tbo = "TBO Hotels";
 	       		}
 	       	}
+	       	$Markuptype = $r->Markuptype=="Flat Rate" ? "AED" : '%';
+	       	$OtherMarkuptype = $r->OtherMarkuptype=="Flat Rate" ? "AED" : '%';
 			$data[] = array(
 				$key+1,
 				$tbo.$impHotelName[$key],
@@ -2896,7 +2898,8 @@ class Hotels extends MY_Controller {
 				date('d/m/Y' ,strtotime($r->ToDate)),
 				$impContarct[$key],
 				$impAgentName[$key],
-				$r->Markup,
+				$r->Markup.' '.$Markuptype,
+				$r->OtherMarkup.' '.$OtherMarkuptype,
 				$edit.$delete,
 			);
       	}

@@ -1666,19 +1666,7 @@ function blockHotel() {
   /*Child policy end*/
   
   /*Season start*/
-  var seasonhotel_id = $("#hotel_id").val();
-  var seasoncontract_id = $("#contract_id").val();
-  var season_table = $('#season_table').dataTable({
-        "bDestroy": true,
-        "ajax": {
-            url : base_url+'/backend/hotels/seasonList?hotel_id='+seasonhotel_id+'&contract_id='+seasoncontract_id,
-            type : 'GET'
-        },
-      "fnDrawCallback": function(settings){
-      $('[data-toggle="tooltip"]').tooltip();          
-      }
-    });
-
+ 
   $("#season_modal_btn").click(function() {
     var hotel_id = $("#hotel_id").val();
     var contract_id  = $("#contract_id").val(); 

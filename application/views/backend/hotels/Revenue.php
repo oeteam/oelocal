@@ -32,6 +32,7 @@
                                         <th>Contracts</th>
                                         <th>Agents</th>
                                         <th>Markup</th>
+                                        <th>Other Markup</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

@@ -215,19 +215,19 @@ class List_Model extends CI_Model {
     }
 
     if (isset($data['adults'][1])) {
-      $room2 =" OR (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child >= ".$data['Child'][1].")";
+      $room2 =" AND (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child >= ".$data['Child'][1].")";
     }
     if (isset($data['adults'][2])) {
-      $room3 =" OR (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].")";
+      $room3 =" AND (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].")";
     }
     if (isset($data['adults'][3])) {
-      $room4 =" OR (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].")";
+      $room4 =" AND (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].")";
     }
     if (isset($data['adults'][4])) {
-      $room5 =" OR (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].")";
+      $room5 =" AND (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].")";
     }
     if (isset($data['adults'][5])) {
-      $room6 =" OR (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].")";
+      $room6 =" AND (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].")";
     }
     
 
@@ -1089,7 +1089,8 @@ public function contractchecking($request) {
   $count = array();
 
   
-  $ot = $this->db->query("SELECT contract_id FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where   a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$request['nationality']."', IFNULL(nationalityPermission,'')) = 0 AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND from_date <= '".date('Y-m-d',strtotime($request['Check_in']))."' AND to_date > '".date('Y-m-d',strtotime($request['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($request['Check_out']))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_out']))."'  AND hotel_id = '".$request['hotel_id']."' AND contract_flg  = 1")->result();
+  $ot = $this->db->query("SELECT contract_id,(select SUM(amount) from hotel_tbl_allotement where 
+      contract_id = a.contract_id AND hotel_id = a.hotel_id AND from_date <= '".date('Y-m-d',strtotime($request['Check_in']))."' AND to_date > '".date('Y-m-d',strtotime($request['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($request['Check_out']))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_out']))."') as price FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where   a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$request['nationality']."', IFNULL(nationalityPermission,'')) = 0 AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND from_date <= '".date('Y-m-d',strtotime($request['Check_in']))."' AND to_date > '".date('Y-m-d',strtotime($request['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($request['Check_out']))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_out']))."'  AND hotel_id = '".$request['hotel_id']."' AND contract_flg  = 1 order by price asc")->result();
 
   foreach ($ot as $key5 => $value5) {
     $contract_id[] =  $value5->contract_id;
