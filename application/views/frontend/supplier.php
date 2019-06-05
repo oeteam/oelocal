@@ -1,4 +1,4 @@
-<?php init_front_head_supplier(); ?>
+  <?php init_front_head_supplier(); ?>
 <script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
 <style>
  .nav-tabs li {
@@ -9,9 +9,10 @@
  }
  .content5 {
     width: 100%;
-    margin-top: 39px;
     background-color: #e8e8e8;
     font-size: 11px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .form-control {
     font-size: 11px;
@@ -26,112 +27,76 @@
 </style>
 
       <div class="clearfix"></div>
-      <div class="clearfix"></div>
+      <div class="row" style=" margin-top: 20px;">
         <div class="col-md-offset-2 col-md-8" style="height: 58px">
-      <div class="content5">
+        <div class="content5">
           <div class="row">
             <div class="col-md-12">
-                <div class="col-md-2 form-group">
-                  <label>Country</label>
-                  <input type="text" name="co" class="form-control" id="co">
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Prov.</label>
-                  <input type="text" name="prov" class="form-control" id="prov">
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Cityname</label>
-                  <input type="text" name="city" class="form-control" id="city">
-                </div>
-                <div class="col-md-2 form-group">
-                  <label></label>
+               <div class="col-md-2 form-group">
+                  <label>Hotelname</label>
                   <select class="form-control">
                     <option>Hotelname</option>
                   </select>
                 </div>
                 <div class="col-md-2 form-group">
-                  <label></label>
+                  <label>Country</label>
+                  <input type="text" name="co" class="form-control" id="co">
+                </div>
+                <div class="col-md-2 form-group">
+                  <label>State</label>
                   <input type="text" class="form-control">
                 </div>
+                
+                <div class="col-md-2 form-group">
+                  <label>Cityname</label>
+                  <input type="text" name="city" class="form-control" id="citys">
+                </div>
+                <div class="col-md-2 form-group">
+                  <label title="Property Name">Prov.</label>
+                  <input type="text" name="prov" class="form-control" id="prov">
+                </div>
+                
                 <div class="col-md-2 form-group">
                   <label>Rating</label>
                   <select class="form-control">
                     <option>All</option>
                   </select>
                 </div>
+
                 <div class="col-md-2 form-group">
-                  <label>label</label>
+                  <label>Booking No.</label>
                   <input type="text" name="label" class="form-control" id="label">
                 </div>
                 <div class="col-md-2 form-group">
-                  <label>CTripPreBuy</label>
+                  <label>Reference No.</label>
                   <input type="text" name="ctrip" class="form-control" id="ctrip">
                 </div>
                 <div class="col-md-2 form-group">
-                  <label>Deliver By</label>
+                  <label>Date</label>
                   <select class="form-control">
                     <option>All</option>
                   </select>
                 </div>
                 <div class="col-md-2 form-group">
-                  <label>Auto Deliver</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
+                  <label>Check In</label>
+                  <input type="text" name="ctrip" class="form-control" id="ctrip">
                 </div>
                 <div class="col-md-2 form-group">
-                  <label>Auto Accept w.Return</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
+                  <label>Check out</label>
+                  <input type="text" name="ctrip" class="form-control" id="ctrip">
                 </div>
-                <div class="col-md-2 form-group">
-                  <label>Auto Reject w.Return</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Shut Down CTrip</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>CTrip</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Qunar</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>Distribution AStatus</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label>B2B</label>
-                  <select class="form-control">
-                    <option>All</option>
-                  </select>
-                </div>
-                <div class="col-md-offset-9 col-md-2 form-group">
-                  <button class="pull-right btn btn-success ml10" id="search">Search</button>
-                </div> 
-                <div class="col-md-1 form-group">
-                  <button class="pull-right btn btn-success ml10" id="add">Add</button> 
-                </div>         
+                
              </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+            <div class="col-md-12">
+              <button class="pull-right btn btn-success" id="search">Search</button>
+            </div> 
+            </div> 
           </div>
         </div>
+        </div>
       </div>
-      <div class="clearfix"></div>
     </div>
   </div>
 </script>
