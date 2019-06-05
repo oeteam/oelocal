@@ -204,6 +204,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <h6>Room Rates</h6>
+                                    <hr>
+                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Markuptype">Markup Type</label>
@@ -217,6 +221,26 @@
                                     <div class="form-group">
                                         <label for="Markup">Markup</label>
                                         <input id="Markup" name="Markup" type="number" class="form-control" value="<?php echo isset($edit[0]->Markup) ? $edit[0]->Markup : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Other Components</h6>
+                                    <p class="text-danger">(The Other components markup not applied in TBO data's)</p>
+                                    <hr>
+                                </div>
+                                 <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="OtherMarkuptype">Markup Type</label>
+                                        <select class="" id="OtherMarkuptype" name="OtherMarkuptype">
+                                            <option <?php echo isset($edit[0]->OtherMarkuptype) && $edit[0]->OtherMarkuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
+                                            <option <?php echo isset($edit[0]->OtherMarkuptype) && $edit[0]->OtherMarkuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="OtherMarkup">Markup</label>
+                                        <input id="OtherMarkup" name="OtherMarkup" type="number" class="form-control" value="<?php echo isset($edit[0]->OtherMarkup) ? $edit[0]->OtherMarkup : ''; ?>">
                                     </div>
                                 </div>
                             </div>
