@@ -1,3 +1,26 @@
+ $("#hotel_check").click(function() {
+    var hotel_name = $("#hname").val();
+    if (hotel_name=="") {
+      $("#hname").focus();
+      $('.msg').append('<script type="text/javascript"> AddToast("danger","Hotelname is not entered!","!");</script>');
+    } else if(hotel_name!="") {
+       $.ajax({
+            dataType: 'json',
+            url: base_url+'HotelSupplier/checkHotel/'+hotel_name,
+            cache: false,
+            success: function (response) {
+              if(response.status == '1') {
+                $(".msg").append('<script type="text/javascript"> AddToast("danger","Hotel already exists","!");</script>');
+              } else {
+                $("#home").addClass("in active")
+                $("#check").removeClass("in active")
+                $(".home").addClass("active")
+                $(".check").removeClass("active")
+              }
+            }
+          });
+    }
+  });
  $("#hotel_tab_1").click(function() {
     ConSelectFun();
     var map_location = $("#us3-address").val();
@@ -8,9 +31,17 @@
     } else if(map_location!="") {
       $("#menu1").addClass("in active")
       $("#home").removeClass("in active")
+      $("#check").removeClass("in active")
       $(".menu1").addClass("active")
       $(".home").removeClass("active")
+      $(".check").removeClass("active")
     }
+  });
+ $("#hotel_tab_1_prev").click(function() {
+    $("#home").removeClass("in active")
+    $("#check").addClass("in active")
+    $(".home").removeClass("active")
+    $(".check").addClass("active")
   });
   $("#hotel_tab_2").click(function() {
     $("#room_aminities").val($("#chip1").text());
@@ -33,6 +64,12 @@
     if (hotel_name=="") {
       $('.msg').append('<script type="text/javascript"> AddToast("danger","Hotel Name field is required!","!");</script>');
       $("#hotel_name").focus();
+    }  else if (contry=="") {
+      $('.msg').append('<script type="text/javascript"> AddToast("danger","Country field is required!","!");</script>');
+      $("#ConSelect").focus();
+    }  else if (state=="") {
+      $('.msg').append('<script type="text/javascript"> AddToast("danger","State field is required","!");</script>');
+      $("#stateSelect").focus();
     } else if (city=="") {
       $('.msg').append('<script type="text/javascript"> AddToast("danger","City field is required!","!");</script>');
       $("#city").focus();
@@ -66,39 +103,38 @@
     } else if (sell_currency=="") {
       $('.msg').append('<script type="text/javascript"> AddToast("danger","Selling Currency field is required!","!");</script>');
       $("#sell_currency").focus();
-    }  else if (contry=="") {
-      $('.msg').append('<script type="text/javascript"> AddToast("danger","Country field is required!","!");</script>');
-      $("#ConSelect").focus();
-    }  else if (state=="") {
-      $('.msg').append('<script type="text/javascript"> AddToast("danger","State field is required","!");</script>');
-      $("#stateSelect").focus();
-    }
-    else {
+    } else {
       $("#menu3").addClass("in active")
       $("#menu1").removeClass("in active")
       $("#home").removeClass("in active")
+      $("#check").removeClass("in active")
       $(".menu3").addClass("active")
       $(".menu1").removeClass("active")
       $(".home").removeClass("active")
+      $(".check").removeClass("active")
     }
   });
   $("#hotel_tab_2_prev").click(function() {
     $("#menu1").removeClass("in active")
+    $("#check").removeClass("in active")
     $("#home").addClass("in active")
     $(".menu1").removeClass("active")
+    $(".check").removeClass("active")
     $(".home").addClass("active")
   });
   $("#hotel_tab_4").click(function() {
-     $("#menu4").addClass("in active")
+        $("#menu4").addClass("in active")
         $("#menu3").removeClass("in active")
         $("#menu2").removeClass("in active")
         $("#menu1").removeClass("in active")
         $("#home").removeClass("in active")
+        $("#check").removeClass("in active")
         $(".menu4").addClass("active")
         $(".menu3").removeClass("active")
         $(".menu2").removeClass("active")
         $(".menu1").removeClass("active")
         $(".home").removeClass("active")
+        $(".check").removeClass("active")
       //}
   });
   $("#hotel_tab_4_prev").click(function() {
@@ -106,10 +142,12 @@
     $("#menu4").removeClass("in active")
     $("#menu3").removeClass("in active")
     $("#home").removeClass("in active")
+    $("#check").removeClass("in active")
     $(".menu1").addClass("active")
     $(".menu4").removeClass("active")
     $(".menu3").removeClass("active")
     $(".home").removeClass("active")
+    $("#check").removeClass("active")
   });
   $("#hotel_tab_5").click(function() {
       $("#menu5").addClass("in active")
@@ -118,12 +156,14 @@
       $("#menu2").removeClass("in active")
       $("#menu1").removeClass("in active")
       $("#home").removeClass("in active")
+      $("#check").removeClass("in active")
       $(".menu5").addClass("active")
       $(".menu4").removeClass("active")
       $(".menu3").removeClass("active")
       $(".menu2").removeClass("active")
       $(".menu1").removeClass("active")
       $(".home").removeClass("active")
+      $("#check").removeClass("active")
   });
   $("#hotel_tab_5_prev").click(function() {
     $("#menu3").addClass("in active")
@@ -132,12 +172,14 @@
     $("#menu2").removeClass("in active")
     $("#menu1").removeClass("in active")
     $("#home").removeClass("in active")
+    $("#check").removeClass("in active")
     $(".menu3").addClass("active")
     $(".menu5").removeClass("active")
     $(".menu4").removeClass("active")
     $(".menu2").removeClass("active")
     $(".menu1").removeClass("active")
     $(".home").removeClass("active")
+    $("#check").removeClass("active")
   });
    $("#check1").click(function(){
     if($(this).is(':checked')){     
@@ -316,6 +358,7 @@
     $("#menu2").removeClass("in active")
     $("#menu1").removeClass("in active")
     $("#home").removeClass("in active")
+    $("#check").removeClass("in active")
     $(".menu4").addClass("active")
     $(".menu5").removeClass("active")
     $(".menu5").removeClass("active")
@@ -323,6 +366,7 @@
     $(".menu2").removeClass("active")
     $(".menu1").removeClass("active")
     $(".home").removeClass("active")
+    $("#check").removeClass("active")
   });
   function ValidateImageFileUpload(inputId) {
         var fuData = document.getElementById(inputId);

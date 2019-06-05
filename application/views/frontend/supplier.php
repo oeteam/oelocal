@@ -24,28 +24,10 @@
   font-size: 11px;
 }
 </style>
-  <div class="row" style="background: black">
-    <div class="col-md-offset-2 col-md-8" style="height: 58px">
 
-      <ul class="nav nav-tabs myTab2pos">
-          <li class="active">
-              <a href="<?php echo base_url('HotelSupplier')?>">
-                  Booking
-              </a>
-          </li>
-          <li>
-              <a href="<?php echo base_url('HotelSupplier/hotels')?>">              
-                Hotels
-              </a>
-          </li>
-          <li>
-              <a href="<?php echo base_url('HotelSupplier/rooms')?>">              
-                Rooms
-              </a>
-          </li>
-      </ul>
       <div class="clearfix"></div>
       <div class="clearfix"></div>
+        <div class="col-md-offset-2 col-md-8" style="height: 58px">
       <div class="content5">
           <div class="row">
             <div class="col-md-12">

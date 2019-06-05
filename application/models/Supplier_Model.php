@@ -150,7 +150,6 @@ class Supplier_Model extends CI_Model {
 					  'password' => md5($password),
 					  'hotel_code' => $hotel_id, 
 					  'country_code' => $data['country'],
-					  'promoteList' => $data['promoteList'],
 					  'Preferred_currency' 	=> $data['Preferred_currency'],
 					  'created_date' => date('Y-m-d'), 
 					  'created_by' => $this->session->userdata('agent_id'), 

@@ -27,27 +27,7 @@
   margin-top: 230px;
 }
 </style>
-  <div class="row" style="background: black">
-    <div class="col-md-offset-2 col-md-8" style="height: 58px">
-      <ul class="nav nav-tabs myTab2pos">
-          <li>
-              <a href="<?php echo base_url('HotelSupplier')?>">
-                  Booking
-              </a>
-          </li>
-          <li class="active">
-              <a href="<?php echo base_url('HotelSupplier/hotels')?>">              
-                Hotels
-              </a>
-          </li>
-          <li>
-              <a href="<?php echo base_url('HotelSupplier/rooms')?>">              
-                Rooms
-              </a>
-          </li>
-      </ul>
-    </div>
-  </div>
+  
   <div class="clearfix"></div>
   <div class="row" style=" margin-top: 20px;">
     <div class="col-md-offset-2 col-md-8" style="height: 58px">

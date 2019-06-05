@@ -133,9 +133,58 @@
       background-color: white;
     }
     .tab-list li {
-        width: 20%;
+        width: 16.66%;
         text-align: center;
     }
+    .js--image-preview {
+      height: 213px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background-image: url("");
+      background-color: white;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    } 
+    .box img {
+      height:100%;
+      width:100%;
+    }
+    .box {
+      display: inline-block;
+      height: 259px;
+      width: 259px;
+      margin: 10px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+    }
+    .upload-options {
+      position: relative;
+      height: 40px;
+      cursor: pointer;
+      overflow: hidden;
+      text-align: center;
+      -webkit-transition: background-color ease-in-out 150ms;
+      transition: background-color ease-in-out 150ms;
+    }
+    .upload-options label p i {
+      font-size: 22px;
+      color: #f7f7f7;
+    }
+    .upload-options input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+  
 </style>
 <div class="modal-dialog" style="overflow-y:auto;height: 100%;width: 70%;">
     <!-- Modal content-->
@@ -143,7 +192,9 @@
     	<div class="modal-content">
       		<div class="modal-body">
             <ul class="nav nav-tabs tab-list">
-                <li class="home active"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Location</span></a>
+                <li class="check active"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Check</span></a>
+                </li>
+                <li class="home"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Location</span></a>
                 </li>
                 <li class="menu1"><a><i class="fa fa-info" aria-hidden="true"></i> <span>Details</span></a>
                 </li>
@@ -159,7 +210,28 @@
             <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->hotels_edit_id) ? $view[0]->hotels_edit_id : '' ?>">
             <input type="hidden" name="gallery_edit_image" id="gallery_edit_image" value="<?php echo isset($view[0]->gallery_images) ? $view[0]->gallery_images : '' ?>">
             <div class="tab-content">
-                <div id="home" class="tab-pane fade active in">
+              <div id="check" class="tab-pane fade active in">
+                    <div class="box-inn-sp">
+                        <div class="bor mar_top_0">
+                        <div class="row"><br>
+                            <div class="form-group col-md-12">
+                                <label for="hname">Hotel Name</label>
+                                <input type="text" name="hname" class="form-control" id="hname">
+                            </div>
+                        </div><br><br>   
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                     <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_check" style="margin-left: 5px;" value="Next"> 
+                                     <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
+                                <br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div id="home" class="tab-pane fade">
                     <div class="box-inn-sp">
                         <div class="bor mar_top_0">
                         <div class="row">
@@ -198,8 +270,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    
-                                    <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_tab_1" style="margin-left: 5px;" value="Next"> 
+                                    <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_tab_1" style="margin-left: 5px;" value="Next">
+                                    <input type="button" id="hotel_tab_1_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white btn-primary pull-right" style="margin-left: 5px;" value="Previous"> 
                                     <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
@@ -225,7 +297,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="from_date">Country</label>
                                     <select name="ConSelect" id="ConSelect" class="form-control" onchange ="ConSelectFun();">
-                                    <option value=" "> Country </option>
+                                    <option value=""> Country </option>
                                     <?php $count=count($contry);
                                     for ($i=0; $i <$count ; $i++) { ?>
                                     <option <?php echo isset($view[0]->country) && $view[0]->country ==$contry[$i]->id  ? 'selected' : '' ?> value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
@@ -406,14 +478,14 @@
                                         <?php  } } ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <!-- <div class="form-group col-md-6">
                                     <label>Search list on</label>
                                     <select name="promoteList" class="form-control"  id="promoteList">
                                         <option <?php echo isset($view[0]->promoteList) && $view[0]->promoteList==1 ? 'selected' : '' ?> value="1">Last</option>
                                         <option <?php echo isset($view[0]->promoteList) && $view[0]->promoteList==2 ? 'selected' : '' ?> value="2">Medium</option>
                                         <option <?php echo isset($view[0]->promoteList) && $view[0]->promoteList==3 ? 'selected' : '' ?> value="3">Top</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
@@ -430,17 +502,17 @@
                             <div class="box">
                                 <div class="js--image-preview">
                                          <?php 
-
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview" >
+                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview img-rounded" >
                                             <?php  } else {  ?>
-                                           <img src="" class="img1preview" >
+      
+                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img1preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
-                                        <label>
+                                        <label style="margin-top: 5px">
                                             <input type="file" onchange=" return ValidateImageFileUpload('img1');" class="image-upload" id="img1" name="img1" accept="image/*" />
-                                            <p><i class="fa fa-upload"></i></p>
+                                            <p class="btn btn-primary">Select Image<!-- <i class="fa fa-upload"></i> --></p>
                                         </label>
                                 </div>
                                  
@@ -452,13 +524,14 @@
                                             if (isset($view[0]->Image2)) { ?>
                                             <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
                                             <?php  } else {  ?>
-                                            <img src="" class="img2preview" >
-                                        <?php  } ?>
+                                           
+                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img2preview">
+                                        <?php   }?>
                                 </div>
                                 <div class="upload-options">
-                                        <label>
-                                            <input type="file" onchange="ValidateImageFileUpload('img2');" class="image-upload" id="img2" name="img2" accept="image/*" />
-                                            <p><i class="fa fa-upload"></i></p>
+                                        <label style="margin-top: 5px">
+                                            <input type="file" onchange=" return ValidateImageFileUpload('img2');" class="image-upload" id="img2" name="img2" accept="image/*" />
+                                            <p class="btn btn-primary">Select Image<!-- <i class="fa fa-upload"></i> --></p>
                                         </label>
                                 </div>
                             </div>
@@ -468,13 +541,14 @@
                                             if (isset($view[0]->Image3)) { ?>
                                             <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
                                             <?php  } else {  ?>
-                                            <img src="" class="img3preview" >
-                                        <?php  } ?>
+                                        </label>
+                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img3preview">
+                                        <?php   }?>
                                 </div>
                                 <div class="upload-options">
-                                        <label>
-                                            <input type="file" onchange="ValidateImageFileUpload('img3');" class="image-upload" id="img3" name="img3" accept="image/*" />
-                                            <p><i class="fa fa-upload"></i></p>
+                                        <label style="margin-top: 5px">
+                                            <input type="file" onchange=" return ValidateImageFileUpload('img3');" class="image-upload" id="img3" name="img3" accept="image/*" />
+                                            <p class="btn btn-primary">Select Image<!-- <i class="fa fa-upload"></i> --></p>
                                         </label>
                                 </div>
                             </div>
@@ -484,13 +558,13 @@
                                             if (isset($view[0]->Image4)) { ?>
                                             <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image4;?>" class="img4preview" >
                                             <?php  } else {  ?>
-                                            <img src="" class="img4preview" >
-                                        <?php  } ?>
+                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img4preview">
+                                        <?php   }?>
                                 </div>
                                 <div class="upload-options">
-                                        <label>
-                                            <input type="file" onchange="ValidateImageFileUpload('img4');" class="image-upload" id="img4" name="img4" accept="image/*" />
-                                            <p><i class="fa fa-upload"></i></p>
+                                        <label style="margin-top: 5px">
+                                            <input type="file" onchange=" return ValidateImageFileUpload('img4');" class="image-upload" id="img4" name="img4" accept="image/*" />
+                                            <p class="btn btn-primary">Select Image<!-- <i class="fa fa-upload"></i> --></p>
                                         </label>
                                     
                                 </div>
@@ -501,14 +575,14 @@
                                         if (isset($view[0]->Image5)) { ?>
                                         <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
                                         <?php  } else {  ?>
-                                        <img src="" class="img5preview" >
+                                      <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img5preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
-                                    <label>
-                                        <input type="file" onchange="ValidateImageFileUpload('img5');" class="image-upload" id="img5" name="img5" accept="image/*" />
-                                        <p><i class="fa fa-upload"></i></p>
-                                    </label>
+                                        <label style="margin-top: 5px">
+                                            <input type="file" onchange=" return ValidateImageFileUpload('img5');" class="image-upload" id="img5" name="img5" accept="image/*" />
+                                            <p class="btn btn-primary">Select Image<!-- <i class="fa fa-upload"></i> --></p>
+                                        </label>
                                 </div>
                             </div>
                         </div>
@@ -761,6 +835,7 @@
     	</div>
   	</div>
     <script type="text/javascript">
+
       $("#menu_per").on("click", function() {
         $("#custom-select-option-box").toggle();
     });
@@ -796,24 +871,5 @@
       });
       // CitySelectFun();
   }
-  $("#hotel_tab_6").click(function() {
-      $("#new_hotel_form").submit();
-  });
-  $("#hotel_tab_6_prev").click(function() {
-    $("#menu4").addClass("in active")
-    $("#menu6").removeClass("in active")
-    $("#menu5").removeClass("in active")
-    $("#menu3").removeClass("in active")
-    $("#menu2").removeClass("in active")
-    $("#menu1").removeClass("in active")
-    $("#home").removeClass("in active")
-    $(".menu4").addClass("active")
-    $(".menu5").removeClass("active")
-    $(".menu5").removeClass("active")
-    $(".menu3").removeClass("active")
-    $(".menu2").removeClass("active")
-    $(".menu1").removeClass("active")
-    $(".home").removeClass("active")
-  });
-    </script>
+</script>
 <script src="<?php echo base_url(); ?>skin/js/supplier.js"></script>

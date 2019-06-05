@@ -43,10 +43,6 @@ class HotelSupplier extends MY_Controller {
           echo json_encode($data);
      }
      public function add_new_hotel() {
-               $status = $this->Supplier_Model->checkHotel($_REQUEST['hotel_name']);
-               if($status!=0) {
-
-               } else {
                $last_id = $this->Supplier_Model->maxgetid();
                $hotel_last_id = $last_id[0]['id']+1;
                $passwording = $last_id[0]['id']+423;
@@ -60,11 +56,10 @@ class HotelSupplier extends MY_Controller {
                               handle_hotel_gallery_image_upload($hotel_id,$i);
                          }
                     }
-               $description = 'New hotel added [id:'.$hotel_id.', Hotel Code: '.$hotel_code.']';
-               AgentlogActivity($description);
-                    }          
-               }
-                redirect("hotelsupplier/hotels");  
+                    $description = 'New hotel added [id:'.$hotel_id.', Hotel Code: '.$hotel_code.']';
+                    AgentlogActivity($description);
+               }          
+               redirect("hotelsupplier/hotels");  
      }
      public function hotel_list() {
           $data = array();
@@ -98,4 +93,14 @@ class HotelSupplier extends MY_Controller {
           );
        echo json_encode($output);
      }
+     public function checkHotel($hotel) {
+          $status = $this->Supplier_Model->checkHotel($hotel);
+          if($status!=0) {
+               $return['status'] = '1';
+          } else {
+               $return['status'] = '0';
+          }
+          echo json_encode($return);
+     }
+
 }
