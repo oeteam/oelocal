@@ -1,3 +1,6 @@
+ $("#hname").keyup(function() {
+    $(".avail-next").addClass("hide");
+ })
  $("#hotel_check").click(function() {
     var hotel_name = $("#hname").val();
     if (hotel_name=="") {
@@ -10,17 +13,26 @@
             cache: false,
             success: function (response) {
               if(response.status == '1') {
-                $(".msg").append('<script type="text/javascript"> AddToast("danger","Hotel already exists","!");</script>');
+                $(".avail-msg").text("Hotel already exists !");
+                $(".avail-msg").addClass("text-danger");
+                $(".avail-msg").removeClass("text-success");
               } else {
-                $("#home").addClass("in active")
-                $("#check").removeClass("in active")
-                $(".home").addClass("active")
-                $(".check").removeClass("active")
+                $("#hotel_name").val(hotel_name);
+                $(".avail-msg").text("This Hotel name is available");
+                $(".avail-msg").removeClass("text-danger");
+                $(".avail-msg").addClass("text-success");
+                $(".avail-next").removeClass("hide")
               }
             }
           });
     }
   });
+ $("#hotel_next").click(function() {
+    $("#home").addClass("in active")
+    $("#check").removeClass("in active")
+    $(".home").addClass("active")
+    $(".check").removeClass("active")
+ });
  $("#hotel_tab_1").click(function() {
     ConSelectFun();
     var map_location = $("#us3-address").val();
@@ -392,3 +404,4 @@
 
       } 
     }
+

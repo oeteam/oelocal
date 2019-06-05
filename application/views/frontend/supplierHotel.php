@@ -84,14 +84,14 @@
       <table class="table table-hover" id="hotel_table">
         <thead>
             <tr>
-                <th>Hotel Id</th>
+                <th><input type="checkbox" class="check-all"></th>
+                <th>sl.no</th>
                 <th>Hotel</th>
+                <th>country</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Country</th>
-                <th>View</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -102,6 +102,13 @@
 <div id="myModal" class="modal fade" role="dialog">
 </div>
 <script>
+  function edithotel(id) {
+    $("#myModal").load(base_url+'HotelSupplier/addhotelmodal?hotels_edit_id='+id);
+      $('#myModal').modal({
+          backdrop: 'static',
+          keyboard: false
+      });
+  }
   function addhotelmodal() {
     $("#myModal").load(base_url+'HotelSupplier/addhotelmodal');
     $('#myModal').modal({

@@ -69,19 +69,23 @@ class HotelSupplier extends MY_Controller {
           $length = intval($this->input->get("length"));
           $hotel = $this->Supplier_Model->hotel_list_select();
           foreach($hotel->result() as $key => $r) {
-               $cross = '<a href="#" onclick="deletehotelper('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="red accent-4 fa fa-trash-o" aria-hidden="true"></i></a>';  
-               $edit='<a href="addhotelmodal?hotels_edit_id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-               $view='<a href="hotels/hotel_detail_view?id='.$r->id.'" data-target="#myModal"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+               $cross = '<a href="#" title="click to delete" onclick="deletehotelper('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="red accent-4 fa fa-trash-o" aria-hidden="true"></i></a>';  
+               $edit='<a title="click to Edit" href="#" onclick="edithotel('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit"><i style="color: #0074b9;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+               if ($r->delflg==1) {
+                    $status = '<span class="text-success">Active</span>';
+               } else if($r->delflg==2) {
+                    $status = '<span class="text-warning">Pending</span>';
+               } else {
+                    $status = '<span class="text-danger">Rejected</span>';
+               }
                     $data[] = array(
-                         $r->hotel_code,
-                         '<a><span class="list-enq-name">'.$r->hotel_name.'</span><span class="list-enq-city">'.$r->city.'</span></a>',
-                         $r->sale_number.'</br>'.
-                         $r->revenu_number,
-                         $r->sale_mail.'</br>'.
-                         $r->revenu_mail,
-                         $r->location,
-                         $view,
-                         $edit,
+                         '<input type="checkbox" class="cmn-check" value="'.$r->id.'">',
+                         $key+1,
+                         '<a title="click to view" style="color: #0074b9;" href="hotels/hotel_detail_view?id='.$r->id.'">'.$r->hotel_name.'</a> '.' <small>('.$r->hotel_code.')</small> '.$edit,
+                         $r->country,
+                         $r->sale_number,
+                         $r->sale_mail,
+                         $status,
                          $cross,
                     );
           }

@@ -181,8 +181,10 @@
     	<div class="modal-content">
       		<div class="modal-body">
             <ul class="nav nav-tabs tab-list">
+                <?php if (!isset($_REQUEST['hotels_edit_id'])) { ?>
                 <li class="check active"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Check</span></a>
                 </li>
+                <?php } ?>
                 <li class="home"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Location</span></a>
                 </li>
                 <li class="menu1"><a><i class="fa fa-info" aria-hidden="true"></i> <span>Details</span></a>
@@ -199,6 +201,7 @@
             <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->hotels_edit_id) ? $view[0]->hotels_edit_id : '' ?>">
             <input type="hidden" name="gallery_edit_image" id="gallery_edit_image" value="<?php echo isset($view[0]->gallery_images) ? $view[0]->gallery_images : '' ?>">
             <div class="tab-content">
+                <?php if (!isset($_REQUEST['hotels_edit_id'])) { ?>
               <div id="check" class="tab-pane fade active in">
                     <div class="box-inn-sp">
                         <div class="bor mar_top_0">
@@ -206,12 +209,14 @@
                             <div class="form-group col-md-12">
                                 <label for="hname">Hotel Name</label>
                                 <input type="text" name="hname" class="form-control" id="hname">
+                                <p class="avail-msg"></p>
                             </div>
                         </div><br><br>   
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                     <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_check" style="margin-left: 5px;" value="Next"> 
+                                     <input type="button" class="avail-next waves-effect hide waves-light btn-sm btn-success teal darken-3 col_white pull-right" id="hotel_next" style="margin-left: 5px;" value="Next"> 
+                                     <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_check" style="margin-left: 5px;" value="check"> 
                                      <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 <br><br>
                                 </div>
@@ -220,7 +225,8 @@
                     </div>
                     </div>
                 </div>
-                <div id="home" class="tab-pane fade">
+                <?php } ?>
+                <div id="home" class="tab-pane <?php echo !isset($_REQUEST['hotels_edit_id']) ? 'fade' : 'active' ?>">
                     <div class="box-inn-sp">
                         <div class="bor mar_top_0">
                         <div class="row">
@@ -273,7 +279,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="hotel_name">Hotel Name</label><span>*</span>
-                                    <input id="hotel_name" name="hotel_name" type="text" class="form-control" value="<?php echo isset($view[0]->hotel_name) ? $view[0]->hotel_name : '' ?>">
+                                    <input id="hotel_name" name="hotel_name" type="text" readonly="" class="form-control" value="<?php echo isset($view[0]->hotel_name) ? $view[0]->hotel_name : '' ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="property_name">Property Name</label>
