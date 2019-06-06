@@ -43,6 +43,16 @@ class HotelSupplier extends MY_Controller {
           echo json_encode($data);
      }
      public function add_new_hotel() {
+          if ($_REQUEST['hotels_edit_id']!="") {
+               $update = $this->Supplier_Model->update_hotel($_REQUEST,$_REQUEST['hotels_edit_id']);
+               for ($i=1; $i <=5 ; $i++) { 
+                    if ($_FILES['img'.$i]['name']!="") {
+                         handle_hotel_gallery_image_upload($_REQUEST['hotels_edit_id'],$i);
+                    }
+               }
+               $description = 'Hotel details updated [id:'.$_REQUEST['hotels_edit_id'].', Hotel Code: HE0'.$_REQUEST['hotels_edit_id'].']';
+               AgentlogActivity($description);
+          } else {
                $last_id = $this->Supplier_Model->maxgetid();
                $hotel_last_id = $last_id[0]['id']+1;
                $passwording = $last_id[0]['id']+423;
@@ -59,7 +69,8 @@ class HotelSupplier extends MY_Controller {
                     $description = 'New hotel added [id:'.$hotel_id.', Hotel Code: '.$hotel_code.']';
                     AgentlogActivity($description);
                }          
-               redirect("hotelsupplier/hotels");  
+          } 
+            redirect("hotelsupplier/hotels"); 
      }
      public function hotel_list() {
           $data = array();
@@ -81,7 +92,7 @@ class HotelSupplier extends MY_Controller {
                     $data[] = array(
                          '<input type="checkbox" class="cmn-check" value="'.$r->id.'">',
                          $key+1,
-                         '<a title="click to view" style="color: #0074b9;" href="hotels/hotel_detail_view?id='.$r->id.'">'.$r->hotel_name.'</a> '.' <small>('.$r->hotel_code.')</small> '.$edit,
+                         '<a title="click to view" href="#" style="color: #0074b9;" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit"  onclick="viewhotel('.$r->id.');">'.$r->hotel_name.'</a> '.' <small>('.$r->hotel_code.')</small> '.$edit,
                          $r->country,
                          $r->sale_number,
                          $r->sale_mail,
@@ -105,6 +116,34 @@ class HotelSupplier extends MY_Controller {
                $return['status'] = '0';
           }
           echo json_encode($return);
+     }
+     public function hotel_detail_view() {
+          $data['view'] =$this->Supplier_Model->hotel_detail_get($_REQUEST['id']);
+          $hotel_facilities = explode(",",$data['view'][0]->hotel_facilities); 
+          foreach ($hotel_facilities as $key => $value) {
+               $data['hotel_facilities'][$key] = $this->Supplier_Model->hotel_facilities($value);
+          }
+          $room_facilities = explode(",",$data['view'][0]->room_facilities);
+          foreach ($room_facilities as $key => $value) {
+             $data['room_facilities'][$key] = $this->Supplier_Model->room_facilities_data($value);
+          } 
+          if ($data['view'][0]->board!="" && isset($data['view'][0]->board)) {
+               $data['board'] = array($data['view'][0]->board => $data['view'][0]->board,'RO'=> 'RO' ,'BB' => 'BB','HB' => 'HB','FB' => 'FB','AL' => 'AL'); 
+          } else {
+               $data['board'] = array('' => '','RO'=> 'RO' ,'BB' => 'BB','HB' => 'HB','FB' => 'FB','AL' => 'AL'); 
+          }
+          $this->load->view('frontend/hotel_view',$data);
+     }
+     public function delete_hotelper() {
+          $result = $this->Supplier_Model->deleteHotelPer($_REQUEST['delete_id']);
+          if ($result==true) {
+               $Return['status'] = '1';
+               $description = 'Existing hotel details deleted [id:'.$_REQUEST['delete_id'].', Hotel Code: HE0'.$_REQUEST['delete_id'].']';
+            AgentlogActivity($description);
+          } else {
+               $Return['status'] = "0";
+          }
+        echo json_encode($Return);
      }
 
 }

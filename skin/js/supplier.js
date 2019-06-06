@@ -404,4 +404,39 @@
 
       } 
     }
-
+function deletepopupfun(action,id) {
+    $("#delete_id").val(id);
+    $("#delete_form").attr("action",action);
+    $('#delModal').modal();
+  }
+function commonDelete() {
+    $.ajax({
+      dataType: 'json',
+      type: "POST",
+      url: $("#delete_form").attr("action"),
+      data: $("#delete_form").serialize(),
+      cache: false,
+      success: function (response) {
+        alert(response);
+          close_delete_modal();
+          if(response.status=='1') {
+             $(".msg").append('<script type="text/javascript"> AddToast("success","Deleted Successfully","!");</script>');
+          } else {
+             $(".msg").append('<script type="text/javascript"> AddToast("danger","Error Occured","!");</script>');
+          }
+          var hotel_table = $('#hotel_table').dataTable({
+          "bDestroy": true,
+          "ajax": {
+              url : base_url+'HotelSupplier/hotel_list',
+              type : 'GET'
+          },
+       "fnDrawCallback": function(settings){
+          $('[data-toggle="tooltip"]').tooltip();          
+        }
+    });
+      }
+    });
+}
+function close_delete_modal() {
+   $('.close').trigger('click');
+}

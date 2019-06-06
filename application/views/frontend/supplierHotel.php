@@ -101,9 +101,30 @@
   </div>
 <div id="myModal" class="modal fade" role="dialog">
 </div>
+<div id="delModal" class="delete_modal modal">
+        <div class="modal-content modal-content  col-md-6 col-md-offset-3">
+          
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          <div class="modal-body">
+            <h4>Do you want to delete this !</h4>
+            <form action="<?php echo base_url(); ?>backend/" class="delete_id" id="delete_form">
+                <input type="hidden" id="delete_id" name="delete_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
+                <button type="button" onclick="commonDelete();" class="waves-effect waves-light btn-sm btn-danger pull-right">Delete</button><br><br>
+            </form>
+          </div>
+        </div>
+      </div>
 <script>
   function edithotel(id) {
     $("#myModal").load(base_url+'HotelSupplier/addhotelmodal?hotels_edit_id='+id);
+      $('#myModal').modal({
+          backdrop: 'static',
+          keyboard: false
+      });
+  }
+  function viewhotel(id) {
+    $("#myModal").load(base_url+'HotelSupplier/hotel_detail_view?id='+id);
       $('#myModal').modal({
           backdrop: 'static',
           keyboard: false
@@ -115,6 +136,9 @@
         backdrop: 'static',
         keyboard: false
     });
+  }
+  function deletehotelper(id) {
+    deletepopupfun(base_url+"HotelSupplier/delete_hotelper",id);
   }
   $(document).ready(function() {
     var hotel_table = $('#hotel_table').dataTable({
@@ -129,4 +153,5 @@
     });
   });
  </script>
+ <script src="<?php echo base_url(); ?>skin/js/supplier.js"></script>
 <?php init_front_head_footer(); ?> 

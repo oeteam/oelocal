@@ -173,7 +173,6 @@
         position: absolute;
         z-index: -1;
     }
-  
 </style>
 <div class="modal-dialog" style="overflow-y:auto;height: 100%;width: 70%;">
     <!-- Modal content-->
@@ -185,7 +184,7 @@
                 <li class="check active"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Check</span></a>
                 </li>
                 <?php } ?>
-                <li class="home"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Location</span></a>
+                <li class="home  <?php if (!isset($_REQUEST['hotels_edit_id'])) { echo ""; } else { echo "active"; }?>"><a><i class="fa fa-map" aria-hidden="true"></i> <span>Location</span></a>
                 </li>
                 <li class="menu1"><a><i class="fa fa-info" aria-hidden="true"></i> <span>Details</span></a>
                 </li>
@@ -195,10 +194,10 @@
                 <li class="menu5"><a><i class="fa fa-phone" aria-hidden="true"></i> <span>Contact Info</span></a>
                 </li>
             </ul>
-            <form action="add_new_hotel" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data"> 
+            <form action="<?php echo base_url('hotelsupplier/add_new_hotel') ?>" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data"> 
               <input type="hidden" name="room_aminities" id="room_aminities" value="<?php echo isset($view[0]->room_aminities) ? $view[0]->room_aminities : '' ?>">
             <input type="hidden" name="keywords" id="keywords" value="<?php echo isset($view[0]->keywords) ? $view[0]->keywords : '' ?>">
-            <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->hotels_edit_id) ? $view[0]->hotels_edit_id : '' ?>">
+            <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->id) ? $view[0]->id : '' ?>">
             <input type="hidden" name="gallery_edit_image" id="gallery_edit_image" value="<?php echo isset($view[0]->gallery_images) ? $view[0]->gallery_images : '' ?>">
             <div class="tab-content">
                 <?php if (!isset($_REQUEST['hotels_edit_id'])) { ?>
@@ -266,7 +265,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="button" class="waves-effect waves-light btn-sm btn-primary teal darken-3 col_white pull-right" id="hotel_tab_1" style="margin-left: 5px;" value="Next">
+                                    <?php if (!isset($_REQUEST['hotels_edit_id'])) { ?>
                                     <input type="button" id="hotel_tab_1_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white btn-primary pull-right" style="margin-left: 5px;" value="Previous"> 
+                                    <?php } ?>
                                     <button type="button" class="btn-sm btn-danger pull-right" data-dismiss="modal">close</button>
                                 </div>
                             </div>
@@ -498,7 +499,7 @@
                                 <div class="js--image-preview">
                                          <?php 
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview img-rounded" >
+                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview img-rounded" >
                                             <?php  } else {  ?>
       
                                            <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img1preview">
@@ -517,7 +518,7 @@
                                 <div class="js--image-preview">
                                            <?php 
                                             if (isset($view[0]->Image2)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
+                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
                                             <?php  } else {  ?>
                                            
                                            <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img2preview">
@@ -534,7 +535,7 @@
                                 <div class="js--image-preview">
                                           <?php 
                                             if (isset($view[0]->Image3)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
+                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
                                             <?php  } else {  ?>
                                         </label>
                                            <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img3preview">
@@ -551,7 +552,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                             if (isset($view[0]->Image4)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image4;?>" class="img4preview" >
+                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image4;?>" class="img4preview" >
                                             <?php  } else {  ?>
                                            <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img4preview">
                                         <?php   }?>
@@ -568,7 +569,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                         if (isset($view[0]->Image5)) { ?>
-                                        <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
+                                        <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
                                         <?php  } else {  ?>
                                       <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img5preview">
                                         <?php   }?>
