@@ -18,7 +18,9 @@ class HotelSupplier extends MY_Controller {
           $this->load->view('frontend/supplier');
      }
      public function hotels() {
-           $this->load->view('frontend/supplierHotel');
+          $data['contry']= $this->Supplier_Model->SelectCountry();
+          $data['hotels'] = $this->Supplier_Model->hotel_list_select()->result();
+          $this->load->view('frontend/supplierHotel',$data);
      }
      public function rooms() {
           $this->load->view('frontend/supplierRooms');
@@ -144,6 +146,42 @@ class HotelSupplier extends MY_Controller {
                $Return['status'] = "0";
           }
         echo json_encode($Return);
+     }
+     public function hotelsearch() {
+          $data = array();
+          // Datatables Variables
+          $draw = intval($this->input->get("draw"));
+          $start = intval($this->input->get("start"));
+          $length = intval($this->input->get("length"));
+          $hotel = $this->Supplier_Model->hotel_search_list($_REQUEST);
+          foreach($hotel->result() as $key => $r) {
+               $cross = '<a href="#" title="click to delete" onclick="deletehotelper('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="red accent-4 fa fa-trash-o" aria-hidden="true"></i></a>';  
+               $edit='<a title="click to Edit" href="#" onclick="edithotel('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit"><i style="color: #0074b9;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+               if ($r->delflg==1) {
+                    $status = '<span class="text-success">Active</span>';
+               } else if($r->delflg==2) {
+                    $status = '<span class="text-warning">Pending</span>';
+               } else {
+                    $status = '<span class="text-danger">Rejected</span>';
+               }
+                    $data[] = array(
+                         '<input type="checkbox" class="cmn-check" value="'.$r->id.'">',
+                         $key+1,
+                         '<a title="click to view" href="#" style="color: #0074b9;" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit"  onclick="viewhotel('.$r->id.');">'.$r->hotel_name.'</a> '.' <small>('.$r->hotel_code.')</small> '.$edit,
+                         $r->country,
+                         $r->sale_number,
+                         $r->sale_mail,
+                         $status,
+                         $cross,
+                    );
+          }
+          $output = array(
+               "draw"             => $draw,
+                "recordsTotal"    => $hotel->num_rows(),
+                "recordsFiltered" => $hotel->num_rows(),
+                "data"            => $data
+          );
+       echo json_encode($output);
      }
 
 }

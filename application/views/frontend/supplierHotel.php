@@ -38,19 +38,32 @@
             <div class="col-md-12" >
                 <div class="col-md-2 form-group">
                   <label>Hotelname</label>
-                  <select class="form-control">
-                    <option>Hotelname</option>
+                  <select class="form-control" name="HotelSelect" id="HotelSelect">
+                    <option value="">Select Hotel</option>
+                    <?php foreach ($hotels as $value) { ?>
+                      <option value="<?php echo $value->id ?>"><?php echo $value->hotel_name?></option>
+                    <?php } ?>
                   </select>
                 </div>
                 <div class="col-md-2 form-group">
                   <label>Country</label>
-                  <input type="text" name="co" class="form-control" id="co">
+                  <select name="con" id="con" class="form-control" onchange ="ConSelect();">
+                    <option value=""> Country </option>
+                    <?php $count=count($contry);
+                    for ($i=0; $i <$count ; $i++) { ?>
+                    <option value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
+                    <?php  } ?>
+                  </select>
                 </div>
                 <div class="col-md-2 form-group">
                   <label>State</label>
-                  <input type="text" class="form-control">
+                  <input type="hidden" id="hiddenSt">
+                    <div class="multi-select-mod multi-select-trans multi-select-trans1">
+                    <select name="state" id="state"  class="form-control">
+                    <option value="">Select</option>
+                    </select> 
+                  </div>
                 </div>
-                
                 <div class="col-md-2 form-group">
                   <label>Cityname</label>
                   <input type="text" name="city" class="form-control" id="citys">
@@ -62,15 +75,22 @@
                 
                 <div class="col-md-2 form-group">
                   <label>Rating</label>
-                  <select class="form-control">
-                    <option>All</option>
+                  <select class="form-control" name="starRate" id="starRate">
+                    <option value="">Select</option>
+                    <option value="all">All</option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="10">Apartment</option>
                   </select>
                 </div>
                 <div class="clearfix"></div>
                 <br>
                 <div class="col-md-12 form-group">
                   <button class="pull-right btn btn-success ml10" data-toggle="modal" data-target="#myModal" onclick="addhotelmodal();">Add</button> 
-                  <button class="pull-right btn btn-success ml10" id="search">Search</button>
+                  <button class="pull-right btn btn-success ml10" id="hotelSearch">Search</button>
                 </div>         
              </div>
           </div>
@@ -152,6 +172,31 @@
         }
     });
   });
+  $("#hotelSearch").click(function() {
+        var Con       = $("#con option:selected").val();
+        var state       = $("#state option:selected").val();
+        var hotelid      = $("#HotelSelect option:selected").val();
+        var city = $('#citys').val();
+        var prov = $("#prov").val();
+        var rating = $("#starRate").val();
+        var hotel_table = $('#hotel_table').dataTable({
+          "pageLength": 100,
+          "ordering":false,
+          "bDestroy": true,
+          "ajax": {
+            url : base_url+'HotelSupplier/hotelsearch?hotel='+hotelid+
+            '&con='+Con+'&state='+state+'&city='+city+'&prov='+prov+'&rating='+rating,
+            type : 'POST' 
+            },
+
+          "fnDrawCallback": function(settings){
+                 $('[data-toggle="tooltip"]').tooltip();          
+          },
+        }); 
+            
+          
+  });
+
  </script>
  <script src="<?php echo base_url(); ?>skin/js/supplier.js"></script>
 <?php init_front_head_footer(); ?> 

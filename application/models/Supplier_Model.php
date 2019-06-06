@@ -299,4 +299,35 @@ class Supplier_Model extends CI_Model {
 		$this->db->delete('hotel_tbl_hotels');
 		return true;
 	}
+	public function hotel_search_list($request) {
+		$this->db->select('*');
+		$this->db->from('hotel_tbl_hotels');
+		if($request['hotel']!="") {
+			$this->db->where('id',$request['hotel']);
+		}
+		if($request['con']!="") {
+			$this->db->where('country',$request['con']);
+		}
+		if($request['state']!="") {
+			$this->db->where('state',$request['state']);
+		}
+		if($request['state']!="") {
+			$this->db->where('state',$request['state']);
+		}
+		if($request['city']!="") {
+			$this->db->like('city',$request['city']);
+		}
+		if($request['prov']!="") {
+			$this->db->like('property_name',$request['prov']);
+		}
+		if($request['rating']!="" && $request['rating']!='all') {
+			$this->db->where('rating',$request['rating']);
+		}
+		$this->db->where('supplier','1');
+		$this->db->where('supplierid',$this->session->userdata('agent_id'));
+		$this->db->order_by('id','desc');
+		$query=$this->db->get();
+		//echo $this->db->last_query();
+		return $query;
+  	}
 }

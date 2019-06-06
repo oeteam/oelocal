@@ -440,3 +440,26 @@ function commonDelete() {
 function close_delete_modal() {
    $('.close').trigger('click');
 }
+function ConSelect() {
+    var hiddenState = $("#hiddenSt").val();
+    $('#state option').remove();
+      var ConSelect = $('#con').val();
+      $.ajax({
+          url: base_url+'/HotelSupplier/StateSelect?Conid='+ConSelect,
+          type: "POST",
+          data:{},
+          dataType: "json",
+          success:function(data) {
+            $('#state').append('<option value="">Select</option>');
+              $.each(data, function(i, v) {
+                  if (hiddenState==v.id) {
+                    selected = 'selected';
+                  } else {
+                    selected = '';
+                  }
+                  $('#state').append('<option '+selected+' value="'+ v.id +'">'+ v.name +'</option>');
+              });
+          }
+      });
+      // CitySelectFun();
+  }
