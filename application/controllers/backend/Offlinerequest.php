@@ -12,6 +12,7 @@ class Offlinerequest extends MY_Controller {
     $this->load->model("Hotels_Model");
     $this->load->model("Payment_Model");
     $this->load->model("OfflineModel");
+    $this->load->model("Booking_Model");
     $this->load->helper('upload');
     $this->load->helper('common');
     $this->load->helper('manuallog');
@@ -294,6 +295,7 @@ class Offlinerequest extends MY_Controller {
     if ($this->session->userdata('name')=="") {
         redirect("../backend/");
       }
+    $data['remarks'] =  $this->Booking_Model->get_offlinebooking_remarks($_REQUEST['id'],'tour');
     $data['view'] = $this->OfflineModel->Offlinetourrequest_details($_REQUEST['id']);
     $this->load->view('backend/offlinerequests/Offlinetourrequest_details',$data);
   }
@@ -557,6 +559,7 @@ class Offlinerequest extends MY_Controller {
         redirect("../backend/");
       }
     $data['view'] = $this->OfflineModel->Offlinetransferrequest_details($_REQUEST['id']);
+    $data['remarks'] =  $this->Booking_Model->get_offlinebooking_remarks($_REQUEST['id'],'tour');
     $this->load->view('backend/offlinerequests/Offlinetransferrequest_details',$data);
   }
   public function OfflineEditTransferRequestModal() {

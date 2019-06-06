@@ -692,5 +692,47 @@ class Booking_Model extends CI_Model {
     $query = $this->db->get()->result();
     return $query;
   }
+  public function get_offlinebooking_remarks($id,$type) {
+    $this->db->select('a.*,CONCAT(b.First_Name, " ", b.Last_Name) as Name');
+    $this->db->from('hotel_tbl_offlinebookingremarks a');
+    $this->db->join('hotel_tbl_user b', 'a.createdBy = b.id','inner');
+    $this->db->where('a.bookId',$id);
+    $this->db->where('a.type',$type);
+    $query = $this->db->get()->result();
+    return $query;
+  }
+  public function offlineremarksDelete($id,$type) {
+    $this->db->where('id',$id);
+    $this->db->where('type',$type);
+    $this->db->delete('hotel_tbl_offlinebookingremarks');
+    return true;
+  }
+  public function OfflinebookingRemarkSubmit($request) {
+     $data= array(
+                    'bookId'     => $request['bkId'],
+                    'type'     => $request['type'],
+                    'remarks'     => $request['bookingRemark'],
+                    'createdBy'    => $this->session->userdata('id'),
+                    'createdDate'     => date('Y-m-d H:i:s'),
+              );
+      $this->db->insert('hotel_tbl_offlinebookingremarks',$data);
+    return true;
+  }
+  public function getBookingLogs($id) {
+    $query = $this->db->query('select td.* FROM (SELECT a.Created_Date as Date, (select CONCAT(First_Name, " ", Last_Name, " -(Agent)") 
+    from hotel_tbl_agents where id = a.Created_By ) as user, 
+    "Booking Generated" as action, " " as description 
+    FROM hotel_tbl_booking a WHERE a.id = '.$id.' UNION 
+    SELECT b.Updated_Date as Date, (select CONCAT(First_Name, " ", Last_Name, " -(Admin)") 
+    from hotel_tbl_user where id = b.Updated_By ) as user, 
+    "Booking Modified" as action, " " as description 
+    FROM hotel_tbl_booking b WHERE b.id = '.$id.' and b.Updated_Date != ""
+    UNION
+    SELECT c.createdDate as Date ,(select CONCAT(First_Name, " ", Last_Name, " -(Admin)") 
+    from hotel_tbl_user where id = c.createdBy ) as user,"Remarks Added" as action, c.remarks as description
+     FROM hotel_tbl_hotelbookingremarks c WHERE c.bookId = '.$id.'
+    ) as td order by Date asc');
+    return $query->result();
+  }
 }
 

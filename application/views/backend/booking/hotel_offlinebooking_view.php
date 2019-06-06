@@ -305,11 +305,74 @@
 		</div>
   	</div>
 </div>
+<div class="col-sm-12 col-xs-12">
+	<div class="card">
+		<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
+			<h5 class="bold">Remarks</h5>
+			<form id="bookingRemarkForm">
+				<input type="hidden" name="bkId" value="<?php echo $_REQUEST['id']  ?>">
+				<input type="hidden" name="type" value="hotel">
+				<textarea id="bookingRemark" name="bookingRemark" class="form-control"></textarea>
+				<div class="row"> 
+					<br>
+					<div class="col-xs-12"> 
+					<button type="button" id="bookingRemarkBtn" class="btn-sm btn-success pull-right">Add</button>
+					</div>
+					<br>
+				</div>
+			</form>
+		</div>
+		<br>
+		<div class="card-header" style="padding: 10px; border-bottom: 1px solid #ccc;">
+		<table class="table table-bordered table-hover">
+			<thead class="text-uppercase">
+		      <tr style="background-color: #0074b9;color: white">
+		        <th>Remarks</th>
+		        <th>User</th>
+		        <th>Date</th>
+		        <th>Time</th>
+		        <?php if ($this->session->userdata('role')==1) { ?>
+		        	<th class="text-center">Action</th>
+		        <?php } ?>
+		      </tr>
+		    </thead>
+		    <tbody>
+		    	<?php foreach ($remarks as $key => $value) { ?>
+			    	<tr>
+			    		<td><?php echo $value->remarks ?></td>
+			    		<td><?php echo $value->Name ?></td>
+			    		<td><?php echo Date('d/m/Y' ,strtotime($value->createdDate)) ?></td>
+			    		<td><?php echo Date('H:i:s' ,strtotime($value->createdDate)) ?></td>
+		        		<?php if ($this->session->userdata('role')==1) { ?>
+			    			<td class="text-center"><button onclick="offlineremarksDelete('<?php echo $value->id ?>','<?php echo $value->type ?>')" class="btn-sm btn-danger"><i class="fa fa-trash"></i></button></td>
+		        		<?php } ?>
+			    	</tr>
+		    	<?php } ?>
+		    </tbody>
+	    </table>
+		</div>
+	</div>
+</div>
 <div class="modal fade delete_modal" id="booking_modal" role="dialog">
 </div>
 <script type="text/javascript">
+	$("#bookingRemarkBtn").click(function() {
+	    var bookingRemark = $("#bookingRemark").val();
+	    if (bookingRemark=="") {
+	    	addToast("Remarks field is required!","orange");
+	    	$("#bookingRemark").focus();
+	    } else {
+	    	addToast("Updated Successfully","green");
+	    	$("#bookingRemarkForm").attr('action',base_url+'backend/booking/OfflinebookingRemarkSubmit');
+	    	$("#bookingRemarkForm").submit();
+	    }
+	});
 	function GuestDataValidation() {
 		alert("Must fill the guest details.please click edit !");
+	}
+	function offlineremarksDelete(id,type) {
+    	addToast("Deleted Successfully","green");
+		window.location = base_url+"backend/booking/offlineremarksDelete?id="+id+'&type='+type;
 	}
 </script>
 <?php init_tail(); ?>

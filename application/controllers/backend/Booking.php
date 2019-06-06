@@ -178,9 +178,7 @@ class Booking extends MY_Controller {
       $data['cancelation'] =  $this->Payment_Model->get_cancellation_terms($_REQUEST['id']);
       $data['remarks'] =  $this->Booking_Model->get_booking_remarks($_REQUEST['id']);
       $data['payment'] =  $this->Booking_Model->PamentDetailsForBooking($_REQUEST['id']);
-      
-      // print_r($data['general']);
-      // exit();
+      $data['logs'] = $this->Booking_Model->getBookingLogs($_REQUEST['id']);
       $this->load->view('backend/booking/hotel_booking_view',$data);
   }
   public function hotel_portel_admin_permission() {
@@ -487,9 +485,10 @@ class Booking extends MY_Controller {
   }
   public function hotel_offlinebooking_view() {
     if ($this->session->userdata('name')=="") {
-        redirect("../backend/");
-      }
+      redirect("../backend/");
+    }
     $data['view'] = $this->Hotels_Model->Offlinebooking_details($_REQUEST['id']);
+    $data['remarks'] =  $this->Booking_Model->get_offlinebooking_remarks($_REQUEST['id'],'hotel');
     $this->load->view('backend/booking/hotel_offlinebooking_view',$data);
   }
   public function OfflineEditModal() {
@@ -1272,6 +1271,166 @@ class Booking extends MY_Controller {
     $description = 'Hotel booking remarks Deleted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
     AdminlogActivity($description);
     redirect(base_url().'backend/booking/hotel_booking_details?id='.$_REQUEST['bkid']);
+  }
+  public function recentBookingList() {
+    $data = array();
+        // Datatables Variables
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        if (isset($_REQUEST['filter'])) {
+          $filter = $_REQUEST['filter'];
+        } else {
+          $filter = "2";
+        }
+        // @xmlBooking list
+        // This list datas get from xml 
+        // xml booking list start 
+        $XMlbooking_list = $this->Booking_Model->XMlbooking_list($filter);
+
+        foreach ($XMlbooking_list->result() as $key => $r) {
+            $Booking = menuPermissionAvailability($this->session->userdata('id'),'Booking','Hotel Booking'); 
+            if($Booking[0]->view!=0){
+                $view = '<a title="view"  href="'.base_url().'backend/booking/xmlhotel_booking_details?id='.$r->id.'&provider='.$r->XMLProvider.'"><i class="fa fa-eye" aria-hidden="true"  style="margin-right: 5px;"></i></a>';
+            }else{
+                  $view="";
+            }
+            if($Booking[0]->edit!=0){
+                  $cancel='<a title="cancel" href="#" onclick="xmlcancelPopup('.$r->id.');" data-toggle="modal" data-target="#cancelModel" class="sb2-2-1-edit delete"><i class="fa fa-times-circle  red" style="margin-right: 5px; aria-hidden="true"></i></a>';
+                  $edit='<a title="accept" href="#" onclick="add_reference_entryxml_fun('.$r->id.','.$r->agent_id.','.$r->Hotel_id.','."'$r->Check_in'".');" data-toggle="modal" data-target="#reference_add_modal"><i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;"></i></a>';          
+            }else{
+                  $edit="";
+                  $cancel = "";
+            }
+          if ($r->bookingFlg==2) {
+              $status= "<span class='text-primary'>pending</span>";
+              $button = $view.$edit.$cancel;
+          } elseif($r->bookingFlg==1) {
+              $status= "<span class='text-success'>Accepted</span>";
+              $button = $view.$cancel;
+          } elseif($r->bookingFlg==3) {
+              $status= "<span class='text-danger'>Cancelled</span>";
+              $button = $view;
+          } elseif($r->bookingFlg==5) {
+              $status= "<span class='text-danger'>Cancellation pending</span>";
+              $button = $view;
+          } elseif($r->bookingFlg==9) {
+              $status= "<span class='text-danger'>Amendment Request Send</span>";
+              $button = $view;
+          }
+            $data[] = array(
+              '',
+              $r->BookingId,
+              "<span class='hide'>".strtotime($r->Bookingdate)."</span>".date('d/m/Y',strtotime($r->Bookingdate)),
+              $r->hotel_name,
+              $r->RoomTypeName,
+              date('d/m/Y',strtotime($r->Check_in)),
+              date('d/m/Y',strtotime($r->Check_out)),
+              $r->no_of_days,
+              $r->no_of_rooms,
+              admin_currency().' '.ceil(backend_currency_type($r->total_amount)),
+              $status,
+              $r->ConfirmationNo,
+              $view,
+              );
+
+          }
+
+        // xml booking list end
+        $booking_list = $this->Booking_Model->hotel_booking_list($filter);
+          foreach($booking_list->result() as $key => $r) {
+            $Booking = menuPermissionAvailability($this->session->userdata('id'),'Booking','Hotel Booking'); 
+            if($Booking[0]->view!=0){
+                  $view='<a title="view"  href="'.base_url().'backend/booking/hotel_booking_details?id='.$r->id.'"><i class="fa fa-eye" aria-hidden="true"  style="margin-right: 5px;"></i></a>';
+            }else{
+                  $view="";
+            }
+            if($Booking[0]->edit!=0){
+                  $edit='<a title="accept" href="#" onclick="add_reference_entry_fun('.$r->book_id.','.$r->agent.','.$r->hotel_id.','."'$r->check_in'".');" data-toggle="modal" data-target="#reference_add_modal"><i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;"></i></a>';
+                   $cancel='<a title="cancel" href="#" onclick="cancelPopup('.$r->book_id.','.$r->hotel_id.');" data-toggle="modal" data-target="#cancelModel" class="sb2-2-1-edit delete"><i class="fa fa-times-circle  red" style="margin-right: 5px; aria-hidden="true"></i></a>';
+                  $editOk='<a title="cancel" href="#" onclick="cancelPopup('.$r->book_id.','.$r->hotel_id.');" data-toggle="modal" data-target="#cancelModel" class="sb2-2-1-edit delete"><i class="fa fa-thumbs-o-up" style="margin-right: 5px; aria-hidden="true"></i></a>';                   
+            }else{
+                  $edit="";
+                  $cancel = "";
+                  $editOk = "";
+            } 
+
+           
+            // $reject='<a title="reject" href="#" onclick="rejectPopup('.$r->book_id.','.$r->hotel_id.');" data-toggle="modal" data-target="#rejectModel" class="sb2-2-1-edit delete"><i class="  fa fa-ban red" style="margin-right: 5px; aria-hidden="true"></i></a>';
+
+            $reject='';
+            $Totselling = $this->Finance_Model->TotsellingGet($r->id);
+
+            if ($r->booking_flag==2) {
+              $status= "<span class='text-primary'>pending</span>";
+              $button = $view.$edit.$cancel.$reject;
+            } else if ($r->booking_flag==1) {
+              $status= "<span class='text-success'>Accepted</span>";
+              $button = $view.$cancel.$reject;
+            } else if ($r->booking_flag==0) {
+              $status= "<span class='text-danger'>Rejected</span>";
+              $button = $view;
+            } else if ($r->booking_flag==3) {
+              $status= "<span class='text-danger'>Cancelled</span>";
+              $button = $view;
+            } else if ($r->booking_flag==4) {
+              $status= "<span class='text-warning'>Hotel Approved</span>";
+              $button = $view.$edit.$cancel.$reject;
+            } else if ($r->booking_flag==5) {
+              $status= "<span class='text-danger'>Cancellation Pending</span>";
+              $button = $view.$editOk;
+            } else if($r->booking_flag==8) {
+              $status= "<span class='text-danger'>On Request</span>";
+              $button =   $view.$edit.$cancel.$reject;
+            }
+
+
+              $data[] = array(
+                '',
+                $r->booking_id,
+                "<span class='hide'>".strtotime($r->Created_Date)."</span>".date('d/m/Y',strtotime($r->Created_Date)),
+                $r->hotel_name,
+                $r->room_name." ".$r->Room_Type,
+                date('d/m/Y',strtotime($r->check_in)),
+                date('d/m/Y',strtotime($r->check_out)),
+                $r->no_of_days,
+                $r->book_room_count,
+                admin_currency().' '.ceil(backend_currency_type($Totselling)),
+                $status,
+                $r->confirmationNumber,
+                $view,
+              );
+          }
+          $output = array(
+           "draw" => $draw,
+           "recordsTotal" => $booking_list->num_rows()+$XMlbooking_list->num_rows(),
+           "recordsFiltered" => $booking_list->num_rows()+$XMlbooking_list->num_rows(),
+           "data" => $data
+          );
+          echo json_encode($output);
+          exit();
+  }
+  public function offlineremarksDelete() {
+    $this->Booking_Model->offlineremarksDelete($_REQUEST['id'],$_REQUEST['type']);
+    $description = 'Offline '.$_REQUEST['type'].' booking remarks Deleted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
+    AdminlogActivity($description);
+    if ($_REQUEST['type']=="hotel") {
+      $url = "booking/hotel_offlinebooking_view";
+    } else if($_REQUEST['type']=="tour") {
+      $url = "offlinerequest/offline_tour_request_view";
+    }
+    redirect(base_url().'backend/'.$url.'?id='.$_REQUEST['id']);
+  }
+  public function OfflinebookingRemarkSubmit() {
+    $this->Booking_Model->OfflinebookingRemarkSubmit($_REQUEST);
+    $description = 'Offline '.$_REQUEST['type'].' booking remarks updated [ID: '.$_REQUEST['bkId'].', Provider: Otelseasy]';
+    AdminlogActivity($description);
+    if ($_REQUEST['type']=="hotel") {
+      $url = "booking/hotel_offlinebooking_view";
+    } else if($_REQUEST['type']=="tour") {
+      $url = "offlinerequest/offline_tour_request_view";
+    }
+    redirect(base_url().'backend/'.$url.'?id='.$_REQUEST['bkId']);
   }
 }
 ?>

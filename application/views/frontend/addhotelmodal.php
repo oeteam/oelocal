@@ -818,8 +818,8 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <input type="button" id="hotel_tab_6" class="waves-effect mar_left_5 waves-light btn-sm  teal darken-3 col_white pull-right" value="Submit">
-                                    <input type="button" id="hotel_tab_6_prev" class="waves-effect  waves-light btn-sm  teal darken-3 col_white pull-right" value="Previous">
+                                    <input type="button" id="hotel_tab_6" class="waves-effect mar_left_5 waves-light btn-sm btn-success teal darken-3 col_white pull-right" value="Submit">
+                                    <input type="button" id="hotel_tab_6_prev" class="waves-effect  waves-light btn-sm  teal darken-3 btn-primary col_white pull-right" value="Previous">
                                 </div>
                             </div>                           
                     </div>

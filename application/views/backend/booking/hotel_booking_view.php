@@ -783,7 +783,7 @@
 <div class="col-sm-12 col-xs-12">
 	<div class="card">
 		<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
-			<h4 class="bold">Remarks</h4>
+			<h5 class="bold">Remarks</h5>
 			<form id="bookingRemarkForm">
 				<input type="hidden" name="bkId" value="<?php echo $_REQUEST['id']  ?>">
 				<textarea id="bookingRemark" name="bookingRemark" class="form-control"></textarea>
@@ -826,7 +826,38 @@
 	    </table>
 		</div>
 	</div>
+</div>
+<div class="col-sm-12 col-xs-12">
+	<div class="card">
+		<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
+			<h5 class="bold">Logs</h5>
+		</div>
+		<br>
+		<div class="card-header" style="padding: 10px; border-bottom: 1px solid #ccc;">
+		<table class="table table-bordered table-hover">
+			<thead class="text-uppercase">
+		      <tr style="background-color: #0074b9;color: white">
+		        <th>Date</th>
+		        <th>Action</th>
+		        <th>User</th>
+		        <th>Description</th>
+		       
+		      </tr>
+		    </thead>
+		    <tbody>
+		    	<?php foreach ($logs as $key => $value) { ?>
+			    	<tr>
+			    		<td><?php echo $value->Date ?></td>
+			    		<td><?php echo $value->action ?></td>
+			    		<td><?php echo $value->user ?></td>
+			    		<td><?php echo $value->description ?></td>
+			    	</tr>
+		    	<?php } ?>
+		    </tbody>
+	    </table>
+		</div>
 	</div>
+</div>
 <!-- Modal-->
 <div id="myModal" class="modal fade delete_modal" role="dialog">
         <div class="modal-dialog">
@@ -985,7 +1016,8 @@
     	addToast("Deleted Successfully","green");
 		window.location = base_url+"backend/booking/remarksDelete?id="+id+'&bkid='+<?php echo $view[0]->bkid ?>;
 	}
-</script>
+
+	</script>
 <?php init_tail(); ?>
 
 
