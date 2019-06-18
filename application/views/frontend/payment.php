@@ -689,11 +689,11 @@ function FullLoading(flag, dest, from, to) {
 		                <div class="row booking-details-info">
 		                  <div class="col-sm-3 col-xs-6 text-center" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check in date</span><br>
-		                    <span class="text-blue"><?php echo $_REQUEST['Check_in']; ?></span>
+		                    <span class="text-blue"><?php echo date('d/m/Y',strtotime($_REQUEST['Check_in'])); ?></span>
 		                  </div>
 		                  <div class="col-sm-3 col-xs-6 text-center bor-sm" style="border-right: 1px dashed #bbb">
 		                    <span class="text-muted m-0">Check out date</span><br>
-		                    <span class="text-blue"><?php echo $_REQUEST['Check_out']; ?></span>
+		                    <span class="text-blue"><?php echo date('d/m/Y',strtotime($_REQUEST['Check_out'])); ?></span>
 		                  </div>
 		                    <?php 
 		                       $adult= array_sum($_REQUEST['adults']);

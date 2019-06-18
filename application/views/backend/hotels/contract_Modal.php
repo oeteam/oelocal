@@ -149,6 +149,9 @@
                     <div class="col-xs-5">
                         <span>Active Nationality</span>
                         <select name="nationality_from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
+                            <?php foreach ($nationality as $key => $value) { ?>
+                                <option value="<?php echo $value->id ?>" continent="<?php echo $value->continent!="" ? $value->continent : 'other' ?>"><?php echo $value->name ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     
@@ -165,9 +168,7 @@
                         <span>Inactive Nationality</span>
                         <form id="country_permission_form" method="post">
                         <select name="nationality_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
-                            <?php foreach ($nationality as $key => $value) { ?>
-                                <option value="<?php echo $value->id ?>" continent="<?php echo $value->continent!="" ? $value->continent : 'other' ?>"><?php echo $value->name ?></option>
-                            <?php } ?>
+                            
                         </select>
                          
                           <input type="hidden" name="context" id="context"></p>
@@ -241,17 +242,17 @@
         }
     });
 
-    // <?php if (isset($view[0]->nationalityPermission)) { ?>
-    // var permission_check = $("#permission_check").val().split(",");
-    // $.each(permission_check, function(i, v) {
-    //  $('#undo_redo_to option[value='+v+']').attr('selected','selected');
-    // });
-    // <?php } ?>
+    <?php if (isset($view[0]->nationalityPermission)) { ?>
+    var permission_check = $("#permission_check").val().split(",");
+    $.each(permission_check, function(i, v) {
+     $('#undo_redo option[value='+v+']').attr('selected','selected');
+    });
+    <?php } ?>
 
-    // <?php if (isset($view[0]->nationalityPermission)) { ?>
-    // $("#undo_redo_rightSelected").trigger('click');
-    // $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
-    // <?php } ?>
+    <?php if (isset($view[0]->nationalityPermission)) { ?>
+    $("#undo_redo_rightSelected").trigger('click');
+    $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
+    <?php } ?>
 
 // });
     function maincontractCheck() {
@@ -286,21 +287,21 @@
             $(".linked_contract").addClass("hide")
         }
     }
-    function selectCountry() {
-        $.each($("#market option:selected"), function(){ 
-        console.log($(this).val());       
-            $('#undo_redo_to option[continent="'+$(this).val()+'"]').prop('selected',true); 
-            $("#undo_redo_leftSelected").trigger('click'); 
-        });
+    // function selectCountry() {
+    //     $.each($("#market option:selected"), function(){ 
+    //     console.log($(this).val());       
+    //         $('#undo_redo_to option[continent="'+$(this).val()+'"]').prop('selected',true); 
+    //         $("#undo_redo_leftSelected").trigger('click'); 
+    //     });
 
-        $.each($("#market option:not(:selected)"), function(){   
-            $('#undo_redo option[continent="'+$(this).val()+'"]').prop('selected',true); 
-            $("#undo_redo_rightSelected").trigger('click'); 
-        });
-    }
+    //     $.each($("#market option:not(:selected)"), function(){   
+    //         $('#undo_redo option[continent="'+$(this).val()+'"]').prop('selected',true); 
+    //         $("#undo_redo_rightSelected").trigger('click'); 
+    //     });
+    // }
 
 
-    selectCountry();
+    // selectCountry();
 
 </script>
 

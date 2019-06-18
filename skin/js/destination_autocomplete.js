@@ -33,7 +33,7 @@ $(document).ready(function() {
       }
   });
 
-  $("#location").bind('input',function(e) {
+  $("#location").bind('keypress',function(e) {
       $('#DropdownCountry').slideUp('fast');
       $('.citycode').val("");
       $('.cityid').val("");
@@ -112,7 +112,7 @@ $(document).ready(function() {
       $(".focus-li a").trigger('click');
     }
   });
-  $("#returnlocation").bind('input',function(e) {
+  $("#returnlocation").bind('keypress',function(e) {
       $('#returnDropdownCountry').slideUp('fast');
       $('.returncitycode').val("");
       $('.returncityname').val("");
@@ -189,7 +189,7 @@ $(document).ready(function() {
       }
   });
 
-  $("#locationsm").bind('input',function(e) {
+  $("#locationsm").bind('keypress',function(e) {
       $('#DropdownCountrysm').slideUp('fast');
       $('.citycode').val("");
       $('.cityid').val("");

@@ -603,7 +603,7 @@
 												$_REQUEST['adults'][0]="2";
 												?>
 												<select class="form-control mySelectBoxClass" name="adults[]" id="adults">
-													<?php for ($i=1; $i <=30 ; $i++) { 
+													<?php for ($i=1; $i <=10 ; $i++) { 
 														if ($_REQUEST['adults'][0]==$i) {?>
 															<option  selected="" value="<?php echo $i?>"><?php echo $i?></option>
 														<?php } else { ?>
@@ -669,7 +669,7 @@
 													<div class="wh90percent textleft left">
 														<span class="opensans size13">Adult</span>
 														<select name="adults[]" class="form-control mySelectBoxClass" id="room<?php echo $i ?>-adults"  <?php echo isset($_REQUEST['adults'][$i-1]) ? '' : 'disabled' ?>>
-															<?php for ($k=1; $k <=30 ; $k++) { ?>
+															<?php for ($k=1; $k <=10 ; $k++) { ?>
 																<option <?php echo isset($_REQUEST['adults'][$i-1]) && $_REQUEST['adults'][$i-1]==$k ? 'selected' : '' ?> value="<?php echo $k; ?>"><?php echo $k; ?></option>
 															<?php } ?>
 														</select>

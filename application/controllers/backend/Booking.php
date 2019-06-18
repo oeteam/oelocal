@@ -119,7 +119,8 @@ class Booking extends MY_Controller {
             // $reject='<a title="reject" href="#" onclick="rejectPopup('.$r->book_id.','.$r->hotel_id.');" data-toggle="modal" data-target="#rejectModel" class="sb2-2-1-edit delete"><i class="  fa fa-ban red" style="margin-right: 5px; aria-hidden="true"></i></a>';
 
             $reject='';
-            $Totselling = $this->Finance_Model->TotsellingGet($r->id);
+            $total = $this->Payment_Model->TotalBookingAmountDetailsGet($r->id);
+            $Totselling = $total['Selling'];
 
             if ($r->booking_flag==2) {
               $status= "<span class='text-primary'>pending</span>";
@@ -188,7 +189,7 @@ class Booking extends MY_Controller {
       // $result1= $this->Booking_Model->hotel_booking_approved_invoice($_REQUEST['id'],$_REQUEST);
       // print_r($result1);
       // exit();
-      $description = 'Hotel booking accepted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
+      $description = 'Hotel booking accepted [ID: HAB0'.$_REQUEST['id'].', Provider: Otelseasy]';
       AdminlogActivity($description);
       echo json_encode(true);
       // redirect("../backend/booking/");

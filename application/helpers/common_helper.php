@@ -1318,7 +1318,7 @@ function get_board($id) {
   $query =  $ci->db->get()->result();
   return $query[0]->Category;
 }
-function supplementAvailability($request,$supplementType) {
+function supplementAvailability($request,$supplementType,$contract_id,$room_id) {
   $ci =& get_instance();
   $SupplementAvailDate = array();
   $start_date = $request['Check_in'];
@@ -1330,12 +1330,14 @@ function supplementAvailability($request,$supplementType) {
 
   for($i = 0; $i < $tot_days; $i++) {
     $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
-    $boardSplmntCheck[$i] = $ci->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."' AND board = '".$supplementType."' ")->result();
+    $boardSplmntCheck[$i] = $ci->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND FIND_IN_SET('".$room_id."', IFNULL(roomType,'')) > 0 AND board = '".$supplementType."' ")->result();
     if (count($boardSplmntCheck[$i])!=0) {
       $SupplementAvailDate[] = $date[$i];
     }
   } 
-  return $SupplementAvailDate;
+  $return['SupplementAvailDate'] = $SupplementAvailDate; 
+  $return['avail'] = count($SupplementAvailDate)!=0 ? 'true' : 'false'; 
+  return $return;
 }
 function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$booking_id,$room_id,$discount,$type) {
 
@@ -1344,7 +1346,8 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     $ci->load->model("Finance_Model");
     $mail_settings = mail_details();
 
-    $total_amount= $ci->Finance_Model->TotsellingGet($booking_id);
+    $totalAmnt = $ci->Payment_Model->TotalBookingAmountDetailsGet($booking_id);
+    $total_amount= $totalAmnt['Selling'];
 
     $cancellation = $ci->Payment_Model->get_cancellation_terms($booking_id);
 
@@ -1361,12 +1364,8 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
 
     $ci->db->select('*');
     $ci->db->from('hotel_tbl_hotels'); 
-    $ci->db->join('hotel_tbl_hotel_room_type','hotel_tbl_hotel_room_type.hotel_id = hotel_tbl_hotels.id','left');
-    $ci->db->join('hotel_tbl_room_type','hotel_tbl_room_type.id = hotel_tbl_hotel_room_type.room_type','left');
     $ci->db->where('hotel_tbl_hotels.id',$hotel_id);
-    $ci->db->where('hotel_tbl_hotel_room_type.id',$room_id);
     $hotel=$ci->db->get()->result();
-
 
     $ci->db->select('a.*,b.name as nationality');
     $ci->db->from('hotel_tbl_booking a');
@@ -1375,98 +1374,129 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     $booking=$ci->db->get()->result();
 
     $ci->load->model("Hotels_Model");
-      $ExBed  =  $ci->Hotels_Model->getExtrabedDetails($booking_id);
-      $board = $ci->Hotels_Model->board_booking_detail($booking_id);
-      $general = $ci->Hotels_Model->general_booking_detail($booking_id);
+    $ExBed  =  $ci->Hotels_Model->getExtrabedDetails($booking_id);
+    $board = $ci->Hotels_Model->board_booking_detail($booking_id);
+    $general = $ci->Hotels_Model->general_booking_detail($booking_id);
 
-      $book_room_count = $booking[0]->book_room_count;
-      $individual_amount = explode(",", $booking[0]->individual_amount);
-      $individual_discount = explode(",", $booking[0]->individual_discount);
-      $checkin_date=date_create($booking[0]->check_in);
-      $checkout_date=date_create($booking[0]->check_out);
-      $no_of_days=date_diff($checkin_date,$checkout_date);
-      $tot_days = $no_of_days->format("%a");
+    $book_room_count = $booking[0]->book_room_count;
+    $total_markup = $booking[0]->agent_markup+$booking[0]->admin_markup+$booking[0]->search_markup;
+    $individual_amount = explode(",", $booking[0]->individual_amount);
+    $individual_discount = explode(",", $booking[0]->individual_discount);
+    $checkin_date=date_create($booking[0]->check_in);
+    $checkout_date=date_create($booking[0]->check_out);
+    $no_of_days=date_diff($checkin_date,$checkout_date);
+    $tot_days = $no_of_days->format("%a");
 
-      $AmountBreakup = '';
+    $AmountBreakup = '';
+    $roomExp = explode(",", $booking[0]->room_id);
+    $ExtrabedDiscount = explode(",", $booking[0]->ExtrabedDiscount);
+    $GeneralDiscount = explode(",", $booking[0]->GeneralDiscount);
+    $BoardDiscount = explode(",", $booking[0]->BoardDiscount);
+    $RequestType = explode(",", $booking[0]->RequestType);
+    for ($i=1; $i <= $book_room_count; $i++) {
+      if (!isset($ExtrabedDiscount[$i-1])) {
+        $ExtrabedDiscount[$i-1] = 0;
+      }
+      if (!isset($GeneralDiscount[$i-1])) {
+        $GeneralDiscount[$i-1] = 0;
+      }
+      if (!isset($BoardDiscount[$i-1])) {
+        $BoardDiscount[$i-1] = 0;
+      }
+      if (!isset($roomExp[$i-1])) {
+        $room_id = $roomExp[0];
+      } else {
+        $room_id = $roomExp[$i-1];
+      }
+
       $Fdays = 0;
-      $discountType = '';
-      if ($booking[0]->discountType=="stay&pay") {
-        $Cdays = $tot_days/$booking[0]->discountStay;
+      $discountType = "";
+      $DisTypExplode = explode(",", $booking[0]->discountType);
+      $DisStayExplode = explode(",", $booking[0]->discountStay);
+      $DisPayExplode = explode(",", $booking[0]->discountPay);
+      $discountCode = explode(",", $booking[0]->discountCode);
+      if (!isset($DisTypExplode[$i])) {
+        $DisTypExplode[$i] = $DisTypExplode[0];
+      }
+      if (!isset($DisStayExplode[$i])) {
+        $DisStayExplode[$i] = $DisStayExplode[0];
+      }
+      if (!isset($DisTypExplode[$i])) {
+        $DisPayExplode[$i] = $DisPayExplode[0];
+      }
+      if (!isset($discountCode[$i])) {
+        $discountCode[$i] = $discountCode[0];
+      }
+
+      if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+        $Cdays = $tot_days/$DisStayExplode[$i-1];
         $parts = explode('.', $Cdays);
         $Cdays = $parts[0];
-        $Sdays = $booking[0]->discountStay*$Cdays;
-        $Pdays = $booking[0]->discountPay*$Cdays;
+        $Sdays = $DisStayExplode[$i-1]*$Cdays;
+        $Pdays = $DisPayExplode[$i-1]*$Cdays;
         $Tdays = $tot_days-$Sdays;
         $Fdays = $Pdays+$Tdays;
-        $discountType = 'Stay/Pay';
+        $discountType = $DisTypExplode[$i-1];
       }
-      if ($booking[0]->discountType=="" && $booking[0]->discountCode!="") {
-        $discountType = 'Discount';
+
+      $varIndividual = 'Room'.$i.'individual_amount';
+      if($booking[0]->$varIndividual!="") {
+        $individual_amount = explode(",", $booking[0]->$varIndividual);
       }
-      for ($i=1; $i <= $book_room_count; $i++) {
-        $AmountBreakup.='<div class="row payment-table-wrap">
-                      <div class="col-md-12">
-                        <h4 class="room-name" style="padding: 0px;margin: 0px;text-indent: 5px;">Room '.$i.'</h4>
-                        <table class="table-bordered" style="width:100%">
-                          <thead style="background-color: #F2F2F2;">
-                            <tr>
-                              <th style="width: 85px;">Date</th>
-                              <th style="width: calc(100% - 265px);">Room Type</th>
-                              <th style="width: 60px; text-align: center">Board</th>
-                              <th style="width: 60px; text-align: center">Rate</th>
-                            </tr>
-                          </thead>
-                          <tbody>';
+
+      $varIndividualDis = 'Room'.$i.'Discount';
+      if($booking[0]->$varIndividual!="") {
+        $individual_discount = explode(",", $booking[0]->$varIndividualDis);
+      }
+
+      $RoomName = roomnameGET($room_id,$booking[0]->hotel_id);
+
+      $AmountBreakup.='<div class="row payment-table-wrap">
+                    <div class="col-md-12">
+                      <h4 class="room-name" style="padding: 0px;margin: 0px;text-indent: 5px;width:22%;float:left">Room '.$i.'</h4>';
+                      if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+                        $AmountBreakup.='<small style="float:right;background: red;color: white;height: 10px;display: block;    line-height: 20px;padding: 0px 10px 10px;border-bottom-left-radius: 20px;   border-top-left-radius: 20px;font-weight: bolder;">'.$discountCode[$i-1].' - Stay '.$DisStayExplode[$i-1].'nights &amp; Pay '.$DisPayExplode[$i-1].' nights</small>';
+                      }
+                      $AmountBreakup.='<table class="table-bordered" style="width:100%">
+                        <thead style="background-color: #F2F2F2;">
+                          <tr>
+                            <th style="width: 85px;">Date</th>
+                            <th style="width: calc(100% - 265px);">Room Type</th>
+                            <th style="width: 60px; text-align: center">Board</th>
+                            <th style="width: 60px; text-align: center">Rate</th>
+                          </tr>
+                        </thead>
+                        <tbody>';
 
                             $oneNight = array();
                             for ($j=0; $j < $tot_days ; $j++) { 
-                              $ExAmount[$j] = 0;
-                              $TExAmount[$j] = 0;
-                              $GAamount[$j] = 0;
-                              $GCamount[$j] = 0;
-                              $BAamount[$j] = 0;
-                              $TBAamount[$j] = 0;
-                              $BCamount[$j] = 0;
-                              $TBCamount[$j] = 0;
-                              
-                              $EAmoNotMar[$j]=0;
-                              $GAmoNotMar[$j]=0;
-                              $BAAmoNotMar[$j]=0;
-                              $GCAmoNotMar[$j]=0;
-                              $BCAmoNotMar[$j]=0;
-                              $totalNotMar[$j]=0;
-                              $TBAAmoNotMar[$j]=0;
-                              $TBCAmoNotMar[$j]=0;
-                              $RAmoADMar[$j]=0;
-                              $EAmoADMar[$j]=0;
-                              $GAmoADMar[$j]=0;
-                              $GCAmoADMar[$j]=0;
-                              $BAAmoADMar[$j]=0;
-                              $BCAmoAdMar[$j]=0;
-
+                              if (!isset($individual_discount[$j])) {
+                                $individual_discount[$j] = 0;
+                              }
                               $CPRMRate[$j]=0;
                               $CPEAmoAD[$j]=0;
                               $CPGAmoAD[$j]=0;
                               $CPAmoAD[$j]=0;
                               $CPBAAmoAD[$j]=0;
                               $CPBCAmoAd[$j]=0;
+                              $TBAamount[$j] = 0;
+                              $TBCamount[$j] = 0;
           $AmountBreakup.='<tr>
                             <td>'.date('d/m/Y', strtotime($booking[0]->check_in. ' + '.$j.'  days')).'</td>
-                            <td>'.$hotel[0]->room_name." ".$hotel[0]->Room_Type.'</td>
+                            <td>'.$RoomName.'</td>
                             <td style="text-align: center">'.$booking[0]->board.'</td>
                             <td style="text-align: right">
                                 <p class="new-price">';
-                      
-                                if (!isset($individual_discount[$j])) {
-                                  $individual_discount[$j] = 0;
-                                }
                                 $CPRMRate[$j] = $individual_amount[$j]-($individual_amount[$j]*$individual_discount[$j])/100;
 
                                 $WiDisroomAmount[$j] = $individual_amount[$j];
                                 if ($j==0) {
                                   $oneNight[] = $CPRMRate[0];
                                 }
-                            $AmountBreakup.= number_format($CPRMRate[$j],2).'
+                                if ($individual_discount[$j]!=0) {
+                                  $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($individual_amount[$j],2).' AED</small></span><br>';
+                                }             
+                                $AmountBreakup.= number_format($CPRMRate[$j],2).'
                                 AED </p>
                             </td>
                             </tr>';
@@ -1480,19 +1510,25 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                                   foreach ($exroomExplode as $Exrkey => $EXRvalue) {
                                     if ($EXRvalue==$i) {
                         
-                            $AmountBreakup.='<tr>
-                              <td></td>
-                              <td>'.$exTypeExplode[$Exrkey].'</td>
-                              <td class="text-center">-</td>
-                              <td style="text-align: right">';
-
-                                $CPEAmoAD[$j] = $examountExplode[$Exrkey];
-                                if ($j==0) {
-                                  $oneNight[] = $CPEAmoAD[0];
-                                }
-                              $AmountBreakup.=number_format($CPEAmoAD[$j],2).' AED 
-                              </td>
-                            </tr>';
+                                    $AmountBreakup.='<tr>
+                                      <td></td>
+                                      <td>'.$exTypeExplode[$Exrkey].'</td>
+                                      <td class="text-center">-</td>
+                                      <td style="text-align: right">';
+                                        $ExDis = 0;
+                                        if ($ExtrabedDiscount[$i-1]==1) {
+                                          $ExDis = $individual_discount[$j];
+                                        }
+                                        $CPEAmoAD[$j] = $examountExplode[$Exrkey]-($examountExplode[$Exrkey]*$ExDis/100);
+                                        if ($j==0) {
+                                          $oneNight[] = $CPEAmoAD[0];
+                                        }
+                                        if ($ExDis!=0) {
+                                          $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($examountExplode[$Exrkey],2).' AED</small></span><br>';
+                                        }
+                                      $AmountBreakup.=number_format($CPEAmoAD[$j],2).' AED 
+                                    </td>
+                                  </tr>';
 
                             } } } } }
 
@@ -1508,9 +1544,16 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                               <td>'.$gsvalue->application=="Per Room" ? $gsvalue->generalType : 'Adults '.$gsvalue->generalType.'</td>
                               <td class="text-center">-</td>
                               <td style="text-align: right">';
-                                $CPGAmoAD[$j] = $gsadultAmountExplode[$gsakey];
+                                $GSDis = 0;
+                                if ($GeneralDiscount[$i-1]==1) {
+                                  $GSDis = $individual_discount[$j];
+                                }
+                                $CPGAmoAD[$j] = $gsadultAmountExplode[$gsakey]-($gsadultAmountExplode[$gsakey]*$GSDis/100);
                                 if ($j==0) {
                                   $oneNight[] = $CPGAmoAD[0];
+                                }
+                                if ($GSDis!=0) {
+                                  $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($gsadultAmountExplode[$gsakey],2).' AED</small></span><br>';
                                 }
                               $AmountBreakup.= number_format($CPGAmoAD[$j],2).' AED
                               </td>
@@ -1525,11 +1568,18 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                                   <td>Child '.$gsvalue->generalType.'</td>
                                   <td class="text-center">-</td>
                                   <td class="text-center">';
-                                  $CPAmoAD[$j] = $gschildAmountExplode[$gsckey];
+                                  $GSDis = 0;
+                                  if ($GeneralDiscount[$i-1]==1) {
+                                    $GSDis = $individual_discount[$j];
+                                  }
+                                  $CPAmoAD[$j] = $gschildAmountExplode[$gsckey]-($gschildAmountExplode[$gsckey]*$GSDis/100);
                                   if ($j==0) {
                                     $oneNight[] = $CPAmoAD[0];
                                   }
-                                $AmountBreakup.=number_format($CPAmoAD[$j],2).' AED
+                                  if ($GSDis!=0) {
+                                    $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($gschildAmountExplode[$gsckey],2).' AED</small></span><br>';
+                                  } 
+                                  $AmountBreakup.=number_format($CPAmoAD[$j],2).' AED
                                   </td>
                                  </tr>';
                                } }
@@ -1546,10 +1596,18 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                                 <td>Adult '.$bvalue->board.'</td>
                                 <td class="text-center">-</td>
                                 <td style="text-align: right">';
-                                  $CPBAAmoAD[$j] = $ABRwadultamountexplode[$ABRwkey];
+                                  $BSDis = 0;
+                                  if ($BoardDiscount[$i-1]==1) {
+                                    $BSDis = $individual_discount[$j];
+                                  }
+                                  $CPBAAmoAD[$j] = $ABRwadultamountexplode[$ABRwkey]-($ABRwadultamountexplode[$ABRwkey]*$BSDis/100);
+                                  $TBAamount[$j] += $CPBAAmoAD[$j];
                                   if ($j==0) {
                                     $oneNight[] = $CPBAAmoAD[0];
                                   }
+                                  if ($BSDis!=0) {
+                                    $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($ABRwadultamountexplode[$ABRwkey],2).' AED</small></span><br>';
+                                  } 
                                 $AmountBreakup.= number_format($CPBAAmoAD[$j],2).' AED
                                   </td>
                               </tr>';
@@ -1565,10 +1623,18 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                                 <td>Child <?php echo $bvalue->board; ?></td>
                                 <td class="text-center">-</td>
                                 <td style="text-align: right">';
-                                  $CPBCAmoAd[$j] = $CBRwchildamountexplode[$CBRwkey];
+                                  $BSDis = 0;
+                                  if ($BoardDiscount[$i-1]==1) {
+                                    $BSDis = $individual_discount[$j];
+                                  }
+                                  $CPBCAmoAd[$j] = $CBRwchildamountexplode[$CBRwkey]-($CBRwchildamountexplode[$CBRwkey]*$BSDis/100);
+                                  $TBCamount[$j] += $CPBCAmoAd[$j];
                                   if ($j==0) {
                                     $oneNight[] = $CPBCAmoAd[0];
                                   }
+                                  if ($BSDis!=0) {
+                                    $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($CBRwchildamountexplode[$CBRwkey],2).' AED</small></span><br>';
+                                  } 
                                $AmountBreakup.= number_format($CPBCAmoAd[$j],2).' AED
                                 </td>
                               </tr>';
@@ -1578,16 +1644,28 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                           $AmountBreakup.='</tbody>
                           <tfoot>
                             <tr>';
-                                $totalNotMar[$i]=array_sum($WiDisroomAmount)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($CPBAAmoAD)+array_sum($CPBCAmoAd);
-                                if ($Fdays!=0) {
-                                  $temp = array_splice($CPRMRate, 1,$Fdays);
-                                } else {
-                                  $temp = $CPRMRate;
-                                }
-                                
-                                $costPrice[$i] = array_sum($temp)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($CPBAAmoAD)+array_sum($CPBCAmoAd);;
+                                $totalNotMar[$i]=array_sum($CPRMRate)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($TBAamount)+array_sum($TBCamount);
+                                if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay" && $Fdays!=0) {
+                                  array_splice($CPRMRate, 1,$Fdays);
+                                  if ($ExtrabedDiscount[$i-1]==1) {
+                                    array_splice($CPEAmoAD,1,$Fdays);
+                                  }
+                                  if ($GeneralDiscount[$i-1]==1) {
+                                    array_splice($CPGAmoAD,1,$Fdays);
+                                    array_splice($CPAmoAD,1,$Fdays);
+                                  }
+                                  if ($BoardDiscount[$i-1]==1) {
+                                    array_splice($TBAamount,1,$Fdays);
+                                    array_splice($TBCamount,1,$Fdays);
+                                  }
+                                } 
+                                $costPrice[$i] = array_sum($CPRMRate)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($TBAamount)+array_sum($TBCamount);
                               $AmountBreakup.='<td colspan="3" style="text-align: right"><strong class="text-blue">Total</strong></td>
-                              <td style="text-align: right; font-weight: 700; color: #0074b9">'.number_format($totalNotMar[$i],2).' AED</td>
+                              <td style="text-align: right; font-weight: 700; color: #0074b9">';
+                              if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+                                  $AmountBreakup.='<span style="text-decoration: line-through;color:red"><small>'.number_format($totalNotMar[$i],2).' AED</small></span><br>';
+                                }
+                              $AmountBreakup.=number_format($costPrice[$i],2).' AED</td>
                             </tr>
                           </tfoot>
                         </table>
@@ -1596,10 +1674,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                     </div>';
 
       }
-
-
-
-
     $remarks = $ci->Payment_Model->get_policy_contract($hotel_id,$booking[0]->contract_id);
     
     $discountCode = '';
@@ -1624,7 +1698,7 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     } else {
       $subject = 'YOUR BOOKING IS ON REQUEST (BOOKING ID : '.$booking[0]->booking_id.')';     
       $BookingMsg = '<span style="color:red;">YOUR BOOKING IS ON REQUEST</span>. We will get back to you within 24 hours for update';
-      $bookingTypeTag = 'Please check availability for the below <span style="color:red;">ON REQUEST</span>)';
+      $bookingTypeTag = 'Please check availability for the below <span style="color:red;">ON REQUEST</span>';
     }
 
 
@@ -1635,63 +1709,66 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
       $impremarks.=''.$remarks[0]->Important_Remarks_Policies.'<br>';
     }
 
-          $cancellationTerm = '';
-          if (count($cancellation)!=0) {
-            $cancellationTerm.= '<p style="color: #b21105;font-weight: bold;">Cancellations / Amendments</p>
-            <table class="table-bordered" style="width:100%">
-                          <thead style="background-color: #0074b9;">
-                            <tr>
-                              <th>Cancelled on or After</th>
-                              <th>Cancelled on or Before</th>
-                              <th>Cancellation Charge</th>
-                            </tr>
-                          </thead>
-                          <tbody>';
-               foreach ($cancellation as $Canckey => $Cancvalue) { 
-                  if ($Cancvalue->application=="NON REFUNDABLE") {  
-                    $charge = $total_amount * ($Cancvalue->cancellationPercentage/100);
-                  $cancellationTerm.= '<tr>
-                    <td>'.date('d/m/Y',strtotime($booking[0]->Created_Date)).'</td>
-                    <td>'.date('d/m/Y',strtotime($booking[0]->check_in)).' </td>
-                    <td>'.agent_currency().' '.currency_type(agent_currency(),ceil($charge)).' ('.$Cancvalue->application.' )'.'</td>
-                  </tr>';
-                   } else { 
+    $cancellationTerm = '';
+    if (count($cancellation)!=0) {
+      $roomExp = explode(",", $booking[0]->room_id);
+      $cancellationTerm.= '<p style="color: #b21105;font-weight: bold;">Cancellations / Amendments</p>';
+      foreach ($roomExp as $key => $value) {
+      $cancellationTerm.= '<h4 class="room-name" style="padding: 0px;margin: 0px;text-indent: 5px;">Room '.($key+1).'</h4>
+      <table class="table-bordered" style="width:100%">
+                    <thead style="background-color: #0074b9;">
+                      <tr>
+                        <th>Cancelled on or After</th>
+                        <th>Cancelled on or Before</th>
+                        <th>Cancellation Charge</th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+         foreach ($cancellation as $Canckey => $Cancvalue) { 
+          if ($Cancvalue->roomIndex==($key+1) || $Cancvalue->roomIndex=="") {
+            if ($Cancvalue->application=="NON REFUNDABLE") {  
+              $charge = $total_amount * ($Cancvalue->cancellationPercentage/100);
+            $cancellationTerm.= '<tr>
+              <td>'.date('d/m/Y',strtotime($booking[0]->Created_Date)).'</td>
+              <td>'.date('d/m/Y',strtotime($booking[0]->check_in)).' </td>
+              <td>'.agent_currency().' '.currency_type(agent_currency(),ceil($charge)).' ('.$Cancvalue->application.' )'.'</td>
+            </tr>';
+             } else { 
 
-                    $lastAmt = (array_sum($oneNight)*$total_markup)/100+array_sum($oneNight);
-                    if ($Cancvalue->application=="FIRST NIGHT") {
-                      $charge = $lastAmt*($Cancvalue->cancellationPercentage/100);
-                    } else if ($Cancvalue->application=="FREE OF CHARGE") {
-                      $charge = 0;
-                    } else {
-                      $charge = $total_amount * ($Cancvalue->cancellationPercentage/100); 
-                    } 
-                  $cancellationTerm.= '<tr>
-                    <td>'; 
-                    if(date('Y-m-d' , strtotime('-'.($Cancvalue->daysFrom).' days', strtotime($booking[0]->check_in))) < date('Y-m-d')) {
-                      $cancellationTerm.=date('d/m/Y').'';
-                    } else {
-                      $cancellationTerm.=date('d/m/Y' , strtotime('-'.($Cancvalue->daysFrom).' days', strtotime($booking[0]->check_in))).'';
-                    }
-                    $cancellationTerm.= '</td>
-                    <td>'.date('d/m/Y' , strtotime('-'.$Cancvalue->daysTo.' days', strtotime($booking[0]->check_in))).'</td>
-                    <td>'.agent_currency().' '.currency_type(agent_currency(),ceil($charge)).' ('.$Cancvalue->application.')</td>
-                  </tr>';
-               } } 
+              $lastAmt = (array_sum($oneNight)*$total_markup)/100+array_sum($oneNight);
+              if ($Cancvalue->application=="FIRST NIGHT") {
+                $charge = $lastAmt*($Cancvalue->cancellationPercentage/100);
+              } else if ($Cancvalue->application=="FREE OF CHARGE") {
+                $charge = 0;
+              } else {
+                $charge = $total_amount * ($Cancvalue->cancellationPercentage/100); 
+              } 
+            $cancellationTerm.= '<tr>
+              <td>'; 
+              if(date('Y-m-d' , strtotime('-'.($Cancvalue->daysFrom).' days', strtotime($booking[0]->check_in))) < date('Y-m-d')) {
+                $cancellationTerm.=date('d/m/Y').'';
+              } else {
+                $cancellationTerm.=date('d/m/Y' , strtotime('-'.($Cancvalue->daysFrom).' days', strtotime($booking[0]->check_in))).'';
+              }
+              $cancellationTerm.= '</td>
+              <td>'.date('d/m/Y' , strtotime('-'.$Cancvalue->daysTo.' days', strtotime($booking[0]->check_in))).'</td>
+              <td>'.agent_currency().' '.currency_type(agent_currency(),ceil($charge)).' ('.$Cancvalue->application.')</td>
+            </tr>';
+         } } }
 
-              // foreach($cancellation as $CTkey => $CTvalue) {
-              //   $cancellationTerm.=''.$CTvalue->msg.'<br>';
-              // }
-          }
-          $cancellationTerm.='</tbody></table>';
-
-         $grandTotal =  $total_amount;
+        // foreach($cancellation as $CTkey => $CTvalue) {
+        //   $cancellationTerm.=''.$CTvalue->msg.'<br>';
+        // }
+      $cancellationTerm.='</tbody></table>';
+      }
+    }
+          $grandTotal =  $total_amount;
           $message = 'Dear '.$booking[0]->bk_contact_fname." ".$booking[0]->bk_contact_lname.',<br><br>
             Thank you for booking with Otelseasy.com<br><br>
             '.$BookingMsg.'<br><br>
             Booking Details : <br>
             Reference Number : '.$booking[0]->booking_id.'<br>
             Hotel Name : '.$hotel[0]->hotel_name.'<br>
-            Room Type : '.$hotel[0]->room_name." ".$hotel[0]->Room_Type.'<br>
             '.$board.'
             No. of Room(s) : '.$booking[0]->book_room_count.'<br>
             Check-In Date : '.date('d/m/Y',strtotime($booking[0]->check_in)).'<br>
@@ -1718,7 +1795,7 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
             '.$mail_settings[0]->smtp_user.'<br>
             971 54 441 2554<br>
             <strong><a style="color:blue;" href="'.base_url().'">www.otelseasy.com</a></strong><br>.';  
-
+                 
           $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
           $ci->email->to($agent[0]->Email);
           if ($agent[0]->Email_Accounts!="") {
@@ -1743,7 +1820,10 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
       $final_total = array_sum($costPrice);
                 $cancellationTermHotel = '';
           if (count($cancellation)!=0) {
-            $cancellationTermHotel.= '<table class="table-bordered" style="width:100%">
+            $roomExp = explode(",", $booking[0]->room_id);
+            foreach ($roomExp as $key => $value) {
+            $cancellationTermHotel.= '<h5 class="room-name">Room '.($key+1).'</h5>
+                  <table class="table-bordered" style="width:100%">
                           <thead style="background-color: #0074b9;">
                             <tr>
                               <th>Cancelled on or After</th>
@@ -1753,6 +1833,7 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                           </thead>
                           <tbody>';
                foreach ($cancellation as $Canckey => $Cancvalue) { 
+                if ($Cancvalue->roomIndex==($key+1) || $Cancvalue->roomIndex=="") {
                   if ($Cancvalue->application=="NON REFUNDABLE") {  
                     $charge = $final_total * ($Cancvalue->cancellationPercentage/100);
                   $cancellationTermHotel.= '<tr>
@@ -1781,15 +1862,15 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                     <td>'.date('d/m/Y' , strtotime('-'.$Cancvalue->daysTo.' days', strtotime($booking[0]->check_in))).'</td>
                     <td>AED '.ceil($charge).' ('.$Cancvalue->application.')</td>
                   </tr>';
-               } } 
+               } } } 
 
               // foreach($cancellation as $CTkey => $CTvalue) {
               //   $cancellationTermHotel.=''.$CTvalue->msg.'<br>';
               // }
-          }
           $cancellationTermHotel.='</tbody></table>';
+          }
+        }
 
-      $promotion =  $discountType!="" ? '<span style="text-align:right;float:right;color:red;"><span style="text-decoration: line-through;">AED ' .array_sum($totalNotMar).'</span> - '.$discountType .'<span>': " ";
       $subject1 = 'NEW BOOKING FROM OTELSEASY.COM (BOOKING ID : '.$booking[0]->booking_id.')';
       $message1 = 'Dear Reservations,<br><br>
                   Warm greetings from Otelseasy!<br><br>
@@ -1808,8 +1889,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                     }
 
                     #customers tr:nth-child(even){background-color: #f2f2f2;}
-
-                    #customers tr:hover {background-color: #ddd;}
 
                     #customers th {
                       padding-top: 12px;
@@ -1842,10 +1921,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                       <td><span style="width:50%;display:block;float:left;border-right:1px solid;">Adults : '.$booking[0]->adults_count.' </span><span style="width:49%;display:block;float:left;text-indent:5px;">Children : '.$booking[0]->childs_count.'</span> </td>
                     </tr>
                     <tr>
-                      <td>Room Name</td>
-                      <td>'.$hotel[0]->room_name." ".$hotel[0]->Room_Type.'</td>
-                    </tr>
-                    <tr>
                       <td>Number of Rooms</td>
                       <td>'.$booking[0]->book_room_count.'</td>
                     </tr>
@@ -1867,11 +1942,11 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                     </tr>
                     <tr>
                       <td>Room Rate Per Night</td>
-                      <td>'.$AmountBreakup.'</td>
+                      <td style>'.$AmountBreakup.'</td>
                     </tr>
                     <tr>
                       <td>Total Amount</td>
-                      <td>AED '.array_sum($costPrice).' '.$promotion.'</td>
+                      <td>'.array_sum($costPrice).' AED</td>
                     </tr>
                     <tr>
                       <td>Booking Code</td>
@@ -2003,7 +2078,7 @@ function Con_menu_permission($conId){
   $ci->db->where('contract_id',$conId);
   return $ci->db->get()->result();
 }
-function DateWisediscount($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$checkOut) {
+function DateWisediscount($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$checkOut,$status='false') {
   $ci =& get_instance();
   $chIn = date_create($checkIn);
   $chOut = date_create($checkOut);
@@ -2022,7 +2097,7 @@ function DateWisediscount($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$
   $contractCheck = array();
   $roomCheck = array();
   $BlackoutDateCheck = array();
-
+  if ($status=='false') {
   $query = $ci->db->query('SELECT * FROM hoteldiscount WHERE Discount_flag = 1 AND
     FIND_IN_SET('.$hotel_id.' ,hotelid) > 0 AND FIND_IN_SET('.$room_id.',room) > 0 AND FIND_IN_SET("'.$contract_id.'",contract) > 0 AND ((Styfrom <= "'.$date.'" AND Styto >= "'.$date.'" AND  BkFrom <= "'.date("Y-m-d").'" AND BkTo >= "'.date("Y-m-d").'") AND Bkbefore < '.$tot_days.' AND discount_type = "MLOS" AND numofnights <= '.$totalDays.') AND discount  = (SELECT MIN(discount) FROM hoteldiscount  WHERE Discount_flag = 1 AND FIND_IN_SET('.$hotel_id.' ,hotelid) > 0 AND FIND_IN_SET('.$room_id.',room) > 0 AND FIND_IN_SET("'.$contract_id.'",contract) > 0 AND (Styfrom <= "'.$date.'" AND Styto >= "'.$date.'" AND  BkFrom <= "'.date("Y-m-d").'" AND BkTo >= "'.date("Y-m-d").'") AND Bkbefore < '.$tot_days.' AND discount_type = "MLOS" AND numofnights <= '.$totalDays.')')->result();
 
@@ -2056,6 +2131,11 @@ function DateWisediscount($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$
         }
         if (array_sum($BlackoutDateCheck)==0) {
           // $discount = $query[0]->discount;
+          $return['discountType'] = 'discount';
+          if ($query[0]->discount_type!="") {
+            $return['discountType'] = $query[0]->discount_type;
+          }
+          $return['discountCode'] = $query[0]->discountCode;
           $return['discount'] = $query[0]->discount;
           $return['Extrabed'] = $query[0]->Extrabed;
           $return['General'] = $query[0]->General;
@@ -2063,6 +2143,7 @@ function DateWisediscount($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$
         }
 
     }
+  }
  return $return;
 }
 function DateWisediscountCode($date,$hotel_id,$room_id,$contract_id,$type,$checkIn,$checkOut) {
@@ -2370,7 +2451,31 @@ function revenue_markup($hotel_id,$contract_id,$agent_id) {
 }
 function revenue_markup1($hotel_id,$contract_id,$agent_id) {  
   $ci =& get_instance();
-  $query = $ci->db->query("SELECT Markup,Markuptype FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
+  $query = $ci->db->query("SELECT * FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($_REQUEST['Check_in']))."' AND  ToDate >= '".date('Y-m-d',strtotime($_REQUEST['Check_out'].'-1 days'))."'")->result();
+  if (count($query)!=0) {
+    $return['Markup'] = $query[0]->Markup;
+    $return['Markuptype'] = $query[0]->Markuptype;
+    $return['ExtrabedMarkup'] = $query[0]->ExtrabedMarkup;
+    $return['ExtrabedMarkuptype'] = $query[0]->ExtrabedMarkuptype;
+    $return['GeneralSupMarkup'] = $query[0]->GeneralSupMarkup;
+    $return['GeneralSupMarkuptype'] = $query[0]->GeneralSupMarkuptype;
+    $return['BoardSupMarkup'] = $query[0]->BoardSupMarkup;
+    $return['BoardSupMarkuptype'] = $query[0]->BoardSupMarkuptype;
+  } else {
+    $return['Markup'] = '';
+    $return['Markuptype'] = '';
+    $return['ExtrabedMarkup'] = '';
+    $return['ExtrabedMarkuptype'] = '';
+    $return['GeneralSupMarkup'] = '';
+    $return['GeneralSupMarkuptype'] = '';
+    $return['BoardSupMarkup'] = '';
+    $return['BoardSupMarkuptype'] = '';
+  }
+  return $return;
+}
+function revenue_markupDatewise($hotel_id,$contract_id,$agent_id,$date) {  
+  $ci =& get_instance();
+  $query = $ci->db->query("SELECT Markup,Markuptype FROM `hotel_tbl_revenue` where FIND_IN_SET(".$hotel_id.", IFNULL(hotels,'')) > 0 AND FIND_IN_SET('".$contract_id."', IFNULL(contracts,'')) > 0 AND FIND_IN_SET(".$agent_id.", IFNULL(Agents,'')) > 0 AND FromDate <= '".date('Y-m-d',strtotime($date))."' AND  ToDate >= '".date('Y-m-d',strtotime($date))."'")->result();
   if (count($query)!=0) {
     $return['Markup'] = $query[0]->Markup;
     $return['Markuptype'] = $query[0]->Markuptype;
@@ -3942,6 +4047,9 @@ function Alldiscount($startdate,$enddate,$hotel_id,$room_id,$contract_id,$type) 
           $discount['dis'] = 'true';
           $discount['type'] = $query[0]->discount_type;
           $discount['discountCode'] = $query[0]->discountCode;
+          $discount['Extrabed'] = $query[0]->Extrabed;
+          $discount['General'] = $query[0]->General;
+          $discount['Board'] = $query[0]->Board;
         }
     }
  return $discount;
@@ -3963,4 +4071,16 @@ function defaultNationalityGET() {
   $ci->db->where('id',$agent_id);
   $query = $ci->db->get()->result(); 
   return $query[0]->Country;
+}
+function roomnameGET($room_id,$hotel_id) {
+  $ci =& get_instance();
+  $ci->db->select('CONCAT(a.room_name," ",b.Room_Type) as name');
+  $ci->db->from('hotel_tbl_hotel_room_type a');
+  $ci->db->join('hotel_tbl_room_type b','b.id=a.room_type','inner');
+  $ci->db->where('a.id',$room_id);
+  $ci->db->where('a.hotel_id',$hotel_id);
+  $query1=$ci->db->get();
+  $result1 = $query1->result();
+  $name = $result1[0]->name;
+  return $name;
 }

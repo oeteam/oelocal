@@ -30,179 +30,7 @@ class Payment_Model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
-    public function room_booking_add($request,$max_booking_id,$agent_markup,$admin_markup,$normal_price,$per_room_amount,$tax_amount,$total_amount,$agent_currency_type,$search_markup,$discount,$discountCode) {
-        if ($request['RequestType']=='Book') {
-          $booking_flag = 2;
-        } else {
-          $booking_flag = 8;
-        }
-        $checkin_date=date_create($request['Check_in']);
-        $checkout_date=date_create($request['Check_out']);
-        $no_of_days=date_diff($checkin_date,$checkout_date);
-        $tot_days = $no_of_days->format("%a");
-
-        for ($i=0; $i < $tot_days ; $i++) {
-          $dateOut = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
-          $RMdiscountget[$i] = DateWisediscount($dateOut,$request['hotel_id'],$request['room_id'],$request['contract_id'],'Room',$request['Check_in'],$request['Check_out']);
-          $RMdiscount[$i] = $RMdiscountget[$i]['discount'];
-        }
-        $individual_discount = implode(",", $RMdiscount);
-
-        // stay and pay discount start
-        $discountType = '';
-        $discountStay = '';
-        $discountPay = '';
-        $Alldiscount =  Alldiscount(date('Y-m-d',strtotime($request['Check_in'])),date('Y-m-d',strtotime($request['Check_out'])),$request['hotel_id'],$request['room_id'],$request['contract_id'],'Room'); 
-        if ($Alldiscount['dis']=='true') {
-          $discountCode = $Alldiscount['discountCode'];
-          $discountType =  $Alldiscount['type'];
-          $discountStay = $Alldiscount['stay'];         
-          $discountPay = $Alldiscount['pay'];         
-        }
-        // stay and pay discount end
-
-        $Rwadults = implode(",", $request['reqadults']);
-        $RwChild = implode(",", $request['reqChild']);
-        $reqroom1childAge = "";
-        $reqroom2childAge = "";
-        $reqroom3childAge = "";
-        $reqroom4childAge = "";
-        $reqroom5childAge = "";
-        $reqroom6childAge = "";
-        $reqroom7childAge = "";
-        $reqroom8childAge = "";
-        $reqroom9childAge = "";
-        $reqroom10childAge = "";
-        if (isset($request['reqroom1-childAge'])) {
-          $reqroom1childAge = implode(",", $request['reqroom1-childAge']);
-        }
-        if (isset($request['reqroom2-childAge'])) {
-          $reqroom2childAge = implode(",", $request['reqroom2-childAge']);
-        }
-        if (isset($request['reqroom3-childAge'])) {
-          $reqroom3childAge = implode(",", $request['reqroom3-childAge']);
-        }
-        if (isset($request['reqroom4-childAge'])) {
-          $reqroom4childAge = implode(",", $request['reqroom4-childAge']);
-        }
-        if (isset($request['reqroom5-childAge'])) {
-          $reqroom5childAge = implode(",", $request['reqroom5-childAge']);
-        }
-        if (isset($request['reqroom6-childAge'])) {
-          $reqroom6childAge = implode(",", $request['reqroom6-childAge']);
-        }
-        if (isset($request['reqroom7-childAge'])) {
-          $reqroom7childAge = implode(",", $request['reqroom7-childAge']);
-        }
-        if (isset($request['reqroom8-childAge'])) {
-          $reqroom8childAge = implode(",", $request['reqroom8-childAge']);
-        }
-        if (isset($request['reqroom9-childAge'])) {
-          $reqroom9childAge = implode(",", $request['reqroom9-childAge']);
-        }
-        if (isset($request['reqroom10-childAge'])) {
-          $reqroom10childAge = implode(",", $request['reqroom10-childAge']);
-        }
-        $this->db->select('*');
-        $this->db->from('hotel_tbl_contract');
-        $this->db->where('contract_id',$request['contract_id']);
-        $contract_board = $this->db->get()->result();
-
-        if (isset($request['first_name_child'])) {
-            $first_name_child = implode(",", $request['first_name_adult']);
-        } else {
-            $first_name_child = "";
-        }
-        if (isset($request['last_name_child'])) {
-            $last_name_child =  implode(",", $request['last_name_child']);
-        } else {
-            $last_name_child = "";
-        }
-        if (isset($request['pax_kid'])) {
-            $pax_kid = implode(",", $request['pax_kid']);
-        } else {
-            $pax_kid = "";
-        }
-        for ($i=0; $i < 11; $i++) { 
-          if (isset($request['first_name'][$i])) {
-            $request['first_name'][$i] = $request['first_name'][$i];
-            $request['last_name'][$i] = $request['last_name'][$i];
-          } else {
-            $request['first_name'][$i] = "";
-            $request['last_name'][$i] = "";
-          }
-        }
-        $datas= array(
-                  'booking_flag' => $booking_flag,
-                  'booking_id' =>$max_booking_id,
-                  'hotel_id' =>$request['hotel_id'],
-                  'room_id' =>$request['room_id'],
-                  'normal_price' =>$normal_price,
-                  'per_room_amount' =>$per_room_amount,
-                  'tax' =>$request['tax'],
-                  'tax_amount' =>$tax_amount,
-                  'total_amount' =>$total_amount,
-                  'currency_type' =>$agent_currency_type,
-                  'adults_count' =>$request['adults'],
-                  'childs_count' =>$request['childs'],
-                  'agent_markup' =>$agent_markup,
-                  'admin_markup' =>$admin_markup,
-                  'check_in' => $request['Check_in'],
-                  'check_out' => $request['Check_out'],
-                  'no_of_days' => $tot_days,
-                  'book_room_count' => $request['no_of_rooms'],
-                  'agent_id' =>  $this->session->userdata('agent_id'),
-                  'search_markup' =>  $search_markup,
-                  'bk_contact_fname' => $request['first_name'][0],
-                  'bk_contact_lname' => $request['last_name'][0],
-                  'bk_contact_email' => $request['email'],
-                  'bk_contact_number' => $request['contact_num'],
-                  'contract_id' => $request['contract_id'],
-                  'board' => $contract_board[0]->board,
-                  'discount' => $discount,
-                  'Rwadults' => $Rwadults,
-                  'Rwchild' => $RwChild,
-                  'Room1ChildAge' => $reqroom1childAge,
-                  'Room2ChildAge' => $reqroom2childAge,
-                  'Room3ChildAge' => $reqroom3childAge,
-                  'Room4ChildAge' => $reqroom4childAge,
-                  'Room5ChildAge' => $reqroom5childAge,
-                  'Room6ChildAge' => $reqroom6childAge,
-                  'Room7ChildAge' => $reqroom7childAge,
-                  'Room8ChildAge' => $reqroom8childAge,
-                  'Room9ChildAge' => $reqroom9childAge,
-                  'Room10ChildAge' => $reqroom10childAge,
-                  'individual_amount' => implode(",",$request['per_day_amount']),
-                  'individual_discount' => $individual_discount,
-                  'SpecialRequest' => $request['SpecialRequest'],
-                  'Room1-FName' => $request['first_name'][0],
-                  'Room2-FName' => $request['first_name'][1],
-                  'Room3-FName' => $request['first_name'][2],
-                  'Room4-FName' => $request['first_name'][3],
-                  'Room5-FName' => $request['first_name'][4],
-                  'Room6-FName' => $request['first_name'][5],
-                  'Room7-FName' => $request['first_name'][6],
-                  'Room8-FName' => $request['first_name'][7],
-                  'Room9-FName' => $request['first_name'][8],
-                  'Room10-FName' => $request['first_name'][9],
-                  'Room1-LName' => $request['last_name'][0],
-                  'Room2-LName' => $request['last_name'][1],
-                  'Room3-LName' => $request['last_name'][2],
-                  'Room4-LName' => $request['last_name'][3],
-                  'Room5-LName' => $request['last_name'][4],
-                  'Room6-LName' => $request['last_name'][5],
-                  'Room7-LName' => $request['last_name'][6],
-                  'Room8-LName' => $request['last_name'][7],
-                  'Room9-LName' => $request['last_name'][8],
-                  'Room10-LName' => $request['last_name'][9],
-                  'discountCode' => $discountCode,
-                  'discountType' => $discountType,
-                  'discountStay' => $discountStay,
-                  'discountPay' => $discountPay,
-                  'nationality' => $request['nationality'],
-                  'Created_Date' => date('Y-m-d'),
-                  'Created_By' =>  $this->session->userdata('agent_id'),
-                );
+    public function room_booking_add($datas) {
         $this->db->insert('hotel_tbl_booking',$datas);
         $bool_id = $this->db->insert_id();
         return $bool_id;
@@ -386,7 +214,7 @@ class Payment_Model extends CI_Model {
                 'credit_amount' => $credit,
                 'Total_credit' => $total,
                 'narration' => 'Refund',
-                'created_date' => date("Y-m-d"),
+                'created_date' => date('Y-m-d H:i:s'),
                 'created_by' => $createdBy,
               );
       $this->db->insert('hotel_tbl_agent_credit_detail',$data);
@@ -411,7 +239,7 @@ class Payment_Model extends CI_Model {
                     'Credit_amount' => $credit_amt,
                     'used_amount' => $used_amt,
                     'booking_id' => $booking_id,
-                    'date' => date('d/m/Y'),
+                    'date' => date('Y-m-d H:i:s'),
                     'agent_id' =>  $this->session->userdata('agent_id'),
                   );
       $this->db->insert('hotels_tbl_agent_amount_status',$datas);
@@ -696,7 +524,7 @@ class Payment_Model extends CI_Model {
       $return['bsCount'] = array_sum($bsarraySum);
       return $return;
     }
-    public function bkboardSupplementConfirm($stayDate, $BookingDate, $board, $adultamount, $childage, $childAmount, $agent_markup, $total_markup, $admin_markup,$booking_id,$reqadults,$reqchildCount,$rwadult,$rwadultamount,$rwchild,$rwchildAmount) {
+    public function bkboardSupplementConfirm($stayDate, $BookingDate, $board, $adultamount, $childage, $childAmount, $agent_markup, $total_markup, $admin_markup,$booking_id,$reqadults,$reqchildCount,$rwadult,$rwadultamount,$rwchild,$rwchildAmount,$contract_id,$room_id,$index) {
       $datas= array(
                   'bookingID' =>$booking_id,
                   'stayDate' =>$stayDate,
@@ -714,13 +542,16 @@ class Payment_Model extends CI_Model {
                   'RwadultAmount' => $rwadultamount,
                   'Rwchild' => $rwchild,
                   'RwchildAmount' => $rwchildAmount,
-                  'createdDate' => date('Y-m-d'),
+                  'room_id' => $room_id,
+                  'contract_id' => $contract_id,
+                  'roomIndex' => $index,
+                  'createdDate' => date('Y-m-d H:i:s'),
                   'createdBy' =>  $this->session->userdata('agent_id'),
                 );
         $this->db->insert('hotel_tbl_bookingboard',$datas);
      return true;
     }
-    public function bkgeneralSupplementConfirm($gstayDate, $gBookingDate, $generalType, $gadultamount , $gchildamount, $agent_markup, $total_markup, $admin_markup,$booking_id,$reqadults,$reqChild,$mand,$Rwadult,$Rwchild,$Rwadultamount,$RwchildAmount,$application) {
+    public function bkgeneralSupplementConfirm($gstayDate, $gBookingDate, $generalType, $gadultamount , $gchildamount, $agent_markup, $total_markup, $admin_markup,$booking_id,$reqadults,$reqChild,$mand,$Rwadult,$Rwchild,$Rwadultamount,$RwchildAmount,$application,$room_id,$contract_id,$index) {
       $datas= array(
                   'bookingID' =>$booking_id,
                   'gstayDate' =>$gstayDate,
@@ -739,20 +570,23 @@ class Payment_Model extends CI_Model {
                   'Rwadultamount' =>$Rwadultamount,
                   'RwchildAmount' =>$RwchildAmount,
                   'application' => $application,
-                  'createdDate' => date('Y-m-d'),
+                  'room_id' => $room_id,
+                  'contract_id' => $contract_id,
+                  'roomIndex'   =>$index,
+                  'createdDate' => date('Y-m-d H:i:s'),
                   'createdBy' =>  $this->session->userdata('agent_id'),
                 );
         $this->db->insert('hotel_tbl_bookGeneralSupplement',$datas);
      return true;
     }
-    public function get_Confirmgeneral_supplement($request) {
+    public function get_Confirmgeneral_supplement($request,$contract_id,$room_id,$j) {
 
       /*Standard capacity get from rooms start*/
 
-      $this->db->select('*');
+      $this->db->select('occupancy,occupancy_child,standard_capacity');
       $this->db->from('hotel_tbl_hotel_room_type');
       $this->db->where('hotel_id',$request['hotel_id']);
-      $this->db->where('id',$request['room_id']);
+      $this->db->where('id',$room_id);
       $Rmquery = $this->db->get();
       $Rmrow_values  = $Rmquery->row_array();
       $occupancyAdult = $Rmrow_values['occupancy'];
@@ -778,7 +612,7 @@ class Payment_Model extends CI_Model {
       $ManchildAmount = array();
       $MangeneralsupplementforChilds = array();
       $MangeneralsupplementType = array();
-      $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$request['room_id']."'")->result();
+      $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
       // print_r($request);
       $checkin_date=date_create($request['Check_in']);
       $checkout_date=date_create($request['Check_out']);
@@ -792,86 +626,45 @@ class Payment_Model extends CI_Model {
         /*Mandatory General Supplement start*/
         $adultAmount =array();
         $RWadultAmount = array();
-        $generalSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_generalsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."'  AND hotel_id = '".$request['hotel_id']."'  AND mandatory = 1")->result();
+        $generalSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_generalsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."'  AND mandatory = 1 AND FIND_IN_SET('".$room_id."', IFNULL(roomType,'')) > 0")->result();
           $gsarraySum[$i] = count($generalSplmntCheck[$i]);
         if (count($generalSplmntCheck[$i])!=0) {
           foreach ($generalSplmntCheck[$i] as $key1 => $value1) {
-                $explodeRoomType[$key1] = explode(",", $value1->roomType);
-                foreach ($explodeRoomType[$key1] as $key4 => $value4) {
-                    if ($value4==$roomType[0]->id) {
-                      if ($value1->application=="Per Person") {
-                        if (round($value1->adultAmount)!=0) {
-                          $adultAmount[$value1->type] = $value1->adultAmount*array_sum($request['reqadults']);
-                        }
-                        for ($j=1; $j <= count($request['reqadults']); $j++) { 
-                          if (round($value1->adultAmount)!=0) {
-                            $RWadultAmount[$value1->type][$j] = $value1->adultAmount*$request['reqadults'][$j-1];
-                            $RWadult[$value1->type][$j] = $j;
-                          }
-                          if (isset($request['reqroom'.$j.'-childAge'])) {
-                            foreach ($request['reqroom'.$j.'-childAge'] as $key44 => $value44) {
-                              if ($value1->MinChildAge < $value44) {
-                                if (round($value1->childAmount)!=0) {
-                                  $childAmount[$value1->type] = $value1->childAmount;
-                                  $RWchildAmount[$value1->type][$j][$key44] = $value1->childAmount;
-                                  $RWchild[$value1->type][$j] = $j;
-                                }
-                                // $childAmount[$value1->type] = $value1->childAmount;
-                              } 
-                            }
-
-                          }
-
-                        }
-                      } else {
-                        if (round($value1->adultAmount)!=0) {
-                          $adultAmount[$value1->type] = $value1->adultAmount*count($request['reqadults']);
-                          $childAmount[$value1->type] = 0;
-                          $RWadultAmount[$value1->type][1] = $value1->adultAmount*count($request['reqadults']);
-                          $RWadult[$value1->type][1] = 1;
-                        }
-                      }
-                      $generalsupplementType[$key1] = $value1->type;
-                      $generalsupplementapplication[$key1] = $value1->application;
+            if ($value1->application=="Per Person") {
+              if (round($value1->adultAmount)!=0) {
+                $adultAmount[$value1->type] = $value1->adultAmount*$request['reqadults'][$j-1];
+              }
+              if (round($value1->adultAmount)!=0) {
+                $RWadultAmount[$value1->type][$j] = $value1->adultAmount*$request['reqadults'][$j-1];
+                $RWadult[$value1->type][$j] = $j;
+              }
+              if (isset($request['reqroom'.$j.'-childAge'])) {
+                foreach ($request['reqroom'.$j.'-childAge'] as $key44 => $value44) {
+                  if ($value1->MinChildAge < $value44) {
+                    if (round($value1->childAmount)!=0) {
+                      $childAmount[$value1->type] = $value1->childAmount;
+                      $RWchildAmount[$value1->type][$j][$key44] = $value1->childAmount;
+                      $RWchild[$value1->type][$j] = $j;
                     }
+                    // $childAmount[$value1->type] = $value1->childAmount;
+                  } 
                 }
-                
+
+              }
+            } else {
+              if (round($value1->adultAmount)!=0) {
+                $adultAmount[$value1->type] = $value1->adultAmount;
+                $childAmount[$value1->type] = 0;
+                $RWadultAmount[$value1->type][1] = $value1->adultAmount;
+                $RWadult[$value1->type][1] = 1;
+              }
             }
+            $generalsupplementType[$key1] = $value1->type;
+            $generalsupplementapplication[$key1] = $value1->application;
+                
+          }
         }
 
-        /*Mandatory General Supplement end*/
-        /*Without Mandatory General Supplement start*/
-        // $MangeneralSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_generalsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."'  AND hotel_id = '".$request['hotel_id']."'  AND mandatory = 0")->result();
-        // if (count($MangeneralSplmntCheck[$i])!=0) {
-        //     foreach ($MangeneralSplmntCheck[$i] as $key5 => $value5) {
-              
-        //       $ManexplodeRoomType[$key5] = explode(",", $value5->roomType);
-        //         foreach ($ManexplodeRoomType[$key5] as $key6 => $value6) {
-        //             if ($value6==$roomType[0]->id) {
-        //               foreach ($request['reqadults'] as $key7 => $value7) {
-        //                 if (($value7+$request['reqChild'][$key7]) > $standard_capacity) {
-        //                   // echo ($value7+$request['Child'][$key7]);
-        //                   $mangsarraySum[$i] = count($MangeneralSplmntCheck[$i]);
-        //                   if ($value5->application=="Per Person") {
-        //                     $ManadultAmount[$value5->type][$key7] = ($value5->adultAmount*$value7);
-        //                     $ManchildAmount[$value5->type][$key7] = ($value5->childAmount*$request['reqChild'][$key7]);
-        //                     $MangeneralsupplementforAdults[$value5->type][$key7] = $value7;
-        //                     $MangeneralsupplementforChilds[$value5->type][$key7] =  $request['reqChild'][$key7];
-        //                   } else {
-        //                     $ManadultAmount[$value5->type][$key7] = $value5->adultAmount;
-        //                     $ManchildAmount[$value5->type][$key7] = 0;
-        //                     $MangeneralsupplementforAdults[$value5->type][$key7] = 1;
-        //                     $MangeneralsupplementforChilds[$value5->type][$key7] =  0;
-        //                   }
-        //                   $MangeneralsupplementType[$key5] = $value5->type;
-        //                 }
-        //               }
-                      
-        //             }
-        //         }
-        //     }
-        //   }
-        /*Without Mandatory General Supplement end*/
         $return['date'][$i] = $dateFormatdate[$i];
         $return['day'][$i] = $dateFormatday[$i];
         $return['adultamount'][$i] = $adultAmount;
@@ -945,15 +738,18 @@ class Payment_Model extends CI_Model {
       }
       return $data;
     }
-    public function addCancellationBooking($booking_id,$msg,$percentage,$daysFrom,$daysTo,$application) {
+    public function addCancellationBooking($booking_id,$msg,$percentage,$daysFrom,$daysTo,$application,$room_id="",$contract_id="",$index) {
       $datas= array(
                   'bookingID'               =>$booking_id,
+                  'room_id'                 =>$room_id,
+                  'contract_id'             =>$contract_id,
+                  'roomIndex'                =>$index,
                   'daysFrom'                =>$daysFrom,
                   'daysTo'                  =>$daysTo,
                   'cancellationPercentage'  =>$percentage,
                   'application'             =>$application,
                   'msg'                     =>$msg,
-                  'createdDate'             => date('Y-m-d'),
+                  'createdDate'             => date('Y-m-d H:i:s'),
                   'createdBy'               =>  $this->session->userdata('agent_id'),
                 );
         $this->db->insert('hotel_tbl_bookcancellationpolicy',$datas);
@@ -1197,47 +993,34 @@ class Payment_Model extends CI_Model {
         // exit();
         return $return;
     }
-    public function get_PaymentConfirmextrabedAllotment($request) {
+    public function get_PaymentConfirmextrabedAllotment($request,$contract_id,$room_id,$index) {
       
       $extrabedAmount  = array();
       $extraBedtotal  = array();
       $exrooms = array();
       $extrabedType = array();
 
-      $this->db->select('*');
+      $this->db->select('tax_percentage,max_child_age,board');
       $this->db->from('hotel_tbl_contract');
       $this->db->where('hotel_id',$request['hotel_id']);
-      $this->db->where('contract_id',$request['contract_id']);
+      $this->db->where('contract_id',$contract_id);
       $query = $this->db->get();
       $row_values  = $query->row_array();
       $tax = $row_values['tax_percentage'];
       $max_child_age = $row_values['max_child_age'];
       $contract_board = $row_values['board'];
-      $contract_id = $request['contract_id'];
-
-      // foreach ($request['reqChild'] as $Rreqkey => $Rreqvalue) {
-      //   if ($Rreqvalue!=0) {
-      //     for ($q=1; $q <=$Rreqvalue ; $q++) { 
-      //         if ( isset($request['reqroom'.($Rreqkey+1).'-childAge'][$q-1]) && $request['reqroom'.($Rreqkey+1).'-childAge'][$q-1] >= $max_child_age) {
-      //           $request['reqadults'][$Rreqkey]+=1;
-      //           $request['reqChild'][$Rreqkey]-=1;
-      //           unset($request['reqroom'.($Rreqkey+1).'-childAge'][$q-1]);
-      //         }
-      //     }
-      //   }
-      // }
         
-      $this->db->select('*');
+      $this->db->select('occupancy,occupancy_child,standard_capacity,max_total');
       $this->db->from('hotel_tbl_hotel_room_type');
       $this->db->where('hotel_id',$request['hotel_id']);
-      $this->db->where('id',$request['room_id']);
+      $this->db->where('id',$room_id);
       $Rmquery = $this->db->get();
       $Rmrow_values  = $Rmquery->row_array();
       $occupancyAdult = $Rmrow_values['occupancy'];
       $occupancyChild = $Rmrow_values['occupancy_child'];
       $standard_capacity = $Rmrow_values['standard_capacity'];
       $max_capacity = $Rmrow_values['max_total'];
-      $Room_Type = $Rmrow_values['id'];
+      $Room_Type = $room_id;
 
 
       $start_date = $request['Check_in'];
@@ -1261,70 +1044,50 @@ class Payment_Model extends CI_Model {
           }
           $implodeboardRequest = implode("','", $contract_boardRequest);
 
-           $extrabedallotment[$i] = $this->db->query("SELECT * FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."'")->result();
+           $extrabedallotment[$i] = $this->db->query("SELECT * FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
             if (count($extrabedallotment[$i])!=0) {
             foreach ($extrabedallotment[$i] as $key15 => $value15) {
-                 foreach ($request['reqadults'] as $key17 => $value7) {
-                  if (($value7+$request['reqChild'][$key17]) > $standard_capacity) {
-                    // for ($k=1; $k <= count($request['reqadults']); $k++) { 
-                      if (isset($request['reqroom'.($key17+1).'-childAge'])) {
-                        foreach ($request['reqroom'.($key17+1).'-childAge'] as $key18 => $value18) {
-                            if ($max_child_age < $value18) {
-                                $explodeexRType = explode(",", $value15->roomType);
-                                  foreach ($explodeexRType as $exexrtypekey => $exexrtypevalue) {
-                                    if ($Room_Type==$exexrtypevalue) {
-                                      $extrabedAmount[$i][$key17][] =  $value15->amount;
-                                      $exrooms[$i][$key17][] = $key17+1;
-                                      $extrabedType[$i][$key17][] =  'Adult Extrabed';
-                                    }
-                                  }
-                            } else {
-                              if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
-                                  if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
-                                    $extrabedAmount[$i][$key17][$key18] =  $value15->ChildAmount;
-                                    $extrabedType[$i][$key17][$key18] =  'Child Extrabed';
-                                    $exrooms[$i][$key17][$key18] = $key17+1;
-                                  }
-                              } else {
-                                $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."')")->result();
-                                if (count($boardalt[$i])!=0) {
-                                  foreach ($boardalt[$i] as $key21 => $value21) {
-                                    if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                                        $explodeRType = explode(",", $value21->roomType);
-                                        foreach ($explodeRType as $exrtypekey => $exrtypevalue) {
-                                          if ($Room_Type==$exrtypevalue) {
-                                            $extrabedAmount[$i][$key17][$key18] =  $value21->amount;
-                                            $exrooms[$i][$key17][$key18] = $key17+1;
-                                            $extrabedType[$i][$key17][$key18] =  'Child '.$value21->board;
-                                          }
-                                        }
-                                    }
-                                    
-                                  }
+              if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+                // for ($k=1; $k <= count($request['reqadults']); $k++) { 
+                  if (isset($request['reqroom'.($index+1).'-childAge'])) {
+                    foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                        if ($max_child_age < $value18) {
+                          $extrabedAmount[$i][$index][] =  $value15->amount;
+                          $exrooms[$i][$index][] = $index+1;
+                          $extrabedType[$i][$index][] =  'Adult Extrabed';
+                        } else {
+                          if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
+                              if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
+                                $extrabedAmount[$i][$index][$key18] =  $value15->ChildAmount;
+                                $extrabedType[$i][$index][$key18] =  'Child Extrabed';
+                                $exrooms[$i][$index][$key18] = $index+1;
+                              }
+                          } else {
+                            $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+                            if (count($boardalt[$i])!=0) {
+                              foreach ($boardalt[$i] as $key21 => $value21) {
+                                if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                                  $extrabedAmount[$i][$index][$key18] =  $value21->amount;
+                                  $exrooms[$i][$index][$key18] = $index+1;
+                                  $extrabedType[$i][$index][$key18] =  'Child '.$value21->board;
                                 }
-                              } 
-
+                                
+                              }
                             }
-                        }
-                        
-                      }
+                          } 
 
-                    // }
-                    if ($value7 > $standard_capacity) {
-                      $explodeexRType = explode(",", $value15->roomType);
-                      foreach ($explodeexRType as $exexrtypekey => $exexrtypevalue) {
-                        if ($Room_Type==$exexrtypevalue) {
-                          $extrabedAmount[$i][$key17][] =  $value15->amount;
-                          $exrooms[$i][$key17][] = $key17+1;
-                          $extrabedType[$i][$key17][] =  'Adult Extrabed';
                         }
-                      }
                     }
-                    // echo $request['Child'][$key17];
-                    // echo "<BR>";
-
+                    
                   }
-                 }
+
+                // }
+                if ($request['reqadults'][$index] > $standard_capacity) {
+                  $extrabedAmount[$i][$index][] =  $value15->amount;
+                  $exrooms[$i][$index][] = $index+1;
+                  $extrabedType[$i][$index][] =  'Adult Extrabed';
+                }
+              }
             }
           }
 
@@ -1338,24 +1101,22 @@ class Payment_Model extends CI_Model {
 
             if (count($boardSp[$i])!=0) {
               foreach ($boardSp[$i] as $key21 => $value21) {
-                foreach ($request['reqadults'] as $key17 => $value17) {
-                  if (($value17+$request['reqChild'][$key17]) > $standard_capacity) {
-                    if (isset($request['reqroom'.($key17+1).'-childAge'])) {
-                      foreach ($request['reqroom'.($key17+1).'-childAge'] as $key18 => $value18) {
-                        if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                          if (round($value21->amount)!=0) {
-                            $extrabedAmount[$i][$key17][] =  $value21->amount;
-                            $extrabedType[$i][$key17][] =  'Child '.$value21->board;
-                          }
+                if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+                  if (isset($request['reqroom'.($index+1).'-childAge'])) {
+                    foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                      if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                        if (round($value21->amount)!=0) {
+                          $extrabedAmount[$i][$index][] =  $value21->amount;
+                          $extrabedType[$i][$index][] =  'Child '.$value21->board;
                         }
                       }
                     }
                   }
-                  if ($value21->startAge >= 18) {
-                    if (round($value21->amount)!=0) {
-                      $extrabedAmount[$i][$key17][] =  $value21->amount;
-                      $extrabedType[$i][$key17][] =  'Adult '.$value21->board;
-                    }
+                }
+                if ($value21->startAge >= 18) {
+                  if (round($value21->amount)!=0) {
+                    $extrabedAmount[$i][$index][] =  $value21->amount;
+                    $extrabedType[$i][$index][] =  'Adult '.$value21->board;
                   }
                 }
               }
@@ -1384,7 +1145,7 @@ class Payment_Model extends CI_Model {
         }
         return $return;
     }
-  public function AddPaymentConfirmExtrabed($date,$amount,$bookId,$rooms,$rwamount,$type){
+  public function AddPaymentConfirmExtrabed($date,$amount,$bookId,$rooms,$rwamount,$type,$room_id,$contract_id,$index){
     $data= array(
                   'date'   =>   $date,
                   'amount' =>   $amount,
@@ -1392,6 +1153,9 @@ class Payment_Model extends CI_Model {
                   'Exrwamount' =>   $rwamount,
                   'Type' =>   $type,
                   'bookId' =>   $bookId,
+                  'room_id' =>   $room_id,
+                  'contract_id' =>   $contract_id,
+                  'roomIndex'   =>$index,
                 );
 
     $this->db->insert('bookingextrabed',$data);
@@ -1422,29 +1186,21 @@ class Payment_Model extends CI_Model {
     $childarrayBoardSumData = array();
     $bsCount = array();
     $BoardsupplementType = array();
-    $this->db->select('*');
-    $this->db->from('hotel_tbl_contract');
-    $this->db->where('contract_id',$request['contract_id']);
-    $query1 = $this->db->get()->result();
-    $max_child_age = $query1[0]->max_child_age;
-
     $start_date = $request['Check_in'];
     $end_date = $request['Check_out'];
     $checkin_date=date_create($start_date);
     $checkout_date=date_create($end_date);
     $no_of_days=date_diff($checkin_date,$checkout_date);
     $tot_days = $no_of_days->format("%a");
-    for($i = 0; $i < $tot_days; $i++) {
-      $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
-      $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."' AND board = '".$boardRequest."' ")->result();
-      foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
-
-        $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
-            
-        foreach ($explodeBoardroomtype[$key7] as $key6 => $value6) {
-          if ($value6==$request['room_id']) {
-              $BoardsupplementType[$i] = $value7->board;
-          }
+    for ($j=0; $j < count($_REQUEST['reqadults']); $j++) { 
+      $IndexSplit = explode("-", $_REQUEST['Room'.($j+1)]);
+      $contractId= $IndexSplit[0];
+      $RoomId= $IndexSplit[1];
+      for($i = 0; $i < $tot_days; $i++) {
+        $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
+        $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contractId."'  AND FIND_IN_SET('".$RoomId."', IFNULL(roomType,'')) > 0 AND board = '".$boardRequest."' ")->result();
+        foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
+          $BoardsupplementType[] = $value7->board;
         }
       }
     }
@@ -1467,121 +1223,116 @@ class Payment_Model extends CI_Model {
     
   }
   public function supplementcheck($request) {
-    // print_r($request);
-
-    $revenue_markup = revenue_markup($_REQUEST['hotel_id'],$_REQUEST['contract_id'],$this->session->userdata('agent_id'));
-    $agent_markup = mark_up_get()+general_mark_up_get();
-    if ($revenue_markup!=0) {
-      $agent_markup = mark_up_get();
-    }
-    $data = array();
-    $data1 = array();
-    $data2 = array();
-    $adultBoardAmount = array();
-    $childBoardAmount[] = array();
-    $this->db->select('*');
-    $this->db->from('hotel_tbl_contract');
-    $this->db->where('contract_id',$request['contract_id']);
-    $query1 = $this->db->get()->result();
-    $max_child_age = $query1[0]->max_child_age;
-    $contract_markup = $query1[0]->markup;
-    $total_markup = $agent_markup+$contract_markup;
-
-
+    // Total date fetch start
     $start_date = $request['Check_in'];
     $end_date = $request['Check_out'];
     $checkin_date=date_create($start_date);
     $checkout_date=date_create($end_date);
     $no_of_days=date_diff($checkin_date,$checkout_date);
     $tot_days = $no_of_days->format("%a");
-    for($i = 0; $i < $tot_days; $i++) {
+    // Total date fetch end
+    $totAmounts = array();
+    $data = array();
+    $data1 = array();
+    $data2 = array();
+    $adultBoardAmount = array();
+    $childBoardAmount[] = array();
+    foreach ($request['RoomIndex'] as $key => $value) {
+      // Markup define start
+      $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$request['contract_id'][$key],$this->session->userdata('agent_id'));
+      $agent_markup = mark_up_get()+general_mark_up_get();
+      if ($revenue_markup['Markup']!='') {
+        $agent_markup = mark_up_get();
+      }
+      $total_markup = $agent_markup;
+      // Markup define end
+      // Max child get start
+      $this->db->select('max_child_age');
+      $this->db->from('hotel_tbl_contract');
+      $this->db->where('contract_id',$request['contract_id'][$key]);
+      $query1 = $this->db->get()->result();
+      $max_child_age = $query1[0]->max_child_age;
+      // Max child get end
+        $adultBoardAmountRM[$key] = array();
+      for($i = 0; $i < $tot_days; $i++) {
         $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
-        if(isset($request[$date[$i]])) {
-        $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."' AND board = '".$request['supplementType']."' ")->result();
-        if (count($boardSplmntCheck[$i])!=0) {
-          $SupplementAvailDate[] = $date[$i];
-        }
-        foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
-          $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
-          foreach ($explodeBoardroomtype[$key7] as $key6 => $value6) {
-            if ($value6==$request['room_id']) {
-              if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
-                $adultBoardAmount[$i] = $value7->amount;
-
-                for ($q=0; $q <= count($request['splAdults']); $q++) { 
-                  if (isset($request['splAdults'][$q]) && isset($request['splAdultsCheck'][$q])) {
-                    $data['adults']['date'][$i] = $date[$i];
-                    $data['adults']['adultAmount'][$i][$q+1] = $value7->amount*$request['splAdults'][$q];
-                  }
+        if(isset($request['Room'.($key+1)][$date[$i]])) {
+          $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id'][$key]."' AND FIND_IN_SET('".$request['room_id'][$key]."', IFNULL(roomType,'')) > 0 AND board = '".$request['supplementType']."' ")->result();
+          if (count($boardSplmntCheck[$i])!=0) {
+            $SupplementAvailDate[$i] = $date[$i];
+          }
+          foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
+            if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
+              $Bsamount = 0;
+              if ($revenue_markup['BoardSupMarkup']!='') {
+                if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                  $Bsamount = (($value7->amount*$revenue_markup['BoardSupMarkup'])/100);
+                } else {
+                  $Bsamount = $revenue_markup['BoardSupMarkup'];
                 }
-
-                
               }
-              for ($j=1; $j <= count($request['splAdults']); $j++) { 
-                if (isset($request['splRoom'.$j.'-ChildAge'])) {
-                  foreach ($request['splRoom'.$j.'-ChildAge'] as $key4 => $value4) {
-                    if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
-                      $childBoardAmount[$i]['room'.$j.'-child'.($key4).'Age-rate']= $value7->amount;
-                      if (isset($request['room'.$j.'-child'.($key4).'Age-rateCheck'])) {
-                        $data['childs']['date'][$i] = $date[$i];
-                        $data['childs']['childAmount'][$i][$j][$key4] = $value7->amount;
-                      }
-                    } 
+              $adultBoardAmountRM[$key][$i] = (($value7->amount*$total_markup)/100)+$Bsamount+$value7->amount;
+              if (isset($request['splAdults'][$key]) && isset($request['splAdultsCheck'][$key])) {
+                $data['Room'.($key+1)]['adults']['date'][$i] = $date[$i];
+                $data['Room'.($key+1)]['adults']['adultAmount'][$i][$key+1] = $value7->amount*$request['splAdults'][$key];
+              }
+            }
+            if (isset($request['splRoom'.$value.'-ChildAge'])) {
+              foreach ($request['splRoom'.$value.'-ChildAge'] as $key4 => $value4) {
+                if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
+                  $childBoardAmount[$i]['room'.$value.'-child'.($key4).'Age-rate']= $value7->amount;
+                  if (isset($request['room'.$value.'-child'.($key4).'Age-rateCheck'])) {
+                    $data['Room'.($key+1)]['childs']['date'][$i] = $date[$i];
+                    $data['Room'.($key+1)]['childs']['childAmount'][$i][$value][$key4] = $value7->amount;
                   }
-
-                }
-
+                } 
               }
             }
           }
         }
       }
-    }
-    foreach ($childBoardAmount as $reqChildkey => $reqChildvalue) {
-      foreach ($reqChildvalue as $reqChildkey1 => $reqChildvalue1) {
-          if(isset($data1[$reqChildkey1])) {
-            $data1[$reqChildkey1]+= ($reqChildvalue1*$total_markup)/100+$reqChildvalue1;
-          } else {
-            $data1[$reqChildkey1] = ($reqChildvalue1*$total_markup)/100+$reqChildvalue1;
-          }
-          if (isset($request[$reqChildkey1."Check"])) {
-            if(isset($data2[$reqChildkey1])) {
-              $data2[$reqChildkey1]+= ($reqChildvalue1*$total_markup)/100+$reqChildvalue1;
+      $adultBoardAmount[$key] = array_sum($adultBoardAmountRM[$key]);
+      foreach ($childBoardAmount as $reqChildkey => $reqChildvalue) {
+        foreach ($reqChildvalue as $reqChildkey1 => $reqChildvalue1) {
+            $BsCamount = 0;
+            if ($revenue_markup['BoardSupMarkup']!='') {
+              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                $BsCamount = (($reqChildvalue1*$revenue_markup['BoardSupMarkup'])/100);
+              } else {
+                $BsCamount = $revenue_markup['BoardSupMarkup'];
+              }
+            }
+
+
+            if(isset($data1[$reqChildkey1])) {
+              $data1[$reqChildkey1]+= ($reqChildvalue1*$total_markup)/100+$reqChildvalue1+$BsCamount;
             } else {
-              $data2[$reqChildkey1] = ($reqChildvalue1*$total_markup)/100+$reqChildvalue1;
+              $data1[$reqChildkey1] = ($reqChildvalue1*$total_markup)/100+$reqChildvalue1+$BsCamount;
             }
-          }
+            if (isset($request[$reqChildkey1."Check"])) {
+              if(isset($data2[$reqChildkey1])) {
+                $data2[$reqChildkey1]+= ($reqChildvalue1*$total_markup)/100+$reqChildvalue1+$BsCamount;
+              } else {
+                $data2[$reqChildkey1] = ($reqChildvalue1*$total_markup)/100+$reqChildvalue1+$BsCamount;
+              }
+            }
+        }
+        
       }
-      
+      $totChildAmount = array_sum($data2);
+      $data['child'] = $data1;
+      $totAdultAmount = array();
+        $data['adult']['room'.($key+1).'-adult-rate'] = ceil($adultBoardAmount[$key]*$request['splAdults'][$key]);
+        if (isset($request['splAdultsCheck'][$key])) {
+          $totAdultAmount[] = ($adultBoardAmount[$key]*$request['splAdults'][$key]);
+        }
+      $totAmounts[$key] = ceil(array_sum($totAdultAmount)+$totChildAmount);
     }
-    $totChildAmount = array_sum($data2);
-    $data['child'] = $data1;
-    $totAdultAmount = array();
-    foreach ($request['splAdults'] as $reqAdultkey => $reqAdultvalue) {
-      $data['adult']['room'.($reqAdultkey+1).'-adult-rate'] = (array_sum($adultBoardAmount)*$reqAdultvalue*$total_markup)/100+(array_sum($adultBoardAmount)*$reqAdultvalue);
-      if (isset($request['splAdultsCheck'][$reqAdultkey])) {
-        $totAdultAmount[] = (array_sum($adultBoardAmount)*$reqAdultvalue*$total_markup)/100+(array_sum($adultBoardAmount)*$reqAdultvalue);
-      }
-    }
-    // $data['child'] = $data1;
-    // print_r($request);
-    // echo "<br>";
-    // echo "<br>";
-    // echo "<br>";
-    // print_r($data);
-    // exit();
-
-    $data['totAmount'] = ceil(array_sum($totAdultAmount)+$totChildAmount);
+    $data['totAmounts'] = $totAmounts;
+    $data['totAmount'] = array_sum($totAmounts);
     return $data;
   }
-  public function supplementConfirm($request,$Bookdate) {
-    // print_r($request);
-    if (isset($request['mark_up']) && $request['mark_up']!="") {
-      $agent_markup = $request['mark_up']+mark_up_get()+general_mark_up_get();
-    } else {
-      $agent_markup = mark_up_get()+general_mark_up_get();
-    } 
-
+  public function supplementConfirm($request,$Bookdate,$contract_id,$room_id,$j) {
     $data = array();
     $data1 = array();
     $data2 = array();
@@ -1590,54 +1341,39 @@ class Payment_Model extends CI_Model {
     $childBoardAge = array();
     $this->db->select('*');
     $this->db->from('hotel_tbl_contract');
-    $this->db->where('contract_id',$request['contract_id']);
+    $this->db->where('contract_id',$contract_id);
     $query1 = $this->db->get()->result();
     $max_child_age = $query1[0]->max_child_age;
-    $contract_markup = $query1[0]->markup;
-    $total_markup = $agent_markup+$contract_markup;
 
-    $boardSplmntCheck = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$Bookdate."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."' AND board = '".$request['supplementType']."' ")->result();
+    $boardSplmntCheck = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$Bookdate."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND FIND_IN_SET('".$room_id."', IFNULL(roomType,'')) > 0 AND board = '".$request['supplementType']."' ")->result();
+
     if (count($boardSplmntCheck)!=0) {
       foreach ($boardSplmntCheck as $key7 => $value7) {
-        $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
-        foreach ($explodeBoardroomtype[$key7] as $key6 => $value6) {
-          if ($value6==$request['room_id']) {
-            if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
-              $adultBoardAmount = $value7->amount;
-              for ($q=0; $q <= count($request['splAdults']); $q++) { 
-                  if (isset($request['splAdults'][$q]) && isset($request['splAdultsCheck'][$q])) {
-                    $data['adults']['adultAmount'][$q+1] = $value7->amount*$request['splAdults'][$q];
-                    $data['adults']['rooms'][$q+1] = $q+1;
-                  }
-                }
-            }
-            for ($j=1; $j <= count($request['splAdults']); $j++) { 
-              if (isset($request['splRoom'.$j.'-ChildAge'])) {
-                foreach ($request['splRoom'.$j.'-ChildAge'] as $key4 => $value4) {
-                  if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
-                    if (isset($request['room'.$j.'-child'.($key4).'Age-rateCheck'])) {
-                      $childBoardAmount[]= $value7->amount;
-                      $childBoardAge[]= ($value7->startAge."-".$value7->finalAge);
-                      if (isset($request['room'.$j.'-child'.($key4).'Age-rateCheck'])) {
-                        $data['childs']['rooms'][$j] = $j;
-                        $data['childs']['childAmount'][$j][$key4] = $value7->amount;
-                      }
-                    }
-                  } 
-                }
-
-              }
-
-            }
+        if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
+          $adultBoardAmount = $value7->amount;
+          if (isset($request['splAdults'][$j-1]) && isset($request['splAdultsCheck'][$j-1])) {
+            $data['adults']['adultAmount'][$j] = $value7->amount*$request['splAdults'][$j-1];
+            $data['adults']['rooms'][$j] = $j;
           }
         }
-        
+        if (isset($request['splRoom'.$j.'-ChildAge'])) {
+          foreach ($request['splRoom'.$j.'-ChildAge'] as $key4 => $value4) {
+            if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
+              if (isset($request['room'.$j.'-child'.($key4).'Age-rateCheck'])) {
+                $childBoardAmount[]= $value7->amount;
+                $childBoardAge[]= ($value7->startAge."-".$value7->finalAge);
+                if (isset($request['room'.$j.'-child'.($key4).'Age-rateCheck'])) {
+                  $data['childs']['rooms'][$j] = $j;
+                  $data['childs']['childAmount'][$j][$key4] = $value7->amount;
+                }
+              }
+            } 
+          }
+        }
       }
       $adults_count= 0;
-      foreach ($request['splAdults'] as $reqAdultkey => $reqAdultvalue) {
-        if (isset($request['splAdultsCheck'][$reqAdultkey])) {
-          $adults_count+= $reqAdultvalue;
-        }
+      if (isset($request['splAdultsCheck'][$j-1])) {
+        $adults_count+= $request['splAdults'][$j-1];
       }
       
       $data['adultsCount'] = $adults_count;
@@ -1651,8 +1387,8 @@ class Payment_Model extends CI_Model {
 
     return $data;
   }
-  public function get_CancellationPolicy_contractConfirm($request) {
-      $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$request['contract_id']."' AND nonRefundable = 1")->result();
+  public function get_CancellationPolicy_contractConfirm($request,$contract_id,$room_id) {
+      $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$contract_id."' AND nonRefundable = 1")->result();
       if (count($refund)!=0) {
         $data[0]['msg'] = "This booking is Nonrefundable";
         $data[0]['percentage'] = 100;
@@ -1662,7 +1398,7 @@ class Payment_Model extends CI_Model {
         $data[0]['daysTo'] = '0';
       } else {
 
-        $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$request['room_id']."'")->result();
+        $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
         $data = array();
         $checkin_date=date_create($request['Check_in']);
         $checkout_date=date_create($request['Check_out']);
@@ -2016,7 +1752,7 @@ class Payment_Model extends CI_Model {
                     'Hotel_id' => $Hotel_id,
                     'agent_markup' =>  mark_up_get(),
                     'admin_markup' =>  $admin_markup,
-                    'CreatedDate'    => date('Y-m-d H:mm'),
+                    'CreatedDate'    => date('Y-m-d H:i:s'),
                     'CreatedBy'    => $agent_id,
                     'Bookingdate'    => date('m/d/Y'),
                     'PriceChange' => $PriceChange,
@@ -2046,7 +1782,7 @@ class Payment_Model extends CI_Model {
                     'transactionId' => $request['transid'],
                     'orderNumber' => $request['ordernumber'],
                     'method' => $request['gateway'],
-                    'date' => date('Y-m-d'),
+                    'date' => date('Y-m-d H:i:s'),
                     'agentId' => $this->session->userdata('agent_id'),
                     'provider' => 'Otelseasy');
       $this->db->insert('tbl_onlinepaymentrecords',$data);
@@ -2059,7 +1795,7 @@ class Payment_Model extends CI_Model {
                     'transactionId' => $request['transid'],
                     'orderNumber' => $request['ordernumber'],
                     'method' => $request['gateway'],
-                    'date' => date('Y-m-d'),
+                    'date' => date('Y-m-d H:i:s'),
                     'agentId' => $this->session->userdata('agent_id'),
                     'provider' => 'TBO');
       $this->db->insert('tbl_onlinepaymentrecords',$data);
@@ -2080,6 +1816,7 @@ class Payment_Model extends CI_Model {
       $tot_days = $no_of_days->format("%a");
 
       $disNRFVal = '';
+      $roomType = $this->db->query("SELECT CONCAT(a.room_name,' ',b.Room_Type) as Name FROM hotel_tbl_hotel_room_type a INNER JOIN hotel_tbl_room_type b ON b.id = a.room_type WHERE a.id = '".$room_id."'")->result();
 
       for ($i=0; $i < $tot_days ; $i++) {
         $dateOut = date('Y-m-d', strtotime($_REQUEST['Check_in']. ' + '.$i.'  days'));
@@ -2089,21 +1826,22 @@ class Payment_Model extends CI_Model {
         }
       }
       
-  
+      $data[0]['RoomName'] = $roomType[0]->Name;
       if (count($refund)!=0) {
         $data[0]['description'] = "This booking is Nonrefundable";
         $data[0]['after'] = "";
         $data[0]['before'] = "";
         $data[0]['percentage'] = "";
         $data[0]['application'] = "Nonrefundable";
+        $data[0]['RoomName'] = $roomType[0]->Name;
       } else if($disNRFVal!='') {
         $data[0]['description'] = "This booking is Nonrefundable";
         $data[0]['after'] = '';
         $data[0]['before'] = '';
         $data[0]['percentage'] = "";
+        $data[0]['RoomName'] = $roomType[0]->Name;
         $data[0]['application'] = "Nonrefundable";
       } else {
-        $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
         $data = array();
         $checkin_date=date_create($request['Check_in']);
         $checkout_date=date_create($request['Check_out']);
@@ -2118,56 +1856,50 @@ class Payment_Model extends CI_Model {
 
         for($i = 0; $i < $tot_days; $i++) {
           $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
-          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysFrom desc")->result();
+          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND FIND_IN_SET('".$room_id."', IFNULL(roomType,'')) > 0 AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysFrom desc")->result();
           if (count($CancellationPolicyCheck[$i])!=0) {
             foreach ($CancellationPolicyCheck[$i] as $key => $value) {
-                $exploderoomType[$key] = explode(",", $value->roomType);
-                foreach ($exploderoomType[$key] as $key1 => $value1) {
+              $after = date('Y-m-d', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+              $before = date('Y-m-d', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+              if ($after < date('Y-m-d')) {
+                $data[$key]['after'] = date('d/m/Y');
+              } else {
+                $data[$key]['after'] = date('d/m/Y', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+              }
+              if ($before < date('Y-m-d')) {
+                $data[$key]['before'] = date('d/m/Y');
+              } else {
+                $data[$key]['before'] = date('d/m/Y', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+              }
 
-                  
-                  if ($value1==$roomType[0]->id) {
-                      $after = date('Y-m-d', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
-                      $before = date('Y-m-d', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
-                      if ($after < date('Y-m-d')) {
-                        $data[$key]['after'] = date('d/m/Y');
-                      } else {
-                        $data[$key]['after'] = date('d/m/Y', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
-                      }
-                      if ($before < date('Y-m-d')) {
-                        $data[$key]['before'] = date('d/m/Y');
-                      } else {
-                        $data[$key]['before'] = date('d/m/Y', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
-                      }
+              if ($value->daysFrom==0) {
+                $daysInAdvance = 'your check-in date';
+              } else if($value->daysFrom==1) {
+                $daysInAdvance = 'within 24 hours of your check-in';
+              } else {
+                $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
+              }
 
-                      if ($value->daysFrom==0) {
-                        $daysInAdvance = 'your check-in date';
-                      } else if($value->daysFrom==1) {
-                        $daysInAdvance = 'within 24 hours of your check-in';
-                      } else {
-                        $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
-                      }
+              
+              $data[$key]['percentage'] = $value->cancellationPercentage;
+              $data[$key]['application'] = $value->application;
+              $data[$key]['RoomName'] = $roomType[0]->Name;
 
-                      
-                      $data[$key]['percentage'] = $value->cancellationPercentage;
-                          $data[$key]['application'] = $value->application;
+              if ($value->application=="FIRST NIGHT") {
+                $data[$key]['description'] = '<span>
+                           If you cancel '.$daysInAdvance.',you will pay '.$value->cancellationPercentage.'% of one night stay with supplementary charges no matter the number of stay days.
+                        </span>';
 
-                      if ($value->application=="FIRST NIGHT") {
-                        $data[$key]['description'] = '<span>
-                                   If you cancel '.$daysInAdvance.',you will pay '.$value->cancellationPercentage.'% of one night stay with supplementary charges no matter the number of stay days.
-                                </span>';
+              } else if ($value->application=="STAY") {
 
-                      } else if ($value->application=="STAY") {
-
-                          $data[$key]['description'] = '<span>
-                                      If you cancel '.$daysInAdvance.', you will pay '.$value->cancellationPercentage.'% of the booking amount.
-                                </span>';
-                      } else {
-                        $data[$key]['description'] = '<span>
-                                   If you cancel '.$daysInAdvance.',  Cancellation charge is free .
-                              </span>';
-                      }
-                  }
-                }
+                  $data[$key]['description'] = '<span>
+                              If you cancel '.$daysInAdvance.', you will pay '.$value->cancellationPercentage.'% of the booking amount.
+                        </span>';
+              } else {
+                $data[$key]['description'] = '<span>
+                           If you cancel '.$daysInAdvance.',  Cancellation charge is free .
+                      </span>';
+              }
             }
           }
         }
@@ -2175,5 +1907,883 @@ class Payment_Model extends CI_Model {
 
       }
       return $data;
+    }
+    public function roomList($hotel_id,$key,$data) {
+        $this->db->select('a.id as room_id,a.*,b.Room_Type');
+        $this->db->from('hotel_tbl_hotel_room_type a');
+        $this->db->join('hotel_tbl_room_type b', 'b.id = a.room_type', 'inner');
+        $this->db->where('a.max_total >=',($data['adults'][$key]+$data['Child'][$key]));
+        $this->db->where('a.occupancy >=',$data['adults'][$key]);
+        $this->db->where('a.occupancy_child >=',$data['Child'][$key]);
+        $this->db->where('a.hotel_id',$hotel_id);
+        $this->db->where('a.delflg',1);
+        return $query=$this->db->get()->result();
+    }
+    public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$index) {
+          /*Tax percentage grt from contract start*/
+          $discountGet = Alldiscount(date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)),$request['hotel_id'],$room_id,$contract_id,'Room');
+
+          $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contract_id,$this->session->userdata('agent_id'));
+          if ($revenue_markup['Markup']!='') {
+            $markup = mark_up_get();
+          }
+          $request['contract_id']  = $contract_id;
+
+          $this->db->select('linkedContract,contract_type');
+          $this->db->from('hotel_tbl_contract');
+          $this->db->where('hotel_id',$request['hotel_id']);
+          $this->db->where('contract_id',$contract_id);
+          $linkedcontract=$this->db->get()->result();
+          if ($linkedcontract[0]->contract_type=="Sub") {
+            $Lcontract_id = "CON0".$linkedcontract[0]->linkedContract;
+          } else {
+            $Lcontract_id = $contract_id;
+          }
+
+        $this->db->select('tax_percentage,max_child_age,board,nonRefundable');
+        $this->db->from('hotel_tbl_contract');
+        $this->db->where('hotel_id',$request['hotel_id']);
+        $this->db->where('contract_id',$contract_id);
+        $query = $this->db->get();
+        $row_values  = $query->row_array();
+        $tax = $row_values['tax_percentage'];
+        $max_child_age = $row_values['max_child_age'];
+        
+
+        $contract_board = $row_values['board'];
+        $nonRefundable = '';
+        if ($row_values['nonRefundable']==1) {
+          $nonRefundable = 'Non Refundable';
+        }
+        /*Tax percentage grt from contract end*/
+
+        /*Standard capacity get from rooms start*/
+
+        $this->db->select('occupancy,occupancy_child,standard_capacity,max_total,linked_to_room_type');
+        $this->db->from('hotel_tbl_hotel_room_type');
+        $this->db->where('hotel_id',$request['hotel_id']);
+        $this->db->where('id',$room_id);
+        $Rmquery = $this->db->get();
+        $Rmrow_values  = $Rmquery->row_array();
+        $occupancyAdult = $Rmrow_values['occupancy'];
+        $occupancyChild = $Rmrow_values['occupancy_child'];
+        $standard_capacity = $Rmrow_values['standard_capacity'];
+        $max_capacity = $Rmrow_values['max_total'];
+        /*Standard capacity get from rooms end*/
+        $BoardsupplementType = array();
+        $adultBoardAmount = array();
+        $childBoardAmount = array();
+        $childarrayBoardSumData =array();
+        $adultAmount = array();
+        $childAmount = array();
+        $adultAmountPR = array();
+        $childAmountPR = array();
+        $generalsupplementType  = array();
+        $ManadultAmount  = array();
+        $ManadultAmountPR = array();
+        $MangeneralsupplementforAdults = array();
+        $ManchildAmount = array();
+        $MangeneralsupplementforChilds = array();
+        $MangeneralsupplementType = array();
+        $generalsupplementforAdults = array();
+        $generalsupplementforChilds = array();
+        $extrabedAmount  = array();
+        $extrabedType = array();
+        
+        $adultscount = $adults;
+        $childscount = $child;
+        $roomType = $this->db->query("SELECT id FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
+        $cut_off_date = array();
+        $cut_off_msg = "";
+        $checkin_date=date_create($start_date);
+        $checkout_date=date_create($end_date);
+        $no_of_days=date_diff($checkin_date,$checkout_date);
+        $tot_days = $no_of_days->format("%a");
+        for($i = 0; $i < $tot_days; $i++) {
+          $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
+          $RMdiscount = DateWisediscount(date('Y-m-d',strtotime($start_date)),$request['hotel_id'],$room_id,$Lcontract_id,'Room',date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)));
+          $EDis = 0;
+          $GDis = 0;
+          $BDis = 0;
+          if (is_numeric($RMdiscount['discount']) && $discountGet['dis']!="true") {
+            if ($RMdiscount['Extrabed']==1) {
+              $EDis = $RMdiscount['discount'];
+            }
+            if ($RMdiscount['General']==1) {
+              $GDis = $RMdiscount['discount'];
+            }
+            if ($RMdiscount['Board']==1) {
+              $BDis = $RMdiscount['discount'];
+            }
+          } 
+          if (isset($request['board'])) {
+            foreach ($request['board'] as $key5 => $value5) {
+              $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = '".$value5."'")->result();
+              foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
+
+                $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
+
+                foreach ($explodeBoardroomtype[$key7] as $key6 => $value6) {
+
+                  if ($value6==$roomType[0]->id) {
+
+                        //   $boardsupplementData[$key7] = $value7;
+                    if ($max_child_age<$value7->startAge || $max_child_age<$value7->finalAge) {
+
+                      $BoardsupplementType[$key5] = $value7->board;
+
+                      $adultBoardAmount[$key5] = $value7->amount;
+                    }
+                          // if($max_child_age >= $value7->finalAge) {
+
+                    $childBoardcnt[$i] = array();
+                      if (isset($request['room'.$index.'-childAge'])) {
+                        foreach ($request['room'.$index.'-childAge'] as $key4 => $value4) {
+                          if ($value7->startAge <= $value4 && $value7->finalAge >= $value4) {
+                           $childBoardcnt[$i][]= $value4;
+                         } 
+                       }
+
+                     }
+                   if (count($childBoardcnt[$i])!=0) {
+                    $childBoardAmount[$i][] = $value7->amount*count($childBoardcnt[$i]);
+                  } 
+                          // }
+                }
+              }
+            }
+          }
+        }
+
+        $adultarrayBoardSumData[$i] = array_sum($adultBoardAmount);
+        if (isset($childBoardAmount[$i])) {
+          $childarrayBoardSumData[$i] = array_sum($childBoardAmount[$i]);
+        }
+        /*mandatory General Supplement start*/
+
+        $generalSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_generalsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0 AND mandatory = 1")->result();
+        
+        $gsarraySum[$i] = count($generalSplmntCheck[$i]);
+        if ($gsarraySum[$i]!=0) {
+          $gsData[$i] = $generalSplmntCheck[$i];
+
+          foreach ($gsData[$i] as $key3 => $value3) {
+
+            $explodeRoomType[$key3] = explode(",", $value3->roomType);
+            if ($value3->application=="Per Person") {
+              $GSAmamount = 0;
+              if ($revenue_markup['GeneralSupMarkup']!='') {
+                if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
+                  $GSAmamount = (($value3->adultAmount*$revenue_markup['GeneralSupMarkup'])/100);
+                } else {
+                  $GSAmamount = $revenue_markup['GeneralSupMarkup'];
+                }
+              }
+              $adultAmount[] = (($value3->adultAmount*$markup/100)+$value3->adultAmount+$GSAmamount)-(($value3->adultAmount*$markup/100)+$value3->adultAmount+$GSAmamount)*$GDis/100;
+                if (isset($request['room'.$index.'-childAge'])) {
+                  foreach ($request['room'.$index.'-childAge'] as $key44 => $value44) {
+                    if ($value3->MinChildAge < $value44) {
+                      $GSCmamount = 0;
+                      if ($revenue_markup['GeneralSupMarkup']!='') {
+                        if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
+                          $GSCmamount = (($value3->childAmount*$revenue_markup['GeneralSupMarkup'])/100);
+                        } else {
+                          $GSCmamount = $revenue_markup['GeneralSupMarkup'];
+                        }
+                      }
+                      $childAmount[] = (($value3->childAmount*$markup/100)+$value3->childAmount+$GSCmamount)-(($value3->childAmount*$markup/100)+$value3->childAmount+$GSCmamount)*$GDis/100;
+                    } 
+                  }
+
+                }
+            } else {
+              $GSAmamount = 0;
+              if ($revenue_markup['GeneralSupMarkup']!='') {
+                if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
+                  $GSAmamount = (($value3->adultAmount*$revenue_markup['GeneralSupMarkup'])/100);
+                } else {
+                  $GSAmamount = $revenue_markup['GeneralSupMarkup'];
+                }
+              }
+              $GSCmamount = 0;
+              if ($revenue_markup['GeneralSupMarkup']!='') {
+                if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
+                  $GSCmamount = (($value3->childAmount*$revenue_markup['GeneralSupMarkup'])/100);
+                } else {
+                  $GSCmamount = $revenue_markup['GeneralSupMarkup'];
+                }
+              }
+              $adultAmountPR[] = (($value3->adultAmount*$markup/100)+$value3->adultAmount+$GSAmamount)-(($value3->adultAmount*$markup/100)+$value3->adultAmount+$GSAmamount)*$GDis/100;
+              $childAmountPR[] = (($value3->childAmount*$markup/100)+$value3->childAmount+$GSCmamount)-(($value3->childAmount*$markup/100)+$value3->childAmount+$GSCmamount)*$GDis/100;
+            }
+            $generalsupplementType[] = $value3->type;
+            $generalsupplementforAdults[] = $occupancyAdult;
+            $generalsupplementforChilds[] =  $occupancyChild;
+          }
+
+        }
+        /*mandatory General Supplement end*/
+        /*Extrabed allotment start*/
+
+        if ($contract_board=="BB") {
+          $contract_boardRequest = array('Breakfast');
+        } else if($contract_board=="HB") {
+          $contract_boardRequest = array('Breakfast','Dinner');
+        } else if($contract_board=="FB") {
+          $contract_boardRequest = array('Breakfast','Dinner','Lunch');
+        } else {
+          $contract_boardRequest = array();
+        }
+        $implodeboardRequest = implode("','", $contract_boardRequest);
+
+        $extrabedallotment[$i] = $this->db->query("SELECT amount,ChildAmount,ChildAgeFrom,ChildAgeTo FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+
+        if (count($extrabedallotment[$i])!=0) {
+          foreach ($extrabedallotment[$i] as $key15 => $value15) {
+            if (($adults+$child) > $standard_capacity) {
+                        // for ($k=1; $k <= count($adults); $k++) { 
+              if (isset($request['room'.$index.'-childAge'])) {
+                foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
+                  if ($max_child_age < $value18) {
+                    $EXamount = 0;
+                   if ($revenue_markup['ExtrabedMarkup']!='') {
+                      if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
+                        $EXamount = (($value15->amount*$revenue_markup['ExtrabedMarkup'])/100);
+                      } else {
+                        $EXamount = $revenue_markup['ExtrabedMarkup'];
+                      }
+                    }
+
+                   $extrabedAmount[] =  (($value15->amount*$markup/100)+$value15->amount+$EXamount)-(($value15->amount*$markup/100)+$value15->amount+$EXamount)*$EDis/100;
+                   $extrabedType[] =  'Adult Extrabed';
+                 } else {
+                  if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
+                    if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
+                      $EXamount = 0;
+                      if ($revenue_markup['ExtrabedMarkup']!='') {
+                        if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
+                          $EXamount = (($value15->ChildAmount*$revenue_markup['ExtrabedMarkup'])/100);
+                        } else {
+                          $EXamount = $revenue_markup['ExtrabedMarkup'];
+                        }
+                      }
+                      $extrabedAmount[] = (($value15->ChildAmount*$markup/100)+$value15->ChildAmount+$EXamount)-(($value15->ChildAmount*$markup/100)+$value15->ChildAmount+$EXamount)*$EDis/100;
+                      $extrabedType[] =  'Child Extrabed';
+                    }
+                  } else {
+                    $boardalt[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+                    if (count($boardalt[$i])!=0) {
+                      foreach ($boardalt[$i] as $key21 => $value21) {
+                        if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                          $BsCamount = 0;
+                          if ($revenue_markup['BoardSupMarkup']!='') {
+                            if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                              $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
+                            } else {
+                              $BsCamount = $revenue_markup['BoardSupMarkup'];
+                            }
+                          }
+                          $extrabedAmount[] = (($value21->amount*$markup/100)+$value21->amount+$BsCamount)-(($value21->amount*$markup/100)+$value21->amount+$BsCamount)*$BDis/100;
+                          $extrabedType[] =  'Child '.$value21->board;
+                        }
+
+                      }
+                    }
+                  }  
+
+                }
+              }
+
+            }
+
+                        // }
+                        // if ($request['Child'][$key17]==0) {
+            if ($adults > $standard_capacity) {
+              $EXamount = 0;
+              if ($revenue_markup['ExtrabedMarkup']!='') {
+                if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
+                  $EXamount = (($value15->amount*$revenue_markup['ExtrabedMarkup'])/100);
+                } else {
+                  $EXamount = $revenue_markup['ExtrabedMarkup'];
+                }
+              }
+              $extrabedAmount[] =  (($value15->amount*$markup/100)+$value15->amount+$EXamount)-(($value15->amount*$markup/100)+$value15->amount+$EXamount)*$EDis/100;
+              $extrabedType[] =  'Adult Extrabed';
+            }
+                        // echo $request['Child'][$key17];
+                        // echo "<BR>";
+
+          }
+      }
+    }
+
+
+    /* Board wise supplement check start */
+    $boardSp[$i] = array();
+    if($contract_board=="HB") {
+      $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Half Board' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+    } else if($contract_board=="FB") {
+      $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Full Board' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+    }
+    if (count($boardSp[$i])!=0) {
+      foreach ($boardSp[$i] as $key21 => $value21) {
+          if (($adults+$child) > $standard_capacity) {
+            if (isset($request['room'.$index.'-childAge'])) {
+              foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
+                if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                  $BsCamount = 0;
+                  if ($revenue_markup['BoardSupMarkup']!='') {
+                    if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                      $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
+                    } else {
+                      $BsCamount = $revenue_markup['BoardSupMarkup'];
+                    }
+                  }
+                  $extrabedAmount[] =  (($value21->amount*$markup/100)+$value21->amount+$BsCamount)-(($value21->amount*$markup/100)+$value21->amount+$BsCamount)*$BDis/100;
+                  $extrabedType[] =  'Child '.$value21->board;
+                }
+              }
+            }
+          }
+          if ($value21->startAge >= 18) {
+            $BsAamount = 0;
+            if ($revenue_markup['BoardSupMarkup']!='') {
+              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                $BsAamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
+              } else {
+                $BsAamount = $revenue_markup['BoardSupMarkup'];
+              }
+            }
+            $extrabedAmount[] = (($value21->amount*$markup/100)+$value21->amount+$BsAamount)-(($value21->amount*$markup/100)+$value21->amount+$BsAamount)*$BDis/100;
+            $extrabedType[] =  'Adult '.$value21->board;
+          }
+      }
+    }
+
+    /* Board wise supplement check end */
+              // print_r($extrabedType);
+              // echo "<br>";
+    /*Extrabed allotment end*/
+
+    }
+        // $totalAdultBoardSumData =  array_sum($adultarrayBoardSumData)*$adultscount; 
+        // $totalChildBoardSumData =  array_sum($childarrayBoardSumData); 
+    
+        // print_r($extrabedAmount);
+        //     echo "<br>";
+
+    
+    $implode = implode("','",$date);
+    $linkedAllotmentquery = array();
+    if ($Rmrow_values['linked_to_room_type']!="" && $Rmrow_values['linked_to_room_type']!=NULL) {
+      $linkedAllotmentquery = $this->db->query("SELECT allotement FROM hotel_tbl_allotement WHERE allotement_date IN ('".$implode."') AND room_id = '".$Rmrow_values['linked_to_room_type']."' AND contract_id = '".$Lcontract_id."'")->result();
+    }
+
+    $query = $this->db->query("SELECT hotel_id,room_id,allotement_date,contract_id,allotement,cut_off FROM hotel_tbl_allotement WHERE allotement_date IN ('".$implode."') AND room_id = '".$room_id."' AND contract_id = '".$Lcontract_id."'")->result();
+    if (count($query)!=0) {
+      foreach ($query as $key1 => $value1) {
+
+        $RMdiscount = DateWisediscount(date('Y-m-d',strtotime($start_date)),$value1->hotel_id,$value1->room_id,$Lcontract_id,'Room',date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)));
+        
+        $amtGet = $this->db->query("SELECT amount FROM hotel_tbl_allotement WHERE allotement_date = '".$value1->allotement_date."' AND room_id = '".$room_id."' AND contract_id = '".$contract_id."'")->result();
+        if (count($amtGet)!=0) {
+          $ramount = $amtGet[0]->amount;
+        } else {
+          $ramount = 0;
+        }
+
+        if ($markup!=0) {
+          $rmamount = 0;
+          if ($revenue_markup['Markup']!='') {
+            if ($revenue_markup['Markuptype']=="Percentage") {
+              $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+            } else {
+              $rmamount = $revenue_markup['Markup'];
+            }
+          }
+          $ramount = (($ramount*$markup)/100)+$rmamount+$ramount;
+        } else {
+          $rmamount = 0;
+          if ($revenue_markup['Markup']!='') {
+            if ($revenue_markup['Markuptype']=="Percentage") {
+              $rmamount = (($ramount*$revenue_markup['Markup'])/100);
+            } else {
+              $rmamount = $revenue_markup['Markup'];
+            }
+          }
+          $ramount = $ramount+$rmamount;
+        }
+        if (is_numeric($RMdiscount['discount']) && $discountGet['dis']!="true") {
+          $RMdiscount = $RMdiscount['discount'];
+        } else {
+          $RMdiscount = 0;
+        }
+
+        $amount[$key1] = $ramount-($ramount*$RMdiscount)/100;
+        $Disamount[$key1] = $ramount;
+        $discount[$key1] = $RMdiscount;
+        if ($ramount!=0) {
+          if (isset($linkedAllotmentquery[$key1]->allotement)) {
+            $linkedAllotment=$linkedAllotmentquery[$key1]->allotement;
+          } else {
+            $linkedAllotment=0;
+          }
+          $booked = $this->List_Model->all_booked_roomDatewise($value1->hotel_id,$value1->room_id,$value1->allotement_date,$value1->contract_id);
+          $allotement[] = ($value1->allotement+$linkedAllotment)-$booked;
+        } else {
+          $allotement[] = 0;
+        }
+
+        $current_date = date_create(date('Y-m-d'));
+        $ck_2 = date_create($value1->allotement_date);
+        $date_diff_check = date_diff($current_date,$ck_2);
+        $check_cutoff1 = $date_diff_check->format("%a");
+        if ($check_cutoff1<$value1->cut_off) {
+          $cut_off_date[] = date('d/m/Y', strtotime($value1->allotement_date));
+        }  
+
+      }
+
+
+      if (count($cut_off_date)!=0) {
+        $cut_off_msg = "Cannot book selected dates (".implode(",", $cut_off_date).") due to cut off period. Kindly select another date";
+      }
+
+      foreach ($query as $key => $value) {
+        $c1 = date_create(date('Y-m-d'));
+        $c2 = date_create($value->allotement_date);
+        $days=date_diff($c1,$c2);
+        $check_cutoff = $days->format("%a");
+
+        if ($check_cutoff<$value->cut_off) {
+          $data['condition'] =  "false";
+          break;
+        } else {
+          $data['condition'] =  "true";
+        }
+      }
+
+      if (isset($request['nationality'])) {
+        $nationality = $this->db->query("SELECT contract_id FROM hotel_tbl_contract WHERE contract_id = '".$contract_id."' AND FIND_IN_SET('".$request['nationality']."', IFNULL(nationalityPermission,'')) = 0")->result();
+        if (count($nationality)==0) {
+          $data['condition'] =  "false";
+        }
+
+      }
+
+      $data['cut_off_msg'] = $cut_off_msg;
+      $adultsRoomCount = $adults;
+      if ($discountGet['dis']=="true") {
+        $Cdays = $tot_days/$discountGet['stay'];
+        $parts = explode('.', $Cdays);
+        $Cdays = $parts[0];
+        $Sdays = $discountGet['stay']*$Cdays;
+        $Pdays = $discountGet['pay']*$Cdays;
+        $Tdays = $tot_days-$Sdays;
+        $Fdays = $Pdays+$Tdays;
+        $discountGet['stay'];
+        $discountGet['pay'];
+        array_splice($amount, $Fdays);
+        if ($discountGet['Extrabed']==1) {
+          array_splice($extrabedAmount, $Fdays);
+        }
+        if ($discountGet['General']==1) {
+          array_splice($ManadultAmount, $Fdays);
+          array_splice($ManchildAmount, $Fdays);
+        }
+        // if ($discountGet['Board']==1) {
+        //   array_splice($extrabedAmount, $Fdays);
+        // }
+        $discount[0] = 1;
+      }
+      $array_sumAdultAmount = array_sum($adultAmount)*array_sum($request['adults'])+(array_sum($adultAmountPR)*count($request['adults']));
+      $array_sumChildAmount = array_sum($childAmount);
+      $manGenarray_sumAdultAmount =  array_sum($ManadultAmount)+array_sum($ManadultAmountPR);
+      $manGenarray_sumChildAmount = array_sum($ManchildAmount);
+      $extrabedTotalAmount = array_sum($extrabedAmount);
+
+      if ($markup!=0) {
+            // $totalAdultBoardSumData = (($totalAdultBoardSumData*$markup)/100)+$totalAdultBoardSumData;
+            // $totalChildBoardSumData = (($totalChildBoardSumData*$markup)/100)+$totalChildBoardSumData;
+        $array_sumAdultAmount = $array_sumAdultAmount;
+        $array_sumChildAmount = $array_sumChildAmount;
+        $manGenarray_sumAdultAmount = (($manGenarray_sumAdultAmount*$markup)/100)+$manGenarray_sumAdultAmount;
+        $manGenarray_sumChildAmount = (($manGenarray_sumChildAmount*$markup)/100)+$manGenarray_sumChildAmount;
+        $extrabedTotalAmount =  $extrabedTotalAmount;
+      }
+
+
+      $totalbkamount = ((array_sum($amount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+      $totalbkamount1 = ((array_sum($Disamount))+$array_sumAdultAmount+$array_sumChildAmount+$manGenarray_sumAdultAmount+$manGenarray_sumChildAmount)+$extrabedTotalAmount;
+
+      if($tax!=0) {
+        $totalbkamount = ((($totalbkamount*$tax)/100)+$totalbkamount);
+        $totalbkamount1 = ((($totalbkamount*$tax)/100)+$totalbkamount);
+      }
+      $data['price'] = $totalbkamount;
+      $data['discountAmount'] = $totalbkamount1;
+      $rtrn = array();
+      if ((($adults+$child) > $max_capacity) || ($adults > $occupancyAdult) || ($child > $occupancyChild)) {
+        $rtrn[] = 1;
+      } else {
+        $rtrn[] = 0;
+      }
+      if (array_sum($rtrn) == 0 && $cut_off_msg=="") {
+        $data['allotement'] = min($allotement);
+      } else {
+        $data['allotement'] = 0;
+        $data['condition'] =  "false";
+      }
+      $data['generalsupplementType'] = array_unique($generalsupplementType);
+      $data['MangeneralsupplementType'] = array_unique($MangeneralsupplementType);
+      $data['BoardsupplementType'] = implode(", ", array_unique($BoardsupplementType));
+      $data['nonRefundable'] = $nonRefundable;
+      $data['extrabedType'] = $extrabedType;
+      $data['discount'] = array_sum($discount);
+
+    } else {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotel_room_type');
+      $this->db->where('id',$room_id);
+      $query1=$this->db->get();
+      $final =  $query1->result();
+      $data['cut_off_msg'] = $cut_off_msg;
+      $data['condition'] =  "TRUE";
+      $data['price'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
+      $data['discountAmount'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
+      $data['allotement'] = $final[0]->allotement;
+      $data['generalsupplementType'] = array_unique($generalsupplementType);
+      $data['MangeneralsupplementType'] = array_unique($MangeneralsupplementType);
+      $data['BoardsupplementType'] = implode(", ", array_unique($BoardsupplementType));
+      $data['extrabedType'] = $extrabedType;
+      $data['nonRefundable'] = $nonRefundable;
+      $data['discount'] = 0;
+    }
+    return $data;
+    }
+    public function TotalBookingAmountDetailsGet($book_id) {
+      $return['Cost'] = 0;
+      $return['Selling'] = 0;
+      $return['AgentProfit'] = 0;
+      $return['AdminProfit'] = 0;
+      $view = $this->Payment_Model->booking_details($book_id);
+      $board = $this->Payment_Model->board_booking_detail($book_id);
+      $general = $this->Payment_Model->general_booking_detail($book_id);
+      $cancelation =  $this->Payment_Model->get_cancellation_terms($book_id);
+      $ExBed =  $this->Payment_Model->getExtrabedDetails($book_id);
+
+      $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
+      $book_room_count = $view[0]->book_room_count;
+      $individual_amount = explode(",", $view[0]->individual_amount);
+      if ($view[0]->individual_discount!="") {
+        $individual_discount = explode(",", $view[0]->individual_discount);
+      }
+
+      $tot_days = $view[0]->no_of_days;
+
+      $roomExp = explode(",", $view[0]->room_id);
+      $ExtrabedDiscount = explode(",", $view[0]->ExtrabedDiscount);
+      $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
+      $BoardDiscount = explode(",", $view[0]->BoardDiscount);
+      $RequestType = explode(",", $view[0]->RequestType);
+
+      for ($i=1; $i <= $book_room_count; $i++) {
+        if (!isset($ExtrabedDiscount[$i-1])) {
+          $ExtrabedDiscount[$i-1] = 0;
+        }
+        if (!isset($GeneralDiscount[$i-1])) {
+          $GeneralDiscount[$i-1] = 0;
+        }
+        if (!isset($BoardDiscount[$i-1])) {
+          $BoardDiscount[$i-1] = 0;
+        }
+        if (!isset($roomExp[$i-1])) {
+          $room_id = $roomExp[0];
+        } else {
+          $room_id = $roomExp[$i-1];
+        }
+
+        $Fdays = 0;
+        $discountType = "";
+        $DisTypExplode = explode(",", $view[0]->discountType);
+        $DisStayExplode = explode(",", $view[0]->discountStay);
+        $DisPayExplode = explode(",", $view[0]->discountPay);
+        $discountCode = explode(",", $view[0]->discountCode);
+        if (!isset($DisTypExplode[$i])) {
+          $DisTypExplode[$i] = $DisTypExplode[0];
+        }
+        if (!isset($DisStayExplode[$i])) {
+          $DisStayExplode[$i] = $DisStayExplode[0];
+        }
+        if (!isset($DisTypExplode[$i])) {
+          $DisPayExplode[$i] = $DisPayExplode[0];
+        }
+        if (!isset($discountCode[$i])) {
+          $discountCode[$i] = $discountCode[0];
+        }
+        if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+          $Cdays = $tot_days/$DisStayExplode[$i-1];
+          $parts = explode('.', $Cdays);
+          $Cdays = $parts[0];
+          $Sdays = $DisStayExplode[$i-1]*$Cdays;
+          $Pdays = $DisPayExplode[$i-1]*$Cdays;
+          $Tdays = $tot_days-$Sdays;
+          $Fdays = $Pdays+$Tdays;
+          $discountType = $DisTypExplode[$i-1];
+        }
+
+        $varIndividual = 'Room'.$i.'individual_amount';
+        if($view[0]->$varIndividual!="") {
+          $individual_amount = explode(",", $view[0]->$varIndividual);
+        }
+
+        $varIndividualDis = 'Room'.$i.'Discount';
+        if($view[0]->$varIndividual!="") {
+          $individual_discount = explode(",", $view[0]->$varIndividualDis);
+        }
+        $oneNight = array();
+        for ($j=0; $j < $tot_days ; $j++) { 
+          if (!isset($individual_discount[$j])) {
+            $individual_discount[$j] = 0;
+          }
+          $CPRMRate[$j]=0;
+          $DisroomAmount[$j] = 0;
+          $CPEAmoAD[$j] = 0;
+          $ExAmount[$j] = 0;
+          $TExAmount[$j] = 0;
+          $CPGAmoAD[$j] = 0;
+          $CPAmoAD[$j] = 0; 
+          $GCamount[$j] = 0;
+          $CPBAAmoAD[$j] = 0;
+          $BAamount[$j] = 0;
+          $TBAamount[$j] = 0;
+          $CPBCAmoAd[$j]  = 0;
+          $BCamount[$j] = 0;
+          $TBCamount[$j]  = 0;
+          $CPGAmoAD[$j] = 0;
+          $GAamount[$j] = 0;
+          $TPBAamount[$j] = 0;
+          /* Room rates start */
+          $rmAmount = 0;
+          if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
+            if ($view[0]->revenueMarkupType=='Percentage') {
+              $rmAmount = ($individual_amount[$j]*$view[0]->revenueMarkup)/100;
+            } else {
+              $rmAmount = $view[0]->revenueMarkup;
+            }
+          }
+          // Cost Room price 
+            $CPRMRate[$j] = $individual_amount[$j]-($individual_amount[$j]*$individual_discount[$j])/100;
+          // Selling Room price start
+            $roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
+            $DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
+          /* Room rates end */
+          /* Extrabed rate start */
+            if (count($ExBed)!=0) {
+              foreach ($ExBed as $Exkey => $Exvalue) {
+                if ($Exvalue->date==date('Y-m-d', strtotime($view[0]->check_in. ' + '.$j.'  days'))) {
+                  $exroomExplode = explode(",", $Exvalue->rooms);
+                  $examountExplode = explode(",", $Exvalue->Exrwamount);
+                  $exTypeExplode = explode(",", $Exvalue->Type);
+                  foreach ($exroomExplode as $Exrkey => $EXRvalue) {
+                    if ($EXRvalue==$i) {
+                      $ExMAmount = 0;
+                      if ($view[0]->revenueMarkup!="") {
+                        if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
+                          $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+                        } else {
+                          $ExMAmount = $view[0]->revenueExtrabedMarkup;
+                        }
+                      }
+                      $ExDis = 0;
+                      if ($ExtrabedDiscount[$i-1]==1) {
+                        $ExDis = $individual_discount[$j];
+                      }
+                      // Extrabed Cost Price
+                      $CPEAmoAD[$j] = $examountExplode[$Exrkey]-(($examountExplode[$Exrkey]*$ExDis)/100);
+                      // Extrabed Selling Price
+                      $ExAmount[$j] = (($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount-(((($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount)*$ExDis/100);
+                      $TExAmount[$j] +=$ExAmount[$j];
+                    } 
+                  } 
+                } 
+              }
+            }
+          /* Extrabed rate end */
+ 
+          /* General supplement start */
+            if (count($general)!=0) {
+              
+              foreach ($general as $gskey => $gsvalue) {
+                if ($gsvalue->gstayDate==date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days'))) {
+                  $gsadultExplode = explode(",", $gsvalue->Rwadult);
+                  $gsadultAmountExplode = explode(",", $gsvalue->Rwadultamount);
+                  // Adult general supplements start
+                  foreach ($gsadultExplode as $gsakey => $gsavalue) {
+                    if ($gsavalue==$i) {
+                      $GSMAmount = 0;
+                      if ($view[0]->revenueMarkup!="") {
+                        if ($view[0]->revenueGeneralMarkupType=='Percentage') {
+                          $GSMAmount = ($gsadultAmountExplode[$gsakey]*$view[0]->revenueGeneralMarkup)/100;
+                        } else {
+                          $GSMAmount = $view[0]->revenueGeneralMarkup;
+                        }
+                      }
+                      $GSDis = 0;
+                      if ($GeneralDiscount[$i-1]==1) {
+                        $GSDis = $individual_discount[$j];
+                      }
+                      // Adult general cost rate
+                      $CPGAmoAD[$j] = $gsadultAmountExplode[$gsakey]-($gsadultAmountExplode[$gsakey]*$GSDis)/100;
+                      // Adult general selling rate
+                      $GAamount[$j] = ((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)-((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)*$GSDis/100;
+                    }
+                  }
+                  // Adult general supplements end
+                  // Child general supplements start
+                  $gschildExplode = explode(",", $gsvalue->Rwchild);
+                  $gschildAmountExplode = explode(",", $gsvalue->RwchildAmount);
+                  foreach ($gschildExplode as $gsckey => $gscvalue) {
+                    if ($gscvalue==$i) {
+                      $GSMAmount = 0;
+                      if ($view[0]->revenueMarkup!="") {
+                        if ($view[0]->revenueGeneralMarkupType=='Percentage') {
+                          $GSMAmount = ($gschildAmountExplode[$gsckey]*$view[0]->revenueGeneralMarkup)/100;
+                        } else {
+                          $GSMAmount = $view[0]->revenueGeneralMarkup;
+                        }
+                      }
+                      $GSDis = 0;
+                      if ($GeneralDiscount[$i-1]==1) {
+                        $GSDis = $individual_discount[$j];
+                      }
+                      // Child general cost rate
+                      $CPAmoAD[$j] = $gschildAmountExplode[$gsckey]-$gschildAmountExplode[$gsckey]*$GSDis/100;
+                      // Child general selling rate
+                      $GCamount[$j] = ((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)-((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)*$GSDis/100;
+                    }
+                  }
+                  // Child general supplements end
+
+
+                }
+              }
+            }
+          /* General supplement end */
+
+          /* Board supplement start */
+          foreach ($board as $bkey => $bvalue) { 
+            if (($room_id==$bvalue->room_id || $bvalue->room_id=="") && $bvalue->stayDate==date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days'))) {
+
+              // Adult Board start
+              $ABReqwadultexplode = explode(",", $bvalue->Breqadults);
+              $ABRwadultexplode = explode(",", $bvalue->Rwadult);
+              $ABRwadultamountexplode = explode(",", $bvalue->RwadultAmount);
+              foreach ($ABRwadultexplode as $ABRwkey => $ABRwvalue) {
+                if ($ABRwvalue==$i) {
+                  $BSMAmount = 0;
+                  if ($view[0]->revenueMarkup!="") {
+                    if ($view[0]->revenueBoardMarkupType=='Percentage') {
+                      $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$view[0]->revenueBoardMarkup)/100;
+                    } else {
+                      $BSMAmount = $view[0]->revenueBoardMarkup*$ABReqwadultexplode[$ABRwkey];
+                    }
+                  }
+                  $BSDis = 0;
+                  if ($BoardDiscount[$i-1]==1) {
+                    $BSDis = $individual_discount[$j];
+                  }
+                  // Adult board cost rate
+                  $CPBAAmoAD[$j] = $ABRwadultamountexplode[$ABRwkey]-($ABRwadultamountexplode[$ABRwkey]*$BSDis/100);
+                  $TPBAamount[$j] += $CPBAAmoAD[$j];
+                  
+                  // Adult board selling rate
+                  $BAamount[$j] = ((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)-((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)*$BSDis/100;
+                  $TBAamount[$j] += $BAamount[$j];
+                }
+              }
+              // Adult Board end
+
+              // Child Board start
+              $CBReqwchildexplode = explode(",", $bvalue->BreqchildCount);
+              $CBRwchildexplode = explode(",", $bvalue->Rwchild);
+              $CBRwchildamountexplode = explode(",", $bvalue->RwchildAmount);
+              foreach ($CBRwchildexplode as $CBRwkey => $CBRwvalue) {
+                if ($CBRwvalue==$i) {
+                  $BSMAmount = 0;
+                  if ($view[0]->revenueMarkup!="") {
+                    if ($view[0]->revenueBoardMarkupType=='Percentage') {
+                      $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$view[0]->revenueBoardMarkup)/100;
+                    } else {
+                      $BSMAmount = $view[0]->revenueBoardMarkup*$CBReqwchildexplode[$CBRwkey];
+                    }
+                  }
+                  $BSDis = 0;
+                  if ($BoardDiscount[$i-1]==1) {
+                    $BSDis = $individual_discount[$j];
+                  }
+                  // Child Board cost price
+                  $CPBCAmoAd[$j] = $CBRwchildamountexplode[$CBRwkey]-($CBRwchildamountexplode[$CBRwkey]*$BSDis/100);
+                  // Child Board selling price
+                  $BCamount[$j] = ((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)-((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)*$BSDis/100;
+                  $TBCamount[$j] += $BCamount[$j];
+                }
+              }
+              // Child Board end
+
+            }
+          }
+          /* Board supplement end */
+        }
+
+        // Roomwise total rates start
+        if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay" && $Fdays!=0) {
+        array_splice($CPRMRate, 1,$Fdays);
+        array_splice($DisroomAmount, 1,$Fdays);
+        if ($ExtrabedDiscount[$i-1]==1) {
+          array_splice($CPEAmoAD,1,$Fdays);
+          array_splice($TExAmount,1,$Fdays);
+        }
+        if ($GeneralDiscount[$i-1]==1) {
+          array_splice($CPGAmoAD,1,$Fdays);
+          array_splice($CPAmoAD,1,$Fdays);
+
+          array_splice($GAamount,1,$Fdays);
+          array_splice($GCamount,1,$Fdays);
+        }
+        if ($BoardDiscount[$i-1]==1) {
+          array_splice($TPBAamount,1,$Fdays);
+          array_splice($CPBCAmoAd,1,$Fdays);
+
+          array_splice($TBAamount,1,$Fdays);
+          array_splice($TBCamount,1,$Fdays);
+        }
+      } 
+      $costPrice[$i] = array_sum($CPRMRate)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($TPBAamount)+array_sum($CPBCAmoAd);
+
+
+      $totRmAmt[$i] = array_sum($DisroomAmount)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
+        
+      // Roomwise total rates end
+      }
+      $costPrice = array_sum($costPrice);
+      $sellingPrice = (array_sum($totRmAmt)*$view[0]->tax)/100+array_sum($totRmAmt);
+      $Agentprofit= ($costPrice*($view[0]->agent_markup))/100;
+      $Adminprofit= ($costPrice*($view[0]->admin_markup))/100;
+      if ($Adminprofit==0) {
+        $Adminprofit= $sellingPrice-($Agentprofit+$costPrice);
+      }
+      $return['Cost'] = $costPrice;
+      $return['Selling'] = $sellingPrice;
+      $return['AgentProfit'] = $Agentprofit;
+      $return['AdminProfit'] = $Adminprofit;
+      return $return;
+    }
+    public function booking_details($book_id) {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_booking');
+      $this->db->where('id',$book_id);
+      $query=$this->db->get();
+      return $query->result();
     }
 }

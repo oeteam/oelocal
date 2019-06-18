@@ -230,17 +230,48 @@
                                 </div>
                                  <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="OtherMarkuptype">Markup Type</label>
-                                        <select class="" id="OtherMarkuptype" name="OtherMarkuptype">
-                                            <option <?php echo isset($edit[0]->OtherMarkuptype) && $edit[0]->OtherMarkuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
-                                            <option <?php echo isset($edit[0]->OtherMarkuptype) && $edit[0]->OtherMarkuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
+                                        <label for="ExtrabedMarkuptype">Extrabed Markup Type</label>
+                                        <select class="" id="ExtrabedMarkuptype" name="ExtrabedMarkuptype">
+                                            <option <?php echo isset($edit[0]->ExtrabedMarkuptype) && $edit[0]->ExtrabedMarkuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
+                                            <option <?php echo isset($edit[0]->ExtrabedMarkuptype) && $edit[0]->ExtrabedMarkuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="OtherMarkup">Markup</label>
-                                        <input id="OtherMarkup" name="OtherMarkup" type="number" class="form-control" value="<?php echo isset($edit[0]->OtherMarkup) ? $edit[0]->OtherMarkup : ''; ?>">
+                                        <label for="ExtrabedMarkup">Markup</label>
+                                        <input id="ExtrabedMarkup" name="ExtrabedMarkup" type="number" class="form-control" value="<?php echo isset($edit[0]->ExtrabedMarkup) ? $edit[0]->ExtrabedMarkup : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="GeneralSupMarkuptype">General Markup Type</label>
+                                        <select class="" id="GeneralSupMarkuptype" name="GeneralSupMarkuptype">
+                                            <option <?php echo isset($edit[0]->GeneralSupMarkuptype) && $edit[0]->GeneralSupMarkuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
+                                            <option <?php echo isset($edit[0]->GeneralSupMarkuptype) && $edit[0]->GeneralSupMarkuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="GeneralSupMarkup">Markup</label>
+                                        <input id="GeneralSupMarkup" name="GeneralSupMarkup" type="number" class="form-control" value="<?php echo isset($edit[0]->GeneralSupMarkup) ? $edit[0]->GeneralSupMarkup : ''; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="BoardSupMarkuptype">Board Markup Type</label>
+                                        <select class="" id="BoardSupMarkuptype" name="BoardSupMarkuptype">
+                                            <option <?php echo isset($edit[0]->BoardSupMarkuptype) && $edit[0]->BoardSupMarkuptype=="Percentage"  ? 'selected' : ''; ?> value="Percentage">Percentage</option>
+                                            <option <?php echo isset($edit[0]->BoardSupMarkuptype) && $edit[0]->BoardSupMarkuptype=="Flat Rate"  ? 'selected' : ''; ?> value="Flat Rate">Flat Rate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="BoardSupMarkup">Markup</label>
+                                        <input id="BoardSupMarkup" name="BoardSupMarkup" type="number" class="form-control" value="<?php echo isset($edit[0]->BoardSupMarkup) ? $edit[0]->BoardSupMarkup : ''; ?>">
                                     </div>
                                 </div>
                             </div>

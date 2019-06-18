@@ -1,5 +1,18 @@
 <?php init_front_head_dashboard(); ?>
 <script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<style type="text/css">
+	.stay-pay-tag {
+	    background: red;
+	    color: white;
+	    height: 20px;
+	    display: block;
+	    line-height: 20px;
+	    padding: 0px 10px 10px;
+	    border-bottom-left-radius: 20px;
+	    border-top-left-radius: 20px;
+	    font-weight: bolder;
+	}
+</style>
 <div class="booking-view">
 <div class="row">
 	<div class="col-md-6">
@@ -32,7 +45,7 @@
 				<div class="col-md-8">
 					<div class="col-md-6">
 						<p><span class="opensans size17 bold"><?php echo $view[0]->hotel_name ?></span></p>
-						<p><img src="<?php echo base_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
+						
 						<div class="row">
 							<div class="col-md-12">
 								<h4>Address</h4>
@@ -41,12 +54,12 @@
 								<div class="col-md-6">
 									<?php echo $view[0]->sale_address ?>
 									</br>
-									<?php echo $view[0]->revenu_address ?>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6">
+						<p><img src="<?php echo base_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
 						<div class="row">
 							<div class="col-md-12">
 								<h4>Location</h4>
@@ -78,7 +91,6 @@
 			<div class="col-md-12">
 				<div class="col-md-6">
 					<span>Booking Id : <?php echo $view[0]->booking_id ?></span><br>
-					<span>Room type : <?php echo $view[0]->room_name." ".$view[0]->Room_Type ?></span><br>
 					<span>Booking date : <?php echo date('d/m/Y',strtotime($view[0]->booking_date)) ?></span>
 					<?php if ($view[0]->boardName!="") { ?>
 						<br><span>Board : <?php echo $view[0]->boardName; ?></span>
@@ -150,7 +162,7 @@
 			</br>
 			<div class="line2"></div>
 			<div class="col-md-12">
-				<h4 class="opensans dark bold">Booking Amount Breakup</h4>
+				<h4 class="dark bold">Booking Amount Breakup</h4>
 				<?php 
 				// print_r($ExBed);
 		        $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
@@ -162,26 +174,86 @@
 				$no_of_days=date_diff($checkin_date,$check_out);
 				$tot_days = $no_of_days->format("%a");
 
-				$Fdays = 0;
-		      	$discountType = "";
-		        if ($view[0]->discountType=="stay&pay") {
-		          $Cdays = $tot_days/$view[0]->discountStay;
-		          $parts = explode('.', $Cdays);
-		          $Cdays = $parts[0];
-		          $Sdays = $view[0]->discountStay*$Cdays;
-		          $Pdays = $view[0]->discountPay*$Cdays;
-		          $Tdays = $tot_days-$Sdays;
-		          $Fdays = $Pdays+$Tdays;
-		          $discountType = 'Stay/Pay';
-		        }
-		        if ($view[0]->discountType=="" && $view[0]->discountCode!="") {
-		          $discountType = 'Discount';
-		        }
+				$roomExp = explode(",", $view[0]->room_id);
+		        $ExtrabedDiscount = explode(",", $view[0]->ExtrabedDiscount);
+		        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
+		        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
+		        $RequestType = explode(",", $view[0]->RequestType);
 
-				for ($i=1; $i <= $book_room_count; $i++) { ?>
+				for ($i=1; $i <= $book_room_count; $i++) { 
+					if (!isset($ExtrabedDiscount[$i-1])) {
+						$ExtrabedDiscount[$i-1] = 0;
+					}
+					if (!isset($GeneralDiscount[$i-1])) {
+						$GeneralDiscount[$i-1] = 0;
+					}
+					if (!isset($BoardDiscount[$i-1])) {
+						$BoardDiscount[$i-1] = 0;
+					}
+					if (!isset($roomExp[$i-1])) {
+						$room_id = $roomExp[0];
+					} else {
+						$room_id = $roomExp[$i-1];
+					}
+
+					$Fdays = 0;
+			      	$discountType = "";
+			      	$DisTypExplode = explode(",", $view[0]->discountType);
+			      	$DisStayExplode = explode(",", $view[0]->discountStay);
+			      	$DisPayExplode = explode(",", $view[0]->discountPay);
+			      	$discountCode = explode(",", $view[0]->discountCode);
+			      	if (!isset($DisTypExplode[$i])) {
+			      		$DisTypExplode[$i] = $DisTypExplode[0];
+			      	}
+			      	if (!isset($DisStayExplode[$i])) {
+			      		$DisStayExplode[$i] = $DisStayExplode[0];
+			      	}
+			      	if (!isset($DisTypExplode[$i])) {
+			      		$DisPayExplode[$i] = $DisPayExplode[0];
+			      	}
+			      	if (!isset($discountCode[$i])) {
+			      		$discountCode[$i] = $discountCode[0];
+			      	}
+
+			        if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+			          $Cdays = $tot_days/$DisStayExplode[$i-1];
+			          $parts = explode('.', $Cdays);
+			          $Cdays = $parts[0];
+			          $Sdays = $DisStayExplode[$i-1]*$Cdays;
+			          $Pdays = $DisPayExplode[$i-1]*$Cdays;
+			          $Tdays = $tot_days-$Sdays;
+			          $Fdays = $Pdays+$Tdays;
+			          $discountType = $DisTypExplode[$i-1];
+			        }
+			        // if ($DisTypExplode[$i-1]=="" && $view[0]->discountCode!="") {
+			        //   $discountType = 'Discount';
+			        // }
+
+					$varIndividual = 'Room'.$i.'individual_amount';
+					if($view[0]->$varIndividual!="") {
+						$individual_amount = explode(",", $view[0]->$varIndividual);
+					}
+
+					$varIndividualDis = 'Room'.$i.'Discount';
+					if($view[0]->$varIndividual!="") {
+						$individual_discount = explode(",", $view[0]->$varIndividualDis);
+					}
+
+					$RoomName = roomnameGET($room_id,$view[0]->hotel_id);
+				?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
             			<h4 class="room-name">Room <?php echo $i; ?></h4>
+            			<span class="pull-right">
+            			<!-- 	<?php if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]!="" && $DisTypExplode[$i-1]!="stay&pay") { ?>
+            					<small class="text-right red stay-pay-tag"><?php echo $discountCode[$i-1] ?> - <?php echo $DisTypExplode[$i-1] ?></small>
+            				<?php } ?> -->	
+
+            				<?php 
+            					if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") { ?>
+            					<small class="text-right red stay-pay-tag"><?php echo $discountCode[$i-1] ?> - Stay <?php echo $DisStayExplode[$i-1] ?> nights &amp; Pay <?php echo $DisPayExplode[$i-1] ?> nights</small>
+            				<?php } ?>
+            			</span>
             			<table class="table-bordered" >
             				<thead>
             					<tr>
@@ -195,26 +267,35 @@
             					<?php 
             					$oneNight = array();
             					for ($j=0; $j < $tot_days ; $j++) { 
-								$ExAmount[$j] = 0;
-								$TExAmount[$j] = 0;
-								$GAamount[$j] = 0;
-								$GCamount[$j] = 0;
-								$BAamount[$j] = 0;
-								$BCamount[$j] = 0;
-								$TBAamount[$j] = 0;
-								$TBCamount[$j] = 0;
-            						?>
+	        						if (!isset($individual_discount[$j])) {
+										$individual_discount[$j] = 0;
+									}
+									$ExAmount[$j] = 0;
+									$TExAmount[$j] = 0;
+									$GAamount[$j] = 0;
+									$GCamount[$j] = 0;
+									$BAamount[$j] = 0;
+									$BCamount[$j] = 0;
+									$TBAamount[$j] = 0;
+									$TBCamount[$j] = 0;
+        						?>
             					<tr>
 	            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
-	            					<td><?php echo $view[0]->room_name." ".$view[0]->Room_Type ?></td>
+	            					<td><?php echo $RoomName ?></td>
 	            					<td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
 	            					<td style="text-align: right">
             							<p class="new-price">
 
             								<?php 
-
-
-        									$roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j];
+            								$rmAmount = 0;
+            								if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
+            									if ($view[0]->revenueMarkupType=='Percentage') {
+            										$rmAmount = ($individual_amount[$j]*$view[0]->revenueMarkup)/100;
+            									} else {
+            										$rmAmount = $view[0]->revenueMarkup;
+            									}
+            								}
+        									$roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
 
         									$DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
             								$WiDisroomAmount[$j] = $roomAmount[$j];
@@ -244,9 +325,28 @@
 		            					 	<td><?php echo $exTypeExplode[$Exrkey] ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 	$ExAmount[$j] = (($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey];
+		            					 	$ExMAmount = 0;
+            								if ($view[0]->revenueMarkup!="") {
+            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
+            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+            									} else {
+            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
+            									}
+            								}
+            								$ExDis = 0;
+            								if ($ExtrabedDiscount[$i-1]==1) {
+            									$ExDis = $individual_discount[$j];
+            								}
 
-		            					 	$TExAmount[$j] +=(($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey];
+		            					 	$ExAmount[$j] = (($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount-(((($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount)*$ExDis/100);
+
+		            					 	$TExAmount[$j] +=(($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount-(((($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount)*$ExDis/100);
+		            					 	if ($ExDis!=0) { ?>
+		            					 		<small class="old-price text-danger"><?php 
+		            							echo currency_type(agent_currency(),(($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount) ?> <?php echo agent_currency() ?>
+		            							</small>
+			            						<br>
+		            						<?php }
 		            					 	if ($j==0) {
 			            						$oneNight[] = $ExAmount[0];
 			            					}
@@ -269,7 +369,24 @@
 		            					 	<td><?php echo $gsvalue->application=="Per Room" ? $gsvalue->generalType : 'Adults '.$gsvalue->generalType ; ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 		$GAamount[$j] = (($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey];
+		            					 		$GSMAmount = 0;
+	            								if ($view[0]->revenueMarkup!="") {
+	            									if ($view[0]->revenueGeneralMarkupType=='Percentage') {
+	            										$GSMAmount = ($gsadultAmountExplode[$gsakey]*$view[0]->revenueGeneralMarkup)/100;
+	            									} else {
+	            										$GSMAmount = $view[0]->revenueGeneralMarkup;
+	            									}
+	            								}
+	            								$GSDis = 0;
+	            								if ($GeneralDiscount[$i-1]==1) {
+	            									$GSDis = $individual_discount[$j];
+	            								}
+		            					 		$GAamount[$j] = (($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount-(((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)*$GSDis/100);
+		            					 		if ($GSDis!=0) { ?>
+				            						<small class="old-price text-danger"><?php 
+		            							echo currency_type(agent_currency(),(($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount) ?> <?php echo agent_currency() ?>
+		            								</small>
+	            								<?php }
 	            					 			if ($j==0) {
 				            						$oneNight[] = $GAamount[0];
 				            					}
@@ -289,7 +406,25 @@
 		            					 	<td><?php echo 'Child '.$gsvalue->generalType ; ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 		$GCamount[$j] = (($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey];
+		            					 		$GSMAmount = 0;
+	            								if ($view[0]->revenueMarkup!="") {
+	            									if ($view[0]->revenueGeneralMarkupType=='Percentage') {
+	            										$GSMAmount = ($gschildAmountExplode[$gsckey]*$view[0]->revenueGeneralMarkup)/100;
+	            									} else {
+	            										$GSMAmount = $view[0]->revenueGeneralMarkup;
+	            									}
+	            								}
+	            								$GSDis = 0;
+	            								if ($GeneralDiscount[$i-1]==1) {
+	            									$GSDis = $individual_discount[$j];
+	            								}
+
+		            					 		$GCamount[$j] = ((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)-((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)*$GSDis/100;
+		            					 		if ($GSDis!=0) { ?>
+				            						<small class="old-price text-danger"><?php 
+		            							echo currency_type(agent_currency(),(($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount) ?> <?php echo agent_currency() ?>
+		            								</small>
+	            								<?php }
 		            					 		if ($j==0) {
 				            						$oneNight[] = $GCamount[0];
 				            					}
@@ -302,6 +437,7 @@
             					<!-- Adults Board supplement list start -->
             					<?php foreach ($board as $bkey => $bvalue) { 
             						if ($bvalue->stayDate==date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days'))) {
+        								$ABReqwadultexplode = explode(",", $bvalue->Breqadults);
             							$ABRwadultexplode = explode(",", $bvalue->Rwadult);
             							$ABRwadultamountexplode = explode(",", $bvalue->RwadultAmount);
             							foreach ($ABRwadultexplode as $ABRwkey => $ABRwvalue) {
@@ -312,8 +448,25 @@
             							<td>Adult <?php echo $bvalue->board; ?></td>
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
-            								$BAamount[$j] = (($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey];;
+            								$BSMAmount = 0;
+            								if ($view[0]->revenueMarkup!="") {
+            									if ($view[0]->revenueBoardMarkupType=='Percentage') {
+            										$BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$view[0]->revenueBoardMarkup)/100;
+            									} else {
+            										$BSMAmount = $view[0]->revenueBoardMarkup*$ABReqwadultexplode[$ABRwkey];
+            									}
+            								}
+            								$BSDis = 0;
+            								if ($BoardDiscount[$i-1]==1) {
+            									$BSDis = $individual_discount[$j];
+            								}
+            								$BAamount[$j] = ((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)-((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)*$BSDis/100;
             								$TBAamount[$j] += $BAamount[$j];
+            								if ($BSDis!=0) { ?>
+			            						<small class="old-price text-danger"><?php 
+		            							echo currency_type(agent_currency(),((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)) ?> <?php echo agent_currency() ?></small>
+			            						<br>
+		            						<?php }
             								if ($j==0) {
 			            						$oneNight[] = $BAamount[0];
 			            					}
@@ -324,6 +477,7 @@
             					<!-- Adults Board supplement list end -->
             					<!-- Child Board supplement list start -->
             					<?php 
+            							$CBReqwchildexplode = explode(",", $bvalue->BreqchildCount);
             							$CBRwchildexplode = explode(",", $bvalue->Rwchild);
             							$CBRwchildamountexplode = explode(",", $bvalue->RwchildAmount);
             							foreach ($CBRwchildexplode as $CBRwkey => $CBRwvalue) {
@@ -334,9 +488,27 @@
             							<td>Child <?php echo $bvalue->board; ?></td>
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
-            								$BCamount[$j] = (($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey];
+            								$BSMAmount = 0;
+            								if ($view[0]->revenueMarkup!="") {
+            									if ($view[0]->revenueBoardMarkupType=='Percentage') {
+            										$BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$view[0]->revenueBoardMarkup)/100;
+            									} else {
+            										$BSMAmount = $view[0]->revenueBoardMarkup*$CBReqwchildexplode[$CBRwkey];
+            									}
+            								}
+            								$BSDis = 0;
+            								if ($BoardDiscount[$i-1]==1) {
+            									$BSDis = $individual_discount[$j];
+            								}
+            								$BCamount[$j] = ((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)-((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)*$BSDis/100;
 
             								$TBCamount[$j] += $BCamount[$j];
+            								if ($BSDis!=0) { ?>
+		            						<small class="old-price text-danger"><?php 
+		            							echo currency_type(agent_currency(),((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)) ?> <?php echo agent_currency() ?>
+		            						</small>
+		            						<br>
+	            						<?php }
             								if ($j==0) {
 			            						$oneNight[] = $BCamount[0];
 			            					}
@@ -354,21 +526,38 @@
             						$witotal[$i] = array_sum($WiDisroomAmount)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount);
 
             						$total[$i] = array_sum($DisroomAmount)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
-            						if ($Fdays!=0) {
-            							$temp = array_splice($DisroomAmount,1,$Fdays);
-            						} else {
-            							$temp = $DisroomAmount;
-            						}
-            						$totRmAmt[$i] = array_sum($temp)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
+
+            						if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay" && $Fdays!=0) {
+            							array_splice($DisroomAmount, 1,$Fdays);
+            							if ($ExtrabedDiscount[$i-1]==1) {
+            								array_splice($TExAmount,1,$Fdays);
+            							}
+            							if ($GeneralDiscount[$i-1]==1) {
+            								array_splice($GAamount,1,$Fdays);
+            								array_splice($GCamount,1,$Fdays);
+            							}
+            							if ($BoardDiscount[$i-1]==1) {
+            								array_splice($TBAamount,1,$Fdays);
+            								array_splice($TBCamount,1,$Fdays);
+            							}
+            						} 
+
+
+            						$totRmAmt[$i] = array_sum($DisroomAmount)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
             						?>
 
             						<td colspan="3" style="text-align: right"><strong class="text-blue">Total</strong></td>
-            						<td style="text-align: right; font-weight: 700; color: #0074b9"><?php echo currency_type(agent_currency(),$total[$i])  ?> <?php echo agent_currency() ?></td>
+            						<td style="text-align: right; font-weight: 700; color: #0074b9">
+            							<?php if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") { ?>
+	        								<small class="old-price text-danger" style="font-size: 11px;font-weight: 100;"><?php echo currency_type(agent_currency(),$total[$i]); ?> <?php echo agent_currency() ?></small><br>
+	        							<?php } ?>
+            							<?php echo currency_type(agent_currency(),$totRmAmt[$i])  ?> <?php echo agent_currency() ?></td>
             					</tr>
             				</tfoot>
             			</table>
             		<div>
             	</div>
+            	<br>
             	<?php } ?>
 			</div>
 			<div class="col-md-12">
@@ -381,40 +570,7 @@
 			    <?php 
 				$array_sumTotal = (array_sum($totRmAmt)*$view[0]->tax)/100+array_sum($totRmAmt);
 				$wioarray_sumTotal = ceil((array_sum($witotal)*$view[0]->tax)/100+array_sum($witotal));
-
-			    if ($view[0]->discount!=0) { ?>
-				    <div class="col-md-6 bold">
-					    <p></p>
-				    </div>
-				    <div class="col-md-6 bold">
-					    <p><div class="slashed-price">
-								<small class="old-price text-danger">
-									<?php 
-
-									echo currency_type(agent_currency(),$wioarray_sumTotal) ?> <?php echo agent_currency() ?>
-								</small>
-								<span><?php echo $discountType ?></span>
-							</div>
-						</p>
-				    </div>
-			    <?php } 
-			    if ($view[0]->discountType=="stay&pay") { ?>
-                  <div class="col-md-6 bold">
-					    <p></p>
-				    </div>
-				    <div class="col-md-6 bold">
-					    <p><div class="slashed-price">
-								<small class="old-price text-danger">
-									<?php 
-
-									echo currency_type(agent_currency(),$wioarray_sumTotal) ?> <?php echo agent_currency() ?>
-								</small>
-								<span><?php echo $discountType ?></span>
-							</div>
-						</p>
-				    </div>
-                <?php }
-                ?>
+				?>
 			    <div class="col-md-6 bold">
 				    <p>GRAND TOTAL</p>
 			    </div>
@@ -422,7 +578,7 @@
 				    <p><?php 
 				    $final_total = $array_sumTotal;
 
-				    echo agent_currency() ?> <?php echo currency_type(agent_currency(),ceil($final_total)) ?></p>
+				    echo agent_currency() ?> <?php echo currency_type(agent_currency(),$final_total) ?></p>
 			    </div>
 				<!-- </div> -->
 			</div>
@@ -448,6 +604,9 @@
 			 ?>
 			<div class="col-md-12">
 				<h4 class="bold">Cancelation Policy</h4>
+				<?php $roomExp = explode(",", $view[0]->room_id);
+				foreach ($roomExp as $key => $value) { ?>
+				<h5 class="room-name">Room <?php echo $key+1 ?> </h5>
 				<table class="table table-bordered table-hover">
 						<thead>
 					      <tr style="background-color: #0074b9;color: white">
@@ -458,12 +617,13 @@
 					    </thead>
 					    <tbody> 
 					    	<?php foreach ($cancelation as $Canckey => $Cancvalue) { 
+					    		if ($Cancvalue->roomIndex==($key+1) || $Cancvalue->roomIndex=="") {
 					    		if ($Cancvalue->application=="NON REFUNDABLE") {  ?>
 					    		<tr>
 						    		<td><?php echo date('d/m/Y',strtotime($view[0]->Created_Date)) ?></td>
 						    		<td><?php echo date('d/m/Y',strtotime($view[0]->check_in)) ?></td>
 						    		<td><?php $charge = $final_total * ($Cancvalue->cancellationPercentage/100); 
-						    		   echo agent_currency() ?> <?php echo currency_type(agent_currency(),ceil($charge));
+						    		   echo agent_currency() ?> <?php echo currency_type(agent_currency(),$charge);
 						    		?>
 						    		(<?php echo $Cancvalue->application ?>)</td>
 						    	</tr>
@@ -485,13 +645,14 @@
 						    				$charge = $final_total * ($Cancvalue->cancellationPercentage/100); 
 						    			}
 						    			
-						    		   echo agent_currency() ?> <?php echo currency_type(agent_currency(),ceil($charge));
+						    		   echo agent_currency() ?> <?php echo currency_type(agent_currency(),$charge);
 						    		?>
 						    		(<?php echo $Cancvalue->application ?>)</td>
 						    	</tr>
-							<?php } } ?>
+							<?php } } } ?>
 				    	</tbody>
 				</table>
+			<?php } ?>
 			</div>
 			<?php } ?>
 			<div class="col-md-12">
@@ -503,7 +664,9 @@
 			<div class="col-md-12">
 				<h4>progress : <?php if ($view[0]->booking_flag==0) { ?>
 					<span class="red">Rejected</span>
-				<?php } else if($view[0]->booking_flag==1) { ?><span class="green">Success</span><?php } else if($view[0]->booking_flag==2) { ?><span class="orange">Pending</span> <?php } ?></h4>
+				<?php } else if($view[0]->booking_flag==1) { ?><span class="green">Success</span><?php } else if($view[0]->booking_flag==2) { ?><span class="orange">Pending</span> <?php } else if($view[0]->booking_flag==8) {
+					?><span class="orange">On Request</span>
+				<?php } ?></h4>
 			</div>
 		</div>
 	</div>

@@ -2678,7 +2678,11 @@ class Hotels extends MY_Controller {
 	        	$switch = "Enabled";
 	        }
 		}
-
+		if ($r->discount_type=="stay&pay") {
+			$discountval = $r->stay_night.' stay / '.$r->pay_night.' pay - (nights)';
+		} else {
+			$discountval = $r->discount;
+		}
         $data[] = array(
           $key+1,
           $impHotelName[$key],
@@ -2689,7 +2693,7 @@ class Hotels extends MY_Controller {
           date('d/m/Y' ,strtotime($r->Styfrom)),
           date('d/m/Y' ,strtotime($r->Styto)),
           $r->Bkbefore,
-          $r->discount,
+          $discountval,
           $NonRefundable,
           $switch,
           $edit.' '.$delete,
@@ -2890,7 +2894,9 @@ class Hotels extends MY_Controller {
 	       		}
 	       	}
 	       	$Markuptype = $r->Markuptype=="Flat Rate" ? "AED" : '%';
-	       	$OtherMarkuptype = $r->OtherMarkuptype=="Flat Rate" ? "AED" : '%';
+	       	$ExtrabedMarkuptype = $r->ExtrabedMarkuptype=="Flat Rate" ? "AED" : '%';
+	       	$GeneralSupMarkuptype = $r->GeneralSupMarkuptype=="Flat Rate" ? "AED" : '%';
+	       	$BoardSupMarkuptype = $r->BoardSupMarkuptype=="Flat Rate" ? "AED" : '%';
 			$data[] = array(
 				$key+1,
 				$tbo.$impHotelName[$key],
@@ -2899,7 +2905,9 @@ class Hotels extends MY_Controller {
 				$impContarct[$key],
 				$impAgentName[$key],
 				$r->Markup.' '.$Markuptype,
-				$r->OtherMarkup.' '.$OtherMarkuptype,
+				$r->ExtrabedMarkup.' '.$ExtrabedMarkuptype,
+				$r->GeneralSupMarkup.' '.$GeneralSupMarkuptype,
+				$r->BoardSupMarkup.' '.$BoardSupMarkuptype,
 				$edit.$delete,
 			);
       	}

@@ -1317,7 +1317,9 @@ class Finance_Model extends CI_Model {
 
 		$book_room_count = $data[0]->book_room_count;
 		$individual_amount = explode(",", $data[0]->individual_amount);
-		$individual_discount = explode(",", $data[0]->individual_discount);
+		if ($data[0]->individual_discount!="") {
+			$individual_discount = explode(",", $data[0]->individual_discount);
+		}
 		$checkin_date=date_create($data[0]->check_in);
 		$checkout_date=date_create($data[0]->check_out);
 		$no_of_days=date_diff($checkin_date,$checkout_date);

@@ -474,25 +474,41 @@ function RoomCombinationCheck() {
     $(".r-type").find('input[name="Room'+i+'"]').prop('checked',false);
 
   }
+
+  $.each(RoomCombination,function(j,v) {
+    for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+      if (isNaN(RoomCombination.RoomIndex)) {       
+        $('#listRoom'+i+v.RoomIndex[i-1]).removeClass("hide");   
+      } else {
+        $('#listRoom'+i+RoomCombination.RoomIndex[i-1]).removeClass("hide");
+      }
+    }
+  });
+
   $.each(RoomCombination,function(j,v) {
     if (isNaN(RoomCombination.RoomIndex)) {
       if (v.RoomIndex[0]==room1) {
         for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
-          $('#Room'+i+v.RoomIndex).prop('disabled',false);
-          $('#Room'+i+v.RoomIndex).closest('li').find('.av-div').addClass('availability');
+          $('#Room'+i+v.RoomIndex[i-1]).prop('disabled',false);
+          $('#Room'+i+v.RoomIndex[i-1]).closest('li').find('.av-div').addClass('availability');
+          
         }
       }
     }
   });
 
+
   var availableRooms = $('.r-type--room').not(':first-child').find('.availability').closest('li');
   $.each(availableRooms, function(){
       $(this).closest('ul').prepend($(this).closest('li'));
   })
+  defaultcheck();
   var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
   $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());
   $("#contract_index").val($('input[type="radio"]:checked').closest('li').find('.contract_id').val());
-  $("#RequestType").val($('input[type="radio"]:checked').closest('li').find('.RequestType').val());
+  $.each($('input[type="radio"]:checked'),function(i,v) {
+      $('input[name="RequestType['+i+']"]').val($(this).closest('li').find('.RequestType').val());
+    }) 
   var sum = 0
   $.each(comAmnt,function(i,v) {
     sum += Number($(this).val().replace(/,/g , '')); 
@@ -503,7 +519,20 @@ function goBack() {
     window.history.back();
 }
 //defaultRateCheck(); 
-
+function defaultcheck() {
+  var room1 =  $('input[name="Room1"]:checked').val();
+  $.each(RoomCombination,function(j,v) {
+    if (isNaN(RoomCombination.RoomIndex)) {
+      if (v.RoomIndex[0]==room1) {
+        for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+           if (j==0) {
+              $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
+          }
+        }
+      }
+    }
+  });
+}
 function defaultRateCheck() {
 	if ($("#def_rid").val()!="" && $("#def_cid").val()!="") {
 		var def_rid= $("#def_rid").val();
@@ -513,7 +542,9 @@ function defaultRateCheck() {
     var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
     $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());
 	$("#contract_index").val($('input[type="radio"]:checked').closest('li').find('.contract_id').val());
-	$("#RequestType").val($('input[type="radio"]:checked').closest('li').find('.RequestType').val());
+	  $.each($('input[type="radio"]:checked'),function(i,v) {
+      $('input[name="RequestType['+i+']"]').val($(this).closest('li').find('.RequestType').val());
+    }) 
     var sum = 0
     $.each(comAmnt,function(i,v) {
       sum += Number($(this).val().replace(/,/g , '')); 
@@ -565,7 +596,9 @@ btn.on('click', function(e) {
     var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
     $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());
 	$("#contract_index").val($('input[type="radio"]:checked').closest('li').find('.contract_id').val());
-	$("#RequestType").val($('input[type="radio"]:checked').closest('li').find('.RequestType').val());
+	$.each($('input[type="radio"]:checked'),function(i,v) {
+      $('input[name="RequestType['+i+']"]').val($(this).closest('li').find('.RequestType').val());
+    }) 
     var sum = 0
     $.each(comAmnt,function(i,v) {
       sum += Number($(this).val().replace(/,/g , '')); 
@@ -782,9 +815,9 @@ $(document).ready(function() {
 				<input type="hidden" id="startTime" value="<?php echo date('D M d Y H:i:s',strtotime($_REQUEST['token'])); ?>">
 
 		      	  
-					    <input type="hidden" id="RequestType" name="RequestType" value="<?php echo isset($_REQUEST['RequestType']) ? $_REQUEST['RequestType'] : 'Book' ?>">
 						<?php foreach ($_REQUEST['adults'] as $key => $value) { ?>
 							<input type="hidden" name="reqadults[]" value="<?php echo $value ?>">
+              <input type="hidden" name="RequestType[<?php echo $key ?>]" value="">
 						<?php } ?>
 						<?php foreach ($_REQUEST['Child'] as $key => $value) { ?>
 							<input type="hidden" name="reqChild[]" value="<?php echo $value ?>">
@@ -1029,6 +1062,7 @@ $(document).ready(function() {
 		              </ul>
 		            </div>
 		        <?php } ?>
+            <div class="clearfix"></div>
             <div class="row margtop10">
           <div class="col-md-12" id="details">
             <h4 class="text-green margtop25 text-justify">Hotel Details<small class="right traveller-validate validated"></small></h4>

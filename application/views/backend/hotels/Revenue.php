@@ -32,7 +32,9 @@
                                         <th>Contracts</th>
                                         <th>Agents</th>
                                         <th>Markup</th>
-                                        <th>Other Markup</th>
+                                        <th title="Extrabed Markup">EB</th>
+                                        <th title="General supplements Markup">GS</th>
+                                        <th title="Board supplements Markup">BS</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

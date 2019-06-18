@@ -16,14 +16,14 @@ class Booking_Model extends CI_Model {
         $this->db->order_by('hotel_tbl_booking.id','desc') ;
         return $query=$this->db->get();
     } 
-    public function hotel_booking_detail($rooom_id) {
+    public function hotel_booking_detail($id) {
         $this->db->select('*,hotel_tbl_booking.created_date as booking_date,hotel_tbl_booking.board as boardName,hotel_tbl_booking.id as bkid,hotel_tbl_agents.First_Name as AFName,hotel_tbl_agents.Last_Name as ALName');
         $this->db->from('hotel_tbl_booking');
         $this->db->join('hotel_tbl_hotels','hotel_tbl_booking.hotel_id = hotel_tbl_hotels.id', 'left');
         $this->db->join('hotel_tbl_hotel_room_type','hotel_tbl_booking.room_id = hotel_tbl_hotel_room_type.id', 'left');
         $this->db->join('hotel_tbl_room_type','hotel_tbl_hotel_room_type.room_type = hotel_tbl_room_type.id', 'left');
         $this->db->join('hotel_tbl_agents','hotel_tbl_booking.agent_id = hotel_tbl_agents.id', 'left');
-        $this->db->where('hotel_tbl_booking.id',$rooom_id);
+        $this->db->where('hotel_tbl_booking.id',$id);
         $query=$this->db->get();
         return $query->result();
     } 
@@ -56,7 +56,7 @@ class Booking_Model extends CI_Model {
                       'invoice_date' => date('Y-m-d'),
                       'confirmationNumber' => $request['booking_confirmation'],
                       'confirmationName'  => $request['booking_confirmation_name'],
-                      'Updated_Date' => date('Y-m-d'),
+                      'Updated_Date' => date('Y-m-d H:i:s'),
                       'Updated_By'   =>  $this->session->userdata('id'),);
             
         } else {
@@ -64,7 +64,7 @@ class Booking_Model extends CI_Model {
                   'booking_flag' => 1,
                   'confirmationNumber' => $request['booking_confirmation'],
                   'confirmationName'  => $request['booking_confirmation_name'],
-                  'Updated_Date' => date('Y-m-d'),
+                  'Updated_Date' => date('Y-m-d H:i:s'),
                   'Updated_By'   =>  $this->session->userdata('id'),);
         }
         $this->db->where('id',$request['id']);

@@ -493,11 +493,11 @@ function supplementFormFill(value) {
     $("#Submitbtn").removeAttr('disabled','disabled');
   }
 }
-function aditionalfoodRemoveRequest1(prm,req) {
+function aditionalfoodRemoveRequest1(prm,req,key) {
   $.ajax({
     dataType: 'json',
     type: 'post',
-    url: base_url+'payment/supplementFormRemove?board='+req,
+    url: base_url+'payment/supplementFormRemove?board='+req+'&&key='+key,
     cache: false,
     success: function (respose) {
       window.location.reload(true);

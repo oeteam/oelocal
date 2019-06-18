@@ -372,7 +372,7 @@ class Agents extends MY_Controller {
             $img_path = base_url()."assets/images/user/1.png";
         }
         $data[] = array(
-          '<a title="view rooms" class="primary" href="agents/agent_credit_view?id='.$r->id.'"><i class="light-blue darken-4 fa fa-arrow-circle-right" aria-hidden="true"></i></a>',
+          '<a title="view credits" class="primary" href="agents/agent_credit_view?id='.$r->id.'"><i class="light-blue darken-4 fa fa-arrow-circle-right" aria-hidden="true"></i></a>',
           '<span class="list-img"><img src="'.$img_path.'" alt=""></span>',
           $r->Agent_Code,
           '<a href="#"><span class="list-enq-name">'.$r->First_Name." ".$r->Last_Name.'</span><span class="list-enq-city">'.$r->City.",".$r->Country.'</span></a>',
