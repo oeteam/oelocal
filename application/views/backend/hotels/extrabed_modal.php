@@ -106,11 +106,11 @@
             </div>
             <div class="form-group col-md-4">
                 <label>Child amount</label>
-                <input type="number"   id="ChildAmount" name="ChildAmount" value="<?php echo isset($_REQUEST['id']) ? round(contract_currency_type(hotel_currency_type($_REQUEST['hotel_id']),$extrabed[0]->ChildAmount)) : '' ?>" >
+                <input type="number"   id="ChildAmount" name="ChildAmount" value="<?php echo isset($_REQUEST['id']) && $extrabed[0]->ChildAmount!="" ? round(contract_currency_type(hotel_currency_type($_REQUEST['hotel_id']),$extrabed[0]->ChildAmount)) : '' ?>" >
             </div>
             <div class="form-group col-md-4">
                 <label>Adult amount</label>
-                <input type="number" min="0" name="Amount" id="Amount" value="<?php echo isset($_REQUEST['id']) ? round(contract_currency_type(hotel_currency_type($_REQUEST['hotel_id']),$extrabed[0]->amount)) : '' ?>">
+                <input type="number" min="0" name="Amount" id="Amount" value="<?php echo isset($_REQUEST['id']) && $extrabed[0]->amount!="" ? round(contract_currency_type(hotel_currency_type($_REQUEST['hotel_id']),$extrabed[0]->amount)) : '' ?>">
             </div>
         </div>
         </form>

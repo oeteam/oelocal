@@ -420,6 +420,7 @@
 						$RoomId= $IndexSplit[1];
         				$revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'));
         				$extrabed = $this->Payment_Model->get_PaymentConfirmextrabedAllotment($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey);
+        				
         				$general = $this->Payment_Model->get_Confirmgeneral_supplement($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey+1);
         				// stay and pay dicount start 
         				$Fdays = 0;

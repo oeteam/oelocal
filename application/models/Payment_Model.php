@@ -1048,7 +1048,6 @@ class Payment_Model extends CI_Model {
             if (count($extrabedallotment[$i])!=0) {
             foreach ($extrabedallotment[$i] as $key15 => $value15) {
               if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
-                // for ($k=1; $k <= count($request['reqadults']); $k++) { 
                   if (isset($request['reqroom'.($index+1).'-childAge'])) {
                     foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
                         if ($max_child_age < $value18) {
@@ -1067,11 +1066,10 @@ class Payment_Model extends CI_Model {
                             if (count($boardalt[$i])!=0) {
                               foreach ($boardalt[$i] as $key21 => $value21) {
                                 if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                                  $extrabedAmount[$i][$index][$key18] =  $value21->amount;
+                                  $extrabedAmount[$i][$index][$key21] =  $value21->amount;
                                   $exrooms[$i][$index][$key18] = $index+1;
-                                  $extrabedType[$i][$index][$key18] =  'Child '.$value21->board;
+                                  $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
                                 }
-                                
                               }
                             }
                           } 
@@ -1090,6 +1088,25 @@ class Payment_Model extends CI_Model {
               }
             }
           }
+          if (count($extrabedallotment[$i])==0) {
+          $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+            if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+              if (isset($request['reqroom'.($index+1).'-childAge'])) {
+                foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                  if (count($boardalt[$i])!=0) {
+                    foreach ($boardalt[$i] as $key21 => $value21) {
+                      if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                        $extrabedAmount[$i][$index][$key21] =  $value21->amount;
+                        $exrooms[$i][$index][$key18] = $index+1;
+                        $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
 
           /* Board wise supplement check start */
             $boardSp[$i] = array();
@@ -1733,7 +1750,7 @@ class Payment_Model extends CI_Model {
       $query=$this->db->get();
       return $query->result();
     }
-    public function TBOBookingConfirm($agent_id,$ClientReferenceNumber,$BookingId,$TripId,$ConfirmationNo,$BookingStatus,$hotel_name,$RoomTypeName,$Check_in,$Check_out,$total_amount,$no_of_days,$no_of_rooms,$Hotel_id,$PriceChange,$admin_markup,$guestfname,$guestlname) {
+    public function TBOBookingConfirm($agent_id,$ClientReferenceNumber,$BookingId,$TripId,$ConfirmationNo,$BookingStatus,$hotel_name,$RoomTypeName,$Check_in,$Check_out,$total_amount,$no_of_days,$no_of_rooms,$Hotel_id,$PriceChange,$admin_markup,$guestfname,$guestlname,$board) {
       $data = array(
                     'XMLProvider' => 'TBO',
                     'agent_id'    => $agent_id,
@@ -1758,6 +1775,7 @@ class Payment_Model extends CI_Model {
                     'PriceChange' => $PriceChange,
                     'bk_contact_fname' => $guestfname,
                     'bk_contact_lname' => $guestlname,
+                    'board' => implode("==", $board),
       );
       $this->db->insert('xml_hotel_booking',$data);
       $id = $this->db->insert_id();
@@ -2018,7 +2036,7 @@ class Payment_Model extends CI_Model {
           } 
           if (isset($request['board'])) {
             foreach ($request['board'] as $key5 => $value5) {
-              $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = '".$value5."'")->result();
+              $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0 AND board = '".$value5."'")->result();
               foreach ($boardSplmntCheck[$i] as $key7 => $value7) {
 
                 $explodeBoardroomtype[$key7] = explode(",", $value7->roomType);
@@ -2172,19 +2190,19 @@ class Payment_Model extends CI_Model {
                     }
                   } else {
                     $boardalt[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
-                    if (count($boardalt[$i])!=0) {
-                      foreach ($boardalt[$i] as $key21 => $value21) {
-                        if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                          $BsCamount = 0;
-                          if ($revenue_markup['BoardSupMarkup']!='') {
-                            if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
-                              $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
-                            } else {
-                              $BsCamount = $revenue_markup['BoardSupMarkup'];
+                      if (count($boardalt[$i])!=0) {
+                        foreach ($boardalt[$i] as $key21 => $value21) {
+                          if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                            $BsCamount = 0;
+                            if ($revenue_markup['BoardSupMarkup']!='') {
+                              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                                $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
+                              } else {
+                                $BsCamount = $revenue_markup['BoardSupMarkup'];
+                              }
                             }
-                          }
-                          $extrabedAmount[] = (($value21->amount*$markup/100)+$value21->amount+$BsCamount)-(($value21->amount*$markup/100)+$value21->amount+$BsCamount)*$BDis/100;
-                          $extrabedType[] =  'Child '.$value21->board;
+                           $extrabedAmount[] = (($value21->amount*$markup/100)+$value21->amount+$BsCamount)-(($value21->amount*$markup/100)+$value21->amount+$BsCamount)*$BDis/100;
+                            $extrabedType[] =  'Child '.$value21->board;
                         }
 
                       }
@@ -2216,8 +2234,32 @@ class Payment_Model extends CI_Model {
           }
       }
     }
+    if (count($extrabedallotment[$i])==0) {
+      $boardalt[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+      if (($adults+$child) > $standard_capacity) {
+        if (isset($request['room'.$index.'-childAge'])) {
+          foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
+            if (count($boardalt[$i])!=0) {
+              foreach ($boardalt[$i] as $key21 => $value21) {
+                if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                  $BsCamount = 0;
+                  if ($revenue_markup['BoardSupMarkup']!='') {
+                    if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+                      $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
+                    } else {
+                      $BsCamount = $revenue_markup['BoardSupMarkup'];
+                    }
+                  }
+                  $extrabedAmount[] = (($value21->amount*$markup/100)+$value21->amount+$BsCamount)-(($value21->amount*$markup/100)+$value21->amount+$BsCamount)*$BDis/100;
+                  $extrabedType[] =  'Child '.$value21->board;
+                }
 
-
+              }
+            }
+          }
+        }
+      }
+    }
     /* Board wise supplement check start */
     $boardSp[$i] = array();
     if($contract_board=="HB") {
@@ -2261,17 +2303,8 @@ class Payment_Model extends CI_Model {
     }
 
     /* Board wise supplement check end */
-              // print_r($extrabedType);
-              // echo "<br>";
     /*Extrabed allotment end*/
-
     }
-        // $totalAdultBoardSumData =  array_sum($adultarrayBoardSumData)*$adultscount; 
-        // $totalChildBoardSumData =  array_sum($childarrayBoardSumData); 
-    
-        // print_r($extrabedAmount);
-        //     echo "<br>";
-
     
     $implode = implode("','",$date);
     $linkedAllotmentquery = array();
@@ -2283,7 +2316,7 @@ class Payment_Model extends CI_Model {
     if (count($query)!=0) {
       foreach ($query as $key1 => $value1) {
 
-        $RMdiscount = DateWisediscount(date('Y-m-d',strtotime($start_date)),$value1->hotel_id,$value1->room_id,$Lcontract_id,'Room',date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)));
+        $RMdiscount = DateWisediscount($value1->allotement_date,$value1->hotel_id,$value1->room_id,$Lcontract_id,'Room',date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)));
         
         $amtGet = $this->db->query("SELECT amount FROM hotel_tbl_allotement WHERE allotement_date = '".$value1->allotement_date."' AND room_id = '".$room_id."' AND contract_id = '".$contract_id."'")->result();
         if (count($amtGet)!=0) {
@@ -2318,7 +2351,6 @@ class Payment_Model extends CI_Model {
         } else {
           $RMdiscount = 0;
         }
-
         $amount[$key1] = $ramount-($ramount*$RMdiscount)/100;
         $Disamount[$key1] = $ramount;
         $discount[$key1] = $RMdiscount;

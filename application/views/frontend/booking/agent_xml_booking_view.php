@@ -188,7 +188,10 @@
 				$checkout_date=date_create($view['CheckOutDate']);
 				$no_of_days=date_diff($checkin_date,$check_out);
 				$tot_days = $no_of_days->format("%a");
-
+				$board  = array();
+				if ($view1[0]->board!="") {
+					$board = explode("==", $view1[0]->board);
+				}
 				for ($i=1; $i <= $book_room_count; $i++) { ?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
@@ -216,7 +219,7 @@
             					<tr>
 	            					<td><?php echo date('d/m/Y',strtotime($view['CheckInDate'])) .' to '.date('d/m/Y',strtotime($view['CheckOutDate'])) ?></td>
 	            					<td><?php echo $RoomDetails['RoomName'] ?></td>
-	            					<td style="text-align: center"></td>
+	            					<td style="text-align: center"><?php echo isset($board[$i-1]) ? $board[$i-1] : '' ?></td>
 	            					<td style="text-align: right">
             							<p class="new-price">
 <?php  

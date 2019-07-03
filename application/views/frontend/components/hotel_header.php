@@ -128,7 +128,7 @@
                 </a>
                 <ul aria-labelledby="myTabDrop1" role="menu" class="dropdown-menu2">
                 <li><a href="<?php echo base_url(); ?>dashboard/hotel_room_booking_details">Booking</a></li>
-                <li><a href="<?php echo base_url(); ?>dashboard/hotel_room_booking_history">Booking history</a></li>
+                <!-- <li><a href="<?php echo base_url(); ?>dashboard/hotel_room_booking_history">Booking history</a></li> -->
                 </ul></li> 
               <li>
                 <a href="<?php echo base_url(); ?>dashboard/hotel_gallery_image">

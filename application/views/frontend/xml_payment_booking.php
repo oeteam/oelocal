@@ -410,7 +410,8 @@
             						<input type="hidden" name="RoomFare[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['RoomFare'] ?>">
             						<input type="hidden" name="RoomTax[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['RoomTax'] ?>">
             						<input type="hidden" name="TotalFare[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['TotalFare'] ?>">
-
+            						<input type="hidden" name="board[<?php echo $RAkey ?>]" value="<?php echo count($HotelRooms['Inclusion'])!=0 ? $HotelRooms['Inclusion'] : 'Room Only' ?>">
+            						
 	            					 <?php
 	            					 	}
 	            					  for ($i=0; $i <$tot_days ; $i++) {
@@ -424,7 +425,7 @@
 	            					<tr>
 		            					<td><?php echo date('d/m/Y' ,strtotime($result[$i+1]['date'])) ?></td>
 		            					<td><?php echo $HotelRooms['RoomTypeName'] ?></td>
-		            					<td class="text-center">BB</td>
+		            					<td class="text-center"><?php echo count($HotelRooms['Inclusion'])!=0 ? $HotelRooms['Inclusion'] : 'Room Only' ?></td>
 		            					<td class="text-right"><?php echo agent_currency().' '.xml_currency_change($DayRates,$HotelRooms['RoomRate']['@attributes']['Currency'],agent_currency()); ?></td>
 	            					</tr>
 	            					<?php
@@ -505,7 +506,7 @@
             						<input type="hidden" name="RoomFare[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['RoomFare'] ?>">
             						<input type="hidden" name="RoomTax[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['RoomTax'] ?>">
             						<input type="hidden" name="TotalFare[]" value="<?php echo $HotelRooms['RoomRate']['@attributes']['TotalFare'] ?>">
-
+            						<input type="hidden" name="board[<?php echo $RAkey ?>]" value="<?php echo count($HotelRooms['Inclusion'])!=0 ? $HotelRooms['Inclusion'] : 'Room Only' ?>">
 	            					 <?php for ($i=0; $i <$tot_days ; $i++) {
             					 		if (isset($HotelRooms['RoomRate']['DayRates']['DayRate'][$i])) {
         					 				$DayRates = $HotelRooms['RoomRate']['DayRates']['DayRate'][$i]['@attributes']['BaseFare'];
@@ -517,7 +518,7 @@
 	            					<tr>
 		            					<td><?php echo date('d/m/Y' ,strtotime($result[$i+1]['date'])) ?></td>
 		            					<td><?php echo $HotelRooms['RoomTypeName'] ?></td>
-		            					<td class="text-center">BB</td>
+		            					<td class="text-center"><?php echo count($HotelRooms['Inclusion'])!=0 ? $HotelRooms['Inclusion'] : 'Room Only' ?></td>
 		            					<td class="text-right"><?php echo agent_currency().' '.xml_currency_change($DayRates,$HotelRooms['RoomRate']['@attributes']['Currency'],agent_currency()); ?></td>
 	            					</tr>
 	            					<?php

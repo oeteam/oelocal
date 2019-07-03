@@ -231,7 +231,6 @@
         				</div>
         				<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc; ">
 							<?php 
-							// print_r($ExBed);
 					        $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
 							$book_room_count = $view[0]->book_room_count;
 							$individual_amount = explode(",", $view[0]->individual_amount);
@@ -443,10 +442,18 @@
 		            								<?php 
 		            								$ExMAmount = 0;
 		            								if ($view[0]->revenueMarkup!="") {
-		            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
-		            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+		            									if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+			            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
+			            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+			            									} else {
+			            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
+			            									}
 		            									} else {
-		            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
+		            										if ($view[0]->revenueBoardMarkupType=='Percentage') {
+			            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueBoardMarkup)/100;
+			            									} else {
+			            										$ExMAmount = $view[0]->revenueBoardMarkup;
+			            									}
 		            									}
 		            								}
 		            								$ExDis = 0;

@@ -2697,7 +2697,15 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $checkout_date=date_create($view['CheckOutDate']);
       $no_of_days=date_diff($checkin_date,$check_out);
       $tot_days = $no_of_days->format("%a");
+      $board  = array();
+      if ($view1[0]->board!="") {
+        $board = explode("==", $view1[0]->board);
+      }
+      
       for ($i=1; $i <= $book_room_count; $i++) {
+        if (!isset($board[$i-1])) {
+          $board[$i-1] = '';
+        }
         $tb51.='
           <h4 class="room-name">Room '.$i.'</h4>
           <table style="border-collapse: collapse;border:1px solid #dddddd" class="tg">
@@ -2723,7 +2731,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               $tb51 .='<tr>
                   <td >'.date('d/m/Y', strtotime($view['CheckInDate']. ' + '.$j.'  days')).'</td>
                   <td>'.$RoomDetails['RoomName'].'</td>
-                  <td></td>
+                  <td>'.$board[$i-1].'</td>
                 </tr>';
               }
               $RoomRate = $RoomDetails['RoomRate']['@attributes']['RoomFare'];
@@ -2770,7 +2778,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $pdf->Output('VOUCHER_0'.$_REQUEST['id'].'.pdf', $type);
     }
     public function booking_online_payment($data) {
-        $this->session->set_userdata('pay_currency',agent_currency());
+        $this->session->set_userdata('pay_currency','AED');
+        // $this->session->set_userdata('pay_currency',agent_currency());
         $totalAmt = $this->session->userdata('tot-'.$data['hotel_id']);
         $this->session->set_userdata('totalamount',$totalAmt);
       if($data['paymenttype']=="checkout"){
@@ -3119,7 +3128,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       print_r($_REQUEST);exit();
     }
     public function xml_booking_online_payment($data) {
-      $this->session->set_userdata('pay_currency',agent_currency());
+      $this->session->set_userdata('pay_currency','AED');
+      // $this->session->set_userdata('pay_currency',agent_currency());
       $this->session->set_userdata('totalamount',$data['tot']);
       if($data['paymenttype']=="checkout"){
         $details['checkoutdata']    = $this->Common_Model->checkoutdetails();
@@ -3368,7 +3378,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
          $guestlname =  $_REQUEST['Room1AdultLastName'][0];
 
 
-         $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup,$guestfname,$guestlname);
+         $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup,$guestfname,$guestlname,$_REQUEST['board']);
          if($type=='Credit') {
           $agent_credit_get = $this->Payment_Model->agent_credit_get();
           $agent_amount = $agent_credit_get-$_REQUEST['tot'];
@@ -3655,6 +3665,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                 }
                }
           }
+          
         }
       }
       $x=0;
@@ -3662,12 +3673,13 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         foreach ($value as $key1 => $value1) {
           if (count($_REQUEST['adults'])==count($value1['RoomIndex'])) {
               $roomIndex[$x]['RoomIndex'] =$value1['RoomIndex'];
+          } else {
+            for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
+              if (is_array($value1['RoomIndex'])) {
+               $roomIndex[$x]['RoomIndex'][$i] = array_values($value1['RoomIndex'])[0];
+              } 
+            }
           }
-          // for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
-          //   if ($i!=0 && !isset($value1['RoomIndex'][$i])) {
-          //     $rooms['CIndex'][$key][$key1]['RoomIndex'][$i] = $value1['RoomIndex'][0];
-          //   } 
-          // }
           $x++;
         }
       }

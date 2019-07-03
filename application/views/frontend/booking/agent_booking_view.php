@@ -327,10 +327,18 @@
 		            					 	<td class="text-right"><?php 
 		            					 	$ExMAmount = 0;
             								if ($view[0]->revenueMarkup!="") {
-            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
-            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+            									if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+	            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
+	            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+	            									} else {
+	            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
+	            									}
             									} else {
-            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
+            										if ($view[0]->revenueBoardMarkupType=='Percentage') {
+	            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueBoardMarkup)/100;
+	            									} else {
+	            										$ExMAmount = $view[0]->revenueBoardMarkup;
+	            									}
             									}
             								}
             								$ExDis = 0;

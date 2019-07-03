@@ -1,5 +1,18 @@
 <?php init_hotel_login_header(); ?>
 <script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<style type="text/css">
+	.stay-pay-tag {
+	    background: red;
+	    color: white;
+	    height: 20px;
+	    display: block;
+	    line-height: 20px;
+	    padding: 0px 10px 10px;
+	    border-bottom-left-radius: 20px;
+	    border-top-left-radius: 20px;
+	    font-weight: bolder;
+	}
+</style>
 <div class="row">
 	<div class="col-md-6">
 		<h3>Booking view</h3>
@@ -28,7 +41,6 @@
 			<div class="col-md-12">
 				<div class="col-md-6">
 					<span>Booking Id : <?php echo $view[0]->booking_id ?></span><br>
-					<span>Room type : <?php echo $view[0]->room_name." ".$view[0]->Room_Type ?></span><br>
 					<span>Booking date : <?php echo date('d/m/Y',strtotime($view[0]->booking_date)) ?></span>
 					<?php if ($view[0]->boardName!="") { ?>
 						<br><span>Board : <?php echo $view[0]->boardName; ?></span>
@@ -49,7 +61,7 @@
 							<label>Children(s) Details <span class="badge"><?php echo $view[0]->childs_count ?></span></label>
 						</div>
 					</div>
-				</div><br
+				</div><br>
 				<div class="col-mds-12">
 				<h4>Contact Details</h4> 
 					<table class="table table-striped table-dark">
@@ -117,10 +129,79 @@
 					$checkout_date=date_create($view[0]->check_in);
 					$no_of_days=date_diff($checkin_date,$check_out);
 					$tot_days = $no_of_days->format("%a");
-				for ($i=1; $i <= $book_room_count; $i++) { ?>
+
+					$roomExp = explode(",", $view[0]->room_id);
+			        $ExtrabedDiscount = explode(",", $view[0]->ExtrabedDiscount);
+			        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
+			        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
+			        $RequestType = explode(",", $view[0]->RequestType);
+				for ($i=1; $i <= $book_room_count; $i++) { 
+					if (!isset($ExtrabedDiscount[$i-1])) {
+						$ExtrabedDiscount[$i-1] = 0;
+					}
+					if (!isset($GeneralDiscount[$i-1])) {
+						$GeneralDiscount[$i-1] = 0;
+					}
+					if (!isset($BoardDiscount[$i-1])) {
+						$BoardDiscount[$i-1] = 0;
+					}
+					if (!isset($roomExp[$i-1])) {
+						$room_id = $roomExp[0];
+					} else {
+						$room_id = $roomExp[$i-1];
+					}
+
+					$Fdays = 0;
+			      	$discountType = "";
+			      	$DisTypExplode = explode(",", $view[0]->discountType);
+			      	$DisStayExplode = explode(",", $view[0]->discountStay);
+			      	$DisPayExplode = explode(",", $view[0]->discountPay);
+			      	$discountCode = explode(",", $view[0]->discountCode);
+			      	if (!isset($DisTypExplode[$i])) {
+			      		$DisTypExplode[$i] = $DisTypExplode[0];
+			      	}
+			      	if (!isset($DisStayExplode[$i])) {
+			      		$DisStayExplode[$i] = $DisStayExplode[0];
+			      	}
+			      	if (!isset($DisTypExplode[$i])) {
+			      		$DisPayExplode[$i] = $DisPayExplode[0];
+			      	}
+			      	if (!isset($discountCode[$i])) {
+			      		$discountCode[$i] = $discountCode[0];
+			      	}
+			      	if (!isset($RequestType[$i])) {
+			      		$RequestType[$i] = $RequestType[0];
+			      	}
+
+			        if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") {
+			          $Cdays = $tot_days/$DisStayExplode[$i-1];
+			          $parts = explode('.', $Cdays);
+			          $Cdays = $parts[0];
+			          $Sdays = $DisStayExplode[$i-1]*$Cdays;
+			          $Pdays = $DisPayExplode[$i-1]*$Cdays;
+			          $Tdays = $tot_days-$Sdays;
+			          $Fdays = $Pdays+$Tdays;
+			          $discountType = $DisTypExplode[$i-1];
+			        }
+
+					$varIndividual = 'Room'.$i.'individual_amount';
+					if($view[0]->$varIndividual!="") {
+						$individual_amount = explode(",", $view[0]->$varIndividual);
+					}
+
+					$varIndividualDis = 'Room'.$i.'Discount';
+					if($view[0]->$varIndividual!="") {
+						$individual_discount = explode(",", $view[0]->$varIndividualDis);
+					}
+
+					$RoomName = roomnameGET($room_id,$view[0]->hotel_id);
+				?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
-            			<h4 class="room-name">Room <?php echo $i; ?></h4>
+            			<h4 class="room-name">Room <?php echo $i; ?> <small class="text-danger"><?php echo  isset($RequestType[$i]) && $RequestType[$i]=="On Request" ? ' - On Request' : '' ?></small></h4>
+            			<?php if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") { ?>
+        					<span class="pull-right"><small class="text-right red stay-pay-tag"><?php echo $discountCode[$i-1] ?> - Stay <?php echo $DisStayExplode[$i-1] ?> nights &amp; Pay <?php echo $DisPayExplode[$i-1] ?> nights</small></span>
+        				<?php } ?>
             			<table class="table-bordered" >
             				<thead>
             					<tr>
@@ -133,7 +214,10 @@
             				<tbody>
             					<?php 
             					$oneNight = array();
-            					for ($j=0; $j < $tot_days ; $j++) { 
+            					for ($j=0; $j < $tot_days ; $j++) {
+        							if (!isset($individual_discount[$j])!=0) {
+    									$individual_discount[$j] = 0;
+    								} 
 									$ExAmount[$j] = 0;
 									$GAamount[$j] = 0;
 									$GCamount[$j] = 0;
@@ -144,15 +228,11 @@
             					?>
             					<tr>
 	            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
-	            					<td><?php echo $view[0]->room_name." ".$view[0]->Room_Type ?></td>
+	            					<td><?php echo $RoomName ?></td>
 	            					<td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
 	            					<td style="text-align: right">
-            							<p class="new-price">
-
             								<?php 
-            								if (!isset($individual_discount[$j])!=0) {
-            									$individual_discount[$j] = 0;
-            								}
+            								
         									$roomAmount[$j] = $individual_amount[$j];
 
         									$DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
@@ -165,7 +245,7 @@
 		            						if ($j==0) {
 			            						$oneNight[] = $DisroomAmount[0];
 			            					}
-            								echo number_format(($DisroomAmount[$j]),2),$currency_type ?></p>
+			            					echo currency_type($currency_type,$DisroomAmount[$j]) ?> <?php echo $currency_type ?>
 	            					</td>
             					</tr>
             					<!-- Extrabed list start -->
@@ -183,12 +263,21 @@
 		            					 	<td><?php echo $exTypeExplode[$Exrkey] ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 	$ExAmount[$j]+= $examountExplode[$Exrkey];
+		            					 	$ExDis = 0;
+            								if ($ExtrabedDiscount[$i-1]==1) {
+            									$ExDis = $individual_discount[$j];
+            								}
+		            					 	$ExAmount[$j]+= $examountExplode[$Exrkey]-(($examountExplode[$Exrkey]*$ExDis)/100);
+		            					 	if ($ExDis!=0) { ?>
+		            						<small class="old-price text-danger"><?php 
+		            						echo currency_type($currency_type,$examountExplode[$Exrkey]) ?> <?php echo $currency_type ?></small>
+		            						<br>
+		            						<?php }
 		            					 	if ($j==0) {
 			            						$oneNight[] = $ExAmount[0];
 			            					}
-		            					 	echo number_format(($examountExplode[$Exrkey]),2),$currency_type
-		            					 	?> </td>
+		            					 	?> <?php 
+		            						echo currency_type($currency_type,$examountExplode[$Exrkey]-(($examountExplode[$Exrkey]*$ExDis)/100)) ?> <?php echo $currency_type ?></td>
 		            					 </tr>
 
             					<?php } } } } } ?>
@@ -207,12 +296,23 @@
 		            					 	<td><?php echo $gsvalue->application=="Per Room" ? $gsvalue->generalType : 'Adults '.$gsvalue->generalType ; ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 		$GAamount[$j]=$gsadultAmountExplode[$gsakey];
+		            					 		$GSDis = 0;
+	            								if ($GeneralDiscount[$i-1]==1) {
+	            									$GSDis = $individual_discount[$j];
+	            								}
+		            					 		$GAamount[$j]= $gsadultAmountExplode[$gsakey]-($gsadultAmountExplode[$gsakey]*$GSDis)/100;
+		            					 		if ($GSDis!=0) { ?>
+			            						<small class="old-price text-danger"><?php 
+			            						echo currency_type($currency_type,$gsadultAmountExplode[$gsakey]) ?> <?php echo $currency_type ?></small>
+			            						<br>
+			            						<?php }
 		            					 		if ($j==0) {
 				            						$oneNight[] = $GAamount[0];
 				            					}
-		            					 		echo number_format(($GAamount[$j]),2),$currency_type
-		            					 	 ?> </td>
+		            					 	 	?> 
+		            					 	 	<?php 
+			            						echo currency_type($currency_type,$GAamount[$j]) ?> <?php echo $currency_type ?>
+			            					</td>
 		            					 </tr>
             					<?php } } ?> 
             					<!-- Adult and room General supplement list end -->
@@ -228,12 +328,21 @@
 		            					 	<td><?php echo 'Child '.$gsvalue->generalType ; ?></td>
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
-		            					 		$GCamount[$j]=$gschildAmountExplode[$gsckey];
+		            					 		$GSDis = 0;
+	            								if ($GeneralDiscount[$i-1]==1) {
+	            									$GSDis = $individual_discount[$j];
+	            								}
+		            					 		$GCamount[$j] = $gschildAmountExplode[$gsckey]-($gschildAmountExplode[$gsckey]*$GSDis/100);
+		            					 		if ($GSDis!=0) { ?>
+			            						<small class="old-price text-danger"><?php 
+			            						echo currency_type($currency_type,$gschildAmountExplode[$gsckey]) ?> <?php echo $currency_type ?></small>
+			            						<br>
+			            						<?php }
 		            					 		if ($j==0) {
 				            						$oneNight[] = $GCamount[0];
 				            					}
-		            					 		echo number_format(($GCamount[$j]),2),$currency_type
-		            					 	 ?> </td>
+		            					 	 ?> <?php 
+			            						echo currency_type($currency_type,$GCamount[$j]) ?> <?php echo $currency_type ?></td>
 		            					 </tr>
             					<?php } } ?> 
 
@@ -252,13 +361,23 @@
             							<td>Adult <?php echo $bvalue->board; ?></td>
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
-            								$BAamount[$j] = $ABRwadultamountexplode[$ABRwkey];
+            								$BSDis = 0;
+            								if ($BoardDiscount[$i-1]==1) {
+            									$BSDis = $individual_discount[$j];
+            								}
+            								$BAamount[$j] = $ABRwadultamountexplode[$ABRwkey]-($ABRwadultamountexplode[$ABRwkey]*$BSDis/100);
             								$TBAamount[$j] += $BAamount[$j];
+            								if ($BSDis!=0) { ?>
+			            						<small class="old-price text-danger"><?php 
+			            						echo currency_type($currency_type,$ABRwadultamountexplode[$ABRwkey]) ?> <?php echo $currency_type ?></small>
+			            						<br>
+		            						<?php }
             								if ($j==0) {
 			            						$oneNight[] = $BAamount[0];
 			            					}
-            								echo number_format(($BAamount[$j]),2),$currency_type;
-            							 ?></td>
+            							 ?><?php 
+			            						echo currency_type($currency_type,$BAamount[$j]) ?> <?php echo $currency_type ?>
+			            					</td>
             						</tr>
             						
             					<?php } } ?>
@@ -275,13 +394,22 @@
             							<td>Child <?php echo $bvalue->board; ?></td>
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
-            								$BCamount[$j] = $CBRwchildamountexplode[$CBRwkey];;
+            								$BSDis = 0;
+            								if ($BoardDiscount[$i-1]==1) {
+            									$BSDis = $individual_discount[$j];
+            								}
+            								$BCamount[$j] = $CBRwchildamountexplode[$CBRwkey]-($CBRwchildamountexplode[$CBRwkey]*$BSDis/100);
             								$TBCamount[$j] += $BCamount[$j];
+            								if ($BSDis!=0) { ?>
+			            						<small class="old-price text-danger"><?php 
+			            						echo currency_type($currency_type,$CBRwchildamountexplode[$CBRwkey]) ?> <?php echo $currency_type ?></small>
+			            						<br>
+		            						<?php }
             								if ($j==0) {
 			            						$oneNight[] = $BCamount[0];
 			            					}
-            								echo number_format(($TBCamount[$j]),2),$currency_type
-            							 ?></td>
+            							 ?><?php 
+			            						echo currency_type($currency_type,$TBCamount[$j]) ?> <?php echo $currency_type ?></td>
             						</tr>
             						
             					<?php } }  ?>
@@ -294,16 +422,35 @@
             						<?php 
 
             						$total[$i] = array_sum($DisroomAmount)+array_sum($ExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
-
+            						if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay" && $Fdays!=0) {
+            							array_splice($DisroomAmount, 1,$Fdays);
+            							if ($ExtrabedDiscount[$i-1]==1) {
+            								array_splice($ExAmount,1,$Fdays);
+            							}
+            							if ($GeneralDiscount[$i-1]==1) {
+            								array_splice($GAamount,1,$Fdays);
+            								array_splice($GCamount,1,$Fdays);
+            							}
+            							if ($BoardDiscount[$i-1]==1) {
+            								array_splice($TBAamount,1,$Fdays);
+            								array_splice($TBCamount,1,$Fdays);
+            							}
+            						}
             						
-            						$totalNotMar[$i] = array_sum($roomAmount)+array_sum($ExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
+            						$totalNotMar[$i] = array_sum($DisroomAmount)+array_sum($ExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
 
             						
             						?>
             						<?php  ?>
             						<td colspan="3" style="text-align: right"><strong class="text-blue">Total</strong></td>
-            						<td style="text-align: right; font-weight: 700; color: #0074b9"><?php 
-            						echo number_format(($total[$i]),2),$currency_type  ?> </td>
+            						<td style="text-align: right; font-weight: 700; color: #0074b9">
+            							<?php if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay") { ?>
+			            						<small class="old-price text-danger"><?php 
+			            						echo currency_type($currency_type,$total[$i]) ?> <?php echo $currency_type ?></small>
+			            						<br>
+		            						<?php }
+	            						echo currency_type($currency_type,$totalNotMar[$i]) ?> <?php echo $currency_type ?>	
+	            					</td>
             					</tr>
             				</tfoot>
             			</table>
@@ -314,52 +461,21 @@
 		</div>
 		<div class="col-md-12">
 			    <?php 
-				$array_sumTotal 	= (array_sum($total)*$view[0]->tax)/100 + array_sum($total);
-				$wioarray_sumTotal 	= (array_sum($totalNotMar)*$view[0]->tax)/100 + array_sum($totalNotMar);
-				$array_sumTotalNM	= (array_sum($totalNotMar));
-
-			    if (array_sum($individual_discount)!=0) { ?>
-				    <div class="col-md-6 bold">
-					    <p></p>
-				    </div>
-				    <div class="col-md-6 bold">
-					    <p><div class="slashed-price">
-								<small class="old-price text-danger">
-									<?php 
-									echo number_format(($wioarray_sumTotal),2),$currency_type
-									 ?> 
-								</small>
-							</div>
-						</p>
-				    </div>
-			    <?php } ?>
+				$array_sumTotal 	= (array_sum($totalNotMar)*$view[0]->tax)/100 + array_sum($totalNotMar);
+				 ?>
 			    <div class="col-md-6 bold" style="padding-left: 0;">
 				    <p>GRAND TOTAL</p>
 			    </div>
 			    <div class="col-md-6 bold" style="padding-left: 0;">
 				    <p><?php 
 				    $final_total = $array_sumTotal;
-				    echo number_format(ceil($final_total),2),$currency_type
-				     ?> 
+				    echo currency_type($currency_type,$final_total);
+				    echo " ";
+				    echo $currency_type;?> 
 				    </p>
 			    </div>
-			    
-		
-
 		
 		</br>
-		<br>
-		<!-- <div class="row">
-			<?php if(count($cancelation)!=0) { ?>
-			<div class="col-md-12">
-				<h4 class="bold">Cancelation Policy</h4>
-				<?php foreach ($cancelation as $cpkey => $cpvalue) {
-					echo $cpvalue->msg;
-					echo "<br>";
-				} ?>
-			</div>
-			<?php } ?>
-		</div> -->
 		<div class="row">
 			<div class="col-md-12">
 				<h4 class="bold">Important Remarks</h4>

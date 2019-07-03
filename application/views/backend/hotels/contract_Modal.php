@@ -131,8 +131,16 @@
                 <input type="hidden" id="market_check" value="<?php echo isset($view[0]->market) ? $view[0]->market : '' ?>">
                 <div class="multi-select-mod">
                 <select name="market[]" id="market" class="form-control"  multiple="" onchange="selectCountry();">
-                    <?php foreach ($market as $key => $value) { ?>
-                        <option <?php echo in_array($value->continent,$tempmarket)!='' ? 'selected' : '' ?>  value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
+                    <?php foreach ($market as $key => $value) {
+                        if (!isset($_REQUEST['id'])) {
+                            $selected = 'selected';
+                        } else if (isset($_REQUEST['id']) && in_array($value->continent,$tempmarket)!='') {
+                            $selected = 'selected';
+                        } else {
+                            $selected = '';
+                        }
+                     ?>
+                        <option <?php echo  $selected ?>  value="<?php echo $value->continent ?>"><?php echo $value->continent ?></option>
                     <?php } ?>
                 </select>     
                 </div>
@@ -190,10 +198,13 @@
     </div>
   </div>
 </div>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript">
-    $('#market').multiselect({
-            includeSelectAllOption: true,
-            selectAllValue: 0
+    $(document).ready(function()  {
+        $('#market').multiselect({
+                includeSelectAllOption: true,
+                selectAllValue: 0
+        });
     });
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
@@ -242,17 +253,19 @@
         }
     });
 
-    <?php if (isset($view[0]->nationalityPermission)) { ?>
-    var permission_check = $("#permission_check").val().split(",");
-    $.each(permission_check, function(i, v) {
-     $('#undo_redo option[value='+v+']').attr('selected','selected');
-    });
-    <?php } ?>
+    function nationatilitycheck() {
+        <?php if (isset($view[0]->nationalityPermission) && $view[0]->nationalityPermission!="") { ?>
+        var permission_check = $("#permission_check").val().split(",");
+        $.each(permission_check, function(i, v) {
+         $('#undo_redo option[value='+v+']').attr('selected','selected');
+        });
+        <?php } ?>
 
-    <?php if (isset($view[0]->nationalityPermission)) { ?>
-    $("#undo_redo_rightSelected").trigger('click');
-    $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
-    <?php } ?>
+        <?php if (isset($view[0]->nationalityPermission)  && $view[0]->nationalityPermission!="") { ?>
+        $("#undo_redo_rightSelected").trigger('click');
+        $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
+        <?php } ?>
+    }
 
 // });
     function maincontractCheck() {
@@ -287,21 +300,20 @@
             $(".linked_contract").addClass("hide")
         }
     }
-    // function selectCountry() {
-    //     $.each($("#market option:selected"), function(){ 
-    //     console.log($(this).val());       
-    //         $('#undo_redo_to option[continent="'+$(this).val()+'"]').prop('selected',true); 
-    //         $("#undo_redo_leftSelected").trigger('click'); 
-    //     });
+    function selectCountry() {
+        $.each($("#market option:selected"), function(){ 
+            $('#undo_redo_to option[continent="'+$(this).val()+'"]').prop('selected',true); 
+            $("#undo_redo_leftSelected").trigger('click'); 
+        });
 
-    //     $.each($("#market option:not(:selected)"), function(){   
-    //         $('#undo_redo option[continent="'+$(this).val()+'"]').prop('selected',true); 
-    //         $("#undo_redo_rightSelected").trigger('click'); 
-    //     });
-    // }
-
-
-    // selectCountry();
-
+        $.each($("#market option:not(:selected)"), function(){   
+            $('#undo_redo option[continent="'+$(this).val()+'"]').prop('selected',true); 
+            $("#undo_redo_rightSelected").trigger('click'); 
+        });
+    }
+    <?php if (isset($_REQUEST['id']) && $view[0]->market!='') { ?>
+        selectCountry();
+    <?php } ?>
+    nationatilitycheck();
 </script>
 

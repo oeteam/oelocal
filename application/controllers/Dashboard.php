@@ -372,8 +372,8 @@ class Dashboard extends MY_Controller {
       $booking_list = $this->Hotels_Model->hotel_room_booking_list($filter);
         foreach($booking_list->result() as $key => $r) {
           
-          $totalcost= $this->Finance_Model->TotcostGet($r->id);
-          $final_total = ceil($totalcost);
+          $total= $this->Payment_Model->TotalBookingAmountDetailsGet($r->id);
+          $final_total = $total['Cost'];
 
             $permission = '';
             $booking_success = '';

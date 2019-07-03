@@ -1810,6 +1810,12 @@ class Hotels_Model extends CI_Model {
 			/*Extrabed copy start*/
 			$this->db->query("INSERT INTO hotel_tbl_extrabed (roomType, season,from_date,to_date,ChildAmount,ChildAgeFrom,ChildAgeTo,amount,hotel_id,contract_id) SELECT  roomType, season,from_date,to_date,ChildAmount,ChildAgeFrom,ChildAgeTo,amount,hotel_id,'".$contract_id."' FROM   hotel_tbl_extrabed WHERE  contract_id = '".$request['contract_id']."'");
 			/*Extrabed copy end*/
+			/*Country permission copy start*/
+			$this->db->query("INSERT INTO hotel_country_permission (permission, hotel_id,contract_id) SELECT permission, hotel_id,'".$contract_id."' FROM   hotel_country_permission WHERE  contract_id = '".$request['contract_id']."'");
+			/*Country permission copy end*/
+			/*agent permission copy start*/
+			$this->db->query("INSERT INTO hotel_agent_permission (permission, hotel_id,contract_id) SELECT permission, hotel_id,'".$contract_id."' FROM   hotel_agent_permission WHERE  contract_id = '".$request['contract_id']."'");
+			/*agent permission copy end*/
 		}
 		return $con_id;
     }
@@ -5334,6 +5340,12 @@ class Hotels_Model extends CI_Model {
 			/*Extrabed copy start*/
 			$this->db->query("INSERT INTO hotel_tbl_extrabed (roomType, season,from_date,to_date,ChildAmount,ChildAgeFrom,ChildAgeTo,amount,hotel_id,contract_id) SELECT  roomType, season,from_date,to_date,ChildAmount,ChildAgeFrom,ChildAgeTo,amount,hotel_id,'".$contract_id."' FROM   hotel_tbl_extrabed WHERE  contract_id = '".$request['contract_id']."'");
 			/*Extrabed copy end*/
+			/*Country permission copy start*/
+			$this->db->query("INSERT INTO hotel_country_permission (permission, hotel_id,contract_id) SELECT permission, hotel_id,'".$contract_id."' FROM   hotel_country_permission WHERE  contract_id = '".$request['contract_id']."'");
+			/*Country permission copy end*/
+			/*agent permission copy start*/
+			$this->db->query("INSERT INTO hotel_agent_permission (permission, hotel_id,contract_id) SELECT permission, hotel_id,'".$contract_id."' FROM   hotel_agent_permission WHERE  contract_id = '".$request['contract_id']."'");
+			/*agent permission copy end*/
 		}
 		return $con_id;
     }

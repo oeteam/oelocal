@@ -125,11 +125,23 @@ $adults = $_REQUEST['adults'] ?>
 									 ?>
 									
 									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
-								<?php } ?>					
+								<?php } ?>		
+								<?php 
+									for ($q=1; $q <= 5; $q++) { 
+										$image = 'Image'.$q;
+									 ?>
+									
+									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
+								<?php } ?>						
 							</div>
 						</div>
 						<div id="pager-wrapper">
 							<div id="pager">
+								<?php for ($q=1; $q <= 5; $q++) { 
+										$image = 'Image'.$q;
+								 ?>
+									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
+								<?php } ?>		
 								<?php for ($q=1; $q <= 5; $q++) { 
 										$image = 'Image'.$q;
 								 ?>
@@ -409,13 +421,13 @@ $adults = $_REQUEST['adults'] ?>
 								</div>
 
 								<div class="col-md-6">
-									<div class="row room1-childAge <?php echo isset($Room1ChildAges[0]) && $Room1ChildAges[0]!="" ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
+									<div class="row room1-childAge <?php echo isset($_REQUEST['room1-childAge'][0]) && $_REQUEST['room1-childAge'][0]!="" ? '' : 'hide' ?>" style="transform: translateX(-8px);margin: 0 -8px;">
 									<p class="room1-child-p" style="padding-left: 15px;margin-bottom: 0px;">Children Age</p>
 									<?php for ($l=1; $l <= 4 ; $l++) {  ?>
-										<div class="col-xs-3 room1-child<?php echo $l; ?> <?php echo isset($Room1ChildAges[$l-1]) && $Room1ChildAges[$l-1]!="" ? '' : 'hide' ?>" style="padding-right: 0;">
-											<select name="room1-childAge[]" class="child-age-option form-control mySelectBoxClass room1-childAges<?php echo $l; ?>" <?php echo isset($Room1ChildAges[$l-1]) && $Room1ChildAges[$l-1]!="" ? '' : 'disabled' ?>  id="room1-childAge<?php echo $l; ?>"  onchange="MaxChildAgeCheck('room1-childAges<?php echo $l; ?>'); available_check();">
+										<div class="col-xs-3 room1-child<?php echo $l; ?> <?php echo isset($_REQUEST['room1-childAge'][$l-1]) && $_REQUEST['room1-childAge'][$l-1]!="" ? '' : 'hide' ?>" style="padding-right: 0;">
+											<select name="room1-childAge[]" class="child-age-option form-control mySelectBoxClass room1-childAges<?php echo $l; ?>" <?php echo isset($_REQUEST['room1-childAge'][$l-1]) && $_REQUEST['room1-childAge'][$l-1]!="" ? '' : 'disabled' ?>  id="room1-childAge<?php echo $l; ?>"  onchange="MaxChildAgeCheck('room1-childAges<?php echo $l; ?>'); available_check();">
 												<?php for ($i=0; $i <18 ; $i++) { 
-													if (isset($Room1ChildAges[$l-1]) && $Room1ChildAges[$l-1]==$i) { ?>
+													if (isset($_REQUEST['room1-childAge'][$l-1]) && $_REQUEST['room1-childAge'][$l-1]==$i) { ?>
 													  <option selected="" value="<?php echo $i ?>"><?php echo $i ?></option>
 												<?php } else { ?>
 													  <option value="<?php echo $i ?>"><?php echo $i ?></option>

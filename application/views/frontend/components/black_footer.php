@@ -98,6 +98,7 @@
     <script type="text/javascript" src="<?php echo base_url(); ?>skin/assets/js/helper-plugins/jquery.ba-throttle-debounce.min.js"></script>
     <script src="<?php echo base_url(); ?>skin/assets/js/counter.js"></script>	
     <script src="<?php echo base_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script>
+    <script src="<?php echo base_url(); ?>skin/js/carousel.js"></script>
     <script src="<?php echo base_url(); ?>skin/assets/js/jquery.easing.js"></script>
     
     <script src="<?php echo base_url(); ?>skin/assets/js/js-dashboard.js"></script>
