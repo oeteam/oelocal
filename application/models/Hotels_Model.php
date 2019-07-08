@@ -365,7 +365,7 @@ class Hotels_Model extends CI_Model {
 		return $hotel_room_id;
 	}
 	public function hotel_list_select($filter) {
-		$this->db->select('*');
+		$this->db->select('*,IF(supplier=1,(select CONCAT(Agent_Code," - ",First_Name," ",Last_Name) from hotel_tbl_agents where id = supplierid),"Otelseasy") as supplierName');
 		$this->db->from('hotel_tbl_hotels');
 		$this->db->where('delflg',$filter);
 		$this->db->order_by('id','desc');

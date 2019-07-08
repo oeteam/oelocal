@@ -31,10 +31,9 @@ $(document).ready(function() {
 		var rate = tpj(".rate:checked").val();
 		var altCheckIn = $("#alternate3").val();
     	var altCheckOut = $("#alternate2").val();
-		if (location=="" && hotel_name=="" && Nationality=="") {
+		if (location=="" && hotel_name=="") {
 			tpj(".dest_err").css("color","red");
 			tpj(".htl_err").css("color","red");
-			tpj(".nat_err").css("color","red");
 		} else if(Nationality=="") {
 			tpj(".dest_err").css("color","white");
 			tpj(".htl_err").css("color","white");

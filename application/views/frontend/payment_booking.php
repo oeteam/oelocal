@@ -413,6 +413,8 @@
 					
 
 				<?php 
+				$agent_markup = mark_up_get();
+				$general_markup = general_mark_up_get();
 				$oneNight = array();
 				foreach ($_REQUEST['reqadults'] as $RAkey => $RAvalue) { 
 						$IndexSplit = explode("-", $_REQUEST['Room'.($RAkey+1)]);
@@ -437,6 +439,7 @@
 						    $discountGet['pay'];
 						  }
         				// stay and pay dicount end 
+
 					?>
 					<input type="hidden" name="RoomIndex[]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
 	            	<div class="row payment-table-wrap">
@@ -497,7 +500,9 @@
 		            					<td style="text-align: center"><?php echo $boardName ?></td>
 		            					<td style="text-align: right"><?php 
 		            					$rmamount = 0;
+		            					$total_markup = $agent_markup+$general_markup;
 		            					if ($revenue_markup['Markup']!='') {
+		          							$total_markup = $agent_markup;
 									        if ($revenue_markup['Markuptype']=="Percentage") {
 									          $rmamount = (($result[$i]['amount']*$revenue_markup['Markup'])/100);
 									        } else {
@@ -533,7 +538,9 @@
 	            								<td class="text-center">-</td>
 	            								<td class="text-right"><?php
 	            									$GSAmamount = 0;
+		            								$total_markup = $agent_markup+$general_markup;
 	            									if ($revenue_markup['GeneralSupMarkup']!='') {
+		            									$total_markup = $agent_markup;
 												        if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
 												          $GSAmamount = (($general['RWadultamount'][$GAkey][$GSNvalue][$RAkey+1]*$revenue_markup['GeneralSupMarkup'])/100);
 												        } else {
@@ -569,7 +576,9 @@
 	            								<td class="text-center">-</td>
 	            								<td class="text-right"><?php
 	            									$GSCmamount = 0;
+		            								$total_markup = $agent_markup+$general_markup;
 	            									if ($revenue_markup['GeneralSupMarkup']!='') {
+		            									$total_markup = $agent_markup;
 												        if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
 												          $GSCmamount = ((array_sum($general['RWchildAmount'][$GCkey][$GSNvalue][$RAkey+1])*$revenue_markup['GeneralSupMarkup'])/100);
 												        } else {
@@ -607,13 +616,29 @@
 		            						<td style="text-align: center">-</td>
 		            						<td style="text-align: right"><?php 
 		            							$EXamount = 0;
-            									if ($revenue_markup['ExtrabedMarkup']!='') {
-											        if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
-											          $EXamount = (($extrabed['RwextrabedAmount'][$i-1][$RAkey][$exMkey]*$revenue_markup['ExtrabedMarkup'])/100);
-											        } else {
-											          $EXamount = $revenue_markup['ExtrabedMarkup'];
-											        }
-											      }
+	            								$total_markup = $agent_markup+$general_markup;
+            										if ($extrabed['extrabedType'][$i-1][$RAkey][$exMkey]=="Adult Extrabed" || $extrabed['extrabedType'][$i-1][$RAkey][$exMkey]=="Child Extrabed") {
+		            									if ($revenue_markup['ExtrabedMarkup']!='') {
+		            										$total_markup = $agent_markup;
+			            									if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
+													          $EXamount = (($extrabed['RwextrabedAmount'][$i-1][$RAkey][$exMkey]*$revenue_markup['ExtrabedMarkup'])/100);
+													        } else {
+													          $EXamount = $revenue_markup['ExtrabedMarkup'];
+													        }
+												        }
+	            									} else {
+		            									if ($revenue_markup['BoardSupMarkup']!='') {
+		            										$total_markup = $agent_markup;
+		            										if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
+													          $EXamount = (($extrabed['RwextrabedAmount'][$i-1][$RAkey][$exMkey]*$revenue_markup['BoardSupMarkup'])/100);
+													        } else {
+													          $EXamount = $revenue_markup['BoardSupMarkup'];
+													        }
+												        }
+	            									}
+
+
+											        
 		            							$FextrabedAmount[$i-1] =  ($extrabed['RwextrabedAmount'][$i-1][$RAkey][$exMkey]*$total_markup)/100+$extrabed['RwextrabedAmount'][$i-1][$RAkey][$exMkey]+$EXamount; 
 		            							
 		            							$TFextrabedAmount[$i-1] += $FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100; 
@@ -646,7 +671,9 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$BsAamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+	            										  $total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
 											                $BsAamount = (($Breakfast['Room'.($RAkey+1)]['adults']['adultAmount'][$BADkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
@@ -683,9 +710,11 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$BsCamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+		            									  $total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
-											                $BsCamount = (($Breakfast['Room'.($RAkey+1)]['childs']['childAmount'][$BADkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
+											                $BsCamount = ((array_sum($Breakfast['Room'.($RAkey+1)]['childs']['childAmount'][$BADkey][$RAkey+1])*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
 											                $BsCamount = $revenue_markup['BoardSupMarkup']*$this->session->userdata('Breakfast')['splChild'][$RAkey];
 											              }
@@ -727,7 +756,9 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$LsAamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+		            									$total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
 											                $LsAamount = (($Lunch['Room'.($RAkey+1)]['adults']['adultAmount'][$LADkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
@@ -766,9 +797,11 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$LsCamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+		            									  $total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
-											                $LsCamount = (($Lunch['Room'.($RAkey+1)]['childs']['childAmount'][$LADkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
+											                $LsCamount = ((array_sum($Lunch['Room'.($RAkey+1)]['childs']['childAmount'][$LADkey][$RAkey+1])*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
 											                $LsCamount = $revenue_markup['BoardSupMarkup']*$this->session->userdata('Lunch')['splChild'][$RAkey];
 											              }
@@ -809,7 +842,9 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$DsAamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+		            									  $total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
 											                $DsAamount = (($Dinner['Room'.($RAkey+1)]['adults']['adultAmount'][$DAkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
@@ -845,9 +880,11 @@
 	            									<td style="text-align: center;">-</td>
 	            									<td style="text-align: right;"><?php 
 	            										$DsCamount = 0;
+		            									$total_markup = $agent_markup+$general_markup;
 	            										if ($revenue_markup['BoardSupMarkup']!='') {
+		            									  $total_markup = $agent_markup;
 											              if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
-											                $DsCamount = (($Dinner['Room'.($RAkey+1)]['childs']['childAmount'][$DAkey][$RAkey+1]*$revenue_markup['BoardSupMarkup'])/100);
+											                $DsCamount = ((array_sum($Dinner['Room'.($RAkey+1)]['childs']['childAmount'][$DAkey][$RAkey+1])*$revenue_markup['BoardSupMarkup'])/100);
 											              } else {
 											                $DsCamount = $revenue_markup['BoardSupMarkup']*$this->session->userdata('Dinner')['splChild'][$RAkey];
 											              }

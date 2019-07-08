@@ -403,7 +403,7 @@ function available_check(){
                   '<div class="col-xs-5"><ul>'+generalsupl+'</ul><ul>'+extrabedType+'</ul><ul>'+nonRefundable+'</ul></div>'+
                   '<div class="col-xs-3 text-right">'+
                     oldPrice+
-                    '<p class="color-blue mb-0 bold">'+data.price[item][j]+'</p>'+
+                    '<p class="color-blue mb-0 bold price" srt-price="'+data.price1[item][j]+'">'+data.price[item][j]+'</p>'+
                   '</div>'+
                   '<div class="col-xs-2 text-right">'+
                   '<a href="#" '+style+' class="hotel-view-btn1 sbookbtn mt1" onclick="hotel_book('+item+','+data.hotel_val[item][j]+','+data.occupancy[item][j]+','+data.occupancy_child[item][j]+',\''+data.contract_val[item][j]+'\',\''+btn_name+'\')" >'+btn_name+'</a></div></div>');
@@ -411,6 +411,7 @@ function available_check(){
             });
           });
            
+          sortDetailsPrice();
           $(".dateCheckLoad").hide();
           $(".dateCheckLoadAfter").show();
       },
@@ -423,6 +424,25 @@ function available_check(){
         } 
       }
     });
+}
+function sortDetailsPrice() {
+  $(".contractCheckDiv .roomRateCheckdiv").each(function(j,u) {
+      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      $(u).find(" .price").each(function(i,v){
+        if (defVal < $(v).attr('srt-price') ) {
+            $(u).prepend($(this).closest('.col-md-12'));
+        }
+      })
+  })
+
+  $(".contractCheckDiv .roomRateCheckdiv").each(function(j,u) {
+      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      $(u).find(" .price").each(function(i,v){
+        if (defVal > $(v).attr('srt-price') ) {
+            $(u).prepend($(this).closest('.col-md-12'));
+        }
+      })
+  })
 }
 function review_clear() {
   $("#review_uname").val("");

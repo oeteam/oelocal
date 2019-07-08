@@ -371,6 +371,7 @@ class Details extends MY_Controller {
               $nonRefundable[$value][] = $room_current_count[$key][$key1]['nonRefundable'];
               $discount[$value][] = $room_current_count[$key][$key1]['discount'];
               $price[$value][] = agent_currency()." ".currency_type(agent_currency(),$room_current_count[$key][$key1]['price']);
+              $price1[$value][] = ceil($room_current_count[$key][$key1]['price']);
               $discountAmount[$value][] = agent_currency()." ".currency_type(agent_currency(),$room_current_count[$key][$key1]['discountAmount']);
           } else {
               $contract_val[$value][] = $value1;
@@ -390,6 +391,7 @@ class Details extends MY_Controller {
               $nonRefundable[$value][] = $room_current_count[$key][$key1]['nonRefundable'];
               $discount[$value][] = $room_current_count[$key][$key1]['discount'];
               $price[$value][] = agent_currency()." ".currency_type(agent_currency(),$room_current_count[$key][$key1]['price']);
+              $price1[$value][] = ceil($room_current_count[$key][$key1]['price']);
               $discountAmount[$value][] = agent_currency()." ".currency_type(agent_currency(),$room_current_count[$key][$key1]['discountAmount']);
           }
         }
@@ -403,6 +405,7 @@ class Details extends MY_Controller {
       $data['occupancy']= $occupancy;
       $data['occupancy_child']= $occupancy_child;
       $data['price']= $price;
+      $data['price1']= $price1;
       $data['count']= $count;
       $data['condition']= $condition;
       $data['contractBoard']= $contractBoard;

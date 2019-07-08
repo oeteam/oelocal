@@ -1942,9 +1942,8 @@ class Payment_Model extends CI_Model {
           $discountGet = Alldiscount(date('Y-m-d',strtotime($start_date)),date('Y-m-d',strtotime($end_date)),$request['hotel_id'],$room_id,$contract_id,'Room');
 
           $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contract_id,$this->session->userdata('agent_id'));
-          if ($revenue_markup['Markup']!='') {
-            $markup = mark_up_get();
-          }
+          $agent_markup = mark_up_get();
+          $general_markup = general_mark_up_get();
           $request['contract_id']  = $contract_id;
 
           $this->db->select('linkedContract,contract_type');
@@ -2084,13 +2083,14 @@ class Payment_Model extends CI_Model {
         $gsarraySum[$i] = count($generalSplmntCheck[$i]);
         if ($gsarraySum[$i]!=0) {
           $gsData[$i] = $generalSplmntCheck[$i];
-
+          $markup = $agent_markup+$general_markup;
           foreach ($gsData[$i] as $key3 => $value3) {
 
             $explodeRoomType[$key3] = explode(",", $value3->roomType);
             if ($value3->application=="Per Person") {
               $GSAmamount = 0;
               if ($revenue_markup['GeneralSupMarkup']!='') {
+                $markup = $agent_markup;
                 if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
                   $GSAmamount = (($value3->adultAmount*$revenue_markup['GeneralSupMarkup'])/100);
                 } else {
@@ -2103,6 +2103,7 @@ class Payment_Model extends CI_Model {
                     if ($value3->MinChildAge < $value44) {
                       $GSCmamount = 0;
                       if ($revenue_markup['GeneralSupMarkup']!='') {
+                        $markup = $agent_markup;
                         if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
                           $GSCmamount = (($value3->childAmount*$revenue_markup['GeneralSupMarkup'])/100);
                         } else {
@@ -2117,6 +2118,7 @@ class Payment_Model extends CI_Model {
             } else {
               $GSAmamount = 0;
               if ($revenue_markup['GeneralSupMarkup']!='') {
+                $markup = $agent_markup;
                 if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
                   $GSAmamount = (($value3->adultAmount*$revenue_markup['GeneralSupMarkup'])/100);
                 } else {
@@ -2125,6 +2127,7 @@ class Payment_Model extends CI_Model {
               }
               $GSCmamount = 0;
               if ($revenue_markup['GeneralSupMarkup']!='') {
+                $markup = $agent_markup;
                 if ($revenue_markup['GeneralSupMarkuptype']=="Percentage") {
                   $GSCmamount = (($value3->childAmount*$revenue_markup['GeneralSupMarkup'])/100);
                 } else {
@@ -2157,6 +2160,7 @@ class Payment_Model extends CI_Model {
         $extrabedallotment[$i] = $this->db->query("SELECT amount,ChildAmount,ChildAgeFrom,ChildAgeTo FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
 
         if (count($extrabedallotment[$i])!=0) {
+          $markup = $agent_markup+$general_markup;
           foreach ($extrabedallotment[$i] as $key15 => $value15) {
             if (($adults+$child) > $standard_capacity) {
                         // for ($k=1; $k <= count($adults); $k++) { 
@@ -2165,6 +2169,7 @@ class Payment_Model extends CI_Model {
                   if ($max_child_age < $value18) {
                     $EXamount = 0;
                    if ($revenue_markup['ExtrabedMarkup']!='') {
+                      $markup = $agent_markup;
                       if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
                         $EXamount = (($value15->amount*$revenue_markup['ExtrabedMarkup'])/100);
                       } else {
@@ -2179,6 +2184,7 @@ class Payment_Model extends CI_Model {
                     if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
                       $EXamount = 0;
                       if ($revenue_markup['ExtrabedMarkup']!='') {
+                        $markup = $agent_markup;
                         if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
                           $EXamount = (($value15->ChildAmount*$revenue_markup['ExtrabedMarkup'])/100);
                         } else {
@@ -2195,6 +2201,7 @@ class Payment_Model extends CI_Model {
                           if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
                             $BsCamount = 0;
                             if ($revenue_markup['BoardSupMarkup']!='') {
+                              $markup = $agent_markup;
                               if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
                                 $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
                               } else {
@@ -2219,6 +2226,7 @@ class Payment_Model extends CI_Model {
             if ($adults > $standard_capacity) {
               $EXamount = 0;
               if ($revenue_markup['ExtrabedMarkup']!='') {
+                $markup = $agent_markup;
                 if ($revenue_markup['ExtrabedMarkuptype']=="Percentage") {
                   $EXamount = (($value15->amount*$revenue_markup['ExtrabedMarkup'])/100);
                 } else {
@@ -2236,6 +2244,7 @@ class Payment_Model extends CI_Model {
     }
     if (count($extrabedallotment[$i])==0) {
       $boardalt[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
+      $markup = $agent_markup+$general_markup;
       if (($adults+$child) > $standard_capacity) {
         if (isset($request['room'.$index.'-childAge'])) {
           foreach ($request['room'.$index.'-childAge'] as $key18 => $value18) {
@@ -2244,6 +2253,7 @@ class Payment_Model extends CI_Model {
                 if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
                   $BsCamount = 0;
                   if ($revenue_markup['BoardSupMarkup']!='') {
+                    $markup = $agent_markup;
                     if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
                       $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
                     } else {
@@ -2268,6 +2278,7 @@ class Payment_Model extends CI_Model {
       $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Full Board' AND FIND_IN_SET('".$roomType[0]->id."', IFNULL(roomType,'')) > 0")->result();
     }
     if (count($boardSp[$i])!=0) {
+      $markup = $agent_markup+$general_markup;
       foreach ($boardSp[$i] as $key21 => $value21) {
           if (($adults+$child) > $standard_capacity) {
             if (isset($request['room'.$index.'-childAge'])) {
@@ -2275,6 +2286,7 @@ class Payment_Model extends CI_Model {
                 if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
                   $BsCamount = 0;
                   if ($revenue_markup['BoardSupMarkup']!='') {
+                    $markup = $agent_markup;
                     if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
                       $BsCamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
                     } else {
@@ -2290,6 +2302,7 @@ class Payment_Model extends CI_Model {
           if ($value21->startAge >= 18) {
             $BsAamount = 0;
             if ($revenue_markup['BoardSupMarkup']!='') {
+              $markup = $agent_markup;
               if ($revenue_markup['BoardSupMarkuptype']=="Percentage") {
                 $BsAamount = (($value21->amount*$revenue_markup['BoardSupMarkup'])/100);
               } else {
@@ -2325,9 +2338,11 @@ class Payment_Model extends CI_Model {
           $ramount = 0;
         }
 
+        $markup = $agent_markup+$general_markup;
         if ($markup!=0) {
           $rmamount = 0;
           if ($revenue_markup['Markup']!='') {
+            $markup = $agent_markup;
             if ($revenue_markup['Markuptype']=="Percentage") {
               $rmamount = (($ramount*$revenue_markup['Markup'])/100);
             } else {
@@ -2338,6 +2353,7 @@ class Payment_Model extends CI_Model {
         } else {
           $rmamount = 0;
           if ($revenue_markup['Markup']!='') {
+            $markup = $agent_markup;
             if ($revenue_markup['Markuptype']=="Percentage") {
               $rmamount = (($ramount*$revenue_markup['Markup'])/100);
             } else {
@@ -2621,10 +2637,18 @@ class Payment_Model extends CI_Model {
                     if ($EXRvalue==$i) {
                       $ExMAmount = 0;
                       if ($view[0]->revenueMarkup!="") {
-                        if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
-                          $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+                        if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                          if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
+                            $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+                          } else {
+                            $ExMAmount = $view[0]->revenueExtrabedMarkup;
+                          }
                         } else {
-                          $ExMAmount = $view[0]->revenueExtrabedMarkup;
+                          if ($view[0]->revenueBoardMarkupType=='Percentage') {
+                            $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueBoardMarkup)/100;
+                          } else {
+                            $ExMAmount = $view[0]->revenueBoardMarkup;
+                          }
                         }
                       }
                       $ExDis = 0;

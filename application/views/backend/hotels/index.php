@@ -31,6 +31,7 @@ $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels
                                         <th>Hotel</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>Provider</th>
                                         <th>Country</th>
                                         <?php if ($Profilemenu[0]->view!=0) { ?>
                                         <th>View</th>

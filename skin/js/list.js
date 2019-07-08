@@ -220,9 +220,29 @@ function MoreDetailsToggle(hotel_id,type) {
         cache: false,
         success: function (response) {
           $(".more-content"+hotel_id).html(response);
+          sortDetailsPrice();
         }
     });
   }
+}
+function sortDetailsPrice() {
+  $(".more-wrap.in .roomRateCheckdiv").each(function(j,u) {
+      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      $(u).find(" .price").each(function(i,v){
+        if (defVal < $(v).attr('srt-price') ) {
+            $(u).prepend($(this).closest('.col-md-12'));
+        }
+      })
+  })
+
+  $(".more-wrap.in .roomRateCheckdiv").each(function(j,u) {
+      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      $(u).find(" .price").each(function(i,v){
+        if (defVal > $(v).attr('srt-price') ) {
+            $(u).prepend($(this).closest('.col-md-12'));
+        }
+      })
+  })
 }
 function custom_filter() {
   search_ajax();

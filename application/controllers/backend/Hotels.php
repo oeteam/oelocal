@@ -558,7 +558,11 @@ class Hotels extends MY_Controller {
 			}else{
 				$roomView="";
 			}
-				
+				if ($r->supplierName=="Otelseasy") {
+					$supplierName = $r->supplierName;
+				} else {
+					$supplierName = '<a class="text-primary bold" style="color:blue" href="'.base_url().'/backend/agents/new_agent?edit_id='.$r->supplierid.'">'.$r->supplierName.'</a>';
+				}
 				$data[] = array(
 					$roomView,
 					$r->hotel_code,
@@ -567,25 +571,12 @@ class Hotels extends MY_Controller {
 					$r->revenu_number,
 					$r->sale_mail.'</br>'.
 					$r->revenu_mail,
+					$supplierName,
 					$r->location,
 	          		$view,
 	          		$edit,
 					$permission."".$cross,
 				);
-			
-			// } else {
-			// 	$data[] = array(
-			// 		$r->hotel_code,
-			// 		'<a><span class="list-enq-name">'.$r->hotel_name.'</span><span class="list-enq-city">'.$r->city.'</span></a>',
-			// 		$r->sale_number.'</br>'.
-			// 		$r->revenu_number,
-			// 		$r->sale_mail.'</br>'.
-			// 		$r->revenu_mail,
-			// 		$r->location,
-	  //         		'<a href="hotels/hotel_detail_view?id='.$r->id.'"><i class="fa fa-eye" aria-hidden="true"></i></a>',
-			// 		'<a href="hotels/new_hotel?hotels_edit_id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>',
-			// 	);
-			// }
 		}
       	
 		$output = array(
@@ -905,6 +896,8 @@ class Hotels extends MY_Controller {
 		if ($this->session->userdata('name')=="") {
 			redirect("../backend/");
 		}
+	    $data['room_type'] = $this->Hotels_Model->room_type_get();
+		$data['room_facilties'] = $this->Hotels_Model->room_facilties_get();
 		$roomMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Rooms');
 		if (isset($_REQUEST['room_id'])) {
 			$data['title'] = "Edit Room";
@@ -924,9 +917,7 @@ class Hotels extends MY_Controller {
 	  		} else {
 	    		redirect(base_url().'backend/dashboard');
 	  		}
-		}
-	    $data['room_type'] = $this->Hotels_Model->room_type_get();
-		$data['room_facilties'] = $this->Hotels_Model->room_facilties_get();	   
+		}	   
     }
     public function hotels_room_allotement_room_name() {
     	$room_names= $this->Hotels_Model->room_names_get($_REQUEST['hotel_id']);

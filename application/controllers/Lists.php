@@ -234,12 +234,12 @@ class lists extends MY_Controller {
         }
 
         if ($_REQUEST['view_type']=="list") {
-          // if($value->DataType=='TBO') {
-          //   $moreDetails = '<a href="#" class="hotel-more-btn1"><span>More Details</span> <i class="fa fa-chevron-right"></i></a>';
-          // } else {
-          //   $moreDetails = '<a class="hotel-more-btn" onclick="MoreDetailsToggle('.$value->HotelCode.',\''.$value->DataType.'\')"><span>More Details</span> <i class="fa fa-chevron-down"></i></a>';
-          // }
-          $moreDetails = '';
+          if($value->DataType=='TBO') {
+            $moreDetails = '<a href="#" class="hotel-more-btn1"><span>More Details</span> <i class="fa fa-chevron-right"></i></a>';
+          } else {
+            $moreDetails = '<a class="hotel-more-btn" onclick="MoreDetailsToggle('.$value->HotelCode.',\''.$value->DataType.'\')"><span>More Details</span> <i class="fa fa-chevron-down"></i></a>';
+          }
+          // $moreDetails = '';
             $data['list'][] =  '<div class="offset-2">
             <div class="col-md-3 offset-0">
             <div class="listitem">

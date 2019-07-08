@@ -103,13 +103,8 @@ class Payment extends MY_Controller {
         $id = $_REQUEST['room_id'];
         $data['tax'] = $this->Payment_Model->general_tax($_REQUEST['hotel_id']);
         $data['view'] = $this->Payment_Model->hotel_details_view($id);
-        $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$_REQUEST['contract_index'],$this->session->userdata('agent_id'));
-        $total_markup = mark_up_get()+general_mark_up_get();
-        if ($revenue_markup['Markup']!='') {
-          $total_markup = mark_up_get();
-        }
+        
         $data['contract'] = $this->Payment_Model->get_policy_contract($_REQUEST['hotel_id'],$_REQUEST['contract_id']);
-        $data['total_markup'] = $total_markup;
         $data['agent_currency'] = $this->Payment_Model->agent_currency_typesss();
         if (isset($_REQUEST['board'])) {
           $data['board'] = $this->Payment_Model->get_PaymentConfirmboard_supplement($_REQUEST);
@@ -788,10 +783,18 @@ class Payment extends MY_Controller {
                     if ($EXRvalue==$i) { 
                       $ExMAmount = 0;
                       if ($data[0]->revenueMarkup!="") {
-                        if ($data[0]->revenueExtrabedMarkupType=='Percentage') {
-                          $ExMAmount = ($examountExplode[$Exrkey]*$data[0]->revenueExtrabedMarkup)/100;
+                        if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                          if ($data[0]->revenueExtrabedMarkupType=='Percentage') {
+                            $ExMAmount = ($examountExplode[$Exrkey]*$data[0]->revenueExtrabedMarkup)/100;
+                          } else {
+                            $ExMAmount = $data[0]->revenueExtrabedMarkup;
+                          }
                         } else {
-                          $ExMAmount = $data[0]->revenueExtrabedMarkup;
+                          if ($data[0]->revenueBoardMarkupType=='Percentage') {
+                            $ExMAmount = ($examountExplode[$Exrkey]*$data[0]->revenueBoardMarkup)/100;
+                          } else {
+                            $ExMAmount = $data[0]->revenueBoardMarkup;
+                          }
                         }
                       }
                       $ExDis = 0;
@@ -1119,6 +1122,7 @@ class Payment extends MY_Controller {
       </table>';
       
       $pdf->writeHTML($tb9,true,false,false,false,'');
+      // $type = 'I';
       $type = 'D';
       ob_clean();
       $pdf->Output($invoice_number.'.pdf', $type);
@@ -1690,8 +1694,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
 
       $pdf->writeHTML($tb8,true,false,false,false,'');
  
-        $type = 'I';
-         // $type = 'D';
+        // $type = 'I';
+         $type = 'D';
          ob_clean();
     $pdf->Output('VOUCHER_0'.$_REQUEST['id'].'.pdf', $type);
 

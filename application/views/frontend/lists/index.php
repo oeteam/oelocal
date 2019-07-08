@@ -111,6 +111,7 @@
 		    $(this).closest('.itemlabel3').find(".hotel-view-btn").trigger("click");
 		})
 
+
 	})
 
 	<?php for ($i = 1; $i <= 10; $i++) {  ?>
