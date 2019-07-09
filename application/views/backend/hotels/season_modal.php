@@ -14,8 +14,8 @@
                         <label>Season Name</label>
                         <input type="text" name="SeasonName" id="SeasonName" value="<?php echo isset($view[0]->SeasonName) ? $view[0]->SeasonName : '' ?>"> 
                     </div>
-                    <input type="hidden" name="contract_from" id="contract_from" value="<?php echo isset($contract_period[0]->from_date) ? $contract_period[0]->from_date : '' ?>">
-                    <input type="hidden" name="contract_to" id="contract_to" value="<?php echo isset($contract_period[0]->to_date) ? $contract_period[0]->to_date : '' ?>">
+                    <input type="hidden" name="contract_from" id="contract_from" value="<?php echo isset($contract_period[0]->from_date) ? date('m-d-Y',strtotime($contract_period[0]->from_date)) : '' ?>">
+                    <input type="hidden" name="contract_to" id="contract_to" value="<?php echo isset($contract_period[0]->to_date) ? date('m-d-Y',strtotime($contract_period[0]->to_date)) : '' ?>">
 
                     <div class="form-group col-md-6">
                         <label>From Date</label>
@@ -76,7 +76,7 @@
         altField: "#alternate1",
         dateFormat: "yy-mm-dd",
         altFormat: "dd/mm/yy",
-        minDate: new Date(<?php date('d/m/Y') ?>),
+        minDate: new Date('<?php echo date('m-d-Y') ?>'),
         maxDate: con_end,
         changeYear : true,
         changeMonth : true,
@@ -90,7 +90,7 @@
         altField: "#alternate2",
         dateFormat: "yy-mm-dd",
         altFormat: "dd/mm/yy",
-        minDate: new Date(<?php date('d/m/Y', strtotime('+ 1 day')) ?>),
+        minDate: new Date('<?php echo date('m-d-Y', strtotime('+ 1 day')) ?>'),
         maxDate: con_end,
         changeYear : true,
         changeMonth : true,
