@@ -2497,8 +2497,8 @@ class Payment_Model extends CI_Model {
       $final =  $query1->result();
       $data['cut_off_msg'] = $cut_off_msg;
       $data['condition'] =  "TRUE";
-      $data['price'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
-      $data['discountAmount'] = $final[0]->price+$array_sumAdultAmount+$array_sumChildAmount;
+      $data['price'] = $final[0]->price;
+      $data['discountAmount'] = $final[0]->price;
       $data['allotement'] = $final[0]->allotement;
       $data['generalsupplementType'] = array_unique($generalsupplementType);
       $data['MangeneralsupplementType'] = array_unique($MangeneralsupplementType);
