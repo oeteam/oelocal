@@ -1871,7 +1871,6 @@ class Payment_Model extends CI_Model {
         $end=date_create($request['Check_in']);
         $nod=date_diff($start,$end);
         $tot_days1 = $nod->format("%a");
-
         for($i = 0; $i < $tot_days; $i++) {
           $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
           $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND FIND_IN_SET('".$room_id."', IFNULL(roomType,'')) > 0 AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysFrom desc")->result();
@@ -1897,7 +1896,6 @@ class Payment_Model extends CI_Model {
               } else {
                 $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
               }
-
               
               $data[$key]['percentage'] = $value->cancellationPercentage;
               $data[$key]['application'] = $value->application;
