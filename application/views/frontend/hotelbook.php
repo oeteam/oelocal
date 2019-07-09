@@ -979,7 +979,7 @@ $(document).ready(function() {
 		                    <div class="av-div">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> 
                           <?php 
-                            if ($rooms[$i]['CancellationPolicy'][$key][0]['application']=="FREE OF CHARGE") { ?>
+                            if (isset($rooms[$i]['CancellationPolicy'][$key][0]['application']) && $rooms[$i]['CancellationPolicy'][$key][0]['application']=="FREE OF CHARGE") { ?>
                               <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">Free of Cancellation till <?php echo $rooms[$i]['CancellationPolicy'][$key][0]['before'] ?> <span>
                             <?php } else {
                            ?>
