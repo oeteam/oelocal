@@ -1813,7 +1813,7 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
           $ci->email->message($message);
           
           $ci->email->send();
-          // $ci->email->clear();
+          $ci->email->clear();
     /*Agent mail end*/
     /*Hotel mail start*/
       
@@ -1983,15 +1983,23 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
                     '.$mail_settings[0]->smtp_user.'<br>
                     971 54 441 2554<br>
                     <strong><a style="color:blue;" href="'.base_url().'">www.otelseasy.com</a></strong><br>.';  
-          $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
-          // $contractMail = explode(",", $hotel[0]->contract_mail);
-          $ci->email->to($hotel[0]->contract_mail);
-          $ci->email->Bcc($mail_settings[0]->smtp_user);
-          
-          $ci->email->subject($subject1);
-          $ci->email->message($message1);
-          
-          $ci->email->send();
+            $ci->email->from($mail_settings[0]->smtp_user, $mail_settings[0]->company_name);
+            // $contractMail = explode(",", $hotel[0]->contract_mail);
+            if($hotel[0]->supplierid!="") {
+                $ci->db->select('Email');
+                $ci->db->from('hotel_tbl_agents');
+                $ci->db->where('id',$hotel[0]->supplierid);
+                $agentemail=$ci->db->get()->result();
+                $ci->email->to($agentemail[0]->Email);
+            } else {
+                $ci->email->to($hotel[0]->contract_mail);
+            }
+            $ci->email->Bcc($mail_settings[0]->smtp_user);
+            
+            $ci->email->subject($subject1);
+            $ci->email->message($message1);
+            
+            $ci->email->send();
     /*Hotel mail end*/
     return true;
 }
