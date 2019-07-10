@@ -3715,6 +3715,9 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $revenueExtrabed = 0;
       $revenueGeneral = 0;
       $revenueBoard = 0;
+      $revenueExtrabedType = '';
+      $revenueGeneralType = '';
+      $revenueBoardType = '';
       if ($revenue_markup['Markup']!='') {
         $total_markup = $agent_markup;
         $admin_markup = 0;

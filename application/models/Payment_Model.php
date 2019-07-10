@@ -993,175 +993,175 @@ class Payment_Model extends CI_Model {
         // exit();
         return $return;
     }
-    public function get_PaymentConfirmextrabedAllotment($request,$contract_id,$room_id,$index) {
+  public function get_PaymentConfirmextrabedAllotment($request,$contract_id,$room_id,$index) {
+    
+    $extrabedAmount  = array();
+    $extraBedtotal  = array();
+    $exrooms = array();
+    $extrabedType = array();
+
+    $this->db->select('tax_percentage,max_child_age,board');
+    $this->db->from('hotel_tbl_contract');
+    $this->db->where('hotel_id',$request['hotel_id']);
+    $this->db->where('contract_id',$contract_id);
+    $query = $this->db->get();
+    $row_values  = $query->row_array();
+    $tax = $row_values['tax_percentage'];
+    $max_child_age = $row_values['max_child_age'];
+    $contract_board = $row_values['board'];
       
-      $extrabedAmount  = array();
-      $extraBedtotal  = array();
-      $exrooms = array();
-      $extrabedType = array();
-
-      $this->db->select('tax_percentage,max_child_age,board');
-      $this->db->from('hotel_tbl_contract');
-      $this->db->where('hotel_id',$request['hotel_id']);
-      $this->db->where('contract_id',$contract_id);
-      $query = $this->db->get();
-      $row_values  = $query->row_array();
-      $tax = $row_values['tax_percentage'];
-      $max_child_age = $row_values['max_child_age'];
-      $contract_board = $row_values['board'];
-        
-      $this->db->select('occupancy,occupancy_child,standard_capacity,max_total');
-      $this->db->from('hotel_tbl_hotel_room_type');
-      $this->db->where('hotel_id',$request['hotel_id']);
-      $this->db->where('id',$room_id);
-      $Rmquery = $this->db->get();
-      $Rmrow_values  = $Rmquery->row_array();
-      $occupancyAdult = $Rmrow_values['occupancy'];
-      $occupancyChild = $Rmrow_values['occupancy_child'];
-      $standard_capacity = $Rmrow_values['standard_capacity'];
-      $max_capacity = $Rmrow_values['max_total'];
-      $Room_Type = $room_id;
+    $this->db->select('occupancy,occupancy_child,standard_capacity,max_total');
+    $this->db->from('hotel_tbl_hotel_room_type');
+    $this->db->where('hotel_id',$request['hotel_id']);
+    $this->db->where('id',$room_id);
+    $Rmquery = $this->db->get();
+    $Rmrow_values  = $Rmquery->row_array();
+    $occupancyAdult = $Rmrow_values['occupancy'];
+    $occupancyChild = $Rmrow_values['occupancy_child'];
+    $standard_capacity = $Rmrow_values['standard_capacity'];
+    $max_capacity = $Rmrow_values['max_total'];
+    $Room_Type = $room_id;
 
 
-      $start_date = $request['Check_in'];
-      $end_date = $request['Check_out'];
-      $checkin_date=date_create($start_date);
-      $checkout_date=date_create($end_date);
-      $no_of_days=date_diff($checkin_date,$checkout_date);
-      $tot_days = $no_of_days->format("%a");
-      for($i = 0; $i < $tot_days; $i++) {
-      /*Extrabed allotment start*/
-          $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
+    $start_date = $request['Check_in'];
+    $end_date = $request['Check_out'];
+    $checkin_date=date_create($start_date);
+    $checkout_date=date_create($end_date);
+    $no_of_days=date_diff($checkin_date,$checkout_date);
+    $tot_days = $no_of_days->format("%a");
+    for($i = 0; $i < $tot_days; $i++) {
+    /*Extrabed allotment start*/
+        $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
 
-          if ($contract_board=="BB") {
-              $contract_boardRequest = array('Breakfast');
-          } else if($contract_board=="HB") {
-              $contract_boardRequest = array('Breakfast','Dinner');
-          } else if($contract_board=="FB") {
-              $contract_boardRequest = array('Breakfast','Dinner','Lunch');
-          } else {
-              $contract_boardRequest = array();
-          }
-          $implodeboardRequest = implode("','", $contract_boardRequest);
+        if ($contract_board=="BB") {
+            $contract_boardRequest = array('Breakfast');
+        } else if($contract_board=="HB") {
+            $contract_boardRequest = array('Breakfast','Dinner');
+        } else if($contract_board=="FB") {
+            $contract_boardRequest = array('Breakfast','Dinner','Lunch');
+        } else {
+            $contract_boardRequest = array();
+        }
+        $implodeboardRequest = implode("','", $contract_boardRequest);
 
-           $extrabedallotment[$i] = $this->db->query("SELECT * FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
-            if (count($extrabedallotment[$i])!=0) {
-            foreach ($extrabedallotment[$i] as $key15 => $value15) {
-              if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
-                  if (isset($request['reqroom'.($index+1).'-childAge'])) {
-                    foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
-                        if ($max_child_age < $value18) {
-                          $extrabedAmount[$i][$index][] =  $value15->amount;
-                          $exrooms[$i][$index][] = $index+1;
-                          $extrabedType[$i][$index][] =  'Adult Extrabed';
+         $extrabedallotment[$i] = $this->db->query("SELECT * FROM hotel_tbl_extrabed WHERE '".$date[$i]."' BETWEEN from_date AND to_date AND contract_id = '".$contract_id."' AND  hotel_id = '".$request['hotel_id']."' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+          if (count($extrabedallotment[$i])!=0) {
+          foreach ($extrabedallotment[$i] as $key15 => $value15) {
+            if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+                if (isset($request['reqroom'.($index+1).'-childAge'])) {
+                  foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                      if ($max_child_age < $value18) {
+                        $extrabedAmount[$i][$index][] =  $value15->amount;
+                        $exrooms[$i][$index][] = $index+1;
+                        $extrabedType[$i][$index][] =  'Adult Extrabed';
+                      } else {
+                        if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
+                            if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
+                              $extrabedAmount[$i][$index][$key18] =  $value15->ChildAmount;
+                              $extrabedType[$i][$index][$key18] =  'Child Extrabed';
+                              $exrooms[$i][$index][$key18] = $index+1;
+                            }
                         } else {
-                          if ($value15->ChildAmount!=0 && $value15->ChildAmount!="") {
-                              if ($value15->ChildAgeFrom <= $value18 && $value15->ChildAgeTo >= $value18) {
-                                $extrabedAmount[$i][$index][$key18] =  $value15->ChildAmount;
-                                $extrabedType[$i][$index][$key18] =  'Child Extrabed';
+                          $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+                          if (count($boardalt[$i])!=0) {
+                            foreach ($boardalt[$i] as $key21 => $value21) {
+                              if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                                $extrabedAmount[$i][$index][$key21] =  $value21->amount;
                                 $exrooms[$i][$index][$key18] = $index+1;
-                              }
-                          } else {
-                            $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
-                            if (count($boardalt[$i])!=0) {
-                              foreach ($boardalt[$i] as $key21 => $value21) {
-                                if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                                  $extrabedAmount[$i][$index][$key21] =  $value21->amount;
-                                  $exrooms[$i][$index][$key18] = $index+1;
-                                  $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
-                                }
+                                $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
                               }
                             }
-                          } 
+                          }
+                        } 
 
-                        }
-                    }
-                    
+                      }
                   }
+                  
+                }
 
-                // }
-                if ($request['reqadults'][$index] > $standard_capacity) {
-                  $extrabedAmount[$i][$index][] =  $value15->amount;
-                  $exrooms[$i][$index][] = $index+1;
-                  $extrabedType[$i][$index][] =  'Adult Extrabed';
+              // }
+              if ($request['reqadults'][$index] > $standard_capacity) {
+                $extrabedAmount[$i][$index][] =  $value15->amount;
+                $exrooms[$i][$index][] = $index+1;
+                $extrabedType[$i][$index][] =  'Adult Extrabed';
+              }
+            }
+          }
+        }
+        if (count($extrabedallotment[$i])==0) {
+        $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+          if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+            if (isset($request['reqroom'.($index+1).'-childAge'])) {
+              foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                if (count($boardalt[$i])!=0) {
+                  foreach ($boardalt[$i] as $key21 => $value21) {
+                    if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                      $extrabedAmount[$i][$index][$key21] =  $value21->amount;
+                      $exrooms[$i][$index][$key18] = $index+1;
+                      $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
+                    }
+                  }
                 }
               }
             }
           }
-          if (count($extrabedallotment[$i])==0) {
-          $boardalt[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board IN ('".$implodeboardRequest."') AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
-            if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
-              if (isset($request['reqroom'.($index+1).'-childAge'])) {
-                foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
-                  if (count($boardalt[$i])!=0) {
-                    foreach ($boardalt[$i] as $key21 => $value21) {
-                      if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                        $extrabedAmount[$i][$index][$key21] =  $value21->amount;
-                        $exrooms[$i][$index][$key18] = $index+1;
-                        $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
+        }
+
+
+        /* Board wise supplement check start */
+          $boardSp[$i] = array();
+          if($contract_board=="HB") {
+            $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Half Board' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+          } else if($contract_board=="FB") {
+            $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Full Board' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
+          }
+
+          if (count($boardSp[$i])!=0) {
+            foreach ($boardSp[$i] as $key21 => $value21) {
+              if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
+                if (isset($request['reqroom'.($index+1).'-childAge'])) {
+                  foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
+                    if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
+                      if (round($value21->amount)!=0) {
+                        $extrabedAmount[$i][$index][] =  $value21->amount;
+                        $extrabedType[$i][$index][] =  'Child '.$value21->board;
                       }
                     }
                   }
                 }
               }
-            }
-          }
-
-
-          /* Board wise supplement check start */
-            $boardSp[$i] = array();
-            if($contract_board=="HB") {
-              $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Half Board' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
-            } else if($contract_board=="FB") {
-              $boardSp[$i] = $this->db->query("SELECT startAge,finalAge,amount,board FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."' AND board = 'Full Board' AND FIND_IN_SET('".$Room_Type."', IFNULL(roomType,'')) > 0")->result();
-            }
-
-            if (count($boardSp[$i])!=0) {
-              foreach ($boardSp[$i] as $key21 => $value21) {
-                if (($request['reqadults'][$index]+$request['reqChild'][$index]) > $standard_capacity) {
-                  if (isset($request['reqroom'.($index+1).'-childAge'])) {
-                    foreach ($request['reqroom'.($index+1).'-childAge'] as $key18 => $value18) {
-                      if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                        if (round($value21->amount)!=0) {
-                          $extrabedAmount[$i][$index][] =  $value21->amount;
-                          $extrabedType[$i][$index][] =  'Child '.$value21->board;
-                        }
-                      }
-                    }
-                  }
-                }
-                if ($value21->startAge >= 18) {
-                  if (round($value21->amount)!=0) {
-                    $extrabedAmount[$i][$index][] =  $value21->amount;
-                    $extrabedType[$i][$index][] =  'Adult '.$value21->board;
-                  }
+              if ($value21->startAge >= 18) {
+                if (round($value21->amount)!=0) {
+                  $extrabedAmount[$i][$index][] =  $value21->amount;
+                  $extrabedType[$i][$index][] =  'Adult '.$value21->board;
                 }
               }
             }
-
-        /* Board wise supplement check end */
-         
-
-          if (isset($extrabedAmount[$i])) {
-            $Texamount[$i] = array();
-            foreach ($extrabedAmount[$i] as $Texamkey => $Texam) {
-                $Texamount[$i][] = array_sum($Texam);
-            }
-            $extraBedtotal[$i] = array_sum($Texamount[$i]);
           }
+
+      /* Board wise supplement check end */
+       
+
+        if (isset($extrabedAmount[$i])) {
+          $Texamount[$i] = array();
+          foreach ($extrabedAmount[$i] as $Texamkey => $Texam) {
+              $Texamount[$i][] = array_sum($Texam);
+          }
+          $extraBedtotal[$i] = array_sum($Texamount[$i]);
         }
-        if (count($extraBedtotal)!=0) {
-          $return['date'] = $date;
-          $return['extrabedAmount'] = $extraBedtotal;
-          $return['extrabedType'] = $extrabedType;
-          $return['RwextrabedAmount'] = $extrabedAmount;
-          $return['Exrooms'] = $exrooms;
-          $return['count'] = count($extraBedtotal);
-        } else {
-          $return['count'] = 0;
-        }
-        return $return;
-    }
+      }
+      if (count($extraBedtotal)!=0) {
+        $return['date'] = $date;
+        $return['extrabedAmount'] = $extraBedtotal;
+        $return['extrabedType'] = $extrabedType;
+        $return['RwextrabedAmount'] = $extrabedAmount;
+        $return['Exrooms'] = $exrooms;
+        $return['count'] = count($extraBedtotal);
+      } else {
+        $return['count'] = 0;
+      }
+      return $return;
+  }
   public function AddPaymentConfirmExtrabed($date,$amount,$bookId,$rooms,$rwamount,$type,$room_id,$contract_id,$index){
     $data= array(
                   'date'   =>   $date,
@@ -1468,281 +1468,281 @@ class Payment_Model extends CI_Model {
 
       }
       return $data;
+  }
+  public function get_cancellationamountCancelPeriod($request,$day) {
+    return $this->db->query('SELECT * FROM hotel_tbl_bookcancellationpolicy WHERE bookingId = '.$request.' AND daysInAdvance = (SELECT MIN(daysInAdvance) FROM hotel_tbl_bookcancellationpolicy WHERE bookingId = '.$request.' AND daysInAdvance >= '.$day.')')->result();
+  }
+  public function roomAvailability($room_id,$start_date,$end_date,$contract_id,$hotel_id) {
+    $bookedCount = all_booked_room_ajax($room_id,$start_date,$end_date,$contract_id);
+
+    $linkedRoomAllotment = 0;
+    $checkin_date=date_create($start_date);
+    $checkout_date=date_create($end_date);
+    $no_of_days=date_diff($checkin_date,$checkout_date);
+    $tot_days = $no_of_days->format("%a");
+    for($i = 0; $i < $tot_days; $i++) {
+        $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
     }
-    public function get_cancellationamountCancelPeriod($request,$day) {
-      return $this->db->query('SELECT * FROM hotel_tbl_bookcancellationpolicy WHERE bookingId = '.$request.' AND daysInAdvance = (SELECT MIN(daysInAdvance) FROM hotel_tbl_bookcancellationpolicy WHERE bookingId = '.$request.' AND daysInAdvance >= '.$day.')')->result();
-    }
-    public function roomAvailability($room_id,$start_date,$end_date,$contract_id,$hotel_id) {
-      $bookedCount = all_booked_room_ajax($room_id,$start_date,$end_date,$contract_id);
+    $implode = implode("','",$date);
 
-      $linkedRoomAllotment = 0;
-      $checkin_date=date_create($start_date);
-      $checkout_date=date_create($end_date);
-      $no_of_days=date_diff($checkin_date,$checkout_date);
-      $tot_days = $no_of_days->format("%a");
-      for($i = 0; $i < $tot_days; $i++) {
-          $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
-      }
-      $implode = implode("','",$date);
+    $this->db->select('allotement,linked_to_room_type');
+    $this->db->from('hotel_tbl_hotel_room_type');
+    $this->db->where('hotel_id',$hotel_id);
+    $this->db->where('id',$room_id);
+    $query1=$this->db->get();
+    $result1 = $query1->result();
 
-      $this->db->select('allotement,linked_to_room_type');
-      $this->db->from('hotel_tbl_hotel_room_type');
-      $this->db->where('hotel_id',$hotel_id);
-      $this->db->where('id',$room_id);
-      $query1=$this->db->get();
-      $result1 = $query1->result();
-
-      if ($result1[0]->linked_to_room_type!="" && $result1[0]->linked_to_room_type!=Null) {
-        $this->db->select('allotement');
-        $this->db->from('hotel_tbl_allotement');
-        $this->db->where('hotel_id',$hotel_id);
-        $this->db->where('room_id',$result1[0]->linked_to_room_type);
-        $this->db->where_in('allotement_date',$implode);
-        $this->db->where('contract_id',$contract_id);
-        $query3=$this->db->get();
-        $result3 = $query3->result();
-        if (count($result3)!=0) {
-          $linkedRoomAllotment = $result3[0]->allotement;
-        } 
-      }
-
-      $this->db->select('*');
-      $this->db->from('hotel_tbl_contract');
-      $this->db->where('hotel_id',$hotel_id);
-      $this->db->where('contract_id',$contract_id);
-      $linkedcontract=$this->db->get()->result();
-      if ($linkedcontract[0]->contract_type=="Sub") {
-        $contract_id = "CON0".$linkedcontract[0]->linkedContract;
-      }
+    if ($result1[0]->linked_to_room_type!="" && $result1[0]->linked_to_room_type!=Null) {
       $this->db->select('allotement');
       $this->db->from('hotel_tbl_allotement');
       $this->db->where('hotel_id',$hotel_id);
-      $this->db->where('room_id',$room_id);
+      $this->db->where('room_id',$result1[0]->linked_to_room_type);
       $this->db->where_in('allotement_date',$implode);
       $this->db->where('contract_id',$contract_id);
-      $query=$this->db->get();
-      $result = $query->result();
-      if (count($result)!=0) {
-        $allotement = $result[0]->allotement;
-      } else {
-        $allotement = $result1[0]->allotement;
-      }
-      return ($allotement+$linkedRoomAllotment)-$bookedCount;
+      $query3=$this->db->get();
+      $result3 = $query3->result();
+      if (count($result3)!=0) {
+        $linkedRoomAllotment = $result3[0]->allotement;
+      } 
     }
-    public function get_CancellationPolicy_tableFlow($request) {
-      $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$request['contract_id']."' AND nonRefundable = 1")->result();
-      $checkin_date=date_create($_REQUEST['Check_in']);
-      $checkout_date=date_create($_REQUEST['Check_out']);
+
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_contract');
+    $this->db->where('hotel_id',$hotel_id);
+    $this->db->where('contract_id',$contract_id);
+    $linkedcontract=$this->db->get()->result();
+    if ($linkedcontract[0]->contract_type=="Sub") {
+      $contract_id = "CON0".$linkedcontract[0]->linkedContract;
+    }
+    $this->db->select('allotement');
+    $this->db->from('hotel_tbl_allotement');
+    $this->db->where('hotel_id',$hotel_id);
+    $this->db->where('room_id',$room_id);
+    $this->db->where_in('allotement_date',$implode);
+    $this->db->where('contract_id',$contract_id);
+    $query=$this->db->get();
+    $result = $query->result();
+    if (count($result)!=0) {
+      $allotement = $result[0]->allotement;
+    } else {
+      $allotement = $result1[0]->allotement;
+    }
+    return ($allotement+$linkedRoomAllotment)-$bookedCount;
+  }
+  public function get_CancellationPolicy_tableFlow($request) {
+    $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$request['contract_id']."' AND nonRefundable = 1")->result();
+    $checkin_date=date_create($_REQUEST['Check_in']);
+    $checkout_date=date_create($_REQUEST['Check_out']);
+    $no_of_days=date_diff($checkin_date,$checkout_date);
+    $tot_days = $no_of_days->format("%a");
+
+    $disNRFVal = '';
+
+    for ($i=0; $i < $tot_days ; $i++) {
+      $dateOut = date('Y-m-d', strtotime($_REQUEST['Check_in']. ' + '.$i.'  days'));
+      $disNRF[$i] = DateWisediscountNonRefundable($dateOut,$request['hotel_id'],$request['room_id'],$request['contract_id'],'Room',$_REQUEST['Check_in'],$_REQUEST['Check_out']);
+      if ($disNRF[$i]['NRF']==1) {
+        $disNRFVal = $disNRF[$i]['discount'];
+      }
+    }
+    
+
+    if (count($refund)!=0) {
+      $data[0]['description'] = "This booking is Nonrefundable";
+      $data[0]['after'] = "";
+      $data[0]['before'] = "";
+      $data[0]['percentage'] = "";
+      $data[0]['application'] = "Nonrefundable";
+    } else if($disNRFVal!='') {
+      $data[0]['description'] = "This booking is Nonrefundable";
+      $data[0]['after'] = '';
+      $data[0]['before'] = '';
+      $data[0]['percentage'] = "";
+      $data[0]['application'] = "Nonrefundable";
+    } else {
+      $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$request['room_id']."'")->result();
+      $data = array();
+      $checkin_date=date_create($request['Check_in']);
+      $checkout_date=date_create($request['Check_out']);
       $no_of_days=date_diff($checkin_date,$checkout_date);
       $tot_days = $no_of_days->format("%a");
 
-      $disNRFVal = '';
 
-      for ($i=0; $i < $tot_days ; $i++) {
-        $dateOut = date('Y-m-d', strtotime($_REQUEST['Check_in']. ' + '.$i.'  days'));
-        $disNRF[$i] = DateWisediscountNonRefundable($dateOut,$request['hotel_id'],$request['room_id'],$request['contract_id'],'Room',$_REQUEST['Check_in'],$_REQUEST['Check_out']);
-        if ($disNRF[$i]['NRF']==1) {
-          $disNRFVal = $disNRF[$i]['discount'];
-        }
-      }
-      
-  
-      if (count($refund)!=0) {
-        $data[0]['description'] = "This booking is Nonrefundable";
-        $data[0]['after'] = "";
-        $data[0]['before'] = "";
-        $data[0]['percentage'] = "";
-        $data[0]['application'] = "Nonrefundable";
-      } else if($disNRFVal!='') {
-        $data[0]['description'] = "This booking is Nonrefundable";
-        $data[0]['after'] = '';
-        $data[0]['before'] = '';
-        $data[0]['percentage'] = "";
-        $data[0]['application'] = "Nonrefundable";
-      } else {
-        $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$request['room_id']."'")->result();
-        $data = array();
-        $checkin_date=date_create($request['Check_in']);
-        $checkout_date=date_create($request['Check_out']);
-        $no_of_days=date_diff($checkin_date,$checkout_date);
-        $tot_days = $no_of_days->format("%a");
+      $start=date_create(date('m/d/Y'));
+      $end=date_create($request['Check_in']);
+      $nod=date_diff($start,$end);
+      $tot_days1 = $nod->format("%a");
 
+      for($i = 0; $i < $tot_days; $i++) {
+        $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
+        $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
+        if (count($CancellationPolicyCheck[$i])!=0) {
+          foreach ($CancellationPolicyCheck[$i] as $key => $value) {
+              $exploderoomType[$key] = explode(",", $value->roomType);
+              foreach ($exploderoomType[$key] as $key1 => $value1) {
 
-        $start=date_create(date('m/d/Y'));
-        $end=date_create($request['Check_in']);
-        $nod=date_diff($start,$end);
-        $tot_days1 = $nod->format("%a");
+                
+                if ($value1==$roomType[0]->id) {
+                    $after = date('Y-m-d', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+                    $before = date('Y-m-d', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+                    if ($after < date('Y-m-d')) {
+                      $data[$key]['after'] = date('d/m/Y');
+                    } else {
+                      $data[$key]['after'] = date('d/m/Y', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
+                    }
+                    if ($before < date('Y-m-d')) {
+                      $data[$key]['before'] = date('d/m/Y');
+                    } else {
+                      $data[$key]['before'] = date('d/m/Y', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
+                    }
 
-        for($i = 0; $i < $tot_days; $i++) {
-          $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
-          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
-          if (count($CancellationPolicyCheck[$i])!=0) {
-            foreach ($CancellationPolicyCheck[$i] as $key => $value) {
-                $exploderoomType[$key] = explode(",", $value->roomType);
-                foreach ($exploderoomType[$key] as $key1 => $value1) {
+                    if ($value->daysFrom==0) {
+                      $daysInAdvance = 'your check-in date';
+                    } else if($value->daysFrom==1) {
+                      $daysInAdvance = 'within 24 hours of your check-in';
+                    } else {
+                      $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
+                    }
 
-                  
-                  if ($value1==$roomType[0]->id) {
-                      $after = date('Y-m-d', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
-                      $before = date('Y-m-d', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
-                      if ($after < date('Y-m-d')) {
-                        $data[$key]['after'] = date('d/m/Y');
-                      } else {
-                        $data[$key]['after'] = date('d/m/Y', strtotime('-'.$value->daysFrom.' days', strtotime($request['Check_in'])));
-                      }
-                      if ($before < date('Y-m-d')) {
-                        $data[$key]['before'] = date('d/m/Y');
-                      } else {
-                        $data[$key]['before'] = date('d/m/Y', strtotime('-'.$value->daysTo.' days', strtotime($request['Check_in'])));
-                      }
+                    
+                    $data[$key]['percentage'] = $value->cancellationPercentage;
+                        $data[$key]['application'] = $value->application;
 
-                      if ($value->daysFrom==0) {
-                        $daysInAdvance = 'your check-in date';
-                      } else if($value->daysFrom==1) {
-                        $daysInAdvance = 'within 24 hours of your check-in';
-                      } else {
-                        $daysInAdvance = 'within '.$value->daysFrom.' days of your check-in';
-                      }
-
-                      
-                      $data[$key]['percentage'] = $value->cancellationPercentage;
-                          $data[$key]['application'] = $value->application;
-
-                      if ($value->application=="FIRST NIGHT") {
-                        $data[$key]['description'] = '<span>
-                                   If you cancel '.$daysInAdvance.',you will pay '.$value->cancellationPercentage.'% of one night stay with supplementary charges no matter the number of stay days.
-                                </span>';
-
-                      } else if ($value->application=="STAY") {
-
-                          $data[$key]['description'] = '<span>
-                                      If you cancel '.$daysInAdvance.', you will pay '.$value->cancellationPercentage.'% of the booking amount.
-                                </span>';
-                      } else {
-                        $data[$key]['description'] = '<span>
-                                   If you cancel '.$daysInAdvance.',  Cancellation charge is free .
+                    if ($value->application=="FIRST NIGHT") {
+                      $data[$key]['description'] = '<span>
+                                 If you cancel '.$daysInAdvance.',you will pay '.$value->cancellationPercentage.'% of one night stay with supplementary charges no matter the number of stay days.
                               </span>';
-                      }
-                  }
+
+                    } else if ($value->application=="STAY") {
+
+                        $data[$key]['description'] = '<span>
+                                    If you cancel '.$daysInAdvance.', you will pay '.$value->cancellationPercentage.'% of the booking amount.
+                              </span>';
+                    } else {
+                      $data[$key]['description'] = '<span>
+                                 If you cancel '.$daysInAdvance.',  Cancellation charge is free .
+                            </span>';
+                    }
                 }
-            }
+              }
           }
         }
-        
-
       }
-      return $data;
-    }
-    public function offlineRequestList($filter) {
-      $this->db->select('*');
-      $this->db->from('hotel_tbl_offlinerequest');
-      $this->db->where('AgentId',$this->session->userdata('agent_id'));
-      $this->db->where('bookingFlg',$filter);
-      $query = $this->db->get();
-      return $query;
-    }
-    public function OfflineRequestSubmit($request) {
       
-      $Room1ChildAge = '';
-      if (isset($request['room1-childAge'])) {
-          $Room1ChildAge = implode(",", $request['room1-childAge']);
-      }
-      $Room2ChildAge = '';
-      if (isset($request['room2-childAge'])) {
-          $Room2ChildAge = implode(",", $request['room2-childAge']);
-      }
-      $Room3ChildAge = '';
-      if (isset($request['room3-childAge'])) {
-          $Room3ChildAge = implode(",", $request['room3-childAge']);
-      }
-      $Room4ChildAge = '';
-      if (isset($request['room4-childAge'])) {
-          $Room4ChildAge = implode(",", $request['room4-childAge']);
-      }
-      $Room5ChildAge = '';
-      if (isset($request['room5-childAge'])) {
-          $Room5ChildAge = implode(",", $request['room5-childAge']);
-      }
-      $Room6ChildAge = '';
-      if (isset($request['room6-childAge'])) {
-          $Room6ChildAge = implode(",", $request['room6-childAge']);
-      }
-      $Room7ChildAge = '';
-      if (isset($request['room7-childAge'])) {
-          $Room7ChildAge = implode(",", $request['room7-childAge']);
-      }
-      $Room8ChildAge = '';
-      if (isset($request['room8-childAge'])) {
-          $Room8ChildAge = implode(",", $request['room8-childAge']);
-      }
-      $Room9ChildAge = '';
-      if (isset($request['room9-childAge'])) {
-          $Room9ChildAge = implode(",", $request['room9-childAge']);
-      }
-      $Room10ChildAge = '';
-      if (isset($request['room10-childAge'])) {
-          $Room10ChildAge = implode(",", $request['room10-childAge']);
-      }
-
-
-      $Room1ContactName = ''; 
-      $Room2ContactName = ''; 
-      $Room3ContactName = ''; 
-      $Room4ContactName = ''; 
-      $Room5ContactName = ''; 
-      $Room6ContactName = ''; 
-      $Room7ContactName = ''; 
-      $Room8ContactName = ''; 
-      $Room9ContactName = ''; 
-      $Room10ContactName = ''; 
-
-
-      $adults = implode(",", $request['adults']);
-      $Child = implode(",", $request['Child']);
-      $data =  array(
-                    'hotel_name' => $request['hotel_name'], 
-                    'Destination' => $request['Destination'], 
-                    'check_in' => $request['CheckIn'], 
-                    'check_out' => $request['CheckOut'], 
-                    'no_of_rooms' => $request['noOfRooms'], 
-                    'Nationality' => $_REQUEST['nationality'],
-                    'adults' => $adults, 
-                    'child' => $Child, 
-                    'Room1ChildAge' => $Room1ChildAge, 
-                    'Room2ChildAge' => $Room2ChildAge, 
-                    'Room3ChildAge' => $Room3ChildAge, 
-                    'Room4ChildAge' => $Room4ChildAge, 
-                    'Room5ChildAge' => $Room5ChildAge, 
-                    'Room6ChildAge' => $Room6ChildAge, 
-                    'Room7ChildAge' => $Room7ChildAge, 
-                    'Room8ChildAge' => $Room8ChildAge, 
-                    'Room9ChildAge' => $Room9ChildAge, 
-                    'Room10ChildAge' => $Room10ChildAge, 
-                    'SpecialRequest' => $request['SpecialRequest'], 
-                    'budget' => $request['budget'],
-                    'createdDate' => date('Y-m-d'),
-                    'AgentId' => $this->session->userdata('agent_id'),
-                );
-   
-      $this->db->insert('hotel_tbl_offlinerequest',$data);
-      return $this->db->insert_id();
 
     }
-    public function get_cancellation_terms($request) {
-      $this->db->select('*');
-      $this->db->from('hotel_tbl_bookcancellationpolicy');
-      $this->db->where('hotel_tbl_bookcancellationpolicy.bookingId',$request);
-      $this->db->order_by('hotel_tbl_bookcancellationpolicy.daysInAdvance','asc');
-      $query=$this->db->get();
-      return $query->result();
+    return $data;
+  }
+  public function offlineRequestList($filter) {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_offlinerequest');
+    $this->db->where('AgentId',$this->session->userdata('agent_id'));
+    $this->db->where('bookingFlg',$filter);
+    $query = $this->db->get();
+    return $query;
+  }
+  public function OfflineRequestSubmit($request) {
+    
+    $Room1ChildAge = '';
+    if (isset($request['room1-childAge'])) {
+        $Room1ChildAge = implode(",", $request['room1-childAge']);
     }
-    public function bankDetails() {
-      $this->db->select('*');
-      $this->db->from('hotel_tbl_general_settings');
-      $this->db->where('id',1);
-      $query=$this->db->get();
-      return $query->result();
+    $Room2ChildAge = '';
+    if (isset($request['room2-childAge'])) {
+        $Room2ChildAge = implode(",", $request['room2-childAge']);
     }
+    $Room3ChildAge = '';
+    if (isset($request['room3-childAge'])) {
+        $Room3ChildAge = implode(",", $request['room3-childAge']);
+    }
+    $Room4ChildAge = '';
+    if (isset($request['room4-childAge'])) {
+        $Room4ChildAge = implode(",", $request['room4-childAge']);
+    }
+    $Room5ChildAge = '';
+    if (isset($request['room5-childAge'])) {
+        $Room5ChildAge = implode(",", $request['room5-childAge']);
+    }
+    $Room6ChildAge = '';
+    if (isset($request['room6-childAge'])) {
+        $Room6ChildAge = implode(",", $request['room6-childAge']);
+    }
+    $Room7ChildAge = '';
+    if (isset($request['room7-childAge'])) {
+        $Room7ChildAge = implode(",", $request['room7-childAge']);
+    }
+    $Room8ChildAge = '';
+    if (isset($request['room8-childAge'])) {
+        $Room8ChildAge = implode(",", $request['room8-childAge']);
+    }
+    $Room9ChildAge = '';
+    if (isset($request['room9-childAge'])) {
+        $Room9ChildAge = implode(",", $request['room9-childAge']);
+    }
+    $Room10ChildAge = '';
+    if (isset($request['room10-childAge'])) {
+        $Room10ChildAge = implode(",", $request['room10-childAge']);
+    }
+
+
+    $Room1ContactName = ''; 
+    $Room2ContactName = ''; 
+    $Room3ContactName = ''; 
+    $Room4ContactName = ''; 
+    $Room5ContactName = ''; 
+    $Room6ContactName = ''; 
+    $Room7ContactName = ''; 
+    $Room8ContactName = ''; 
+    $Room9ContactName = ''; 
+    $Room10ContactName = ''; 
+
+
+    $adults = implode(",", $request['adults']);
+    $Child = implode(",", $request['Child']);
+    $data =  array(
+                  'hotel_name' => $request['hotel_name'], 
+                  'Destination' => $request['Destination'], 
+                  'check_in' => $request['CheckIn'], 
+                  'check_out' => $request['CheckOut'], 
+                  'no_of_rooms' => $request['noOfRooms'], 
+                  'Nationality' => $_REQUEST['nationality'],
+                  'adults' => $adults, 
+                  'child' => $Child, 
+                  'Room1ChildAge' => $Room1ChildAge, 
+                  'Room2ChildAge' => $Room2ChildAge, 
+                  'Room3ChildAge' => $Room3ChildAge, 
+                  'Room4ChildAge' => $Room4ChildAge, 
+                  'Room5ChildAge' => $Room5ChildAge, 
+                  'Room6ChildAge' => $Room6ChildAge, 
+                  'Room7ChildAge' => $Room7ChildAge, 
+                  'Room8ChildAge' => $Room8ChildAge, 
+                  'Room9ChildAge' => $Room9ChildAge, 
+                  'Room10ChildAge' => $Room10ChildAge, 
+                  'SpecialRequest' => $request['SpecialRequest'], 
+                  'budget' => $request['budget'],
+                  'createdDate' => date('Y-m-d'),
+                  'AgentId' => $this->session->userdata('agent_id'),
+              );
+ 
+    $this->db->insert('hotel_tbl_offlinerequest',$data);
+    return $this->db->insert_id();
+
+  }
+  public function get_cancellation_terms($request) {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_bookcancellationpolicy');
+    $this->db->where('hotel_tbl_bookcancellationpolicy.bookingId',$request);
+    $this->db->order_by('hotel_tbl_bookcancellationpolicy.daysInAdvance','asc');
+    $query=$this->db->get();
+    return $query->result();
+  }
+  public function bankDetails() {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_general_settings');
+    $this->db->where('id',1);
+    $query=$this->db->get();
+    return $query->result();
+  }
     public function agent_Offlinebooking_details($id) {
       $this->db->select('*');
       $this->db->from('hotel_tbl_offlinerequest');

@@ -461,7 +461,7 @@ function currency_type($usr_c,$c_type) {
   $final= $query->result();
   $db_amount=($final[0]->amount);
   $converted_amount = $db_amount*$c_type;
-  return number_format($converted_amount,2);
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function xml_currency_change($amount,$dc_type,$c_type) {
   $ci =& get_instance();
@@ -484,7 +484,7 @@ function xml_currency_change($amount,$dc_type,$c_type) {
   $c_out = $final1[0]->amount;
 
   $converted_amount = $c_out*$dc_divided;
-  return number_format($converted_amount,2);
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function currency_type1($usr_c,$c_type) {
   $ci =& get_instance();
@@ -496,7 +496,7 @@ function currency_type1($usr_c,$c_type) {
   $final= $query->result();
   $db_amount=($final[0]->amount);
   $converted_amount = $db_amount*$c_type;
-  return $converted_amount;
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function onload_currency() {
   $ci =& get_instance();
@@ -544,7 +544,7 @@ function currency_type_gc($usr_c,$c_type) {
     } else {
       $rate = $get->$resultKey;
       $converted_amount = $amount*$rate;
-      return $converted_amount;
+      return number_format((float)$converted_amount, 2, '.', '');
     }  
   }else{
     return "failed";
@@ -559,7 +559,8 @@ function currency_type_aed($f_cur,$usr_c,$c_type) {
   
   $amount = $query[0]->amount;
 
-  return $c_type/$amount;
+  $converted_amount = $c_type/$amount;
+  return number_format((float)$converted_amount, 2, '.', '');
 
 }
 function tcpdf()
@@ -2299,7 +2300,7 @@ function backend_currency_type($c_amount) {
     $db_amount= 1;
   }
   $converted_amount = $db_amount*$c_amount;
-  return $converted_amount;
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function backend_Aed_convertion($usr_c,$c_amount) {
   $ci =& get_instance();
@@ -2319,7 +2320,7 @@ function backend_Aed_convertion($usr_c,$c_amount) {
     $db_amount = 1;
   }
   $converted_amount = $c_amount/$db_amount;
-  return $converted_amount;
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function admin_currency() {
   $ci =& get_instance();
@@ -2371,7 +2372,7 @@ function contract_currency_type($usr_c,$c_amount) {
   	$db_amount= 1;
   }
   $converted_amount = $db_amount*$c_amount;
-  return $converted_amount;
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function entryreport($admin_id,$agent_id,$hotel_id,$table,$primary_id,$created_date,$updated_date,$narration,$module,$event) {
   $ci =& get_instance();
