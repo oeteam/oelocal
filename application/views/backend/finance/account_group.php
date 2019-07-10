@@ -2,7 +2,13 @@
 <script src="<?php echo base_url(); ?>assets/js/company.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#myModal").modal('show');
+        //initialize all modals
+        $('.modal').modal({
+            dismissible: true
+        });
+
+        //call the specific div (modal)
+        $('#myModal').modal('open');
     });
 </script>
 <div id="myModal" class="modal-bg-fix modal fade">

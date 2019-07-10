@@ -29,19 +29,23 @@
                             if (count($agentmenu)!=0 && isset($agentmenu[0]->view) && $agentmenu[0]->view!=0) { ?>
                         <li><a href="<?php echo base_url(); ?>backend/agents" class="agents_menu"><i class="fa fa-umbrella" aria-hidden="true"></i> Agents</a>
                         </li>
+                        <?php } 
+                        $revenueList = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
+                          if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
+                            <li><a href="<?php echo base_url(); ?>backend/hotels/Revenue" class="agents_menu"><i class="fa fa-usd" aria-hidden="true"></i> Revenue</a>
+                        </li>
                         <?php } ?>
                         <?php $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Profile'); 
                         $contractmenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Contract');
                         $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','S/O Sales & Availability'); 
                         $discountOffers = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Discounts & Offers');  
-                        $revenueList = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Revenue List'); 
                         $displayManage = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
                         $hotelRanking = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotel Ranking'); 
                         $RoomType = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Type');
                         $Facilities = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotel Facilities'); 
                         $RoomFacility  = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Room Facilities');
                         $providedList = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Provided List'); 
-                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($revenueList)!=0 && $revenueList[0]->view!=0) || (count($displayManage)!=0 && $displayManage[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($providedList)!=0 && $providedList[0]->view!=0) ||(count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
+                        if ((count($Profilemenu)!=0 && $Profilemenu[0]->view!=0) || (count($contractmenu)!=0 && $contractmenu[0]->view!=0) || (count($StopSale)!=0 && $StopSale[0]->view!=0) || (count($discountOffers)!=0 && $discountOffers[0]->view!=0) || (count($displayManage)!=0 && $displayManage[0]->view!=0) || (count($hotelRanking)!=0 && $hotelRanking[0]->view!=0) || (count($providedList)!=0 && $providedList[0]->view!=0) ||(count($RoomType)!=0 && $RoomType[0]->view!=0) || (count($Facilities)!=0 && $Facilities[0]->view!=0) || (count($RoomFacility)!=0 && $RoomFacility[0]->view!=0)) { ?>
                             <li class="hotels"><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-building" aria-hidden="true"></i></i>Hotels</a>
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>                                    
@@ -59,11 +63,7 @@
                                         <a href="<?php echo base_url(); ?>backend/hotels/Disoffers" class="collapsible-header"> Discounts & Offers</a>
                                     </li>
                                     <?php }  
-                                    if (count($revenueList)!=0 && isset($revenueList[0]->view) && $revenueList[0]->view!=0) { ?>
-                                    <li>
-                                        <a class="users_menu" href="<?php echo base_url(); ?>backend/hotels/Revenue">Revenue List</a>
-                                    </li>
-                                    <?php } 
+
                                     if (count($displayManage)!=0 && isset($displayManage[0]->view) && $displayManage[0]->view!=0) { ?>
                                     <li>
                                         <a class="hotels_menu" href="<?php echo base_url(); ?>backend/hotels/display_manage"> Display Management</a>
@@ -298,11 +298,11 @@
                         <?php 
                         $financeMenu = menuPermissionAvailability($this->session->userdata('id'),'Finance',''); 
                         if (count($financeMenu)!=0 && isset($financeMenu[0]->view) && $financeMenu[0]->view!=0) { ?>
-                        <li>
+                        <!-- <li>
                             <a target="_blank" href="http://otelseasy.bisells.com"><i class="fa fa-money" aria-hidden="true"></i> Finance</a>
-                        </li>
+                        </li> -->
                         <?php } ?>
-                        <!-- <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-money" aria-hidden="true"></i> Finance</a>
+                        <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-money" aria-hidden="true"></i> Finance</a>
                             <div class="collapsible-body left-sub-menu">
                                 <ul>
                                     <li><a href="<?php echo base_url(); ?>backend/finance/company">Company</a>
@@ -325,7 +325,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li> -->
+                        </li>
                         <?php 
                         $historylogsMenu = menuPermissionAvailability($this->session->userdata('id'),'History Logs',''); 
                         if (count($historylogsMenu)!=0 && isset($historylogsMenu[0]->view) && $historylogsMenu[0]->view!=0) { ?>

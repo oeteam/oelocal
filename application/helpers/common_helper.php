@@ -1692,7 +1692,7 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     }
     $total_markup = $booking[0]->agent_markup+$booking[0]->admin_markup;
 
-    if ($type=='Book') {
+    if ($booking[0]->booking_flag==2) {
       $subject = 'YOUR BOOKING IS CONFIRMED (BOOKING ID : '.$booking[0]->booking_id.')';     
       $BookingMsg = 'YOUR BOOKING IS CONFIRMED';
       $bookingTypeTag = 'Please confirm the below booking under ALLOTMENT/FREESALE';

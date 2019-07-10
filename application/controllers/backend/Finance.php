@@ -28,13 +28,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if ($this->session->userdata('name')=="") {
             redirect("/logout");
     }
-        if ($this->session->userdata('account')!="") {
-          $_REQUEST['id'] = $this->session->userdata('account');
-          redirect('../backend/finance/account_group');
-        } else {
-            $compdata['view'] = $this->Company_Model->company_getdata();
-            $this->load->view('backend/finance/account_group',$compdata);
-        }
+    if ($this->session->userdata('account')!="") {
+      $_REQUEST['id'] = $this->session->userdata('account');
+      redirect('../backend/finance/account_group');
+    } else {
+        $compdata['view'] = $this->Company_Model->company_getdata();
+        $this->load->view('backend/finance/account_group',$compdata);
+    }
        
     }
     public function account_group(){
@@ -686,10 +686,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $opening_balance_amount = $this->Company_Model->opening_balance_in_cr_dr_ledger($main_head,$child_head,$from_open_date,$to_open_date,"dr",$cost_center);
 
             $debit_open = $open_bal+$opening_balance_amount[0]->amount;
-            $credit_open = '';
+            $credit_open = 0;
         } else {
             $opening_balance_amount = $this->Company_Model->opening_balance_in_cr_dr_ledger($main_head,$child_head,$from_open_date,$to_open_date,"cr",$cost_center);
-            $debit_open = '';
+            $debit_open = 0;
             $credit_open = $open_bal+$opening_balance_amount[0]->amount;
         }
         // print_r($opening_balance_amount);
