@@ -28,6 +28,7 @@ class lists extends MY_Controller {
     }
     $data['agent_currency'] =  agent_currency();
     $data['list'] =  $this->List_Model->temporarySearchProcess($_REQUEST);
+    $data['searchdata'] = $this->List_Model->addSearchData($_REQUEST);
     $data['nationality'] = $this->List_Model->getNationality();
     $data['hotel_facilities_list'] = $this->List_Model->hotel_facilities_list();
     // permission_get();
