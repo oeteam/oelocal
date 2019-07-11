@@ -5781,6 +5781,84 @@ public function get_extrabedAllotment($request,$hotel_id,$contract_id,$room_id) 
         }
         return $return;
     }
+    public function addSearchData($request) {
+        $room1childAge = "";
+        $room2childAge = "";
+        $room3childAge = "";
+        $room4childAge = "";
+        $room5childAge = "";
+        $room6childAge = "";
+        $room7childAge = "";
+        $room8childAge = "";
+        $room9childAge = "";
+        $room10childAge = "";
+        if (isset($request['room1-childAge'])) {
+          $room1childAge = implode(",", $request['room1-childAge']);
+        }
+        if (isset($request['room2-childAge'])) {
+          $room2childAge = implode(",", $request['room2-childAge']);
+        }
+        if (isset($request['room3-childAge'])) {
+          $room3childAge = implode(",", $request['room3-childAge']);
+        }
+        if (isset($request['room4-childAge'])) {
+          $room4childAge = implode(",", $request['room4-childAge']);
+        }
+        if (isset($request['room5-childAge'])) {
+          $room5childAge = implode(",", $request['room5-childAge']);
+        }
+        if (isset($request['room6-childAge'])) {
+          $room6childAge = implode(",", $request['room6-childAge']);
+        }
+        if (isset($request['room7-childAge'])) {
+          $room7childAge = implode(",", $request['room7-childAge']);
+        }
+        if (isset($request['room8-childAge'])) {
+          $room8childAge = implode(",", $request['room8-childAge']);
+        }
+        if (isset($request['room9-childAge'])) {
+          $room9childAge = implode(",", $request['room9-childAge']);
+        }
+        if (isset($request['room10-childAge'])) {
+          $room10childAge = implode(",", $request['room10-childAge']);
+        }
+        if(isset($request['nights'])) {
+          $nights = $request['nights'];
+        } else {
+          $startTimeStamp = strtotime($request['Check_in']);
+          $endTimeStamp = strtotime($request['Check_out']);
+          $timeDiff = abs($endTimeStamp - $startTimeStamp);
+          $numberDays = $timeDiff/86400;  
+          $numberDays = intval($numberDays);
+          $nights = $numberDays;
+        }
+        $data = array('location' => $request['location'],
+                      'city' => $request['cityname'],
+                      'country' => $request['countryname'],
+                      'nationality' => $request['nationality'],
+                      'check_in' => $request['Check_in'],
+                      'check_out' => $request['Check_out'],
+                      'nights' => $nights,
+                      'adults' => array_sum($request['adults']),
+                      'child' => array_sum($request['Child']),
+                      'hotel_name' => $request['hotel_name'],
+                      'agentId' => $this->session->userdata('agent_id'),
+                      'searchDate'=> date('Y-m-d'),
+                      'Room1ChildAge' => $room1childAge,
+                      'Room2ChildAge' => $room2childAge,
+                      'Room3ChildAge' => $room3childAge,
+                      'Room4ChildAge' => $room4childAge,
+                      'Room5ChildAge' => $room5childAge,
+                      'Room6ChildAge' => $room6childAge,
+                      'Room7ChildAge' => $room7childAge,
+                      'Room8ChildAge' => $room8childAge,
+                      'Room9ChildAge' => $room9childAge,
+                      'Room10ChildAge' => $room10childAge,
+                      'noRooms' => count($request['adults'])
+                    );
+        $this->db->insert('agents_tbl_search',$data);
+        return true;
+    }
 }    
 
 
