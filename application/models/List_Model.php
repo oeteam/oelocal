@@ -5792,6 +5792,18 @@ public function get_extrabedAllotment($request,$hotel_id,$contract_id,$room_id) 
         $room8childAge = "";
         $room9childAge = "";
         $room10childAge = "";
+        $Room1Adults = "";
+        $Room2Adults = "";
+        $Room3Adults = "";
+        $Room4Adults = "";
+        $Room5Adults = "";
+        $Room6Adults = "";
+        $Room1Child = "";
+        $Room2Child = "";
+        $Room3Child = "";
+        $Room4Child = "";
+        $Room5Child = "";
+        $Room6Child = "";
         if (isset($request['room1-childAge'])) {
           $room1childAge = implode(",", $request['room1-childAge']);
         }
@@ -5810,17 +5822,41 @@ public function get_extrabedAllotment($request,$hotel_id,$contract_id,$room_id) 
         if (isset($request['room6-childAge'])) {
           $room6childAge = implode(",", $request['room6-childAge']);
         }
-        if (isset($request['room7-childAge'])) {
-          $room7childAge = implode(",", $request['room7-childAge']);
+        if (isset($request['adults'][0])) {
+          $Room1Adults = $request['adults'][0];
         }
-        if (isset($request['room8-childAge'])) {
-          $room8childAge = implode(",", $request['room8-childAge']);
+        if (isset($request['adults'][1])) {
+          $Room2Adults = $request['adults'][1];
         }
-        if (isset($request['room9-childAge'])) {
-          $room9childAge = implode(",", $request['room9-childAge']);
+        if (isset($request['adults'][2])) {
+          $Room3Adults = $request['adults'][2];
         }
-        if (isset($request['room10-childAge'])) {
-          $room10childAge = implode(",", $request['room10-childAge']);
+        if (isset($request['adults'][3])) {
+          $Room4Adults = $request['adults'][3];
+        }
+        if (isset($request['adults'][4])) {
+          $Room5Adults = $request['adults'][4];
+        }
+        if (isset($request['adults'][5])) {
+          $Room6Adults = $request['adults'][5];
+        }
+        if (isset($request['Child'][0])) {
+          $Room1Child = $request['Child'][0];
+        }
+        if (isset($request['Child'][1])) {
+          $Room2Child = $request['Child'][1];
+        }
+        if (isset($request['Child'][2])) {
+          $Room3Child = $request['Child'][2];
+        }
+        if (isset($request['Child'][3])) {
+          $Room4Child = $request['Child'][3];
+        }
+        if (isset($request['Child'][4])) {
+          $Room5Child = $request['Child'][4];
+        }
+        if (isset($request['Child'][5])) {
+          $Room4Child = $request['Child'][5];
         }
         if(isset($request['nights'])) {
           $nights = $request['nights'];
@@ -5850,11 +5886,20 @@ public function get_extrabedAllotment($request,$hotel_id,$contract_id,$room_id) 
                       'Room4ChildAge' => $room4childAge,
                       'Room5ChildAge' => $room5childAge,
                       'Room6ChildAge' => $room6childAge,
-                      'Room7ChildAge' => $room7childAge,
-                      'Room8ChildAge' => $room8childAge,
-                      'Room9ChildAge' => $room9childAge,
-                      'Room10ChildAge' => $room10childAge,
-                      'noRooms' => count($request['adults'])
+                      'cityCode' => $request['citycode'],
+                      'noRooms' => count($request['adults']),
+                      'Room1Adults' => $Room1Adults,
+                      'Room2Adults' => $Room2Adults,
+                      'Room3Adults' => $Room3Adults,
+                      'Room4Adults' => $Room4Adults,
+                      'Room5Adults' => $Room5Adults,
+                      'Room6Adults' => $Room6Adults,
+                      'Room1Child' => $Room1Child,
+                      'Room2Child' => $Room2Child,
+                      'Room3Child' => $Room3Child,
+                      'Room4Child' => $Room4Child,
+                      'Room5Child' => $Room5Child,
+                      'Room6Child' => $Room6Child,
                     );
         $this->db->insert('agents_tbl_search',$data);
         return true;
