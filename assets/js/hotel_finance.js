@@ -666,6 +666,61 @@ function CountryHotelSelectFun(){
     });
 
 }
+function HotelOptions(){
+  var hiddenHotel = $("#hiddenHotel").val();
+  $('#HotelSelect option').remove();
+    var ConSelect = $('#ConSelect').val();
+    $.ajax({
+        url: base_url+'/backend/Report/HotelOptions?countryid='+ConSelect,
+        type: "POST",
+        data:{},
+        dataType: "json",
+        success:function(data) {
+          $('#HotelSelect').append('<option value="">Select</option>');
+            $.each(data, function(i, v) {
+              if(hiddenHotel==v.id) {
+                  selected = 'selected';
+                } else {
+                  selected = '';
+                }
+                $('#HotelSelect').append('<option '+selected+' value="'+ v.id +'">'+ v.hotel_name +'</option>');
+            });
+        }
+    });
+}
+$("#SearchFormReportButton").click(function() {
+        var from_date = $("#from_date").val();
+        var to_date   = $("#to_date").val();
+        var Con       = $("#ConSelect option:selected").text();
+        var hotelid = $("#HotelSelect").val();
+        var agent_id  = $("#agent_id option:selected").val();
+        var rooms = $("#rooms").val()
+        if (from_date==""){
+          addToast('From Date Must be entered',"orange");
+              $("#from_date").focus();
+        } else if(to_date==""){
+          addToast('To Date Must be entered',"orange");
+              $("#to_date").focus();
+        }
+        else if (from_date>to_date){
+              addToast('To Date Must be After From Date',"orange");
+              $("#to_date").focus();
+        } 
+        else{
+          var SearchReportTable = $('#searchTable').dataTable({
+            "bDestroy": true,
+            "ajax": {
+              url : base_url+'backend/Report/SearchReportList?from_date='+from_date+
+              '&to_date='+to_date+'&country='+Con+'&hotelid='+hotelid+'&agent_id='+agent_id+'&rooms='+rooms,
+              type : 'POST' 
+              },
+
+            "fnDrawCallback": function(settings){
+                   $('[data-toggle="tooltip"]').tooltip();          
+            },
+          });
+        }             
+  });
 
   
     

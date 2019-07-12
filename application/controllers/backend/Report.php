@@ -1114,4 +1114,54 @@
 			$data = $this->Finance_Model->SelectHotelByCountry($_REQUEST['conid']);
 			echo json_encode($data);
 		}	
+		public function SearchReport() {
+			if ($this->session->userdata('name')=="") {
+            	redirect("/logout");
+    		}
+    		$data['view']= $this->Finance_Model->SelectCountry();
+			$data['agents'] = $this->Finance_Model->SelectAgent();
+			$searchreportMenu = menuPermissionAvailability($this->session->userdata('id'),'Report','Search Report'); 
+		    if (count($searchreportMenu)!=0 && $searchreportMenu[0]->view==1) {
+		       $this->load->view('backend/Report/searchreport',$data);
+		    } else {
+		      redirect(base_url().'backend/dashboard');
+		    }   
+		}
+		public function SearchReportList() {
+			$data = array();
+    		$noTotal = array();
+    		$LeadTime = array();
+    		$totper = array();
+        	// Datatables Variables
+        	$draw = intval($this->input->get("draw"));
+        	$start = intval($this->input->get("start"));
+        	$length = intval($this->input->get("length"));
+           	$ReportFilter= $this->Finance_Model->SearchReportList($_REQUEST);
+           	foreach($ReportFilter as $key => $r) {
+			    $data[] = array(
+			    		$key+1,
+		    			$r->searchDate,
+		    			$r->location,
+		    			$r->check_in,
+		    			$r->check_out,
+		    			$r->hotel_name,
+		    			$r->adults,
+		    			$r->child,
+		    			$r->noRooms,
+		    			$r->country,
+		    			$r->Name,
+		    	);
+			}
+			$output = array(
+			   		"draw" => $draw,
+				 	"recordsTotal" => count($ReportFilter),
+				 	"recordsFiltered" => count($ReportFilter),
+				 	"data" => $data
+			);
+		  	echo json_encode($output);
+		}
+		public function HotelOptions() {
+			$data = $this->Finance_Model->SelectHotelByCountry($_REQUEST['countryid']);
+			echo json_encode($data);
+		}
    }	

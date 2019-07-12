@@ -51,6 +51,8 @@
                                     $CDdisabled = 'disabled';
                                 } else if(isset($value->sub_menu) && $value->sub_menu=="Transfer Booking") {
                                     $CDdisabled = 'disabled';
+                                } else if(isset($value->sub_menu) && $value->sub_menu=="Provider List") {
+                                    $CDdisabled = 'disabled';
                                 } else if(isset($value->sub_menu) && $value->sub_menu=="S/O Sales & Availability") {
                                     $CDdisabled = 'disabled';
                                 } else if(isset($value->sub_menu) && $value->sub_menu=="Settings") {

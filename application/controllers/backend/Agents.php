@@ -573,5 +573,71 @@ class Agents extends MY_Controller {
       $data = $this->Agents_Model->SelectState($_REQUEST['Conid']);
       echo json_encode($data);
   }
+  public function extranet_provider() {
+    if ($this->session->userdata('name')=="") {
+      redirect("../backend/");
+    }
+    $listMenu = menuPermissionAvailability($this->session->userdata('id'),'Extranet','Provider List'); 
+    if (count($listMenu)!=0 && $listMenu[0]->view==1) {
+      $this->load->view('backend/Agents/extranetProvider');
+    } else {
+      redirect(base_url().'backend/dashboard');
+    }     
+  }
+  public function providerDetailsList() {
+    if ($this->session->userdata('name')==""){
+      redirect("../backend/");
+    }
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $providedList = $this->Agents_Model->extranet_providerlist();
+    foreach($providedList->result() as $key => $r) {
+      if ($r->extranetStatus==1) {
+        $switch = '<div class="switch">
+                  <label>
+                      <input type="checkbox"  checked="checked" id="extranetStatus'.$r->id.'"  onchange="extranetStatus('."'$r->id'".');" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        } else {
+              $switch = '<div class="switch">
+                  <label>
+                      <input type="checkbox"   id="extranetStatus'.$r->id.'"  onchange="extranetStatus('."'$r->id'".');" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        }
+      $data[] = array(
+        $key+1,
+        $r->First_Name.' '.$r->Last_Name,
+        $r->Agency_Name,
+        $switch
+      );
+        }
+    $output = array(
+        "draw"      => $draw,
+      "recordsTotal"  => $providedList->num_rows(),
+      "recordsFiltered" => $providedList->num_rows(),
+      "data" => $data
+    );
+    echo json_encode($output);
+    exit();
+  }
+  public function extranetStatus() {
+    $array = array('extranetStatus' => $_REQUEST['status']);
+    $this->db->where('id',$_REQUEST['id']);
+    $this->db->update('hotel_tbl_agents',$array);
+    $id = $_REQUEST['id'];
+    if ($_REQUEST['status']==0) {
+      $description = 'Extranet Status Disabled [Agent id:'.$id.']';
+    } else {
+      $description = 'Extranet Enabled [Agent id:'.$id.']';
+    }
+    AdminlogActivity($description);
+    echo json_encode(true);
+  }
 }
 ?>

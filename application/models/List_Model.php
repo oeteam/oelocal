@@ -5879,7 +5879,7 @@ public function get_extrabedAllotment($request,$hotel_id,$contract_id,$room_id) 
                       'child' => array_sum($request['Child']),
                       'hotel_name' => $request['hotel_name'],
                       'agentId' => $this->session->userdata('agent_id'),
-                      'searchDate'=> date('Y-m-d'),
+                      'searchDate'=> date('Y-m-d H:i:s'),
                       'Room1ChildAge' => $room1childAge,
                       'Room2ChildAge' => $room2childAge,
                       'Room3ChildAge' => $room3childAge,

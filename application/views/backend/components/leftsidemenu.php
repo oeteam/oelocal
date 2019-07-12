@@ -171,6 +171,20 @@
                                 </div>
                             </li>
                         <?php } 
+                        $extranetprovider = menuPermissionAvailability($this->session->userdata('id'),'Extranet','Provider List'); 
+                        if ((count($extranetprovider)!=0 && $extranetprovider[0]->view!=0)) { ?>
+                            <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-cloud" aria-hidden="true"></i> Extranet</a>                  
+                                <div class="collapsible-body left-sub-menu">
+                                    <ul>
+                                        <?php 
+                                        if (count($extranetprovider)!=0 && isset($extranetprovider[0]->view) && $extranetprovider[0]->view!=0) { ?>
+                                        <li><a href="<?php echo base_url(); ?>backend/agents/extranet_provider">Provider List</a>
+                                        </li>
+                                        <?php } ?>                                       
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php } 
                         $hotelRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Hotels');
                         $tourRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Tours');
                         $transferRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Transfers'); 
@@ -226,7 +240,8 @@
                         $allotmentReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Allotment utilization Report');
                         $availabilityReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Availability Report');
                         $salesReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Agent Sales Report');
-                        if ((count($roomnightReport)!=0 && $roomnightReport[0]->view!=0) || (count($bookingReport)!=0 && $bookingReport[0]->view!=0) || (count($patternReport)!=0 && $patternReport[0]->view!=0) || (count($nationalityReport)!=0 && $nationalityReport[0]->view!=0) || (count($allotmentReport)!=0 && $allotmentReport[0]->view!=0) || (count($availabilityReport)!=0 && $availabilityReport[0]->view!=0) || (count($salesReport)!=0 && $salesReport[0]->view!=0)) { ?> 
+                        $searchReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Search Report');
+                        if ((count($roomnightReport)!=0 && $roomnightReport[0]->view!=0) || (count($bookingReport)!=0 && $bookingReport[0]->view!=0) || (count($patternReport)!=0 && $patternReport[0]->view!=0) || (count($nationalityReport)!=0 && $nationalityReport[0]->view!=0) || (count($allotmentReport)!=0 && $allotmentReport[0]->view!=0) || (count($availabilityReport)!=0 && $availabilityReport[0]->view!=0) || (count($salesReport)!=0 && $salesReport[0]->view!=0) || (count($searchReport)!=0 && $searchReport[0]->view!=0)) { ?> 
                             <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-file-text-o" aria-hidden="true"></i> Report</a>
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>
@@ -257,7 +272,12 @@
                                         if (count($salesReport)!=0 && isset($salesReport[0]->view) && $salesReport[0]->view!=0 ) { ?>
                                         <li><a href="<?php echo base_url(); ?>backend/report/AgentSalesReport">Agent Sales Report</a>
                                         </li>
+                                        <?php } 
+                                       if (count($searchReport)!=0 && isset($searchReport[0]->view) && $searchReport[0]->view!=0 ) { ?>
+                                        <li><a href="<?php echo base_url(); ?>backend/report/SearchReport">Search Report</a>
+                                        </li>
                                         <?php } ?>
+
                                     </ul>
                                 </div>
                             </li> 

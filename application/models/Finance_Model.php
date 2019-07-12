@@ -1494,5 +1494,24 @@ class Finance_Model extends CI_Model {
   		return $query->result();
 
   	}
+  	public function SearchReportList($request) {
+   		$this->db->select('a.*,b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,c.id,c.name as country');
+  		$this->db->from('agents_tbl_search a');
+  		$this->db->join('hotel_tbl_agents b','a.agentId=b.id');
+  		$this->db->join('countries c','a.nationality=c.id');
+  		$this->db->where('DATE(searchDate)>=',$request['from_date']);
+  		$this->db->where('DATE(searchDate)<=',$request['to_date']);
+  		if(isset($request['country'])&&$request['country']!="") {
+  			$this->db->where('a.country',$request['country']);
+  		}
+  		if(isset($request['rooms'])&&$request['rooms']!="") {
+  			$this->db->where('a.noRooms',$request['rooms']);
+  		}
+  		if(isset($request['agent_id'])&&$request['agent_id']!="") {
+  			$this->db->where('a.agentId',$request['agent_id']);
+  		}
+  		$query = $this->db->get()->result();
+		return $query;
+  	}
 }
 
