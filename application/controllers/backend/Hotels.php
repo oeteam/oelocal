@@ -2674,16 +2674,27 @@ class Hotels extends MY_Controller {
 		} else {
 			$discountval = $r->discount;
 		}
+		$validFrom  = date('d/m/Y' ,strtotime($r->BkFrom));
+		$validUntill  = date('d/m/Y' ,strtotime($r->BkTo));
+		$Bkbefore = $r->Bkbefore;
+		if ($r->discount_type=='REB') {
+			$validFrom = '';
+			$validUntill = '';
+		} 
+		if ($r->discount_type=='EB' || $r->discount_type=='stay&pay') {
+			$Bkbefore = '';
+		}
+		
         $data[] = array(
           $key+1,
           $impHotelName[$key],
           $impContarct[$key],
           $impRoomName[$key],
-          date('d/m/Y' ,strtotime($r->BkFrom)),
-          date('d/m/Y' ,strtotime($r->BkTo)),
+          $validFrom,
+          $validUntill,
           date('d/m/Y' ,strtotime($r->Styfrom)),
           date('d/m/Y' ,strtotime($r->Styto)),
-          $r->Bkbefore,
+          $Bkbefore,
           $discountval,
           $NonRefundable,
           $switch,

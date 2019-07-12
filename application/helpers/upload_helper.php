@@ -422,16 +422,16 @@ function handle_hotel_room_image_upload($count,$id = '')
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                 $CI =& get_instance();
-                $config                   = array();
-                $config['image_library']  = 'gd2';
-                $config['source_image']   = $newFilePath;
-                $config['new_image']      = $filename;
-                $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
-                $CI->load->library('image_lib', $config);
-                $CI->image_lib->resize();
-                $CI->image_lib->clear();
+                // $config                   = array();
+                // $config['image_library']  = 'gd2';
+                // $config['source_image']   = $newFilePath;
+                // $config['new_image']      = $filename;
+                // $config['maintain_ratio'] = true;
+                // $config['width']          = 255;
+                // $config['height']         = 144;
+                // $CI->load->library('image_lib', $config);
+                // $CI->image_lib->resize();
+                // $CI->image_lib->clear();
                 $CI->db->where('id', $id);
                 $CI->db->update('hotel_tbl_hotel_room_type', array(
                     'images' => $filename
@@ -476,16 +476,16 @@ function handle_hotel_room_image_login_upload($hotel_room_id = '')
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                 $CI =& get_instance();
-                $config                   = array();
-                $config['image_library']  = 'gd2';
-                $config['source_image']   = $newFilePath;
-                $config['new_image']      = $filename;
-                $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
-                $CI->load->library('image_lib', $config);
-                $CI->image_lib->resize();
-                $CI->image_lib->clear();
+                // $config                   = array();
+                // $config['image_library']  = 'gd2';
+                // $config['source_image']   = $newFilePath;
+                // $config['new_image']      = $filename;
+                // $config['maintain_ratio'] = true;
+                // $config['width']          = 255;
+                // $config['height']         = 144;
+                // $CI->load->library('image_lib', $config);
+                // $CI->image_lib->resize();
+                // $CI->image_lib->clear();
                 $CI->db->where('id', $hotel_room_id);
                 $CI->db->update('hotel_tbl_hotel_room_type', array(
                     'images' => $filename

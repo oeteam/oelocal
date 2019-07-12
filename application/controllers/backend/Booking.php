@@ -1433,6 +1433,48 @@ class Booking extends MY_Controller {
     }
     redirect(base_url().'backend/'.$url.'?id='.$_REQUEST['bkId']);
   }
+  public function AmmendmentModal() {
+    $data['view'] = $this->Booking_Model->hotel_booking_detail($_REQUEST['id']);
+    $this->load->view('backend/booking/AmmendmentModal',$data);
+  }
+  public function amendmentUpdate() {
+    $Room1individual_amount = '';
+    $Room2individual_amount = '';
+    $Room3individual_amount = '';
+    $Room4individual_amount = '';
+    $Room5individual_amount = '';
+    $Room6individual_amount = '';
+    if (isset($_REQUEST['Room1'])) {
+      $Room1individual_amount = implode(",", $_REQUEST['Room1']);
+    }
+    if (isset($_REQUEST['Room2'])) {
+      $Room2individual_amount = implode(",", $_REQUEST['Room2']);
+    }
+    if (isset($_REQUEST['Room3'])) {
+      $Room3individual_amount = implode(",", $_REQUEST['Room3']);
+    }
+    if (isset($_REQUEST['Room4'])) {
+      $Room4individual_amount = implode(",", $_REQUEST['Room4']);
+    }
+    if (isset($_REQUEST['Room5'])) {
+      $Room5individual_amount = implode(",", $_REQUEST['Room5']);
+    }
+    if (isset($_REQUEST['Room6'])) {
+      $Room6individual_amount = implode(",", $_REQUEST['Room6']);
+    }
+    $array = array('bookID' => $_REQUEST['id'],
+                   'Room1individual_amount' => $Room1individual_amount,
+                   'Room2individual_amount' => $Room2individual_amount,
+                   'Room3individual_amount' => $Room3individual_amount,
+                   'Room4individual_amount' => $Room4individual_amount,
+                   'Room5individual_amount' => $Room5individual_amount,
+                   'Room6individual_amount' => $Room6individual_amount,
+                   'Created_Date' => date('Y-m-d H:i:s'),
+                   'Created_By'   =>  $this->session->userdata('id')
+    );
+    $this->db->insert('hotel_tbl_hotelamendments',$array);
+    redirect(base_url().'backend/booking/hotel_booking_details?id='.$_REQUEST['id']);
+  }
 }
 ?>
 

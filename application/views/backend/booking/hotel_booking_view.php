@@ -116,6 +116,7 @@
 						$Booking = menuPermissionAvailability($this->session->userdata('id'),'Booking','Hotel Booking'); 
             			if($Booking[0]->edit!=0) {
 							if( $view[0]->booking_flag ==2 || $view[0]->booking_flag ==4 || $view[0]->booking_flag ==8) { ?>
+							<a href="#" class="btn-sm btn-success  " data-toggle="modal" id="Ammendment_modal_btn" data-target="#Ammendment_modal"  class="sb2-2-1-edit delete">Ammendment</a> &nbsp
 							<a href="#" class="btn-sm btn-success  " data-toggle="modal" data-target="#booking_modal"  class="sb2-2-1-edit delete">Accept</a> &nbsp<a class="btn-sm btn-danger "  data-toggle="modal" data-target="#myModal" onclick="deletefun('.$r->bk_id.');"  href="#" > Cancel </a> <?php } ?>
 							<?php if( $view[0]->booking_flag ==1 ) { ?> 
 							<a class="btn-sm btn-danger "  data-toggle="modal" data-target="#myModal"   href="#" > Cancel </a> <?php } ?>
@@ -1184,7 +1185,14 @@
               <!-- Modal content-->
           </div>
     </div>
+
+    <div class="modal fade col-md-12 delete_modal" style="width: 94%;" id="Ammendment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
 <script type="text/javascript">
+	$("#Ammendment_modal_btn").click(function() {
+		$("#Ammendment_modal").load(base_url+"backend/booking/AmmendmentModal?id=<?php echo $_REQUEST['id'] ?>");
+		$("#Ammendment_modal").modal();
+	})
 	$("#bookingRemarkBtn").click(function() {
 	    var bookingRemark = $("#bookingRemark").val();
 	    if (bookingRemark=="") {
