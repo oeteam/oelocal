@@ -1473,6 +1473,10 @@ class Booking extends MY_Controller {
                    'Created_By'   =>  $this->session->userdata('id')
     );
     $this->db->insert('hotel_tbl_hotelamendments',$array);
+
+    $description = 'Amendments added in [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
+    AdminlogActivity($description);
+
     redirect(base_url().'backend/booking/hotel_booking_details?id='.$_REQUEST['id']);
   }
 }
