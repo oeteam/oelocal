@@ -369,5 +369,11 @@ class Agents_Model extends CI_Model {
     $query=$this->db->get();
     return $query->result();
   }   
+  public function extranet_providerlist() {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_agents');
+    $query = $this->db->get();
+    return $query;
+  }
 }
 ?>
