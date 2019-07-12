@@ -2821,6 +2821,10 @@ class Payment_Model extends CI_Model {
       // Roomwise total rates end
       }
       $costPrice = array_sum($costPrice);
+      $tax = $view[0]->tax;
+      if ($view[0]->tax=="") {
+        $tax = 0
+      }
       $sellingPrice = (array_sum($totRmAmt)*$view[0]->tax)/100+array_sum($totRmAmt);
       $Agentprofit= ($costPrice*($view[0]->agent_markup))/100;
       $Adminprofit= ($costPrice*($view[0]->admin_markup))/100;
