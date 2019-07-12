@@ -2823,7 +2823,7 @@ class Payment_Model extends CI_Model {
       $costPrice = array_sum($costPrice);
       $tax = $view[0]->tax;
       if ($view[0]->tax=="") {
-        $tax = 0
+        $tax = 0;
       }
       $sellingPrice = (array_sum($totRmAmt)*$view[0]->tax)/100+array_sum($totRmAmt);
       $Agentprofit= ($costPrice*($view[0]->agent_markup))/100;
