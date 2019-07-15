@@ -725,9 +725,13 @@ class Booking_Model extends CI_Model {
     FROM hotel_tbl_booking a WHERE a.id = '.$id.' UNION 
     SELECT b.Updated_Date as Date, (select CONCAT(First_Name, " ", Last_Name, " -(Admin)") 
     from hotel_tbl_user where id = b.Updated_By ) as user, 
-    "Booking Modified" as action, " " as description 
-    FROM hotel_tbl_booking b WHERE b.id = '.$id.' and b.Updated_Date != ""
+    "Booking Accepted" as action, " " as description 
+    FROM hotel_tbl_booking b WHERE b.id = '.$id.' and b.Updated_Date != "" AND 0 = (select count(*) from hotel_tbl_booking_logs where bookingId = '.$id.' and action = "Booking Accepted")
     UNION
+    select c.createdDate as Date,(select CONCAT(First_Name, " ", Last_Name, " -(Admin)") 
+    from hotel_tbl_user where id = c.createdBy ) as user,action as action,c.remarks as description 
+     FROM hotel_tbl_booking_logs c WHERE c.bookingId = '.$id.'
+    UNION 
     SELECT c.createdDate as Date ,(select CONCAT(First_Name, " ", Last_Name, " -(Admin)") 
     from hotel_tbl_user where id = c.createdBy ) as user,"Remarks Added" as action, c.remarks as description
      FROM hotel_tbl_hotelbookingremarks c WHERE c.bookId = '.$id.'

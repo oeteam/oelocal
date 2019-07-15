@@ -190,6 +190,14 @@ class Booking extends MY_Controller {
       // $result1= $this->Booking_Model->hotel_booking_approved_invoice($_REQUEST['id'],$_REQUEST);
       // print_r($result1);
       // exit();
+      $array = array(
+                    'bookingId'     => $_REQUEST['id'], 
+                    'action'     => 'Booking accepted', 
+                    'remarks'     => 'Booking accepted and Conf No : '.$_REQUEST['booking_confirmation'].' ,Conf Name : '.$_REQUEST['booking_confirmation_name'],
+                    'createdBy'    => $this->session->userdata('id'),
+                    'createdDate'     => date('Y-m-d H:i:s'),
+              );
+      bookinglogsSubmit($array);
       $description = 'Hotel booking accepted [ID: HAB0'.$_REQUEST['id'].', Provider: Otelseasy]';
       AdminlogActivity($description);
       echo json_encode(true);
@@ -323,6 +331,14 @@ class Booking extends MY_Controller {
       // $this->email->send();
       // print_r($hotel_mail_details);
       // exit();
+      $array = array(
+                    'bookingId'     => $_REQUEST['id'], 
+                    'action'     => 'Booking cancelled', 
+                    'remarks'     => 'Booking cancelled',
+                    'createdBy'    => $this->session->userdata('id'),
+                    'createdDate'     => date('Y-m-d H:i:s'),
+              );
+      bookinglogsSubmit($array);
       $description = 'Hotel booking cancelled [ID: '.$_REQUEST['hotel_id'].', Provider: Otelseasy]';
       AdminlogActivity($description); 
       redirect("../backend/booking/");
@@ -1477,6 +1493,16 @@ class Booking extends MY_Controller {
                    'Created_By'   =>  $this->session->userdata('id')
     );
     $this->db->insert('hotel_tbl_hotelamendments',$array);
+
+
+    $array = array(
+                  'bookingId'     => $_REQUEST['id'], 
+                  'action'     => 'Amendments added', 
+                  'remarks'     => 'Amendments added',
+                  'createdBy'    => $this->session->userdata('id'),
+                  'createdDate'     => date('Y-m-d H:i:s'),
+            );
+    bookinglogsSubmit($array);
 
     $description = 'Amendments added in [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
     AdminlogActivity($description);

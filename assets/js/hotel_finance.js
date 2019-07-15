@@ -96,6 +96,11 @@ $("#search_book_hotel").click(function() {
   var to_date   = $("#to_date").val();
   var NightReporttbl = $('#NightReporttbl').dataTable({
         "bDestroy": true,
+        aLengthMenu: [
+            [25, 50, 100, 200, -1],
+            [25, 50, 100, 200, "All"]
+        ],
+        iDisplayLength: -1,
         "ajax": {
             url : base_url+'/backend/Report/RoomNightReportFilter?from_date='+from_date+
             '&to_date='+to_date,
@@ -137,7 +142,11 @@ $("#search_book_hotel").click(function() {
               $("#to_date").focus();
         }
         var NightReporttbl = $('#NightReporttbl').dataTable({
-          "pageLength": 100,
+          aLengthMenu: [
+              [25, 50, 100, 200, -1],
+              [25, 50, 100, 200, "All"]
+          ],
+          iDisplayLength: -1,
           "bDestroy": true,
           "ordering": false,
           "ajax": {

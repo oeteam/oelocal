@@ -22,7 +22,7 @@
                 				  <div class="col-md-12"> 
                 					        <div class="form-group col-md-2">
                 						              <label for="from_date">From date</label>
-                               			      <input type="text" class="datePicker-hide datepicker input-group-addon" id="from_date" name="from_date" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
+                               			      <input type="text" class="datePicker-hide datepicker input-group-addon" id="from_date" name="from_date" value="<?php echo date('Y-m-d') ?>" />
                                           <?php $today=date('d/m/Y'); ?>
                                           <div class="input-group">
                                           <input class="form-control datepicker date-pic" id="alternate1" name="" value="<?php echo $today ?>">
@@ -31,7 +31,7 @@
                                		</div>
                                		<div class="form-group col-md-2">
                 						              <label for="to_date">To date</label>
-                               			      <input type="text" class="datePicker-hide datepicker input-group-addon" id="to_date" name="to_date" placeholder="dd/mm/yyyy" value="<?php echo date('Y-m-d') ?>" />
+                               			      <input type="text" class="datePicker-hide datepicker input-group-addon" id="to_date" name="to_date" value="<?php echo date('Y-m-d') ?>" />
                                           <?php $today=date('d/m/Y' ,strtotime('+1 days')); ?>
                                           <div class="input-group">
                                           <input class="form-control datepicker date-pic" id="alternate2" name="" value="<?php echo $today ?>">
