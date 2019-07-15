@@ -734,5 +734,30 @@ class Booking_Model extends CI_Model {
     ) as td order by Date asc');
     return $query->result();
   }
+  public function getamendments($id) {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_hotelamendments');
+    $this->db->where('bookID',$id);
+    $query = $this->db->get()->result();
+    return $query;
+  }
+  public function acceptAmendment($id) {
+    $data['status'] = 1;
+    $this->db->where('id',$id);
+    $this->db->update('hotel_tbl_hotelamendments',$data);
+    return true;
+  }
+  public function deleteamendment($id) {
+    $this->db->where('id',$id);
+    $this->db->delete('hotel_tbl_hotelamendments');
+    return true;
+  }
+  public function getAmendment($id) {
+    $this->db->select("*");
+    $this->db->from("hotel_tbl_hotelamendments");
+    $this->db->where("id",$id);
+    $query = $this->db->get()->result();
+    return $query;
+  }
 }
 

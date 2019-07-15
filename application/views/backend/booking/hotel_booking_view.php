@@ -210,6 +210,39 @@
 					</div>
 				</div>
 			</div>
+			<?php if(isset($amendments) && count($amendments)!="") { ?>
+				<br>
+			<div class="row">
+				<div class="scol-md-12">
+					<div class="col-md-9">
+					<a class="btn-sm btn-info" id="listamendment" style="cursor:pointer;">Amendment List</a><br><br>
+					<table class="table table-bordered hide" id="amendmentTable">
+						<thead>
+							<tr>
+								<td>Name</td>
+								<td>Created Date</td>
+								<td>Total Amount</td>
+								<td>Action</td>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($amendments as $key => $value) { 
+							$totalamt = array_sum(explode(",",$value->Room1individual_amount))+array_sum(explode(",",$value->Room2individual_amount))+array_sum(explode(",",$value->Room3individual_amount))+array_sum(explode(",",$value->Room4individual_amount))+array_sum(explode(",",$value->Room5individual_amount))+array_sum(explode(",",$value->Room5individual_amount));
+							?>
+							<tr>
+								<td>Amendment <?php echo $key+1; ?></td>
+								<td><?php echo date('d/m/Y', strtotime($value->Created_Date)) ?></td>
+								<td><?php echo $totalamt ?></td>
+								<td><?php if($value->status==0) { ?> <a href="#" class="btn-sm btn-warning" onclick="amendacceptfun(<?php echo $value->id ?>);" class="sb2-2-1-edit delete"><i class="fa fa-check" aria-hidden="true"></i></a> <?php } ?><a title="Reject" href="#" class="btn-sm btn-danger" onclick="deleteamendmentfun(<?php echo $value->id ?>);" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-remove" aria-hidden="true"></i></a> <a href="#" class="btn-sm btn-success  " data-toggle="modal" id="Ammendment_modal_view_btn" data-id="<?php echo $value->id ?>" data-target="#Ammendment_modal"  class="sb2-2-1-edit delete"><i class="fa fa-eye" aria-hidden="true"></i></a></td> 
+							</tr>
+						<?php } ?>
+						</tbody>			
+				    </table>
+				</div>
+				</div>
+			</div>
+
+		    <?php } ?>
 			</br>
 			<?php 
 			$net_adult_amount = 0;
@@ -1193,6 +1226,11 @@
 		$("#Ammendment_modal").load(base_url+"backend/booking/AmmendmentModal?id=<?php echo $_REQUEST['id'] ?>");
 		$("#Ammendment_modal").modal();
 	})
+	$("#Ammendment_modal_view_btn").click(function(){
+		var amendid=$(this).data('id')
+		$("#Ammendment_modal").load(base_url+"backend/booking/AmmendmentModal?id=<?php echo $_REQUEST['id'] ?>&amendid="+amendid);
+		$("#Ammendment_modal").modal();
+	})
 	$("#bookingRemarkBtn").click(function() {
 	    var bookingRemark = $("#bookingRemark").val();
 	    if (bookingRemark=="") {
@@ -1208,6 +1246,35 @@
     	addToast("Deleted Successfully","green");
 		window.location = base_url+"backend/booking/remarksDelete?id="+id+'&bkid='+<?php echo $view[0]->bkid ?>;
 	}
+	function amendacceptfun(id) {
+        $.ajax({
+            dataType: 'json',
+            type: "Post",
+            url: base_url+'/backend/Booking/acceptAmendment?id='+id,
+            success: function(data) {
+              addToast("Updated Successfully","green");
+            }
+        });
+    }
+    function deleteamendmentfun(id) {
+  		$("#myModal").load(base_url+'backend/Booking/deleteAmendmentfun?id='+id);
+	}
+	function commonDelete() {
+		$.ajax({
+		  dataType: 'json',
+		  type: "POST",
+		  url: $("#delete_form").attr("action"),
+		  data: $("#delete_form").serialize(),
+		  cache: false,
+		  success: function (response) {
+	      	addToast(response.error,response.color);
+	      	close_delete_modal();
+	 	  }
+		});
+	}
+	$('#listamendment').click(function() {
+    	$("#amendmentTable").removeClass("hide");
+    })
 
 	</script>
 <?php init_tail(); ?>

@@ -10,8 +10,18 @@
           <?php 
               $book_room_count = $view[0]->book_room_count;
               $tot_days = $view[0]->no_of_days;
+              $totalamendcost = 0;
               $roomExp = explode(",", $view[0]->room_id);
               $individual_amount = explode(",", $view[0]->individual_amount);
+              if(isset($amenddata[0])&&$amenddata[0]!="") {
+                for($i=1;$i<=$book_room_count;$i++) {
+                 $varIndividual = 'Room'.$i.'individual_amount';
+                  if($amenddata[0]->$varIndividual!="") {
+                    $amendindividual_amount = explode(",", $amenddata[0]->$varIndividual);
+                    $totalamendcost = $totalamendcost + array_sum($amendindividual_amount);
+                  }
+                }
+              }
               for ($i=1; $i <= $book_room_count; $i++) { 
                 if (!isset($roomExp[$i-1])) {
                   $room_id = $roomExp[0];
@@ -19,6 +29,11 @@
                   $room_id = $roomExp[$i-1];
                 }
                 $varIndividual = 'Room'.$i.'individual_amount';
+                if(isset($amenddata[0])&&$amenddata[0]!="") {
+                  if($amenddata[0]->$varIndividual!="") {
+                    $amendindividual_amount = explode(",", $amenddata[0]->$varIndividual);
+                  }
+                }
                 if($view[0]->$varIndividual!="") {
                   $individual_amount = explode(",", $view[0]->$varIndividual);
                 }
@@ -45,7 +60,7 @@
                   <td><?php echo $RoomName ?></td>
                   <td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
                   <td style="text-align: right" class="Cost"><?php echo $individual_amount[$j] ?></td>
-                  <td style="text-align: right"><input type="text" class="newCost text-right" name="Room<?php echo $i; ?>[]" value="0"></td>
+                  <td style="text-align: right"><input type="text" class="newCost text-right" name="Room<?php echo $i; ?>[]" value="<?php echo isset($amendindividual_amount[$j]) && $amendindividual_amount!=''?$amendindividual_amount[$j]:0 ?>"></td>
                   <td style="text-align: right" class="ttl"><?php echo $individual_amount[$j] ?></td>
                 </tr>
               <?php } ?>
@@ -54,7 +69,7 @@
               <tr>
                 <td colspan="3" style="text-align: right"><strong class="text-blue">Total</strong></td>
                 <td class="net-Cost text-right"><?php echo array_sum($individual_amount) ?></td>
-                <td class="net-newCost text-right">0</td>
+                <td class="net-newCost text-right"><?php echo $totalamendcost ?></td>
                 <td class="net-ttl text-right"><?php echo array_sum($individual_amount) ?></td>
               </tr>
             </tfoot>

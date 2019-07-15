@@ -180,6 +180,7 @@ class Booking extends MY_Controller {
       $data['remarks'] =  $this->Booking_Model->get_booking_remarks($_REQUEST['id']);
       $data['payment'] =  $this->Booking_Model->PamentDetailsForBooking($_REQUEST['id']);
       $data['logs'] = $this->Booking_Model->getBookingLogs($_REQUEST['id']);
+      $data['amendments'] = $this->Booking_Model->getamendments($_REQUEST['id']);
       $this->load->view('backend/booking/hotel_booking_view',$data);
   }
   public function hotel_portel_admin_permission() {
@@ -1435,6 +1436,9 @@ class Booking extends MY_Controller {
   }
   public function AmmendmentModal() {
     $data['view'] = $this->Booking_Model->hotel_booking_detail($_REQUEST['id']);
+    if(isset($_REQUEST['amendid']) && $_REQUEST['amendid']!="") {
+      $data['amenddata'] = $this->Booking_Model->getAmendment($_REQUEST['amendid']);
+    }
     $this->load->view('backend/booking/AmmendmentModal',$data);
   }
   public function amendmentUpdate() {
@@ -1478,6 +1482,24 @@ class Booking extends MY_Controller {
     AdminlogActivity($description);
 
     redirect(base_url().'backend/booking/hotel_booking_details?id='.$_REQUEST['id']);
+  }
+  public function acceptAmendment() {
+    $this->Booking_Model->acceptAmendment($_REQUEST['id']);
+    $description = 'Hotel amendment accepted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
+    AdminlogActivity($description);
+    echo json_encode(true);
+  }
+  public function deleteAmendmentfun() {
+      $this->load->view('backend/booking/amendmentDeleteModal');
+  }
+   public function deleteamendment() {
+    $this->Booking_Model->deleteamendment($_REQUEST['delete_id']);
+    $Return['error'] = "Deleted Successfully";
+    $Return['color'] = 'green';
+    $Return['status'] = '1';
+    $description = 'Amendment details deleted [ID: '.$_REQUEST['delete_id'].']';
+    AdminlogActivity($description);
+    echo json_encode($Return);
   }
 }
 ?>

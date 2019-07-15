@@ -79,7 +79,7 @@
     }
   })
 // });
- function deletefun(id) {
+function deletefun(id) {
   deletepopupfun("agents/delete_agent",id);
 }
 function view_modal(id) {
