@@ -18,7 +18,9 @@
                  $varIndividual = 'Room'.$i.'individual_amount';
                   if($amenddata[0]->$varIndividual!="") {
                     $amendindividual_amount = explode(",", $amenddata[0]->$varIndividual);
-                    $totalamendcost = $totalamendcost + array_sum($amendindividual_amount);
+                  }
+                  for ($j=0; $j < $tot_days ; $j++) {
+                    $totalamendcost = array_sum($amendindividual_amount);
                   }
                 }
               }
