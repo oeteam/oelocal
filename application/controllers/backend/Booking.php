@@ -1511,6 +1511,14 @@ class Booking extends MY_Controller {
   }
   public function acceptAmendment() {
     $this->Booking_Model->acceptAmendment($_REQUEST['id']);
+    $array = array(
+                  'bookingId'     => $_REQUEST['bkid'], 
+                  'action'     => 'Amendments acccepted', 
+                  'remarks'     => 'Amendments accepted',
+                  'createdBy'    => $this->session->userdata('id'),
+                  'createdDate'     => date('Y-m-d H:i:s'),
+            );
+    bookinglogsSubmit($array);
     $description = 'Hotel amendment accepted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
     AdminlogActivity($description);
     echo json_encode(true);
@@ -1520,6 +1528,14 @@ class Booking extends MY_Controller {
   }
    public function deleteamendment() {
     $this->Booking_Model->deleteamendment($_REQUEST['delete_id']);
+    $array = array(
+                  'bookingId'     => $_REQUEST['bkid'], 
+                  'action'     => 'Amendments deleted', 
+                  'remarks'     => 'Amendments deleted',
+                  'createdBy'    => $this->session->userdata('id'),
+                  'createdDate'     => date('Y-m-d H:i:s'),
+            );
+    bookinglogsSubmit($array);
     $Return['error'] = "Deleted Successfully";
     $Return['color'] = 'green';
     $Return['status'] = '1';

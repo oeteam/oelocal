@@ -1160,6 +1160,9 @@
             </div>
         </div>
     </div>
+   <div id="amendDelete" class="modal fade delete_modal" role="dialog">
+   </div>
+
     <div class="modal fade  delete_modal" id="booking_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -1254,14 +1257,14 @@
         $.ajax({
             dataType: 'json',
             type: "Post",
-            url: base_url+'/backend/Booking/acceptAmendment?id='+id,
+            url: base_url+'/backend/Booking/acceptAmendment?id='+id+'&bkid='+<?php echo $view[0]->bkid ?>,
             success: function(data) {
               addToast("Updated Successfully","green");
             }
         });
     }
     function deleteamendmentfun(id) {
-  		$("#myModal").load(base_url+'backend/Booking/deleteAmendmentfun?id='+id);
+  		$("#amendDelete").load(base_url+'backend/Booking/deleteAmendmentfun?id='+id+'&bkid='+<?php echo $view[0]->bkid ?>);
 	}
 	function commonDelete() {
 		$.ajax({
