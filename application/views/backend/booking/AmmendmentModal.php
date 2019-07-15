@@ -61,7 +61,7 @@
                   <td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
                   <td style="text-align: right" class="Cost"><?php echo $individual_amount[$j] ?></td>
                   <td style="text-align: right"><input type="text" class="newCost text-right" name="Room<?php echo $i; ?>[]" value="<?php echo isset($amendindividual_amount[$j]) && $amendindividual_amount!=''?$amendindividual_amount[$j]:0 ?>"></td>
-                  <td style="text-align: right" class="ttl"><?php echo $individual_amount[$j] ?></td>
+                  <td style="text-align: right" class="ttl"><?php echo isset($amendindividual_amount[$j])?$individual_amount[$j]+$amendindividual_amount[$j]:$individual_amount[$j] ?></td>
                 </tr>
               <?php } ?>
             </tbody>
