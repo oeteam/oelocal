@@ -1,4 +1,4 @@
-// $(document).ready(function() {
+$(document).ready(function() {
     $("#accept_button").click(function(e) {
       var id = $("#book_id").val();
       var hotel_id = $("#hotels_id").val();
@@ -86,7 +86,7 @@
     });
 
   
-// }); 
+}); 
 function filter(val) {
     var hotel_booking_table = $('#hotel_booking_table').dataTable({
         "bDestroy": true,

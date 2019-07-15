@@ -4093,3 +4093,8 @@ function roomnameGET($room_id,$hotel_id) {
   $name = $result1[0]->name;
   return $name;
 }
+function bookinglogsSubmit($data) {
+  $ci =& get_instance();
+  $ci->db->insert('hotel_tbl_booking_logs',$data);
+  return true;
+}
