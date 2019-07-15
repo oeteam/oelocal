@@ -451,14 +451,15 @@
     }
 
     <?php if (count($edit)!=0) { ?>
+            if ($("#hoteltext").val()!="") {
             var hoteltext = $("#hoteltext").val().split(",");
-            $.each(hoteltext, function(i, v) {
-                $('#hotel_undo_redo option[value='+v+']').attr('selected','selected');
-            });
+                $.each(hoteltext, function(i, v) {
+                    $('#hotel_undo_redo option[value='+v+']').attr('selected','selected');
+                });
 
-            $("#hotel_undo_redo_rightSelected").trigger('click');
-            $('#hotel_undo_redo_to').prop('selectedIndex', 0).focus();  
-
+                $("#hotel_undo_redo_rightSelected").trigger('click');
+                $('#hotel_undo_redo_to').prop('selectedIndex', 0).focus();  
+            }
             var Agentstext = $("#Agentstext").val().split(",");
             $.each(Agentstext, function(i, v) {
                 $('#Agents_undo_redo option[value='+v+']').attr('selected','selected');
