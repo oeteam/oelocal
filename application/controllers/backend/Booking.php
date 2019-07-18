@@ -1520,6 +1520,7 @@ class Booking extends MY_Controller {
                   'createdDate'     => date('Y-m-d H:i:s'),
             );
     bookinglogsSubmit($array);
+    //amendmentemailNotification($_REQUEST['bkid']);
     $description = 'Hotel amendment accepted [ID: '.$_REQUEST['id'].', Provider: Otelseasy]';
     AdminlogActivity($description);
     echo json_encode(true);
