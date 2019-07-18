@@ -2517,6 +2517,7 @@ class Payment_Model extends CI_Model {
       $general = $this->Payment_Model->general_booking_detail($book_id);
       $cancelation =  $this->Payment_Model->get_cancellation_terms($book_id);
       $ExBed =  $this->Payment_Model->getExtrabedDetails($book_id);
+      $amenddata = $this->Payment_Model->getamendmentdata($book_id);
 
       $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
       $book_room_count = $view[0]->book_room_count;
@@ -2534,6 +2535,13 @@ class Payment_Model extends CI_Model {
       $RequestType = explode(",", $view[0]->RequestType);
 
       for ($i=1; $i <= $book_room_count; $i++) {
+        if(isset($amenddata)&& $amenddata!="") {
+          foreach ($amenddata as $key => $value) {
+            $varIndividual = 'Room'.$i.'individual_amount';
+            $amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
+
+          }
+        }
         if (!isset($ExtrabedDiscount[$i-1])) {
           $ExtrabedDiscount[$i-1] = 0;
         }
@@ -2609,6 +2617,13 @@ class Payment_Model extends CI_Model {
           $CPGAmoAD[$j] = 0;
           $GAamount[$j] = 0;
           $TPBAamount[$j] = 0;
+          $amendmentarrTot = array();
+          if(isset($amendmentarr[$i-1])) {
+            foreach ($amendmentarr[$i-1] as $key => $value) {
+              $amendmentarrTot[$key] = $value[$j]; 
+            }
+            $individual_amount[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+          }
           /* Room rates start */
           $rmAmount = 0;
           if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
@@ -2843,5 +2858,13 @@ class Payment_Model extends CI_Model {
       $this->db->where('id',$book_id);
       $query=$this->db->get();
       return $query->result();
+    }
+    public function getamendmentdata($id) {
+      $this->db->select("*");
+      $this->db->from("hotel_tbl_hotelamendments");
+      $this->db->where("bookID",$id);
+      $this->db->where("status",'1');
+      $query = $this->db->get()->result();
+      return $query;
     }
 }

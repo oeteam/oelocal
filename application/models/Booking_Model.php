@@ -763,5 +763,13 @@ class Booking_Model extends CI_Model {
     $query = $this->db->get()->result();
     return $query;
   }
+  public function getamendmentdata($id) {
+    $this->db->select("*");
+    $this->db->from("hotel_tbl_hotelamendments");
+    $this->db->where("bookID",$id);
+    $this->db->where("status",'1');
+    $query = $this->db->get()->result();
+    return $query;
+  }
 }
 

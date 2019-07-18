@@ -268,6 +268,7 @@
 					        $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
 							$book_room_count = $view[0]->book_room_count;
 							$individual_amount = explode(",", $view[0]->individual_amount);
+							$amend_individual_amount = array();
 							if ($view[0]->individual_discount!="") {
 								$individual_discount = explode(",", $view[0]->individual_discount);
 							}
@@ -280,9 +281,21 @@
 					        $ExtrabedDiscount = explode(",", $view[0]->ExtrabedDiscount);
 					        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
 					        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
-					        $RequestType = explode(",", $view[0]->RequestType);
-
+					        $RequestType = explode(",", $view[0]->RequestType);				        
+					        for ($i=1; $i <= $book_room_count; $i++) {
+					        	$varIndividual = 'Room'.$i.'individual_amount';
+					        	if(isset($amenddata[0]->$varIndividual)&&$amenddata[0]->$varIndividual!="") {
+					        		$amendamount[$i-1] = explode(",",$amenddata[0]->$varIndividual);
+					        	}
+					        }
+					       //print_r($amendamount);exit;
 							for ($i=1; $i <= $book_room_count; $i++) {
+								foreach ($amenddata as $key => $value) {
+					        		$varIndividual = 'Room'.$i.'individual_amount';
+									$amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
+
+								}
+
 								if (!isset($ExtrabedDiscount[$i-1])) {
 									$ExtrabedDiscount[$i-1] = 0;
 								}
@@ -331,7 +344,6 @@
 						        //   $discountType = 'Discount';
 						        // }
 
-								$varIndividual = 'Room'.$i.'individual_amount';
 								if($view[0]->$varIndividual!="") {
 									$individual_amount = explode(",", $view[0]->$varIndividual);
 								}
@@ -414,6 +426,13 @@
 			            					<td style="text-align: right">
 	            								<p class="new-price">
 		            								<?php 
+		            								$amendmentarrTot = array();
+		            								if(isset($amendmentarr[$i-1])) {
+		            								foreach ($amendmentarr[$i-1] as $key => $value) {
+		        										$amendmentarrTot[$key] = $value[$j]; 
+		        									}
+		        									$individual_amount[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+		        								}
 		            								$rmAmount = 0;
 		            								if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
 		            									if ($view[0]->revenueMarkupType=='Percentage') {
