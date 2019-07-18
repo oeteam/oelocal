@@ -233,7 +233,7 @@
 								<td>Amendment <?php echo $key+1; ?></td>
 								<td><?php echo date('d/m/Y', strtotime($value->Created_Date)) ?></td>
 								<td><?php echo $totalamt ?></td>
-								<td><?php if($value->status==0) { ?> <a href="#" class="btn-sm btn-warning" onclick="amendacceptfun(<?php echo $value->id ?>);" class="sb2-2-1-edit delete"><i class="fa fa-check" aria-hidden="true"></i></a> <?php } ?><a title="Reject" href="#" class="btn-sm btn-danger" onclick="deleteamendmentfun(<?php echo $value->id ?>);" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-remove" aria-hidden="true"></i></a> <a href="#" class="btn-sm btn-success  " data-toggle="modal" id="Ammendment_modal_view_btn" data-id="<?php echo $value->id ?>" data-target="#Ammendment_modal"  class="sb2-2-1-edit delete" onclick="amendmentView(<?php echo $value->id ?>)"><i class="fa fa-eye" aria-hidden="true"></i></a></td> 
+								<td><?php if($value->status==0) { ?> <a href="#" class="btn-sm btn-warning" onclick="amendacceptfun(<?php echo $value->id ?>);" class="sb2-2-1-edit delete"><i class="fa fa-check" aria-hidden="true"></i></a> <?php } ?><a title="Reject" href="#" class="btn-sm btn-danger" onclick="deleteamendmentfun(<?php echo $value->id ?>);" data-toggle="modal" data-target="#amendDelete" class="sb2-2-1-edit delete"><i class="fa fa-remove" aria-hidden="true"></i></a> <a href="#" class="btn-sm btn-success  " data-toggle="modal" id="Ammendment_modal_view_btn" data-id="<?php echo $value->id ?>" data-target="#Ammendment_modal"  class="sb2-2-1-edit delete" onclick="amendmentView(<?php echo $value->id ?>)"><i class="fa fa-eye" aria-hidden="true"></i></a></td> 
 							</tr>
 						<?php } ?>
 						</tbody>			
@@ -1180,12 +1180,6 @@
             </div>
         </div>
     </div>
-  
-   <div class="modal fade col-md-6 col-md-offset-3" id="amendDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <!-- Modal content-->
-          </div>
-    </div>
 
     <div class="modal fade  delete_modal" id="booking_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1248,7 +1242,9 @@
 
     <div class="modal fade col-md-12 delete_modal" style="width: 94%;" id="Ammendment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
-<script type="text/javascript">
+    <div class="modal fade col-md-12 delete_modal" style="width: 94%;" id="amendDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+    <script type="text/javascript">
 	$("#Ammendment_modal_btn").click(function() {
 		$("#Ammendment_modal").load(base_url+"backend/booking/AmmendmentModal?id=<?php echo $_REQUEST['id'] ?>");
 		$("#Ammendment_modal").modal();
@@ -1288,8 +1284,8 @@
         });
     }
     function deleteamendmentfun(id) {
-    	alert("dfgdg");
   		$("#amendDelete").load(base_url+'backend/Booking/deleteAmendmentfun?id='+id+'&bkid='+<?php echo $view[0]->bkid ?>);
+  		$("#amendDelete").modal();
 	}
 	function commonDelete() {
 		$.ajax({
