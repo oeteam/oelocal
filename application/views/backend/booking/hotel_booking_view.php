@@ -429,21 +429,23 @@
 		            								<?php 
 		            								$amendmentarrTot = array();
 		            								if(isset($amendmentarr[$i-1])) {
-		            								foreach ($amendmentarr[$i-1] as $key => $value) {
-		        										$amendmentarrTot[$key] = $value[$j]; 
-		        									}
-		        									$individual_amount[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
-		        								}
+			            								foreach ($amendmentarr[$i-1] as $key => $value) {
+			        										$amendmentarrTot[$key] = $value[$j]; 
+			        									}
+			        									$individual_amount1[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+			        								} else {
+			        									$individual_amount1[$j] = $individual_amount[$j];
+			        								}
 		            								$rmAmount = 0;
 		            								if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
 		            									if ($view[0]->revenueMarkupType=='Percentage') {
-		            										$rmAmount = ($individual_amount[$j]*$view[0]->revenueMarkup)/100;
+		            										$rmAmount = ($individual_amount1[$j]*$view[0]->revenueMarkup)/100;
 		            									} else {
 		            										$rmAmount = $view[0]->revenueMarkup;
 		            									}
 		            								}
-		        									$RAmoADMar[$j] = $individual_amount[$j]*($total_markup/100)+$rmAmount;
-		            								$CPRMRate[$j] = $individual_amount[$j]-($individual_amount[$j]*$individual_discount[$j])/100;
+		        									$RAmoADMar[$j] = $individual_amount1[$j]*($total_markup/100)+$rmAmount;
+		            								$CPRMRate[$j] = $individual_amount1[$j]-($individual_amount1[$j]*$individual_discount[$j])/100;
 		            								$RAmoADMar[$j] = $RAmoADMar[$j]-($RAmoADMar[$j]*$individual_discount[$j])/100;
 
 		            								if ($j==0) {
@@ -457,8 +459,8 @@
 		            								<p class="new-price">
 		            								<?php 
 
-		        									$roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
-		        									$RAmoNotMar[$j] = $individual_amount[$j];
+		        									$roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
+		        									$RAmoNotMar[$j] = $individual_amount1[$j];
 
 		        									$DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
             										$WiDisroomAmount[$j] = $roomAmount[$j];
