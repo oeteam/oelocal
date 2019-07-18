@@ -1180,8 +1180,12 @@
             </div>
         </div>
     </div>
-   <div id="amendDelete" class="modal fade delete_modal" role="dialog">
-   </div>
+  
+   <div class="modal fade col-md-6 col-md-offset-3" id="amendDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <!-- Modal content-->
+          </div>
+    </div>
 
     <div class="modal fade  delete_modal" id="booking_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -1284,6 +1288,7 @@
         });
     }
     function deleteamendmentfun(id) {
+    	alert("dfgdg");
   		$("#amendDelete").load(base_url+'backend/Booking/deleteAmendmentfun?id='+id+'&bkid='+<?php echo $view[0]->bkid ?>);
 	}
 	function commonDelete() {
