@@ -13,7 +13,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--== FAV ICON ==-->
     <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
-
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/socket.io.js"></script>
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet">
 
@@ -79,11 +79,14 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.8/datamaps.world.js"></script>
 
+
     <!-- jVector Map JS -->
 <!--     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.js"></script> -->
 
     <script type="text/javascript">
+    var socket = io.connect("http://localhost:8890?adminid=<?php echo $this->session->userdata('id') ?>");
+
         var base_url = "<?php  echo base_url();?>"; 
         // var myVar = setInterval(myTimer, 1000);
 
@@ -296,6 +299,7 @@ $(window).load(function() {
     transition: top .6s ease-in-out .3s;
 }
 </style>
+
         <!--== MAIN CONTRAINER ==-->
     <div class="container-fluid sb1">
         <div class="row">
@@ -342,7 +346,7 @@ $(window).load(function() {
                         <?php if (count($Booking)!=0 && isset($Booking[0]->view) && $Booking[0]->view!=0) { ?>
                         <a class="waves-effect btn-noti dropdown-toggle" id="calendar_filter" href="<?php echo base_url(); ?>backend/booking"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
                 <?php } ?>
-                <a class="waves-effect btn-noti dropdown-toggle" id="open_chat_list" target="_blank" href="https://dashboard.tawk.to/login#/chat"><i class="fa fa-wechat" aria-hidden="true"></i></a>
+                <a class="waves-effect btn-noti dropdown-toggle" id="open_chat_list"  href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a>
 </div>                  
 
                 <!-- Dropdown Structure -->
@@ -364,3 +368,15 @@ $(window).load(function() {
         </div>
     </div>
 
+<?php 
+ init_load_chat_list(); 
+ ?>
+<script type="text/javascript">
+    $('#open_chat_list').click(function () {
+          $('#chat_list').toggleClass('in');
+    });
+    $("#close_chat_list").click(function() {
+          $('#chat_list').removeClass('in');
+    })
+</script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/realtimebackend.js"></script>

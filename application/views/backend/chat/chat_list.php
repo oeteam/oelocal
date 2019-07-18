@@ -14,10 +14,10 @@ $this->load->helper('common');
     border: 2px solid transparent;
 }
 .circle-success{
-    background: #1ed51e;
+    color: #1ed51e;
 }
-.circle-warning{
-    background: red;
+.circle-warning {
+    color: red;
 }
 .media-box-object {
     display: block;
@@ -60,13 +60,9 @@ img {
 
 </style>
  
-<?php
-$frontend = $this->uri->segment(1);
-$mid = my_id();
-if (!empty($mid) && $frontend != 'frontend') { ?>
     <div class="chat_frame">
         
-   <!--      <button type="button" style="padding: 0 10px !important;" class="btn btn-round custom-bg" id="open_chat_list"><span
+<!--         <button type="button" style="padding: 0 10px !important;" class="btn btn-round custom-bg" id="open_chat_list"><span
                 class="fa fa-comments"></span></button> -->
         <div class="panel b0" id="chat_list">
             <div class="panel-heading custom-bg">
@@ -89,22 +85,16 @@ if (!empty($mid) && $frontend != 'frontend') { ?>
                             
                                     ?>
                                     <!-- START User status-->
-                                    <a href="#" data-user_id="<?= $v_user->id ?>"
+                                    <a href="#" class="admin-<?= $v_user->id ?>" data-user_id="<?= $v_user->id ?>"
                                        class="media-box p pb-sm pt-sm bb mt0 start_chat">
-                                   <?php
-                                        if ($v_user->active_status == '1') {
-                                            ?>
-                                            <span class="pull-right"><span class="circle circle-success circle-lg"></span>
+                                            <span class="pull-right"><span class="circle-warning circle-status circle-lg"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                             </span>
-                                        <?php } else { ?>
-                                            <span class="pull-right"><span class="circle circle-warning circle-lg"></span>
-                                            </span>
-                                        <?php } ?>
                                     <span class="pull-left">
                                  <!-- Contact avatar-->
                                  <img
-                                     src="<?php if(!empty($v_user->profile_image)){ ?><?= base_url() ?>uploads/agent_profile_pic/<?= $v_user->id ?>/<?= 'thumb_'.$v_user->profile_image?> <?php }else{ ?>
-                                    <?= base_url() ?>skin/images/dash/no-avatar.jpg ?>/<?= 'thumb_'.$v_user->profile_image?>
+
+                                     src="<?php if(!empty($v_user->Img)){ ?><?= base_url() ?>uploads/user_profile_pic/<?= $v_user->id ?>/<?= 'thumb_'.$v_user->Img?> <?php }else{ ?>
+                                    <?= base_url() ?>skin/images/dash/no-avatar.jpg ?>/<?= 'thumb_'.$v_user->Img?>
                                     <?php } ?>"
                                      alt="" class="media-box-object img-circle thumb48">
                               </span>
@@ -135,4 +125,3 @@ if (!empty($mid) && $frontend != 'frontend') { ?>
         </audio>
     </div>
     <!--End live_chat_section-->
-<?php } ?>

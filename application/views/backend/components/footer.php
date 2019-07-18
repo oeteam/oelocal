@@ -121,16 +121,6 @@
     });
   });
 </script>
-<?php
- // $profile = profile();
- $chat = true;
-  if (!empty($chat)) { 
-    ?>
-    <!--star live_chat_section-->
-    <?php
-     // $this->load->view('backend/chat/chat_list');
-      ?>
-<?php  } ?>
 </body>
 
 </html>

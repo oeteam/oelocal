@@ -500,7 +500,7 @@ function init_load_live_chat()
 function init_load_chat_list()
 {
     $CI =& get_instance();
-    // $CI->load->view('backend/chat/chat');
+    $CI->load->view('backend/chat/chat_list');
 }
 function init_front_head_supplier($aside = true)
 {

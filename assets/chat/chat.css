@@ -338,7 +338,7 @@
     text-shadow:none;
 }
 .media-box-heading strong {
-    text-transform: lowercase;
+    /*text-transform: lowercase;*/
     color: #3a3a3a;
     font-weight: 100;
 }

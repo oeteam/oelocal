@@ -2651,7 +2651,8 @@ function staffImage2($user_id = null)
     $CI =& get_instance();
     $profile = profile();
     $CI->db->select('*');
-    $CI->db->from('hotel_tbl_agents');
+    $CI->db->from('hotel_tbl_user');
+    $CI->db->where('id !=',$CI->session->userdata('id'));
     $query=$CI->db->get();
     return $query->result();
   }

@@ -52,6 +52,7 @@ class lists extends MY_Controller {
     $Otelseasyoutput = $listarray['OtelseasyHotels'];
     $TBOoutput = $listarray['TBOHotels'];
     $mergeData = array_merge($Otelseasyoutput,$TBOoutput);
+    $agent_currency = agent_currency();
     $this->db->query("CREATE TABLE IF NOT EXISTS ci_sessions(HotelCode VARCHAR(100), HotelName VARCHAR(255), HotelPicture VARCHAR(2000), HotelDescription VARCHAR(2000),RoomName VARCHAR(255),Rating INT(11),TotalPrice VARCHAR(255),Currency VARCHAR(100),OriginalPrice VARCHAR(255),oldPrice VARCHAR(255),DataType VARCHAR(255),RatingImg VARCHAR(255),ReviewImg VARCHAR(2000),reviews VARCHAR(255),BookBtn VARCHAR(1000),HotelRequest VARCHAR(5000),Inclusion VARCHAR(2000),agent_id INT(11),ip_add VARCHAR(255),searchDate VARCHAR(255))");
         $ip_add = get_client_ip();
         $this->db->query("DELETE FROM ci_sessions where agent_id = ".$this->session->userdata('agent_id')." and ip_add = '".$ip_add."'");
@@ -110,7 +111,7 @@ class lists extends MY_Controller {
                         'HotelDescription' =>$value['HotelDescription'],
                         'Rating' =>$value['Rating'],
                         'TotalPrice' => floatval(preg_replace('/[^\d.]/', '', $TotalPrice)),
-                        'Currency' =>$value['Currency'],
+                        'Currency' =>$agent_currency,
                         'OriginalPrice' =>$OriginalPrice,
                         'oldPrice' => $oldPrice,
                         'DataType' =>$value['DataType'],

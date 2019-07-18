@@ -513,7 +513,7 @@ function RoomCombinationCheck() {
   $.each(comAmnt,function(i,v) {
     sum += Number($(this).val().replace(/,/g , '')); 
   });
-  $(".b-rates--grand-total").text(sum);
+  $(".b-rates--grand-total").text(sum.toFixed(2));
 }
 function goBack() {
     window.history.back();
@@ -549,7 +549,7 @@ function defaultRateCheck() {
     $.each(comAmnt,function(i,v) {
       sum += Number($(this).val().replace(/,/g , '')); 
     });
-    $(".b-rates--grand-total").text(sum);
+    $(".b-rates--grand-total").text(sum.toFixed(2));
 }
 $(document).ready(function() {
   loadScript();
@@ -603,7 +603,7 @@ btn.on('click', function(e) {
     $.each(comAmnt,function(i,v) {
       sum += Number($(this).val().replace(/,/g , '')); 
     });
-    $(".b-rates--grand-total").text(sum);
+    $(".b-rates--grand-total").text(sum.toFixed(2));
   });
   RoomCombinationinitCheck();
   // ConSelectFun();

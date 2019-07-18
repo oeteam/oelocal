@@ -13,18 +13,16 @@
               $totalamendcost = 0;
               $roomExp = explode(",", $view[0]->room_id);
               $individual_amount = explode(",", $view[0]->individual_amount);
-              if(isset($amenddata[0])&&$amenddata[0]!="") {
-                for($i=1;$i<=$book_room_count;$i++) {
-                 $varIndividual = 'Room'.$i.'individual_amount';
-                  if($amenddata[0]->$varIndividual!="") {
-                    $amendindividual_amount = explode(",", $amenddata[0]->$varIndividual);
-                  }
-                  for ($j=0; $j < $tot_days ; $j++) {
-                    $totalamendcost = array_sum($amendindividual_amount);
-                  }
-                }
-              }
+              
               for ($i=1; $i <= $book_room_count; $i++) { 
+                if(isset($amenddata[0])&&$amenddata[0]!="") {
+                   $varIndividual = 'Room'.$i.'individual_amount';
+                    if($amenddata[0]->$varIndividual!="") {
+                      $amendindividual_amount = explode(",", $amenddata[0]->$varIndividual);
+                    }
+                    $totalamendcost = array_sum($amendindividual_amount);
+                }
+
                 if (!isset($roomExp[$i-1])) {
                   $room_id = $roomExp[0];
                 } else {
@@ -81,9 +79,11 @@
       </form>
       </div>
        <div class="modal-footer">
+        <?php  if(isset($amenddata[0])&&$amenddata[0]!="") { } else { ?> 
           <div class="row">
                 <button type="button" id="amendmentUpdate" class="btn-sm btn-primary">Update</button>
           </div>
+          <?php } ?>
       </div>
 </div>
 
