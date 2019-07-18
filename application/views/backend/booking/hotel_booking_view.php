@@ -291,9 +291,10 @@
 					       //print_r($amendamount);exit;
 							for ($i=1; $i <= $book_room_count; $i++) {
 								foreach ($amenddata as $key => $value) {
-					        		$varIndividual = 'Room'.$i.'individual_amount';
-									$amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
-
+									if ( $value->status==1) {
+						        		$varIndividual = 'Room'.$i.'individual_amount';
+										$amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
+									}
 								}
 
 								if (!isset($ExtrabedDiscount[$i-1])) {
