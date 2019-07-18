@@ -180,7 +180,15 @@
 		        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
 		        $RequestType = explode(",", $view[0]->RequestType);
 
-				for ($i=1; $i <= $book_room_count; $i++) { 
+				for ($i=1; $i <= $book_room_count; $i++) {
+					if(isset($amenddata)&&$amenddata!="") { 
+						foreach ($amenddata as $key => $value) {
+							if ( $value->status==1) {
+				        		$varIndividual = 'Room'.$i.'individual_amount';
+								$amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
+							}
+						}
+				    }
 					if (!isset($ExtrabedDiscount[$i-1])) {
 						$ExtrabedDiscount[$i-1] = 0;
 					}
@@ -287,15 +295,24 @@
             							<p class="new-price">
 
             								<?php 
+            								$amendmentarrTot = array();
+            								if(isset($amendmentarr[$i-1])) {
+	            								foreach ($amendmentarr[$i-1] as $key => $value) {
+	        										$amendmentarrTot[$key] = $value[$j]; 
+	        									}
+	        									$individual_amount1[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+	        								} else {
+	        									$individual_amount1[$j] = $individual_amount[$j];
+	        								}
             								$rmAmount = 0;
             								if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
             									if ($view[0]->revenueMarkupType=='Percentage') {
-            										$rmAmount = ($individual_amount[$j]*$view[0]->revenueMarkup)/100;
+            										$rmAmount = ($individual_amount1[$j]*$view[0]->revenueMarkup)/100;
             									} else {
             										$rmAmount = $view[0]->revenueMarkup;
             									}
             								}
-        									$roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
+        									$roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
 
         									$DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
             								$WiDisroomAmount[$j] = $roomAmount[$j];

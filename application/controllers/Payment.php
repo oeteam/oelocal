@@ -398,7 +398,7 @@ class Payment extends MY_Controller {
       $data['board'] = $this->Payment_Model->board_booking_detail($_REQUEST['id']);
       $data['general'] = $this->Payment_Model->general_booking_detail($_REQUEST['id']);
       $data['cancelation'] =  $this->Payment_Model->get_cancellation_terms($_REQUEST['id']);
-
+      $data['amenddata'] =  $this->Payment_Model->getamendmentdata($_REQUEST['id']);
       $data['ExBed']  =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
 
       $this->load->view('frontend/booking/agent_booking_view',$data);
@@ -655,9 +655,18 @@ class Payment extends MY_Controller {
         $board = $this->Payment_Model->board_booking_detail($_REQUEST['id']);
         $general = $this->Payment_Model->general_booking_detail($_REQUEST['id']);
         $cancelation =  $this->Payment_Model->get_cancellation_terms($_REQUEST['id']);
+        $amenddata = $this->Payment_Model->getamendmentdata($_REQUEST['id']);
 
         $ExBed =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
         for ($i=1; $i <= $book_room_count; $i++) {
+          if(isset($amenddata)&&$amenddata!="") { 
+            foreach ($amenddata as $key => $value) {
+              if ( $value->status==1) {
+                    $varIndividual = 'Room'.$i.'individual_amount';
+                $amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
+              }
+            }
+          }
           if (!isset($ExtrabedDiscount[$i-1])) {
             $ExtrabedDiscount[$i-1] = 0;
           }
@@ -749,15 +758,24 @@ class Payment extends MY_Controller {
           $TBAamount[$j] = 0;
           $TBCamount[$j] = 0;
           // Room only Rate start
+          $amendmentarrTot = array();
+          if(isset($amendmentarr[$i-1])) {
+            foreach ($amendmentarr[$i-1] as $key => $value) {
+              $amendmentarrTot[$key] = $value[$j]; 
+            }
+            $individual_amount1[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+          } else {
+            $individual_amount1[$j] = $individual_amount[$j];
+          }
           $rmAmount = 0;
           if ($data[0]->revenueMarkup!="" && $data[0]->revenueMarkup!=0) {
             if ($data[0]->revenueMarkupType=='Percentage') {
-              $rmAmount = ($individual_amount[$j]*$data[0]->revenueMarkup)/100;
+              $rmAmount = ($individual_amount1[$j]*$data[0]->revenueMarkup)/100;
             } else {
               $rmAmount = $data[0]->revenueMarkup;
             }
           }
-          $roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
+          $roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
           
           $roomDisAmount[$j] = $roomAmount[$j] - (($roomAmount[$j]*$individual_discount[$j])/100);
           $tb51 .='<tr>
