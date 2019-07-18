@@ -2622,21 +2622,23 @@ class Payment_Model extends CI_Model {
             foreach ($amendmentarr[$i-1] as $key => $value) {
               $amendmentarrTot[$key] = $value[$j]; 
             }
-            $individual_amount[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+            $individual_amount1[$j] = array_sum($amendmentarrTot)+$individual_amount[$j];
+          } else {
+            $individual_amount1[$j] = $individual_amount[$j];
           }
           /* Room rates start */
           $rmAmount = 0;
           if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
             if ($view[0]->revenueMarkupType=='Percentage') {
-              $rmAmount = ($individual_amount[$j]*$view[0]->revenueMarkup)/100;
+              $rmAmount = ($individual_amount1[$j]*$view[0]->revenueMarkup)/100;
             } else {
               $rmAmount = $view[0]->revenueMarkup;
             }
           }
           // Cost Room price 
-            $CPRMRate[$j] = $individual_amount[$j]-($individual_amount[$j]*$individual_discount[$j])/100;
+            $CPRMRate[$j] = $individual_amount1[$j]-($individual_amount1[$j]*$individual_discount[$j])/100;
           // Selling Room price start
-            $roomAmount[$j] = (($individual_amount[$j]*$total_markup)/100)+$individual_amount[$j]+$rmAmount;
+            $roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
             $DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
           /* Room rates end */
           /* Extrabed rate start */
