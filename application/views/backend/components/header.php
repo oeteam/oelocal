@@ -24,6 +24,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/mob.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>skin/css/chat_box.css">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery-ui.css">
 
@@ -35,6 +36,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <link rel="stylesheet" href="<?php echo base_url();?>assets/DataTables/Buttons/css/buttons.bootstrap4.min.css"> 
     <!--======== SCRIPT FILES =========-->
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/chat_box.js"></script>
     <?php 
     // init_load_chat_list(); 
     ?>
