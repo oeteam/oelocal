@@ -85,8 +85,8 @@ img {
                                 $name = $v_user->First_Name." ".$v_user->Last_Name; 
                                     ?>
                                     <!-- START User status-->
-                                    <a href="#" onClick="register_popup('<?php echo $name ?>', '<?php echo $name ?>')";class="admin-<?= $v_user->id ?>" data-user_id="<?= $v_user->id ?>"
-                                       class="media-box p pb-sm pt-sm bb mt0 start_chat">
+                                    <a href="#" onClick="register_popup('<?php echo $name ?>', '<?php echo $name ?>')"; data-user_id="<?= $v_user->id ?>"
+                                       class="media-box p pb-sm pt-sm bb mt0 start_chat admin-<?= $v_user->id ?>">
                                             <span class="pull-right"><span class="circle-warning circle-status circle-lg"><i class="fa fa-circle" aria-hidden="true"></i></span>
                                             </span>
                                     <span class="pull-left">
