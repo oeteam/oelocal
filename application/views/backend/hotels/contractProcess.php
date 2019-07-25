@@ -649,7 +649,7 @@
                     <div class="col-sm-6">
                         <label for="" class="control-label">Allotment</label>
                         <div class="">
-                            <input id="bulk-alt-allotment" <?php echo $designation!='Main' ? 'disabled' : '' ?> name="bulk-alt-allotment" type="number" class="form-control">
+                            <input id="bulk-alt-allotment" <?php echo isset($designation)&&$designation!='Main' ? 'disabled' : '' ?> name="bulk-alt-allotment" type="number" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -657,7 +657,7 @@
                     <div class="col-sm-6">
                         <label for="" class="control-label">Cut-off</label>
                         <div class="">
-                            <input id="bulk-alt-cut-off" <?php echo $designation!='Main' ? 'disabled' : '' ?> name="bulk-alt-cut-off" type="number" class="form-control">
+                            <input id="bulk-alt-cut-off" <?php echo isset($designation) && $designation!='Main' ? 'disabled' : '' ?> name="bulk-alt-cut-off" type="number" class="form-control">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -678,9 +678,9 @@
                                 })
                             </script>
                             <p class="custom-checkbox multi-select-mod-closed">
-                              <input type="checkbox" name="Open" class="filled-in c-open" id="Open" <?php echo $designation!='Main' ? 'disabled' : '' ?>/>
+                              <input type="checkbox" name="Open" class="filled-in c-open" id="Open" <?php echo isset($designation)&&$designation!='Main' ? 'disabled' : '' ?>/>
                               <label for="Open">Open</label>
-                              <input type="checkbox" name="Close" class="filled-in c-closed" id="Close" <?php echo $designation!='Main' ? 'disabled' : '' ?>/>
+                              <input type="checkbox" name="Close" class="filled-in c-closed" id="Close" <?php echo isset($designation)&&$designation!='Main' ? 'disabled' : '' ?>/>
                               <label for="Close">close</label>
                             </p>
                         </div>
