@@ -3506,6 +3506,18 @@ class Hotels extends MY_Controller {
       $data = $this->Hotels_Model->SelectCon($_REQUEST);
       echo $data;
 	}
+	public function allotementBlkupdatewizard() {
+		//print_r($_REQUEST);exit;
+    	$update  = $this->Hotels_Model->allotementBlkupdatewizard($_REQUEST);
+    	$description = 'Allotment bulk update [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.$_REQUEST['bulk_alt_contract_id'].', Season ID: '.$_REQUEST['season'].']';
+        AdminlogActivity($description);
+        $Return['error'] = "Updated Successfully!";
+        $Return['color'] = 'green';
+        $Return['status'] = '1';
+     
+        echo json_encode($Return);
+    	//redirect('../backend/hotels/contractProcess?month='.$_REQUEST['month'].'&year='.$_REQUEST['year'].'&hotel_id='.$_REQUEST['hotel_id'].'&room_id='.$_REQUEST['room_id'].'&con_id='.$_REQUEST['bulk_alt_contract_id']);
+    }
 }
 
 

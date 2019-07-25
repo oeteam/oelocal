@@ -829,8 +829,60 @@
             }
             
         });
-        $("#bulk-alt-UpdateBtn").click(function() {
-            var season = $("#bulk-alt-season").val();
+        // $("#bulk-alt-UpdateBtn").click(function() {
+        //     var season = $("#bulk-alt-season").val();
+        //     var Otherseason =  $("#other_season").is(":checked");
+        //     var rooms = $("#bulk-alt-room_id").val();
+        //     var from_date = $("#bulk-alt-fromDate").val();
+        //     var to_date = $("#bulk-alt-toDate").val();
+        //     var amount = $("#bulk-alt-amount").val();
+        //     var total_rooms = $("#tot-rooms").val();
+        //     var allotement = $("#bulk-alt-allotment").val();
+        //     var Cut_off = $("#bulk-alt-cut-off").val();
+        //     var closedOut = $("#bulk-alt-closedout").is(":checked"); 
+        //     var dayss = $("#bulk-alt-days").val();
+        //     if ((season=="" || season==null) && Otherseason==false) {
+        //         addToast('Must select a season!','orange');
+        //     } else {
+        //        if (Otherseason==true) {
+        //             if (from_date=="") {
+        //                 addToast('From date field is required!','orange');
+        //                 $("#bulk-alt-fromDate").focus();
+        //             } else if(to_date=="") {
+        //                 addToast('To date field is required!','orange');
+        //                 $("#bulk-alt-toDate").focus();
+        //             } else if(dayss=="") {
+        //                 addToast('Days field is required!','orange');
+        //                 $("#bulk-alt-days").focus();
+        //             } else if(rooms=="" || rooms==null) {
+        //                 addToast('Must select a room!','orange');
+        //                 $("#bulk-alt-room_id").focus();
+        //             } else if(amount!="" &&  amount==0) {
+        //                 addToast('Amount must greater than 0','orange');
+        //                 $("#bulk-alt-amount").focus();
+        //             } else {
+        //                 $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
+        //                 $("#bulk-update-form").submit();
+        //             }
+        //        } else {
+        //             if(dayss=="") {
+        //                 addToast('Days field is required!','orange');
+        //                 $("#bulk-alt-days").focus();
+        //             } else if(rooms=="" || rooms==null) {
+        //                 addToast('Must select a room!','orange');
+        //                 $("#bulk-alt-room_id").focus();
+        //             } else {
+        //                 $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
+        //                 $("#bulk-update-form").submit();
+        //             }
+        //        }
+        //     }
+        // })
+    // });
+     $("#bulk-alt-UpdateBtn").click(function() {
+            //var array = $('#bulk-alt-season').val().split(",");
+            var season = $("#bulk-alt-season").val().toString();
+            var nameArr = season.split(',');
             var Otherseason =  $("#other_season").is(":checked");
             var rooms = $("#bulk-alt-room_id").val();
             var from_date = $("#bulk-alt-fromDate").val();
@@ -872,13 +924,26 @@
                         addToast('Must select a room!','orange');
                         $("#bulk-alt-room_id").focus();
                     } else {
-                        $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
-                        $("#bulk-update-form").submit();
+                        $.each(nameArr,function(i){
+                            $.ajax({
+                                  dataType: 'json',
+                                  type: "Post",
+                                  url: base_url+'backend/hotels/allotementBlkupdatewizard?season='+nameArr[i],
+                                  data: $('#bulk-update-form').serialize(),
+                                  success: function(response) {
+                                    if (response.status == "1") {
+                                      addToast(response.error,response.color);
+                                    }
+                                  }
+                            });
+                            //alert(nameArr[i]);
+                        });
+                        // $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
+                        // $("#bulk-update-form").submit();
                     }
                }
             }
         })
-    // });
     function seasonchange() {
         $.ajax({
               dataType: 'json',
@@ -901,7 +966,7 @@
                 $('#alternate2').val(settodate);
                 $("#bulk-alt-toDate").val(settodate);
               }
-          });
+        });
     }
 </script>
 <script type="text/javascript">
