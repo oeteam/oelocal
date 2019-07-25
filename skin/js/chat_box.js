@@ -59,13 +59,21 @@ function register_popup(id, name) {
             
             return;
         }
-    }               
-
+    }  
+    getMessages(id);              
     var element = '<div class="popup-box chat-popup" id="'+ id +'">';
     element = element + '<div class="popup-head">';
     element = element + '<div class="popup-head-left">'+ name +'</div>';
     element = element + '<div class="popup-head-right"><a href="javascript:close_popup(\''+ id +'\');">&#10005;</a></div>';
-    element = element + '<div style="clear: both"></div></div><div class="popup-messages"></div></div>';
+    element = element + '<div style="clear: both"></div></div><div class="popup-messages">';
+    element = element + '<div class="chat-history"><ul class="messages'+id+'">';
+    // element = element + '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;<span class="message-data-name" >Olia</span></div><div class="message other-message">Hi Vincent, how are you? How is the project coming along?</div></li>';
+     // element = element + '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;<span class="message-data-name" >Olia</span></div><div class="message other-message">Hi Vincent, how are you? How is the project coming along?</div></li>';
+     //  element = element + '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;<span class="message-data-name" >Olia</span></div><div class="message other-message">Hi Vincent, how are you? How is the project coming along?</div></li>';
+     // element = element + '<li><div class="my-message-data"><span class="my-message-data-time">10:12 AM, Today&nbsp; &nbsp;</span><span class="message-data-name">Me</span></div><div class="message my-message">Are we meeting today? Project has been already finished and I have results to show you.</div></li>';
+    element = element + '</ul></div</div></div></div>';
+    // element = element + '<div class="chat-message clearfix"><textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea><button>Send</button></div>';
+
 
     document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + element;  
 
@@ -88,6 +96,17 @@ function calculate_popups() {
     }
     display_popups();
 
+}
+function getMessages(id) {
+    $.ajax({
+      dataType: 'json',
+      type: "POST",
+      url: base_url+'backend/Chat/getMessages/'+id,
+      cache: false,
+      success: function (response) { 
+        $(".messages"+id).html(response.list);
+      }
+    });
 }
 
 //recalculate when window is loaded and also when window is resized.

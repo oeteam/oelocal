@@ -87,7 +87,8 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <script src="//cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.4/jquery-jvectormap.js"></script> -->
 
     <script type="text/javascript">
-    var socket = io.connect("http://162.144.60.192:8890?adminid=<?php echo $this->session->userdata('id') ?>");
+    // var socket = io.connect("http://162.144.60.192:8890?adminid=<?php echo $this->session->userdata('id') ?>");
+    var socket = io.connect("http://localhost:8890?adminid=<?php echo $this->session->userdata('id') ?>");
 
         var base_url = "<?php  echo base_url();?>"; 
         // var myVar = setInterval(myTimer, 1000);

@@ -1665,7 +1665,6 @@ class Hotels extends MY_Controller {
 		$redirect_con = "false";
 		$rooms = $this->Hotels_Model->hotel_rooms_list($_REQUEST['hotel_id']);
 		$data['contract'] = $this->Hotels_Model->hotel_contract_list($_REQUEST['hotel_id']);
-
 		$data['hotels'] = $this->Hotels_Model->contract_hotel_list();
 		$data['rooms'] = $rooms->result();
 

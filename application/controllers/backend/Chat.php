@@ -10,7 +10,7 @@ class Chat extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('chat_model');
+        $this->load->model('Chat_Model');
         $this->load->helper('common');
     }
 
@@ -674,6 +674,20 @@ class Chat extends MY_Controller
                     "success" => 1,  
                 );
         echo json_encode($c_data);
+    }
+    public function getMessages($id) {
+        $messages = $this->Chat_Model->getMessages($id);
+        $data['list'] = "";
+        foreach ($messages as $key => $value) {
+            if($value->sender == $this->session->userdata('id')) {
+                $data['list'] .= '<li><div class="my-message-data"><span class="my-message-data-time">'.$value->createdDate.'&nbsp; &nbsp;</span><span class="message-data-name">Me</span></div><div class="message my-message">'.$value->msg.'</div></li>';
+            } else if($value->receiver == $this->session->userdata('id')) {
+                $sender = getchatuser($value->sender);
+                $data['list'] .= '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >'.$value->createdDate.'</span> &nbsp; &nbsp;<span class="message-data-name" >'.$sender[0]->name.'</span></div><div class="message other-message">'.$value->msg.'</div></li>';
+            }
+           
+        }
+        echo json_encode($data); 
     }
 
 }

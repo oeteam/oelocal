@@ -33,7 +33,7 @@ function user_email_validation($mail) {
     // print_r($data);
     // exit();
 }
- function title() {
+function title() {
     $ci =& get_instance();
       $ci->db->select('Title');
       $ci->db->from('hotel_tbl_general_settings');
@@ -4773,4 +4773,13 @@ function amendmentemailNotification($booking_id) {
             $ci->email->send();
     /*Hotel mail end*/
     return true;
+}
+function getchatuser($id) {
+    $ci =& get_instance();
+    $ci->db->select('CONCAT(First_Name," ",Last_Name) as name');
+    $ci->db->from('hotel_tbl_user');
+    $ci->db->where('id',$id);
+    $query=$ci->db->get();
+    $final= $query->result();
+    return $final;
 }

@@ -104,7 +104,6 @@
                                     $startYear = date('Y' ,strtotime($value1->from_date));
                                     $endYear = date('Y' ,strtotime($value1->to_date));
                                     $designation = $value1->contract_type;
-
                                     if (date('Y-m-d') > $value1->from_date) {
                                         $sdate = date('Y-m-d');
                                     } else {

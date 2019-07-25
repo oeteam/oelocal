@@ -122,4 +122,16 @@ class Chat_Model extends CI_Model
         return $query;
         
     }
+    function getMessages($id) {
+        $this->db->select('*');
+        $this->db->from('admin_tbl_chatmessages');
+        $where1 = "sender='".$id."' or receiver='".$this->session->userdata('id')."'";
+        $where2 = "sender='".$this->session->userdata('id')."' or receiver='".$id."'";
+        $this->db->where($where1);
+        $this->db->where($where2);
+        $this->db->order_by('id','desc');
+        $query_result = $this->db->get();
+        $result = $query_result->result();
+        return $result;
+    }
 }

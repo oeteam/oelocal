@@ -40,5 +40,81 @@
 }
 .popup-box .popup-messages {
     height: 100%;
-    overflow-y: scroll;
 }
+.chat-history {
+    padding: 30px 10px 20px;
+    border-bottom: 2px solid white;
+    overflow-y: scroll;
+    height: 575px;
+}
+
+.my-message-data {
+  margin-bottom: 15px;
+  float:left;
+}
+    
+.my-message-data-time {
+  color: lighten(gray, 8%);
+  padding-left: 6px;
+  float: left;
+}
+.other-message-data {
+  margin-bottom: 15px;
+  float: right;
+}
+    
+.other-message-data-time {
+  color: lighten(gray, 8%);
+  padding-left: 6px;
+  float: right;
+}
+    
+.message {      
+  color: white;
+  padding: 10px 20px;
+  line-height: 18px;
+  font-size: 12px;
+  border-radius: 7px;
+  margin-bottom: 30px;
+  width: 90%;
+  position: relative;
+}
+    
+.my-message {
+  background: #375037;
+  float:left;
+}
+
+.other-message {
+  background: #844e4e;
+  float: right;
+}
+.chat-message {
+    
+}
+.chat-message textarea {
+  width: 100%;
+  border: none;
+  padding: 10px 20px;
+  font: 14px/22px "Lato", Arial, sans-serif;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  resize: none;
+}    
+.chat-message button {
+  float: right;
+  color: $blue;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background: #F2F5F8;
+  
+  &:hover {
+    color: darken($blue, 7%);
+  }
+}
+
+
+ 
