@@ -760,4 +760,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $data= $this->Company_Model->cost_center_update($_REQUEST,$max_id);
         redirect("../backend/finance/cost_center");
     }
+    public function salesReport() {
+        $this->load->view('backend/finance/salesReport');
+    }
 }	

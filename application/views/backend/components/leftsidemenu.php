@@ -318,14 +318,12 @@
                         <?php 
                         $financeMenu = menuPermissionAvailability($this->session->userdata('id'),'Finance',''); 
                         if (count($financeMenu)!=0 && isset($financeMenu[0]->view) && $financeMenu[0]->view!=0) { ?>
-                        <!-- <li>
-                            <a target="_blank" href="http://otelseasy.bisells.com"><i class="fa fa-money" aria-hidden="true"></i> Finance</a>
-                        </li> -->
-                        <?php } ?>
                         <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-money" aria-hidden="true"></i> Finance</a>
                             <div class="collapsible-body left-sub-menu">
                                 <ul>
-                                    <li><a href="<?php echo base_url(); ?>backend/finance/company">Company</a>
+                                    <li><a href="<?php echo base_url(); ?>backend/finance/salesReport">Sales Report</a>
+                                    </li>
+                                   <!--  <li><a href="<?php echo base_url(); ?>backend/finance/company">Company</a>
                                     </li>
                                     <li><a href="<?php echo base_url(); ?>backend/finance/finance_account">Account Group</a>
                                     </li>
@@ -342,10 +340,11 @@
                                     <li><a href="<?php echo base_url(); ?>backend/finance/opening_balance">Opening Balance</a>
                                     <li><a href="<?php echo base_url(); ?>backend/finance/cost_center">Cost Center</a>
                                     <li><a href="<?php echo base_url(); ?>backend/finance/ledger">Ledger</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </li>
+                        <?php } ?>
                         
                         <?php 
                         $activitylogsMenu = menuPermissionAvailability($this->session->userdata('id'),'Activity Logs',''); 

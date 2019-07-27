@@ -7,24 +7,31 @@
 
 <style type="text/css">
     .progress {
-    display: none;
     position: relative;
-    margin: 20px;
+    /*margin: 20px;*/
     width: 400px;
     background-color: #ddd;
     border: 1px solid blue;
     padding: 1px;
-    left: 15px;
+    /*left: 15px;*/
     border-radius: 3px;
+    height: 15px;
 }
 
 .progress-bar {
-    background-color: green;
     width: 0%;
     height: 30px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
+    background-image:
+       -webkit-linear-gradient(-45deg, 
+                               transparent 33%, rgba(0, 0, 0, .1) 33%, 
+                               rgba(0,0, 0, .1) 66%, transparent 66%),
+       -webkit-linear-gradient(top, 
+                               rgba(255, 255, 255, .25), 
+                               rgba(0, 0, 0, .25)),
+       -webkit-linear-gradient(left, #09c, #f44);
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
 }
 
 .percent {
@@ -584,6 +591,7 @@
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-body">
+                <div class="form-entry">
                 <form id="bulk-update-form" method="post">
                     <input type="hidden" id="tot-rooms" value="<?php echo $hotels[0]->Number_of_room ?>">
                     <input type="hidden" name="room_id" value="<?php echo $_REQUEST['room_id'] ?>">
@@ -723,10 +731,13 @@
                     </div>
                 </div>
                 </form>
-                <div class='progress' id="progressDivId">
-            <div class='progress-bar' id='progressBar'></div>
-            <div class='percent' id='percent'>0%</div>
-        </div>
+                </div>
+                <div class="progressive-section hide">
+                </div>
+                <div class="blk-btn-progress row hide">
+                    <button class="pull-right btn-sm btn-primary blk-restart" style="margin-right: 5px;">Restart</button>
+                    <button class="pull-right btn-sm btn-primary blk-close" style="margin-right: 5px;" data-dismiss="modal">Close</button>
+                </div>
               </div>
             </div>
           </div>
@@ -739,6 +750,20 @@
 <script>
                 
     // $( document ).ready(function() {
+
+        $(".blk-close").click(function() {
+            $(".prog").remove();
+            $(".progressive-section").addClass('hide');
+            $(".form-entry").removeClass('hide');
+            $(".blk-btn-progress").addClass('hide');
+            location.reload();
+        })
+        $(".blk-restart").click(function() {
+            $(".prog").remove();
+            $(".progressive-section").addClass('hide');
+            $(".form-entry").removeClass('hide');
+            $(".blk-btn-progress").addClass('hide');
+        })
         $('#alternate1').attr('disabled', 'disabled');
         $('#alternate2').attr('disabled', 'disabled');
 
@@ -916,8 +941,7 @@
     // });
      $("#bulk-alt-UpdateBtn").click(function() {
             //var array = $('#bulk-alt-season').val().split(",");
-            var season = $("#bulk-alt-season").val().toString();
-            var nameArr = season.split(',');
+            var season = $("#bulk-alt-season").val();
             var Otherseason =  $("#other_season").is(":checked");
             var rooms = $("#bulk-alt-room_id").val();
             var from_date = $("#bulk-alt-fromDate").val();
@@ -959,42 +983,67 @@
                         addToast('Must select a room!','orange');
                         $("#bulk-alt-room_id").focus();
                     } else {
-                        $.each(nameArr,function(i){
-                            $.ajax({
-                                  dataType: 'json',
-                                  type: "Post",
-                                  url: base_url+'backend/hotels/allotementBlkupdatewizard?season='+nameArr[i],
-                                  data: $('#bulk-update-form').serialize(),
-                                  beforeSubmit: function () {
-                                        $("#progressDivId").css("display", "block");
-                                        var percentValue = '0%';
+                        $(".progressive-section").removeClass('hide');
+                        $(".form-entry").addClass('hide');
+                        // if ($("#bulk-alt-season").val()!=null) {
+                        //     var season = $("#bulk-alt-season").val();
+                        // } else {
+                        //     var season = 'Other';
+                        // }
+                        // var nameArr = season.split(',');
+                        // if ($("#bulk-alt-season").val()!=null) {
+                        //     var seasontext = $("#bulk-alt-season option:selected").text().toString();
+                        // } else {
+                        //     var seasontext = 'Other';
+                        // }
+                        // var seasontextArr = seasontext.split(',');
 
-                                        $('#progressBar').width(percentValue);
-                                        $('#percent').html(percentValue);
-                                  },
-                                  uploadProgress: function (event, position, total, percentComplete) {
-
-                                        var percentValue = percentComplete + '%';
-                                        $("#progressBar").animate({
-                                            width: '' + percentValue + ''
-                                        }, {
-                                            duration: 5000,
-                                            easing: "linear",
-                                            step: function (x) {
-                                            percentText = Math.round(x * 100 / percentComplete);
-                                                $("#percent").text(percentText + "%");
+                        if ($("#bulk-alt-season").val()!=null) {
+                            $('#bulk-alt-season > option:selected').each(function(i,v){
+                                $(".progressive-section").append('<div class="prog"><label>'+$(v).text()+'</label><div class="progress" ><div class="progress-bar" style="width: 0%;"></div><div class="percent" >0%</div></div></div>');
+                                console.log(i);
+                                $.ajax({
+                                    xhr: function() {
+                                        var xhr = new window.XMLHttpRequest();
+                                        xhr.upload.addEventListener("progress", function(evt) {
+                                            if (evt.lengthComputable) {
+                                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                                //Do something with upload progress here
+                                                var percentValue = percentComplete + '%';
+                                                $(".progress-bar:eq("+i+")").animate({
+                                                    width: '90%'
+                                                }, {
+                                                    duration: 5000,
+                                                    easing: "linear",
+                                                    step: function (x) {
+                                                    percentText = Math.round(x * 100 / percentComplete);
+                                                        if (percentText < 91) {
+                                                            $(".progress-bar:eq("+i+")").width(percentText + "%");
+                                                            $(".percent:eq("+i+")").text(percentText + "%");
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        });
+                                       }, false);
+                                       return xhr;
                                     },
-                                    error: function (response, status, e) {
-                                        alert('Oops something went.');
-                                    },
-                                    complete: function (response) {
-                                        
-                                     }
+                                    type: 'POST',
+                                    url: base_url+'backend/hotels/allotementBlkupdatewizard?season='+$(v).val(),
+                                    data: $('#bulk-update-form').serialize(),
+                                    success: function(data){
+                                        //Do something on success
+                                        console.log("end");
+                                        $(".progress-bar:eq("+i+")").width("100%");
+                                        $(".percent:eq("+i+")").text("100%");
+                                        if (i==($("#bulk-alt-season").length-1)) {
+                                            $(".blk-btn-progress").removeClass('hide')
+                                        }
+                                    }
+                                });
                             });
-                            //alert(nameArr[i]);
-                        });
+                        } else {
+                            // Other season update
+                        }
                         // $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
                         // $("#bulk-update-form").submit();
                     }
