@@ -1252,13 +1252,13 @@ class Hotels extends MY_Controller {
 		$contractmenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Contract'); 
 		if (isset($_REQUEST['id'])) {
 	  		$data['view']= $this->Hotels_Model->hotel_closeout_edit_data($_REQUEST['id']);
-	  		 if (count($tourMenu)!=0 && $tourMenu[0]->edit==1) {
+	  		 if (count($contractmenu)!=0 && $contractmenu[0]->edit==1) {
 		      $this->load->view('backend/hotels/close_out_edit_modal',$data);     
 		    } else {
 		      redirect(base_url().'backend/dashboard');
 		    }    
 		} else {
-			 if (count($tourMenu)!=0 && $tourMenu[0]->edit==1) {
+			 if (count($contractmenu)!=0 && $contractmenu[0]->edit==1) {
 		      $this->load->view('backend/hotels/close_out_edit_modal',$data);     
 		    } else {
 		      redirect(base_url().'backend/dashboard');

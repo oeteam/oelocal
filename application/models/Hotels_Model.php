@@ -1334,6 +1334,21 @@ class Hotels_Model extends CI_Model {
 			        );
 			$this->db->where('id',$request['id']);
 			$this->db->update('hotel_tbl_closeout_period',$data);
+			// Log entry start
+			$id = $request['id'];
+			$dataLOG= array( 
+					'id'			  => $id,
+				 	'hotel_id'   => $request['hotel_id'],
+			        'contract_id' => $request['contract_id'],
+			        'closedDate'  => $request['closedDate'],
+			        'roomType'   => $implode_room_types,
+			        'reason'     => $request['reason'],
+			        'delflg'     => 1,
+			        'CreatedBy' => $this->session->userdata('id'),
+			  		'CreatedDate' => date('Y-m-d H:i:s'),
+			);
+			$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+			// Log entry end
     	} else {
     		$start_date=date_create($request['from_date_edit']);
 	        $end_date=date_create($request['to_date_edit']);
@@ -1357,6 +1372,19 @@ class Hotels_Model extends CI_Model {
 					$this->db->where('hotel_id',$request['hotel_id']);
 					$this->db->where('contract_id',$request['contract_id']);
 					$this->db->update('hotel_tbl_closeout_period',$data);
+					// Log entry start
+					$dataLOG= array( 
+						 	'hotel_id'   => $request['hotel_id'],
+					        'contract_id' => $request['contract_id'],
+					        'closedDate'  => $value,
+					        'roomType'   => $implode_room_types,
+					        'reason'     => $request['reason'],
+					        'delflg'     => 1,
+					        'CreatedBy' => $this->session->userdata('id'),
+					  		'CreatedDate' => date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+					// Log entry end
       	  		} else {
       	  			$data= array( 'hotel_id'   => $request['hotel_id'],
 						          'contract_id' => $request['contract_id'],
@@ -1368,6 +1396,21 @@ class Hotels_Model extends CI_Model {
     					  		  'CreatedDate' => date('Y-m-d H:i:s')
 						        );
 					$this->db->insert('hotel_tbl_closeout_period',$data);
+					// Log entry start
+					$id = $this->db->insert_id();
+					$dataLOG= array( 
+							'id'			  => $id,
+						 	'hotel_id'   => $request['hotel_id'],
+					        'contract_id' => $request['contract_id'],
+					        'closedDate'  => $value,
+					        'roomType'   => $implode_room_types,
+					        'reason'     => $request['reason'],
+					        'delflg'     => 1,
+					        'CreatedBy' => $this->session->userdata('id'),
+					  		'CreatedDate' => date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+					// Log entry end
       	  		}
 	        }
     	}
@@ -3390,7 +3433,7 @@ class Hotels_Model extends CI_Model {
 						 		'roomType' 	         	 => $implode_room_types,
 						 		'season' 	             => $value,
 						 		'fromDate' 	         	 => $query[0]->FromDate,
-						 		'toDate' 	             => $$query[0]->ToDate,
+						 		'toDate' 	             => $query[0]->ToDate,
 						 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
 						 		'cancellationPercentage' => $CancellationPercentage,
 						 		'hotel_id' 	             => $request['hotel_id'],
@@ -3407,9 +3450,9 @@ class Hotels_Model extends CI_Model {
 							$dataLOG= array( 
 								'id'					 => $id,
 						 		'roomType' 	         	 => $implode_room_types,
-						 		'season' 	             => 'Other',
-						 		'fromDate' 	         	 => $request['fromDate'],
-						 		'toDate' 	             => $request['toDate'],
+						 		'season' 	             => $value,
+						 		'fromDate' 	         	 => $query[0]->FromDate,
+						 		'toDate' 	             => $query[0]->ToDate,
 						 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
 						 		'cancellationPercentage' => $CancellationPercentage,
 						 		'hotel_id' 	             => $request['hotel_id'],
@@ -3451,7 +3494,7 @@ class Hotels_Model extends CI_Model {
 			$dataLOG= array( 
 				'id'					 => $id,
 		 		'roomType' 	         	 => $implode_room_types,
-		 		'season' 	             => 'Other',
+		 		'season' 	             => $request['Season'],
 		 		'fromDate' 	         	 => $request['fromDate'],
 		 		'toDate' 	             => $request['toDate'],
 		 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
@@ -3531,13 +3574,13 @@ class Hotels_Model extends CI_Model {
 					$dataLOG= array( 
 						'id'					 => $id,
 				 		'roomType' 	         	 => $implode_room_types,
-				 		'season' 	             => 'Other',
-				 		'fromDate' 	         	 => $request['fromDate'],
-				 		'toDate' 	             => $request['toDate'],
+				 		'season' 	             => $value,
+				 		'fromDate' 	         	 => $query[0]->FromDate,
+				 		'toDate' 	             => $query[0]->ToDate,
 				 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
 				 		'cancellationPercentage' => $CancellationPercentage,
 				 		'hotel_id' 	             => $request['hotel_id'],
-				 		'contract_id' 	         => $RCvalue->contract_id,
+				 		'contract_id' 	         => $request['contract_id'],
 				 		'application' 	         => $request['application'],
 				 		'daysFrom'				 => $request['daysFrom'],
 				 		'daysTo'				 => $request['daysTo'],
@@ -3826,6 +3869,21 @@ class Hotels_Model extends CI_Model {
 		     			 'CreatedBy'     => $this->session->userdata('id'),
 						);
 						$this->db->insert('hotel_tbl_minimumstay',$data);
+						//Log entry start
+						$id = $this->db->insert_id();
+						$dataLOG= array( 
+						 'id'			 => $id,
+						 'season' 	     => 'Other',
+						 'fromDate' 	 => $request['fromDate'],
+						 'toDate' 	     => $request['toDate'],
+						 'minDay' 	     => $request['minDay'],
+						 'hotel_id' 	 => $request['hotel_id'],
+						 'contract_id' 	 => $RCvalue->contract_id,
+						 'CreatedDate'   => date('Y-m-d H:i:s'),
+		     			 'CreatedBy'     => $this->session->userdata('id'),
+						);
+						$this->db->insert('hotel_tbl_minimumstay_log',$dataLOG);
+						//Log entry end
 					} else {
 						foreach ($request['Season'] as $key => $value) {
 							$this->db->select('*');
@@ -3843,6 +3901,21 @@ class Hotels_Model extends CI_Model {
 		     				 'CreatedBy'     => $this->session->userdata('id'),
 							);
 							$this->db->insert('hotel_tbl_minimumstay',$data);
+							//Log entry start
+							$id = $this->db->insert_id();
+							$dataLOG= array( 
+							 'id'			 => $id,
+							 'season' 	     => $value,
+							 'fromDate' 	 => $query[0]->FromDate,
+							 'toDate' 	     => $query[0]->ToDate,
+							 'minDay' 	     => $request['minDay'],
+							 'hotel_id' 	 => $request['hotel_id'],
+							 'contract_id' 	 => $RCvalue->contract_id,
+							 'CreatedDate'   => date('Y-m-d H:i:s'),
+			     			 'CreatedBy'     => $this->session->userdata('id'),
+							);
+							$this->db->insert('hotel_tbl_minimumstay_log',$dataLOG);
+							//Log entry end
 				    	}
 			    	}
 				}
@@ -3861,6 +3934,21 @@ class Hotels_Model extends CI_Model {
 			);
 			$this->db->where('id',$request['id']);
 			$this->db->update('hotel_tbl_minimumstay',$data);
+			//Log entry start
+			$id = $request['id'];
+			$dataLOG= array( 
+			 'id'			 => $id,
+			 'season' 	     => $request['Season'],
+			 'fromDate' 	 => $request['fromDate'],
+			 'toDate' 	     => $request['toDate'],
+			 'minDay' 	     => $request['minDay'],
+			 'hotel_id' 	 => $request['hotel_id'],
+			 'contract_id' 	 => $request['contract_id'],
+			 'CreatedDate'   => date('Y-m-d H:i:s'),
+ 			 'CreatedBy'     => $this->session->userdata('id'),
+			);
+			$this->db->insert('hotel_tbl_minimumstay_log',$dataLOG);
+			//Log entry end
     	} else {
     		if (isset($request['other_season'])) {
     			$data= array( 
@@ -3874,6 +3962,21 @@ class Hotels_Model extends CI_Model {
 		     	 'CreatedBy'     => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_minimumstay',$data);
+				//Log entry start
+				$id = $this->db->insert_id();
+				$dataLOG= array( 
+				 'id'			 => $id,
+				 'season' 	     => 'Other',
+				 'fromDate' 	 => $request['fromDate'],
+				 'toDate' 	     => $request['toDate'],
+				 'minDay' 	     => $request['minDay'],
+				 'hotel_id' 	 => $request['hotel_id'],
+				 'contract_id' 	 => $request['contract_id'],
+				 'CreatedDate'   => date('Y-m-d H:i:s'),
+	 			 'CreatedBy'     => $this->session->userdata('id'),
+				);
+				$this->db->insert('hotel_tbl_minimumstay_log',$dataLOG);
+				//Log entry end
 			} else {
 				foreach ($request['Season'] as $key => $value) {
 					$this->db->select('*');
@@ -3891,6 +3994,21 @@ class Hotels_Model extends CI_Model {
 		     		 'CreatedBy'     => $this->session->userdata('id'),
 					);
 					$this->db->insert('hotel_tbl_minimumstay',$data);
+					//Log entry start
+					$id = $this->db->insert_id();
+					$dataLOG= array( 
+					 'id'			 => $id,
+					 'season' 	     => $value,
+					 'fromDate' 	 => $query[0]->FromDate,
+					 'toDate' 	     => $query[0]->ToDate,
+					 'minDay' 	     => $request['minDay'],
+					 'hotel_id' 	 => $request['hotel_id'],
+					 'contract_id' 	 => $request['contract_id'],
+					 'CreatedDate'   => date('Y-m-d H:i:s'),
+		 			 'CreatedBy'     => $this->session->userdata('id'),
+					);
+					$this->db->insert('hotel_tbl_minimumstay_log',$dataLOG);
+					//Log entry end
 		    	}
 	    	}
 			

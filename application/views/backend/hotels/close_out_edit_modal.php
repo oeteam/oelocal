@@ -21,7 +21,8 @@
                             <span><label>Closed Date :</label></span>
                             <span><?php echo date('d-m-Y',strtotime($view[0]->closedDate)) ?></span>
                              <br>
-                    </div>    
+                    </div>  
+                     <input type="hidden" value="<?php echo $view[0]->closedDate ?>" name="closedDate">  
                     <?php } else {?>
                     <div class="form-group col-md-6">
                             <label for="from_date_edit">From date</label>
