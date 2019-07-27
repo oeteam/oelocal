@@ -737,7 +737,7 @@ function get_room_name_type($id) {
   $query=$ci->db->get();
   $final = $query->result();
   if (count($final)!=0) {
-    return $final[0]->Room_Type.' '.$final[0]->room_name;
+    return $final[0]->room_name.' '.$final[0]->Room_Type;
   } 
 }
 function agentIp_currency($id) {

@@ -71,8 +71,8 @@ function register_popup(id, name) {
      // element = element + '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;<span class="message-data-name" >Olia</span></div><div class="message other-message">Hi Vincent, how are you? How is the project coming along?</div></li>';
      //  element = element + '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;<span class="message-data-name" >Olia</span></div><div class="message other-message">Hi Vincent, how are you? How is the project coming along?</div></li>';
      // element = element + '<li><div class="my-message-data"><span class="my-message-data-time">10:12 AM, Today&nbsp; &nbsp;</span><span class="message-data-name">Me</span></div><div class="message my-message">Are we meeting today? Project has been already finished and I have results to show you.</div></li>';
-    element = element + '</ul></div</div></div></div>';
-    // element = element + '<div class="chat-message clearfix"><textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea><button>Send</button></div>';
+    element = element + '</ul>';
+    element = element + '<div class="chat-message clearfix"><input type="text" class="message-to-send" placeholder="Type your message"><button>Send</button></div></div></div></div</div>';
 
 
     document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + element;  
@@ -104,7 +104,13 @@ function getMessages(id) {
       url: base_url+'backend/Chat/getMessages/'+id,
       cache: false,
       success: function (response) { 
-        $(".messages"+id).html(response.list);
+        if (response!="") {
+            $(".messages"+id).html(response.list);
+            $(".chat-history ul").animate({
+                scrollTop: $(".chat-history ul").offset().top
+            }, 1000);
+
+        }
       }
     });
 }
@@ -112,3 +118,18 @@ function getMessages(id) {
 //recalculate when window is loaded and also when window is resized.
 window.addEventListener("resize", calculate_popups);
 window.addEventListener("load", calculate_popups);
+
+
+$(document).keypress('.message-to-send',function(event){
+    
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+    //     $(this).closest('chat-history').find('ul').append(
+    // '<li class="clearfix"><div class="other-message-data"><span class="other-message-data-time">2019-07-20 10:55</span> &nbsp; &nbsp;<span class="message-data-name">Justin thomas</span></div><div class="message other-message">'+$(this).val()+'</div></li>');
+        console.log($(this).text());
+        $(this).val("");
+    }
+
+});
+
+

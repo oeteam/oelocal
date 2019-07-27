@@ -1,4 +1,13 @@
 <?php init_head(); ?>
+<style type="text/css">
+    #ActivityLog-table_wrapper .btn  {
+        height: 27px;
+        font-size: 12px;
+        line-height: 28px;
+        background: #009688;
+        margin: 1px;
+    }
+</style>
     <div class="sb2-2">
         <div class="sb2-2-1">
             <div class="inn-title">
@@ -8,8 +17,8 @@
             <div class="col s3">
                 <span class="pull-left">
                     <div class="input-group date">
-                        <input type="text" id="activity_log_date" name="activity_log_date" class="form-control datepicker activity-log-date" value="">
-                        <div class="input-group-addon">
+                        <input type="text" id="activity_log_date" name="activity_log_date" class="form-control datepicker activity-log-date" value="<?php echo date('Y-m-d') ?>">
+                        <div class="input-group-addon"> 
                             <i class="fa fa-calendar calendar-icon"></i>
                         </div>
                     </div>
@@ -54,6 +63,10 @@
                 var date = $(".datepicker").val();
                 var ActivityLogtable = $('#ActivityLog-table').dataTable({
                         "bDestroy": true,
+                        dom: 'lBfrtip',
+                        buttons: [
+                            'copy', 'csv', 'excel', 'pdf', 'print'
+                        ],
                         "ajax": {
                             url : base_url+'/backend/common/ActivityLogList?date='+date,
                             type : 'GET'

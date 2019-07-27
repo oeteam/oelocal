@@ -718,6 +718,10 @@ $("#SearchFormReportButton").click(function() {
         else{
           var SearchReportTable = $('#searchTable').dataTable({
             "bDestroy": true,
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
             "ajax": {
               url : base_url+'backend/Report/SearchReportList?from_date='+from_date+
               '&to_date='+to_date+'&country='+Con+'&hotelid='+hotelid+'&agent_id='+agent_id+'&rooms='+rooms,

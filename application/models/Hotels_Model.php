@@ -2768,6 +2768,27 @@ class Hotels_Model extends CI_Model {
 							 'CreatedBy'	  => $this->session->userdata('id'),
 							);
 							$this->db->insert('hotel_tbl_boardsupplement',$data);
+
+							// Log entry start
+							$id = $this->db->insert_id();
+
+							$dataLOG= array( 
+							 'id' 	      => $id,
+							 'board' 	      => $request['board'],
+							 'roomType' 	  => $implode_room_types,
+							 'season' 	      => 'Other',
+							 'fromDate' 	  => $request['fromDate'],
+							 'toDate' 	      => $request['toDate'],
+							 'startAge' 	  => $request['StartAge'],
+							 'finalAge' 	  => $request['FinalAge'],
+							 'amount' 	      => $price,
+							 'hotel_id' 	  => $request['hotel_id'],
+							 'contract_id' 	  => $RCvalue->contract_id,
+							 'CreatedDate'    => date('Y-m-d H:i:s'),
+							 'CreatedBy'	  => $this->session->userdata('id'),
+							);
+							$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
+							// Log entry end
 			    	} else {
 						foreach ($request['season'] as $key => $value) {
 							$this->db->select('*');
@@ -2790,6 +2811,24 @@ class Hotels_Model extends CI_Model {
 							);
 							$this->db->insert('hotel_tbl_boardsupplement',$data);
 
+							// Log entry start
+							$id = $this->db->insert_id();
+							$dataLOG= array( 
+							 'id' 	      => $id,
+							 'board' 	  	  => $request['board'],
+							 'roomType' 	  => $implode_room_types,
+							 'season' 	  	  => $value,
+							 'fromDate' 	  => $query[0]->FromDate,
+							 'toDate' 	  	  => $query[0]->ToDate,
+							 'startAge' 	  => $request['StartAge'],
+							 'finalAge' 	  => $request['FinalAge'],
+							 'amount' 	  	  => $price,
+							 'hotel_id' 	  => $request['hotel_id'],
+					 		 'contract_id' 	  => $RCvalue->contract_id,
+					 		 'CreatedDate'    => date('Y-m-d H:i:s'),
+							 'CreatedBy'	  => $this->session->userdata('id'),
+							);
+							$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
 						}
 			    	}
 	    		}
@@ -2812,6 +2851,28 @@ class Hotels_Model extends CI_Model {
 				);
 	        	$this->db->where('id',$request['id']);
 				$this->db->update('hotel_tbl_boardsupplement',$data);
+
+				// Log entry start
+				$id = $request['id'];
+
+				$dataLOG= array( 
+				 'id' 	      => $id,
+				 'board' 	      => $request['board'],
+				 'roomType' 	  => $implode_room_types,
+				 'season' 	      => 'Other',
+				 'fromDate' 	  => $request['fromDate'],
+				 'toDate' 	      => $request['toDate'],
+				 'startAge' 	  => $request['StartAge'],
+				 'finalAge' 	  => $request['FinalAge'],
+				 'amount' 	      => $price,
+				 'hotel_id' 	  => $request['hotel_id'],
+		 			'contract_id' 	  => $request['contract_id'],
+				 'CreatedDate'    => date('Y-m-d H:i:s'),
+				 'CreatedBy'	  => $this->session->userdata('id'),
+				);
+				$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
+				// Log entry end
+
 	    	} else {
 				$data= array( 
 				 'board' 	      => $request['board'],
@@ -2828,6 +2889,28 @@ class Hotels_Model extends CI_Model {
 				 'CreatedBy'	  => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_boardsupplement',$data);
+
+				// Log entry start
+				$id = $this->db->insert_id();
+
+				$dataLOG= array( 
+				 'id' 	      => $id,
+				 'board' 	      => $request['board'],
+				 'roomType' 	  => $implode_room_types,
+				 'season' 	      => 'Other',
+				 'fromDate' 	  => $request['fromDate'],
+				 'toDate' 	      => $request['toDate'],
+				 'startAge' 	  => $request['StartAge'],
+				 'finalAge' 	  => $request['FinalAge'],
+				 'amount' 	      => $price,
+				 'hotel_id' 	  => $request['hotel_id'],
+				 'contract_id' 	  => $request['contract_id'],
+				 'CreatedDate'    => date('Y-m-d H:i:s'),
+				 'CreatedBy'	  => $this->session->userdata('id'),
+				);
+				$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
+				// Log entry end
+
 	    	}
     	} else {
 			foreach ($request['season'] as $key => $value) {
@@ -2850,6 +2933,28 @@ class Hotels_Model extends CI_Model {
 					);
 		        	$this->db->where('id',$request['id']);
 					$this->db->update('hotel_tbl_boardsupplement',$data);
+
+					// Log entry start
+					$id = $request['id'];
+
+					$dataLOG= array( 
+					 'id' 	      => $id,
+					 'board' 	  	  => $request['board'],
+					 'roomType' 	  => $implode_room_types,
+					 'season' 	  	  => $value,
+					 'fromDate' 	  => $query[0]->FromDate,
+					 'toDate' 	  	  => $query[0]->ToDate,
+					 'startAge' 	  => $request['StartAge'],
+					 'finalAge' 	  => $request['FinalAge'],
+					 'amount' 	  	  => $price,
+					 'hotel_id' 	  => $request['hotel_id'],
+					 'contract_id' 	  => $request['contract_id'],
+					 'CreatedDate'    => date('Y-m-d H:i:s'),
+					 'CreatedBy'	  => $this->session->userdata('id'),
+					);
+					$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
+					// Log entry end
+
 		    	} else {
 					$data= array( 
 					 'board' 	  	  => $request['board'],
@@ -2866,6 +2971,27 @@ class Hotels_Model extends CI_Model {
 					 'CreatedBy'	  => $this->session->userdata('id'),
 					);
 					$this->db->insert('hotel_tbl_boardsupplement',$data);
+
+					// Log entry start
+					$id = $this->db->insert_id();
+
+					$dataLOG= array( 
+					 'id' 	      => $id,
+					 'board' 	  	  => $request['board'],
+					 'roomType' 	  => $implode_room_types,
+					 'season' 	  	  => $value,
+					 'fromDate' 	  => $query[0]->FromDate,
+					 'toDate' 	  	  => $query[0]->ToDate,
+					 'startAge' 	  => $request['StartAge'],
+					 'finalAge' 	  => $request['FinalAge'],
+					 'amount' 	  	  => $price,
+					 'hotel_id' 	  => $request['hotel_id'],
+					 'contract_id' 	  => $request['contract_id'],
+					 'CreatedDate'    => date('Y-m-d H:i:s'),
+					 'CreatedBy'	  => $this->session->userdata('id'),
+					);
+					$this->db->insert('hotel_tbl_boardsupplement_logs',$dataLOG);
+					// Log entry end
 		    	}
 
 			}
@@ -2936,6 +3062,28 @@ class Hotels_Model extends CI_Model {
 				     	'CreatedBy'     => $this->session->userdata('id'),
 				    	);
 				    	$this->db->insert('hotel_tbl_generalsupplement',$data);
+				    	// Log entry start
+				    	$id = $this->db->insert_id();
+				    	$dataLOG= array( 
+				    		'id' 			=> $id,
+					     	'type'     		=> $request['type'],
+					     	'roomType'     	=> $implode_room_types,
+					     	'season'     	=> 'Other',
+					     	'fromDate'     	=> $request['fromDate'],
+					     	'toDate'     	=> $request['toDate'],
+					     	'adultAmount'   => $adultAmount,
+					     	'childAmount'   => $childAmount,
+					     	'hotel_id'     	=> $request['hotel_id'],
+					     	'contract_id' 	=> $RCvalue->contract_id,
+					     	'application'   => $request['application'],
+					     	'mandatory' 	=> $mandatory,
+					     	'MinChildAge'	=> $request['MinChildAge'],
+					     	'CreatedDate'   => date('Y-m-d H:i:s'),
+					     	'CreatedBy'     => $this->session->userdata('id'),
+					    	);
+				    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+
+				    	// Log entry end
 				} else {
 					foreach ($request['season'] as $key => $value) {
 						$this->db->select('*');
@@ -2960,6 +3108,29 @@ class Hotels_Model extends CI_Model {
 				     		'CreatedBy'     => $this->session->userdata('id'),
 				    	);
 				      	$this->db->insert('hotel_tbl_generalsupplement',$data);
+
+				      	// Log entry start
+				    	$id = $this->db->insert_id();
+				    	$dataLOG= array( 
+				    		'id' 			=> $id,
+					     	'type'     		=> $request['type'],
+				     		'roomType'  	=> $implode_room_types,
+				     		'season'     	=> $value,
+				     		'fromDate'     	=> $query[0]->FromDate,
+				     		'toDate'     	=> $query[0]->ToDate,
+				     		'adultAmount'  	=> $adultAmount,
+				     		'childAmount'  	=> $childAmount,
+				     		'hotel_id'     	=> $request['hotel_id'],
+				     		'contract_id' 	=> $RCvalue->contract_id,
+				     		'application'   => $request['application'],
+				     		'mandatory' 	=> $mandatory,
+				     		'MinChildAge'	=> $request['MinChildAge'],
+				     		'CreatedDate'   => date('Y-m-d H:i:s'),
+				     		'CreatedBy'     => $this->session->userdata('id'),
+					    	);
+				    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+				    	// Log entry end
+
 				    }
 				}
 			}
@@ -2968,43 +3139,89 @@ class Hotels_Model extends CI_Model {
 
 		if ($other_season=="on") {
 		    if ($request['id']!="") {
-	    	  $data= array( 
-		     // 'board'     => $request['board'],
-		     'type'     		=> $request['type'],
-		     'roomType'     	=> $implode_room_types,
-		     'season'     		=> 'Other',
-		     'fromDate'     	=> $request['fromDate'],
-		     'toDate'     		=> $request['toDate'],
-		     'adultAmount'    	=> $adultAmount,
-		     'childAmount'    	=> $childAmount,
-		     'application'    	=> $request['application'],
-		     'mandatory' 		=> $mandatory,
-     		 'MinChildAge'	=> $request['MinChildAge'],
-     		 'UpdatedDate'   => date('Y-m-d H:i:s'),
-		     'UpdatedBy'     => $this->session->userdata('id'),
+	    	    $data= array( 
+			     // 'board'     => $request['board'],
+			     'type'     		=> $request['type'],
+			     'roomType'     	=> $implode_room_types,
+			     'season'     		=> 'Other',
+			     'fromDate'     	=> $request['fromDate'],
+			     'toDate'     		=> $request['toDate'],
+			     'adultAmount'    	=> $adultAmount,
+			     'childAmount'    	=> $childAmount,
+			     'application'    	=> $request['application'],
+			     'mandatory' 		=> $mandatory,
+	     		 'MinChildAge'	=> $request['MinChildAge'],
+	     		 'UpdatedDate'   => date('Y-m-d H:i:s'),
+			     'UpdatedBy'     => $this->session->userdata('id'),
 
-		    );
-		    $this->db->where('id',$request['id']);
-		    $this->db->update('hotel_tbl_generalsupplement',$data);
+			    );
+			    $this->db->where('id',$request['id']);
+			    $this->db->update('hotel_tbl_generalsupplement',$data);
+
+			    // Log entry start
+		    	$id = $request['id'];
+		    	$dataLOG= array( 
+		    		'id' 			=> $id,
+			     	'type'     		=> $request['type'],
+					'roomType'     	=> $implode_room_types,
+					'season'     	=> 'Other',
+					'fromDate'     	=> $request['fromDate'],
+					'toDate'     	=> $request['toDate'],
+					'adultAmount'   => $adultAmount,
+					'childAmount'   => $childAmount,
+					'application'   => $request['application'],
+					'hotel_id'     	=> $request['hotel_id'],
+					'contract_id'   => $request['contract_id'],
+					'mandatory' 	=> $mandatory,
+					'MinChildAge'	=> $request['MinChildAge'],
+			     	'CreatedDate'   => date('Y-m-d H:i:s'),
+			     	'CreatedBy'     => $this->session->userdata('id'),
+			    	);
+		    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+		    	// Log entry end
+
 		    } else {
-		    $data= array( 
-		     // 'board'     => $request['board'],
-		     'type'     		=> $request['type'],
-		     'roomType'     	=> $implode_room_types,
-		     'season'     		=> 'Other',
-		     'fromDate'     	=> $request['fromDate'],
-		     'toDate'     		=> $request['toDate'],
-		     'adultAmount'    	=> $adultAmount,
-		     'childAmount'    	=> $childAmount,
-		     'hotel_id'     	=> $request['hotel_id'],
-		     'contract_id'    	=> $request['contract_id'],
-		     'application'    	=> $request['application'],
-		     'mandatory' 		=> $mandatory,
-     		 'MinChildAge'	=> $request['MinChildAge'],
-     		 'CreatedDate'   => date('Y-m-d H:i:s'),
-			 'CreatedBy'     => $this->session->userdata('id'),
-		    );
-		    $this->db->insert('hotel_tbl_generalsupplement',$data);
+			    $data= array( 
+			     // 'board'     => $request['board'],
+			     'type'     		=> $request['type'],
+			     'roomType'     	=> $implode_room_types,
+			     'season'     		=> 'Other',
+			     'fromDate'     	=> $request['fromDate'],
+			     'toDate'     		=> $request['toDate'],
+			     'adultAmount'    	=> $adultAmount,
+			     'childAmount'    	=> $childAmount,
+			     'hotel_id'     	=> $request['hotel_id'],
+			     'contract_id'    	=> $request['contract_id'],
+			     'application'    	=> $request['application'],
+			     'mandatory' 		=> $mandatory,
+	     		 'MinChildAge'	=> $request['MinChildAge'],
+	     		 'CreatedDate'   => date('Y-m-d H:i:s'),
+				 'CreatedBy'     => $this->session->userdata('id'),
+			    );
+			    $this->db->insert('hotel_tbl_generalsupplement',$data);
+
+			    // Log entry start
+		    	$id = $this->db->insert_id();
+		    	$dataLOG= array( 
+		    		'id' 			=> $id,
+			     	'type'     		=> $request['type'],
+					'roomType'     	=> $implode_room_types,
+					'season'     	=> 'Other',
+					'fromDate'     	=> $request['fromDate'],
+					'toDate'     	=> $request['toDate'],
+					'adultAmount'    => $adultAmount,
+					'childAmount'    => $childAmount,
+					'hotel_id'     	=> $request['hotel_id'],
+					'contract_id'    => $request['contract_id'],
+					'application'    => $request['application'],
+					'mandatory' 	=> $mandatory,
+					'MinChildAge'	=> $request['MinChildAge'],
+					'CreatedDate'   => date('Y-m-d H:i:s'),
+					'CreatedBy'     => $this->session->userdata('id'),
+			    	);
+		    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+		    	// Log entry end
+
 		    }
 		  } else {
 		      foreach ($request['season'] as $key => $value) {
@@ -3014,42 +3231,87 @@ class Hotels_Model extends CI_Model {
 		        $query = $this->db->get()->result();
 
 		      if ($request['id']!="") {
-		    $data= array( 
-		     // 'board'     => $request['board'],
-		     'type'     		=> $request['type'],
-		     'roomType'     	=> $implode_room_types,
-		     'season'     		=> $value,
-		     'fromDate'     	=> $query[0]->FromDate,
-		     'toDate'     		=> $query[0]->ToDate,
-		     'adultAmount'    	=> $adultAmount,
-		     'childAmount'    	=> $childAmount,
-		     'application'    	=> $request['application'],
-		     'mandatory' 		=> $mandatory,
-     		 'MinChildAge'	=> $request['MinChildAge'],
-     		 'UpdatedDate'   => date('Y-m-d H:i:s'),
-		     'UpdatedBy'     => $this->session->userdata('id'),
-		    );
-		      $this->db->where('id',$request['id']);
-		      $this->db->update('hotel_tbl_generalsupplement',$data);
+			    $data= array( 
+			     // 'board'     => $request['board'],
+			     'type'     		=> $request['type'],
+			     'roomType'     	=> $implode_room_types,
+			     'season'     		=> $value,
+			     'fromDate'     	=> $query[0]->FromDate,
+			     'toDate'     		=> $query[0]->ToDate,
+			     'adultAmount'    	=> $adultAmount,
+			     'childAmount'    	=> $childAmount,
+			     'application'    	=> $request['application'],
+			     'mandatory' 		=> $mandatory,
+	     		 'MinChildAge'	=> $request['MinChildAge'],
+	     		 'UpdatedDate'   => date('Y-m-d H:i:s'),
+			     'UpdatedBy'     => $this->session->userdata('id'),
+			    );
+		      	$this->db->where('id',$request['id']);
+		      	$this->db->update('hotel_tbl_generalsupplement',$data);
+
+		      	// Log entry start
+		    	$id = $request['id'];
+		    	$dataLOG= array( 
+		    		'id' 			=> $id,
+			     	'type'     		=> $request['type'],
+				    'roomType'     	=> $implode_room_types,
+				    'season'     	=> $value,
+				    'fromDate'     	=> $query[0]->FromDate,
+				    'toDate'     	=> $query[0]->ToDate,
+				    'adultAmount'   => $adultAmount,
+				    'childAmount'   => $childAmount,
+				    'application'   => $request['application'],
+				    'hotel_id'     	=> $request['hotel_id'],
+					'contract_id'   => $request['contract_id'],
+				    'mandatory' 	=> $mandatory,
+		     		'MinChildAge'	=> $request['MinChildAge'],
+			     	'CreatedDate'   => date('Y-m-d H:i:s'),
+			     	'CreatedBy'     => $this->session->userdata('id'),
+			    	);
+		    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+		    	// Log entry end
+
 		    } else {
-		    $data= array( 
-		     // 'board'     => $request['board'],
-		     'type'     	=> $request['type'],
-		     'roomType'     => $implode_room_types,
-		     'season'     	=> $value,
-		     'fromDate'     => $query[0]->FromDate,
-		     'toDate'     	=> $query[0]->ToDate,
-		     'adultAmount'  => $adultAmount,
-		     'childAmount'  => $childAmount,
-		     'hotel_id'     => $request['hotel_id'],
-		     'contract_id'  => $request['contract_id'],
-		     'application'  => $request['application'],
-		     'mandatory' 	=> $mandatory,
-     		 'MinChildAge'	=> $request['MinChildAge'],
-     		 'CreatedDate'   => date('Y-m-d H:i:s'),
-			 'CreatedBy'     => $this->session->userdata('id'),
-		    );
-		      $this->db->insert('hotel_tbl_generalsupplement',$data);
+			    $data= array( 
+			     // 'board'     => $request['board'],
+			     'type'     	=> $request['type'],
+			     'roomType'     => $implode_room_types,
+			     'season'     	=> $value,
+			     'fromDate'     => $query[0]->FromDate,
+			     'toDate'     	=> $query[0]->ToDate,
+			     'adultAmount'  => $adultAmount,
+			     'childAmount'  => $childAmount,
+			     'hotel_id'     => $request['hotel_id'],
+			     'contract_id'  => $request['contract_id'],
+			     'application'  => $request['application'],
+			     'mandatory' 	=> $mandatory,
+	     		 'MinChildAge'	=> $request['MinChildAge'],
+	     		 'CreatedDate'   => date('Y-m-d H:i:s'),
+				 'CreatedBy'     => $this->session->userdata('id'),
+			    );
+		        $this->db->insert('hotel_tbl_generalsupplement',$data);
+
+		        // Log entry start
+		    	$id = $this->db->insert_id();
+		    	$dataLOG= array( 
+		    		'id' 			=> $id,
+			     	'type'     		=> $request['type'],
+				    'roomType'     	=> $implode_room_types,
+				    'season'     	=> $value,
+				    'fromDate'     	=> $query[0]->FromDate,
+				    'toDate'     	=> $query[0]->ToDate,
+				    'adultAmount'   => $adultAmount,
+				    'childAmount'   => $childAmount,
+				    'application'   => $request['application'],
+				    'hotel_id'     	=> $request['hotel_id'],
+					'contract_id'   => $request['contract_id'],
+				    'mandatory' 	=> $mandatory,
+		     		'MinChildAge'	=> $request['MinChildAge'],
+			     	'CreatedDate'   => date('Y-m-d H:i:s'),
+			     	'CreatedBy'     => $this->session->userdata('id'),
+			    	);
+		    	$this->db->insert('hotel_tbl_generalsupplement_log',$dataLOG);
+		    	// Log entry end
 		    }
 		  }
 		}
@@ -3251,6 +3513,26 @@ class Hotels_Model extends CI_Model {
 		     			'CreatedBy'     => $this->session->userdata('id'),
 						);
 						$this->db->insert('hotel_tbl_extrabed',$data);
+
+						// Log entry start
+						$id = $this->db->insert_id();
+						$dataLOG= array( 
+						'id'			  => $id,
+					 	'season' 	      => 'Other',
+					 	'from_date' 	  => $request['fromDate'],
+					 	'to_date' 	      => $request['toDate'],
+					 	'hotel_id' 	  	  => $request['hotel_id'],
+					 	'contract_id' 	  => $RCvalue->contract_id,
+					 	'amount' 	      => $adultAmount,
+					 	'roomType' 	  	  => $implode_room_types,
+		 				'ChildAmount' 	  => $childAmount,
+						'ChildAgeFrom' 	  => $request['ChildAgeFrom'],
+					 	'ChildAgeTo' 	  => $request['ChildAgeTo'],
+					 	'CreatedDate'   => date('Y-m-d H:i:s'),
+		     			'CreatedBy'     => $this->session->userdata('id'),
+						);
+						$this->db->insert('hotel_tbl_extrabed_log',$dataLOG);
+						// Log entry end
 					} else {
 						foreach ($request['Season'] as $key => $value) {
 							$this->db->select('*');
@@ -3272,6 +3554,27 @@ class Hotels_Model extends CI_Model {
 		     					'CreatedBy'     => $this->session->userdata('id'),
 								);
 								$this->db->insert('hotel_tbl_extrabed',$data);
+
+								// Log entry start
+								$id = $this->db->insert_id();
+								$dataLOG= array( 
+								'id'			  => $id,
+							 	'season' 	      => $value,
+							 	'from_date' 	  => $query[0]->FromDate,
+							 	'to_date' 	      => $query[0]->ToDate,
+							 	'hotel_id' 	  	  => $request['hotel_id'],
+							 	'contract_id' 	  => $RCvalue->contract_id,
+							 	'amount' 	      => $adultAmount,
+							 	'roomType' 	  	  => $implode_room_types,
+				 				'ChildAmount' 	  => $childAmount,
+								'ChildAgeFrom' 	  => $request['ChildAgeFrom'],
+							 	'ChildAgeTo' 	  => $request['ChildAgeTo'],
+							 	'CreatedDate'   => date('Y-m-d H:i:s'),
+		     					'CreatedBy'     => $this->session->userdata('id'),
+								);
+								$this->db->insert('hotel_tbl_extrabed_log',$dataLOG);
+								// Log entry end
+
 					    	}
 					}
 
@@ -3294,6 +3597,27 @@ class Hotels_Model extends CI_Model {
 			);	
 			$this->db->where('id',$request['id']);
 			$this->db->update('hotel_tbl_extrabed',$data);
+
+			// Log entry start
+			$id = $request['id'];
+			$dataLOG= array( 
+			 'id'			  => $id,
+		 	 'season' 	     => $request['Season'],
+			 'from_date'     => $request['fromDate'],
+			 'to_date' 	     => $request['toDate'],
+			 'hotel_id' 	  => $request['hotel_id'],
+			 'contract_id' 	  => $request['contract_id'],
+			 'amount' 	     => $adultAmount,
+			 'roomType' 	 => $implode_room_types,
+		 	 'ChildAmount' 	  => $childAmount,
+			 'ChildAgeFrom'   => $request['ChildAgeFrom'],
+			 'ChildAgeTo' 	  => $request['ChildAgeTo'],
+		 	 'CreatedDate'   => date('Y-m-d H:i:s'),
+			 'CreatedBy'     => $this->session->userdata('id'),
+			);
+			$this->db->insert('hotel_tbl_extrabed_log',$dataLOG);
+			// Log entry end
+
     	} else {
   			if (isset($request['other_season'])) {
 				$data= array( 
@@ -3311,6 +3635,26 @@ class Hotels_Model extends CI_Model {
 		     	 'CreatedBy'     => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_extrabed',$data);
+
+				// Log entry start
+				$id = $this->db->insert_id();
+				$dataLOG= array( 
+				 'id'			  => $id,
+			 	 'season' 	      => 'Other',
+				 'from_date' 	  => $request['fromDate'],
+				 'to_date' 	      => $request['toDate'],
+				 'hotel_id' 	  => $request['hotel_id'],
+				 'contract_id' 	  => $request['contract_id'],
+				 'amount' 	      => $adultAmount,
+				 'roomType' 	  => $implode_room_types,
+			 	 'ChildAmount' 	  => $childAmount,
+				 'ChildAgeFrom'   => $request['ChildAgeFrom'],
+				 'ChildAgeTo' 	  => $request['ChildAgeTo'],
+				 'CreatedDate'   => date('Y-m-d H:i:s'),
+		     	 'CreatedBy'     => $this->session->userdata('id'),
+				);
+				$this->db->insert('hotel_tbl_extrabed_log',$dataLOG);
+				// Log entry end
 			} else {
 				foreach ($request['Season'] as $key => $value) {
 					$this->db->select('*');
@@ -3332,12 +3676,31 @@ class Hotels_Model extends CI_Model {
 		     			 'CreatedBy'     => $this->session->userdata('id'),
 						);
 						$this->db->insert('hotel_tbl_extrabed',$data);
+
+						// Log entry start
+						$id = $this->db->insert_id();
+						$dataLOG= array( 
+						 'id'			  => $id,
+					 	 'season' 	      => $value,
+					 	 'from_date' 	  => $query[0]->FromDate,
+					 	 'to_date' 	      => $query[0]->ToDate,
+						 'hotel_id' 	  => $request['hotel_id'],
+						 'contract_id' 	  => $request['contract_id'],
+						 'amount' 	      => $adultAmount,
+						 'roomType' 	  => $implode_room_types,
+					 	 'ChildAmount' 	  => $childAmount,
+						 'ChildAgeFrom' 	  => $request['ChildAgeFrom'],
+						 'ChildAgeTo' 	  => $request['ChildAgeTo'],
+						 'CreatedDate'   => date('Y-m-d H:i:s'),
+		     			 'CreatedBy'     => $this->session->userdata('id'),
+						);
+						$this->db->insert('hotel_tbl_extrabed_log',$dataLOG);
+						// Log entry end
 			    	}
 			}
     	}
 		return true;
 	}
-
 	public function MinimumStayList($hotel_id,$contract_id) {
 		$this->db->select('hotel_tbl_minimumstay.*,hotel_tbl_season.*,hotel_tbl_minimumstay.id as edit_id');
         $this->db->from('hotel_tbl_minimumstay');

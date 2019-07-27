@@ -274,8 +274,8 @@
                                         </li>
                                         <?php } 
                                        if (count($searchReport)!=0 && isset($searchReport[0]->view) && $searchReport[0]->view!=0 ) { ?>
-                                        <li><a href="<?php echo base_url(); ?>backend/report/SearchReport">Search Report</a>
-                                        </li>
+                                        <!-- <li><a href="<?php echo base_url(); ?>backend/report/SearchReport">Search Report</a>
+                                        </li> -->
                                         <?php } ?>
 
                                     </ul>
@@ -346,15 +346,40 @@
                                 </ul>
                             </div>
                         </li>
+                        
+                        <?php 
+                        $activitylogsMenu = menuPermissionAvailability($this->session->userdata('id'),'Activity Logs',''); 
+                        if (count($activitylogsMenu)!=0 && isset($activitylogsMenu[0]->view) && $activitylogsMenu[0]->view!=0) { ?>
+
+                        <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-gavel" aria-hidden="true"></i> Activity Logs</a>
+                            <div class="collapsible-body left-sub-menu">
+                                <ul>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/activityLog">Common Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/report/SearchReport">Search Log</a>
+                                        </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/allotmentLog">Allotment Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/boardsupplementLog">Board supplement Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/generalsupplementLog">General supplement Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/extrabedLog">Extrabed Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/cancellationLog">Cancellation Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/minimumstayLog">Minimum stay Log</a>
+                                    </li>
+                                    <li><a href="<?php echo base_url(); ?>backend/common/closedoutLog">Closed out Log</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <?php } ?>
                         <?php 
                         $historylogsMenu = menuPermissionAvailability($this->session->userdata('id'),'History Logs',''); 
                         if (count($historylogsMenu)!=0 && isset($historylogsMenu[0]->view) && $historylogsMenu[0]->view!=0) { ?>
                         <li class="main_review"><a href="<?php echo base_url(); ?>backend/dashboard/HistoryLogs" class="collapsible-header"><i class="fa fa-history" aria-hidden="true"></i>History logs</a></li>
-                        <?php } ?>
-                        <?php 
-                        $activitylogsMenu = menuPermissionAvailability($this->session->userdata('id'),'Activity Logs',''); 
-                        if (count($activitylogsMenu)!=0 && isset($activitylogsMenu[0]->view) && $activitylogsMenu[0]->view!=0) { ?>
-                        <li><a  href="<?php echo base_url(); ?>backend/common/activityLog"><i class="fa fa-gavel" aria-hidden="true"></i> Activity Logs</a></li>
                         <?php } ?>
                         <?php 
                         $errorlogsMenu = menuPermissionAvailability($this->session->userdata('id'),'Error Logs',''); 

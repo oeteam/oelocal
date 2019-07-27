@@ -51,10 +51,15 @@
         }
       });
   }
+  var date = $(".datepicker").val();
   var ActivityLogtable = $('#ActivityLog-table').dataTable({
         "bDestroy": true,
+        dom: 'lBfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
         "ajax": {
-            url : base_url+'/backend/common/ActivityLogList',
+            url : base_url+'/backend/common/ActivityLogList?date='+date,
             type : 'GET'
         },
     "fnDrawCallback": function(settings){

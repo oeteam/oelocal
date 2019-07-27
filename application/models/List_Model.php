@@ -676,7 +676,9 @@ class List_Model extends CI_Model {
     $TBOHotels = array();
     $per = tbosearchpermission();
     if ($per!=0) {
-      $TBOHotels = $this->xmlrequest($data);
+      if ($_REQUEST['hotel_name']=="") {
+        $TBOHotels = $this->xmlrequest($data);
+      }
     }
     /*Allotment check end*/
     $return['OtelseasyHotels'] = $OtelseasyHotels;

@@ -1501,15 +1501,16 @@ class Finance_Model extends CI_Model {
   		$this->db->join('countries c','a.nationality=c.id');
   		$this->db->where('DATE(searchDate)>=',$request['from_date']);
   		$this->db->where('DATE(searchDate)<=',$request['to_date']);
-  		if(isset($request['country'])&&$request['country']!="") {
+  		if(isset($request['country']) && $request['country']!="") {
   			$this->db->where('a.country',$request['country']);
   		}
-  		if(isset($request['rooms'])&&$request['rooms']!="") {
+  		if(isset($request['rooms']) && $request['rooms']!="") {
   			$this->db->where('a.noRooms',$request['rooms']);
   		}
-  		if(isset($request['agent_id'])&&$request['agent_id']!="") {
+  		if(isset($request['agent_id']) && $request['agent_id']!=" ") {
   			$this->db->where('a.agentId',$request['agent_id']);
   		}
+  		$this->db->order_by('a.searchDate','desc');
   		$query = $this->db->get()->result();
 		return $query;
   	}

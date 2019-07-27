@@ -9,6 +9,14 @@
   .input-hide li {
     display: none ! important;
   }
+
+  #searchTable_wrapper .btn  {
+      height: 27px;
+      font-size: 12px;
+      line-height: 28px;
+      background: #009688;
+      margin: 1px;
+  }
 </style>
 <div class="sb2-2">
     <div class="sb2-2-3">
@@ -16,7 +24,7 @@
             <div class="col-md-12">
                 <div class="box-inn-sp">
                     <div class="inn-title">
-                        <span> Search Report </span>
+                        <span> Search Log </span>
                     </div>
                     <form method="get" id="bookingReport_filter">
                                   <div class="col-md-12"> 
@@ -144,6 +152,10 @@
     var to_date   = $("#to_date").val();
     var SearchReportTable = $('#searchTable').dataTable({
         "bDestroy": true,
+         dom: 'lBfrtip',
+          buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+          ],
         "ajax": {
           url : base_url+'backend/report/SearchReportList?from_date='+from_date+'&to_date='+to_date,
           type : 'POST' 
