@@ -3360,6 +3360,26 @@ class Hotels_Model extends CI_Model {
 		     				'CreatedBy'     => $this->session->userdata('id'),
 						);
 						$this->db->insert('hotel_tbl_cancellationfee',$data);
+						//log entry start
+						$id = $this->db->insert_id();
+						$dataLOG= array( 
+							'id'					 => $id,
+					 		'roomType' 	         	 => $implode_room_types,
+					 		'season' 	             => 'Other',
+					 		'fromDate' 	         	 => $request['fromDate'],
+					 		'toDate' 	             => $request['toDate'],
+					 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
+					 		'cancellationPercentage' => $CancellationPercentage,
+					 		'hotel_id' 	             => $request['hotel_id'],
+					 		'contract_id' 	         => $RCvalue->contract_id,
+					 		'application' 	         => $request['application'],
+					 		'daysFrom'				 => $request['daysFrom'],
+					 		'daysTo'				 => $request['daysTo'],
+					 		'CreatedDate'   => date('Y-m-d H:i:s'),
+		     				'CreatedBy'     => $this->session->userdata('id'),
+						);
+						$this->db->insert('hotel_tbl_cancellationfee_log',$dataLOG);
+						//log entry end
 	   	  			} else {
 	   	  				foreach ($request['Season'] as $key => $value) {
 							$this->db->select('*');
@@ -3382,6 +3402,26 @@ class Hotels_Model extends CI_Model {
 		     					'CreatedBy'     => $this->session->userdata('id'),
 							);
 							$this->db->insert('hotel_tbl_cancellationfee',$data);
+							//log entry start
+							$id = $this->db->insert_id();
+							$dataLOG= array( 
+								'id'					 => $id,
+						 		'roomType' 	         	 => $implode_room_types,
+						 		'season' 	             => 'Other',
+						 		'fromDate' 	         	 => $request['fromDate'],
+						 		'toDate' 	             => $request['toDate'],
+						 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
+						 		'cancellationPercentage' => $CancellationPercentage,
+						 		'hotel_id' 	             => $request['hotel_id'],
+						 		'contract_id' 	         => $RCvalue->contract_id,
+						 		'application' 	         => $request['application'],
+						 		'daysFrom'				 => $request['daysFrom'],
+						 		'daysTo'				 => $request['daysTo'],
+						 		'CreatedDate'   => date('Y-m-d H:i:s'),
+			     				'CreatedBy'     => $this->session->userdata('id'),
+							);
+							$this->db->insert('hotel_tbl_cancellationfee_log',$dataLOG);
+							//log entry end
 				    	}
 	   	  			}
 	   	  			
@@ -3406,6 +3446,26 @@ class Hotels_Model extends CI_Model {
 			);
 			$this->db->where('id',$request['id']);
 			$this->db->update('hotel_tbl_cancellationfee',$data);
+			// log entry start
+			$id = $request['id'];
+			$dataLOG= array( 
+				'id'					 => $id,
+		 		'roomType' 	         	 => $implode_room_types,
+		 		'season' 	             => 'Other',
+		 		'fromDate' 	         	 => $request['fromDate'],
+		 		'toDate' 	             => $request['toDate'],
+		 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
+		 		'cancellationPercentage' => $CancellationPercentage,
+		 		'hotel_id' 	             => $request['hotel_id'],
+		 		'contract_id' 	         => $RCvalue->contract_id,
+		 		'application' 	         => $request['application'],
+		 		'daysFrom'				 => $request['daysFrom'],
+		 		'daysTo'				 => $request['daysTo'],
+		 		'CreatedDate'   => date('Y-m-d H:i:s'),
+ 				'CreatedBy'     => $this->session->userdata('id'),
+			);
+			$this->db->insert('hotel_tbl_cancellationfee_log',$dataLOG);
+			// log entry end
     	} else {
   			if (isset($request['other_season'])) {
 				$data= array( 
@@ -3424,6 +3484,26 @@ class Hotels_Model extends CI_Model {
 		     	 'CreatedBy'     => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_cancellationfee',$data);
+				//log entry start
+				$id = $this->db->insert_id();
+				$dataLOG= array( 
+					'id'					 => $id,
+			 		'roomType' 	         	 => $implode_room_types,
+			 		'season' 	             => 'Other',
+			 		'fromDate' 	         	 => $request['fromDate'],
+			 		'toDate' 	             => $request['toDate'],
+			 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
+			 		'cancellationPercentage' => $CancellationPercentage,
+			 		'hotel_id' 	             => $request['hotel_id'],
+			 		'contract_id' 	         => $RCvalue->contract_id,
+			 		'application' 	         => $request['application'],
+			 		'daysFrom'				 => $request['daysFrom'],
+			 		'daysTo'				 => $request['daysTo'],
+			 		'CreatedDate'   => date('Y-m-d H:i:s'),
+     				'CreatedBy'     => $this->session->userdata('id'),
+				);
+				$this->db->insert('hotel_tbl_cancellationfee_log',$dataLOG);
+				//log entry end
 			} else {
 				foreach ($request['Season'] as $key => $value) {
 					$this->db->select('*');
@@ -3446,6 +3526,26 @@ class Hotels_Model extends CI_Model {
 		     			 'CreatedBy'     => $this->session->userdata('id'),
 					);
 					$this->db->insert('hotel_tbl_cancellationfee',$data);
+					//log entry start
+					$id = $this->db->insert_id();
+					$dataLOG= array( 
+						'id'					 => $id,
+				 		'roomType' 	         	 => $implode_room_types,
+				 		'season' 	             => 'Other',
+				 		'fromDate' 	         	 => $request['fromDate'],
+				 		'toDate' 	             => $request['toDate'],
+				 		// 'daysInAdvance' 	     => $request['daysInAdvance'],
+				 		'cancellationPercentage' => $CancellationPercentage,
+				 		'hotel_id' 	             => $request['hotel_id'],
+				 		'contract_id' 	         => $RCvalue->contract_id,
+				 		'application' 	         => $request['application'],
+				 		'daysFrom'				 => $request['daysFrom'],
+				 		'daysTo'				 => $request['daysTo'],
+				 		'CreatedDate'   => date('Y-m-d H:i:s'),
+	     				'CreatedBy'     => $this->session->userdata('id'),
+					);
+					$this->db->insert('hotel_tbl_cancellationfee_log',$dataLOG);
+					//log entry end
 		    	}
 			}
     	}
