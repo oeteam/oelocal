@@ -3,9 +3,41 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/summernote.css">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/calendar.css">
 
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
+<script src="<?php echo base_url(); ?>assets/js/jquery.form.min.js"></script>   -->
 
 <style type="text/css">
+    .progress {
+    display: none;
+    position: relative;
+    margin: 20px;
+    width: 400px;
+    background-color: #ddd;
+    border: 1px solid blue;
+    padding: 1px;
+    left: 15px;
+    border-radius: 3px;
+}
+
+.progress-bar {
+    background-color: green;
+    width: 0%;
+    height: 30px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+.percent {
+    position: absolute;
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -20px;
+    -webkit-border-radius: 4px;
+}
   .trumbowyg-fullscreen-button {
     /*display: none ! important;*/
   }
@@ -691,9 +723,12 @@
                     </div>
                 </div>
                 </form>
+                <div class='progress' id="progressDivId">
+            <div class='progress-bar' id='progressBar'></div>
+            <div class='percent' id='percent'>0%</div>
+        </div>
               </div>
             </div>
-
           </div>
         </div>
 <!-- Cancellation Modal -->
@@ -930,11 +965,33 @@
                                   type: "Post",
                                   url: base_url+'backend/hotels/allotementBlkupdatewizard?season='+nameArr[i],
                                   data: $('#bulk-update-form').serialize(),
-                                  success: function(response) {
-                                    if (response.status == "1") {
-                                      addToast(response.error,response.color);
-                                    }
-                                  }
+                                  beforeSubmit: function () {
+                                        $("#progressDivId").css("display", "block");
+                                        var percentValue = '0%';
+
+                                        $('#progressBar').width(percentValue);
+                                        $('#percent').html(percentValue);
+                                  },
+                                  uploadProgress: function (event, position, total, percentComplete) {
+
+                                        var percentValue = percentComplete + '%';
+                                        $("#progressBar").animate({
+                                            width: '' + percentValue + ''
+                                        }, {
+                                            duration: 5000,
+                                            easing: "linear",
+                                            step: function (x) {
+                                            percentText = Math.round(x * 100 / percentComplete);
+                                                $("#percent").text(percentText + "%");
+                                            }
+                                        });
+                                    },
+                                    error: function (response, status, e) {
+                                        alert('Oops something went.');
+                                    },
+                                    complete: function (response) {
+                                        
+                                     }
                             });
                             //alert(nameArr[i]);
                         });
