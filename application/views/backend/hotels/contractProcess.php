@@ -999,9 +999,10 @@
                         // var seasontextArr = seasontext.split(',');
 
                         if ($("#bulk-alt-season").val()!=null) {
+                            var blk_push = [];
                             $('#bulk-alt-season > option:selected').each(function(i,v){
                                 $(".progressive-section").append('<div class="prog"><label>'+$(v).text()+'</label><div class="progress" ><div class="progress-bar" style="width: 0%;"></div><div class="percent" >0%</div></div></div>');
-                                console.log(i);
+                                // console.log(i);
                                 $.ajax({
                                     xhr: function() {
                                         var xhr = new window.XMLHttpRequest();
@@ -1035,7 +1036,9 @@
                                         console.log("end");
                                         $(".progress-bar:eq("+i+")").width("100%");
                                         $(".percent:eq("+i+")").text("100%");
-                                        if (i==($("#bulk-alt-season").length-1)) {
+                                        blk_push.push(1);
+                                        console.log(blk_push.length);
+                                        if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
                                             $(".blk-btn-progress").removeClass('hide')
                                         }
                                     }
