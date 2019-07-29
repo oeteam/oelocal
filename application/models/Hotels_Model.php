@@ -1346,7 +1346,7 @@ class Hotels_Model extends CI_Model {
 			        'delflg'     => 1,
 			        'CreatedBy' => $this->session->userdata('id'),
 			  		'CreatedDate' => date('Y-m-d H:i:s'),
-			  		'Status'  	=> 'updated'
+			  		'Status'  	=> 'open'
 			);
 			$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 			// Log entry end
@@ -1383,7 +1383,7 @@ class Hotels_Model extends CI_Model {
 					        'delflg'     => 1,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status' 	 => 'updated'
+					  		'Status' 	 => 'open'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
@@ -1410,7 +1410,7 @@ class Hotels_Model extends CI_Model {
 					        'delflg'     => 1,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status'	=> 'inserted'
+					  		'Status'	=> 'open'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
@@ -1437,7 +1437,7 @@ class Hotels_Model extends CI_Model {
 		        'delflg'     => 1,
 		        'CreatedBy' => $this->session->userdata('id'),
 		  		'CreatedDate' => date('Y-m-d H:i:s'),
-		  		'Status'  	=> 'deleted'
+		  		'Status'  	=> 'close'
 			);
 			$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 			// Log entry end
@@ -1505,6 +1505,21 @@ class Hotels_Model extends CI_Model {
 				$this->db->where('room_id',$room_id);
 				$this->db->where('allotement_date',$alotement_date);
 				$this->db->update('hotel_tbl_allotement',$data1);
+				// Log entry start
+			    $dataLOG= array( 
+			         'room_id'          => $room_id,
+			         'hotel_id'         => $hotel_id,
+			         'allotement_date'  => $alotement_date,
+			         'amount'           => $data1['amount'],
+			         'allotement'       => 0,
+			         'cut_off'          => 0,
+			         'contract_id'      => $contract_id,
+			         'CreatedDate'      => date('Y-m-d H:i:s'),
+			         'CreatedBy'        => $this->session->userdata('id'),
+			         'Status'           => 'updated'
+			        );
+			    $this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+				// Log entry end
 			} else {
 				$data1= array( 'amount'     => $price,
 					          'allotement'     => $alotement,
@@ -1515,6 +1530,21 @@ class Hotels_Model extends CI_Model {
 				$this->db->where('room_id',$room_id);
 				$this->db->where('allotement_date',$alotement_date);
 				$this->db->update('hotel_tbl_allotement',$data1);
+				// Log entry start
+				$dataLOG= array( 
+			         'room_id'          => $room_id,
+			         'hotel_id'         => $hotel_id,
+			         'allotement_date'  => $alotement_date,
+			         'amount'           => $price,
+			         'allotement'       => $alotement,
+			         'cut_off'          => $cut_off,
+			         'contract_id'      => $contract_id,
+			         'CreatedDate'      => date('Y-m-d H:i:s'),
+			         'CreatedBy'        => $this->session->userdata('id'),
+			         'Status'           => 'updated'
+			        );
+			    $this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+				// Log entry end
 			}
 		} else {
 			if ($contract_type[0]->contract_type!="Main") {
@@ -1525,6 +1555,22 @@ class Hotels_Model extends CI_Model {
 					          'contract_id' => $contract_id
 		        );
 				$this->db->insert('hotel_tbl_allotement',$data);
+				$id = $this->db->insert_id();
+				// Log entry start
+				    $dataLOG= array( 
+				         'id'               => $id,
+				         'room_id'          => $room_id,
+				         'hotel_id'         => $hotel_id,
+				         'allotement_date'  => $alotement_date,
+				         'amount'           => $price,
+				         'contract_id'      => $contract_id,
+				         'CreatedDate'      => date('Y-m-d H:i:s'),
+				         'CreatedBy'        => $this->session->userdata('id'),
+				         'Status'           => 'inserted'
+				        );
+				$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+				// Log entry end
+
 			} else {
 				$data= array( 'room_id'  => $room_id,
 					          'hotel_id'    => $hotel_id,
@@ -1535,6 +1581,23 @@ class Hotels_Model extends CI_Model {
 					          'contract_id' => $contract_id
 		        );
 				$this->db->insert('hotel_tbl_allotement',$data);
+				$id = $this->db->insert_id();
+				// Log entry start
+				    $dataLOG= array( 
+				         'id'               => $id,
+				         'room_id'          => $room_id,
+				         'hotel_id'         => $hotel_id,
+				         'allotement_date'  => $alotement_date,
+				         'amount'    		=> $price,
+					     'allotement'     	=> $alotement,
+					     'cut_off'          => $cut_off,
+				         'contract_id'      => $contract_id,
+				         'CreatedDate'      => date('Y-m-d H:i:s'),
+				         'CreatedBy'        => $this->session->userdata('id'),
+				         'Status'           => 'inserted'
+				        );
+				$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+				// Log entry end
 			}
 		}
 		return true;
@@ -2094,6 +2157,19 @@ class Hotels_Model extends CI_Model {
 						$this->db->where('hotel_id',$request['hotel_id']);
 						$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 						$this->db->update('hotel_tbl_closeout_period',$data);
+						// Log entry start
+                        $dataLOG= array( 
+                                'hotel_id'   => $request['hotel_id'],
+                                'contract_id' => $request['bulk_alt_contract_id'],
+                                'closedDate'  => $value1,
+                                'roomType'   => $implode_room_types,
+                                'reason'     => "",                              
+                                'CreatedBy' => $this->session->userdata('id'),
+                                'CreatedDate' => date('Y-m-d H:i:s'),
+                                'Status'     => 'close'
+                        );
+                        $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+                        // Log entry end
 					} else {
 						$implode_room_types = implode(",", $request['bulk-alt-room_id']);
 	      	  			$data= array( 'hotel_id'     => $request['hotel_id'],
@@ -2104,6 +2180,22 @@ class Hotels_Model extends CI_Model {
 							          'delflg'       => 1,
 							        );
 						$this->db->insert('hotel_tbl_closeout_period',$data);
+						$id = $this->db->insert_id();
+						// Log entry start
+                        $dataLOG= array( 
+                                'id'        => $id,
+                                'hotel_id'   => $request['hotel_id'],
+                                'contract_id' => $request['bulk_alt_contract_id'],
+                                'closedDate'  => $value1,
+                                'roomType'   => $implode_room_types,
+                                'reason'     => "",
+                                'delflg'    => 1,
+                                'CreatedBy' => $this->session->userdata('id'),
+                                'CreatedDate' => date('Y-m-d H:i:s'),
+                                'Status'     => 'close'
+                        );
+                        $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+                        // Log entry end
 					}
 	        	}
         	}
@@ -2130,11 +2222,37 @@ class Hotels_Model extends CI_Model {
 							$this->db->where('hotel_id',$request['hotel_id']);
 							$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 							$this->db->update('hotel_tbl_closeout_period',$data);
+							// Log entry start
+                            $dataLOG= array( 
+                                    'hotel_id'   => $request['hotel_id'],
+                                    'contract_id' => $request['bulk_alt_contract_id'],
+                                    'closedDate'  => $value1,
+                                    'roomType'   => $implode_room_types,
+                                    'reason'     => "",
+                                    'CreatedBy' => $this->session->userdata('id'),
+                                    'CreatedDate' => date('Y-m-d H:i:s'),
+                                    'Status'     => 'open'
+                            );
+                            $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+                            // Log entry end
       	  				} else {
 		  	  				$this->db->where('closedDate',$value1);
 							$this->db->where('hotel_id',$request['hotel_id']);
 							$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 							$this->db->delete('hotel_tbl_closeout_period');
+							// Log entry start
+                            $dataLOG= array( 
+                                    'hotel_id'   => $request['hotel_id'],
+                                    'contract_id' => $request['bulk_alt_contract_id'],
+                                    'closedDate'  => $value1,
+                                    'roomType'   => $implode_room_types,
+                                    'reason'     => "",
+                                    'CreatedBy' => $this->session->userdata('id'),
+                                    'CreatedDate' => date('Y-m-d H:i:s'),
+                                    'Status'     => 'open'
+                            );
+                            $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+                            // Log entry end
       	  				}
 					}
 				}
@@ -4255,6 +4373,18 @@ class Hotels_Model extends CI_Model {
 		     	 'CreatedBy'     => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_closeout_period',$data);
+				// Log entry start
+				$dataLOG= array( 
+					 	'hotel_id' 	  => $hotel_id,
+						'contract_id' 	  => $contract_id,
+						'closedDate' 	  => $closedDate,
+					    'roomType' 	  => $room_id,
+				        'CreatedBy' => $this->session->userdata('id'),
+				  		'CreatedDate' => date('Y-m-d H:i:s'),
+				  		'Status' 	 => 'open'
+				);
+				$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+				// Log entry end
 	        } else {
 	        	$exploderoomType = explode(",", $final[0]->roomType);
 	        	foreach ($exploderoomType as $key => $value) {
@@ -4276,6 +4406,18 @@ class Hotels_Model extends CI_Model {
 	        	$this->db->where('contract_id',$contract_id);
 	        	$this->db->where('closedDate',$closedDate);
 				$this->db->update('hotel_tbl_closeout_period',$data1);
+				// Log entry start
+				$dataLOG= array( 
+					 	'hotel_id' 	  => $hotel_id,
+						'contract_id' 	  => $contract_id,
+						'closedDate' 	  => $closedDate,
+					    'roomType' 	  => $implodeRoomType,
+				        'CreatedBy' => $this->session->userdata('id'),
+				  		'CreatedDate' => date('Y-m-d H:i:s'),
+				  		'Status' 	 => 'open'
+				);
+				$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+				// Log entry end
 	        }
     	// }
         return true;
@@ -4301,6 +4443,19 @@ class Hotels_Model extends CI_Model {
 			        $this->db->where('contract_id',$contract_id);
 			        $this->db->where('closedDate',$closedDate);
 					$this->db->delete('hotel_tbl_closeout_period');
+					// Log entry start
+					$dataLOG= array( 
+						 	'hotel_id' 	  => $hotel_id,
+							'contract_id' 	  => $contract_id,
+							'closedDate' 	  => $closedDate,
+						    'roomType' 	  => $room_id,
+					        'CreatedBy' => $this->session->userdata('id'),
+					  		'CreatedDate' => date('Y-m-d H:i:s'),
+					  		'Status' 	 => 'close'
+					);
+					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+					// Log entry end
+
 	        	} else {
 	        		$exploderoomType = explode(",", $query[0]->roomType);
 	        		foreach ($exploderoomType as $key => $value) {
@@ -4317,6 +4472,18 @@ class Hotels_Model extends CI_Model {
 		        	$this->db->where('contract_id',$contract_id);
 		        	$this->db->where('closedDate',$closedDate);
 					$this->db->update('hotel_tbl_closeout_period',$data1);
+					// Log entry start
+					$dataLOG= array( 
+						 	'hotel_id' 	  => $hotel_id,
+							'contract_id' 	  => $contract_id,
+							'closedDate' 	  => $closedDate,
+						    'roomType' 	  => $implodeRoomType,
+					        'CreatedBy' => $this->session->userdata('id'),
+					  		'CreatedDate' => date('Y-m-d H:i:s'),
+					  		'Status' 	 => 'open'
+					);
+					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+					// Log entry end
 	        	}
 	        }
 		// }
@@ -6443,6 +6610,19 @@ class Hotels_Model extends CI_Model {
 							$this->db->where('hotel_id',$request['hotel_id']);
 							$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 							$this->db->update('hotel_tbl_closeout_period',$data);
+							// Log entry start
+		                    $dataLOG= array( 
+		                            'hotel_id'   => $request['hotel_id'],
+		                            'contract_id' => $request['bulk_alt_contract_id'],
+		                            'closedDate'  => $value1,
+		                            'roomType'   => $implode_room_types,
+		                            'reason'     => "",
+		                            'CreatedBy' => $this->session->userdata('id'),
+		                            'CreatedDate' => date('Y-m-d H:i:s'),
+		                            'Status'     => 'close'
+		                    );
+		                    $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+		                    // Log entry end
 						} else {
 							$implode_room_types = implode(",", $request['bulk-alt-room_id']);
 		      	  			$data= array( 'hotel_id'     => $request['hotel_id'],
@@ -6453,6 +6633,22 @@ class Hotels_Model extends CI_Model {
 								          'delflg'       => 1,
 								        );
 							$this->db->insert('hotel_tbl_closeout_period',$data);
+							$id = $this->db->insert_id();
+							// Log entry start
+		                    $dataLOG= array( 
+		                    		'id'  		=> $id,
+		                            'hotel_id'   => $request['hotel_id'],
+		                            'contract_id' => $request['bulk_alt_contract_id'],
+		                            'closedDate'  => $value1,
+		                            'roomType'   => $implode_room_types,
+		                            'reason'     => "",
+		                            'delflg'	=> 1,
+		                            'CreatedBy' => $this->session->userdata('id'),
+		                            'CreatedDate' => date('Y-m-d H:i:s'),
+		                            'Status'     => 'close'
+		                    );
+		                    $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+		                    // Log entry end
 						}
     				}
 	    		}
@@ -6479,11 +6675,38 @@ class Hotels_Model extends CI_Model {
 								$this->db->where('hotel_id',$request['hotel_id']);
 								$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 								$this->db->update('hotel_tbl_closeout_period',$data);
+								// Log entry start
+			                    $dataLOG= array( 
+			                            'hotel_id'   => $request['hotel_id'],
+			                            'contract_id' => $request['bulk_alt_contract_id'],
+			                            'closedDate'  => $value1,
+			                            'roomType'   => $implode_room_types,
+			                            'reason'     => "",
+			                            'CreatedBy' => $this->session->userdata('id'),
+			                            'CreatedDate' => date('Y-m-d H:i:s'),
+			                            'Status'     => 'open'
+			                    );
+			                    $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+			                    // Log entry end
 	      	  				} else {
 			  	  				$this->db->where('closedDate',$value1);
 								$this->db->where('hotel_id',$request['hotel_id']);
 								$this->db->where('contract_id',$request['bulk_alt_contract_id']);
 								$this->db->delete('hotel_tbl_closeout_period');
+								// Log entry start
+			                    $dataLOG= array( 
+			                            'hotel_id'   => $request['hotel_id'],
+			                            'contract_id' => $request['bulk_alt_contract_id'],
+			                            'closedDate'  => $value1,
+			                            'roomType'   => $implode_room_types,
+			                            'reason'     => "",
+			                            'delflg'	=> 1,
+			                            'CreatedBy' => $this->session->userdata('id'),
+			                            'CreatedDate' => date('Y-m-d H:i:s'),
+			                            'Status'     => 'open'
+			                    );
+			                    $this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
+			                    // Log entry end
 	      	  				}
 						}
     				}
