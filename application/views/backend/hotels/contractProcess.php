@@ -1052,7 +1052,7 @@
                     }
                }
             }
-        })
+     })
     function seasonchange() {
         $.ajax({
               dataType: 'json',

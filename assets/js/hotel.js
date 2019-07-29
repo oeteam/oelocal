@@ -2373,8 +2373,58 @@ $("#bulk-allotement").click(function() {
                         addToast('Must select a room!','orange');
                         $("#bulk-alt-room_id").focus();
                     } else {
-                        $("#bulk-update-form").attr('action',base_url+'backend/hotels/RoomwiseBulkUpdate');
-                        $("#bulk-update-form").submit();
+                        $(".progressive-section").removeClass('hide');
+                        $(".form-entry").addClass('hide');
+                        if ($("#bulk-alt-season").val()!=null) {
+                          var blk_push = [];
+                            $('#bulk-alt-season > option:selected').each(function(i,v){
+                                $(".progressive-section").append('<div class="prog"><label>'+$(v).text()+'</label><div class="progress" ><div class="progress-bar" style="width: 0%;"></div><div class="percent" >0%</div></div></div>');
+                            $.ajax({
+                                xhr: function() {
+                                    var xhr = new window.XMLHttpRequest();
+                                    xhr.upload.addEventListener("progress", function(evt) {
+                                        if (evt.lengthComputable) {
+                                            var percentComplete = (evt.loaded / evt.total) * 100;
+                                            //Do something with upload progress here
+                                            var percentValue = percentComplete + '%';
+                                            $(".progress-bar:eq("+i+")").animate({
+                                                width: '90%'
+                                            }, {
+                                                duration: 5000,
+                                                easing: "linear",
+                                                step: function (x) {
+                                                percentText = Math.round(x * 100 / percentComplete);
+                                                    if (percentText < 91) {
+                                                        $(".progress-bar:eq("+i+")").width(percentText + "%");
+                                                        $(".percent:eq("+i+")").text(percentText + "%");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                   }, false);
+                                   return xhr;
+                                },
+                                type: 'POST',
+                                    url: base_url+'backend/hotels/RoomwiseBulkUpdateWizard?season='+$(v).val(),
+                                    data: $('#bulk-update-form').serialize(),
+                                    success: function(data){
+                                        //Do something on success
+                                        console.log("end");
+                                        $(".progress-bar:eq("+i+")").width("100%");
+                                        $(".percent:eq("+i+")").text("100%");
+                                        blk_push.push(1);
+                                        console.log(blk_push.length);
+                                        if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
+                                            $(".blk-btn-progress").removeClass('hide')
+                                        }
+                                    }
+                              });
+                            });
+                        } else {
+
+                        }
+                        // $("#bulk-update-form").attr('action',base_url+'backend/hotels/RoomwiseBulkUpdate');
+                        // $("#bulk-update-form").submit();
                     }
                }
             }
