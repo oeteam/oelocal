@@ -1346,7 +1346,7 @@ class Hotels_Model extends CI_Model {
 			        'delflg'     => 1,
 			        'CreatedBy' => $this->session->userdata('id'),
 			  		'CreatedDate' => date('Y-m-d H:i:s'),
-			  		'Status'  	=> 'open'
+			  		'Status'  	=> 'close'
 			);
 			$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 			// Log entry end
@@ -1383,7 +1383,7 @@ class Hotels_Model extends CI_Model {
 					        'delflg'     => 1,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status' 	 => 'open'
+					  		'Status' 	 => 'close'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
@@ -1410,7 +1410,7 @@ class Hotels_Model extends CI_Model {
 					        'delflg'     => 1,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status'	=> 'open'
+					  		'Status'	=> 'close'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
@@ -1437,7 +1437,7 @@ class Hotels_Model extends CI_Model {
 		        'delflg'     => 1,
 		        'CreatedBy' => $this->session->userdata('id'),
 		  		'CreatedDate' => date('Y-m-d H:i:s'),
-		  		'Status'  	=> 'close'
+		  		'Status'  	=> 'open'
 			);
 			$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 			// Log entry end
@@ -4373,15 +4373,17 @@ class Hotels_Model extends CI_Model {
 		     	 'CreatedBy'     => $this->session->userdata('id'),
 				);
 				$this->db->insert('hotel_tbl_closeout_period',$data);
+				$id = $this->db->insert_id();
 				// Log entry start
 				$dataLOG= array( 
+						'id'		=> $id,
 					 	'hotel_id' 	  => $hotel_id,
 						'contract_id' 	  => $contract_id,
 						'closedDate' 	  => $closedDate,
 					    'roomType' 	  => $room_id,
 				        'CreatedBy' => $this->session->userdata('id'),
 				  		'CreatedDate' => date('Y-m-d H:i:s'),
-				  		'Status' 	 => 'open'
+				  		'Status' 	 => 'close'
 				);
 				$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 				// Log entry end
@@ -4414,7 +4416,7 @@ class Hotels_Model extends CI_Model {
 					    'roomType' 	  => $implodeRoomType,
 				        'CreatedBy' => $this->session->userdata('id'),
 				  		'CreatedDate' => date('Y-m-d H:i:s'),
-				  		'Status' 	 => 'open'
+				  		'Status' 	 => 'close'
 				);
 				$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 				// Log entry end
@@ -4451,7 +4453,7 @@ class Hotels_Model extends CI_Model {
 						    'roomType' 	  => $room_id,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status' 	 => 'close'
+					  		'Status' 	 => 'open'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
@@ -4480,7 +4482,7 @@ class Hotels_Model extends CI_Model {
 						    'roomType' 	  => $implodeRoomType,
 					        'CreatedBy' => $this->session->userdata('id'),
 					  		'CreatedDate' => date('Y-m-d H:i:s'),
-					  		'Status' 	 => 'open'
+					  		'Status' 	 => 'close'
 					);
 					$this->db->insert('hotel_tbl_closeout_period_log',$dataLOG);
 					// Log entry end
