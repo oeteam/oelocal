@@ -5262,7 +5262,6 @@ class Hotels_Model extends CI_Model {
 
     	$data =array();
 		if (isset($request['other_season'])) {
-		
 			$start_date=date_create($request['bulk-alt-fromDate']);
 	        $end_date=date_create($request['bulk-alt-toDate']);
 	        $no_of_days=date_diff($start_date,$end_date);
@@ -5300,6 +5299,22 @@ class Hotels_Model extends CI_Model {
 									    		$this->db->where('hotel_id',$request['hotel_id']);
 									    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
 									    		$this->db->update('hotel_tbl_allotement',$data);
+									    	    // Log entry start
+												    $dataLOG= array( 
+												         'id'               => $query_out[$i][0]->id,
+												         'room_id'          => $value,
+												         'hotel_id'         => $request['hotel_id'],
+												         'allotement_date'  => $query_out[$i][0]->allotement_date,
+												         'amount'           => $data['amount'],
+												         'allotement'       => $data['allotement'],
+												         'cut_off'          => $data['cut_off'],
+												         'contract_id'      => $request['bulk_alt_contract_id'],
+												         'CreatedDate'      => date('Y-m-d H:i:s'),
+												         'CreatedBy'        => $this->session->userdata('id'),
+												         'Status'           => 'updated'
+												        );
+												$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+												// Log entry end
 									    	}
 									    	
 								    	}
@@ -5325,6 +5340,22 @@ class Hotels_Model extends CI_Model {
 								    		$this->db->where('hotel_id',$request['hotel_id']);
 								    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
 								    		$this->db->update('hotel_tbl_allotement',$data);
+								    		// Log entry start
+										    $dataLOG= array( 
+										         'id'               => $query_out[$i][0]->id,
+										         'room_id'          => $value,
+										         'hotel_id'         => $request['hotel_id'],
+										         'allotement_date'  => $query_out[$i][0]->allotement_date,
+										         'amount'           => $data['amount'],
+										         'allotement'       => $data['allotement'],
+										         'cut_off'          => $data['cut_off'],
+										         'contract_id'      => $request['bulk_alt_contract_id'],
+										         'CreatedDate'      => date('Y-m-d H:i:s'),
+										         'CreatedBy'        => $this->session->userdata('id'),
+										         'Status'           => 'updated'
+										        );
+											$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+											// Log entry end
 							    		}
 					    			}
 						    	} 
@@ -5342,6 +5373,23 @@ class Hotels_Model extends CI_Model {
 						    						  'contract_id' 	=> $request['bulk_alt_contract_id']
 							    		);
 							    		$this->db->insert('hotel_tbl_allotement',$data1);
+							    		$id = $this->db->insert_id();
+										// Log entry start
+										    $dataLOG= array( 
+										         'id'               => $id,
+										         'room_id'          => $value,
+										         'hotel_id'         => $request['hotel_id'],
+										         'allotement_date'  => $result[$i],
+										         'amount'           => $data1['amount'],
+										         'allotement'       => 0,
+										         'cut_off'          => 0,
+										         'contract_id'      => $request['bulk_alt_contract_id'],
+										         'CreatedDate'      => date('Y-m-d H:i:s'),
+										         'CreatedBy'        => $this->session->userdata('id'),
+										         'Status'           => 'inserted'
+										        );
+										$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+										// Log entry end
 				    				} else 
 				    				{
 
@@ -5372,6 +5420,23 @@ class Hotels_Model extends CI_Model {
 								    		// print_r($data1);
 								    		// exit();
 								    		$this->db->insert('hotel_tbl_allotement',$data1);
+								    		$id = $this->db->insert_id();
+											// Log entry start
+											    $dataLOG= array( 
+											         'id'               => $id,
+											         'room_id'          => $value,
+											         'hotel_id'         => $request['hotel_id'],
+											         'allotement_date'  => $result[$i],
+											         'amount'           => $data1['amount'],
+											         'allotement'       => $request['RwAllotment'][$key],
+											         'cut_off'          => $request['RwCutoff'][$key],
+											         'contract_id'      => $request['bulk_alt_contract_id'],
+											         'CreatedDate'      => date('Y-m-d H:i:s'),
+											         'CreatedBy'        => $this->session->userdata('id'),
+											         'Status'           => 'inserted'
+											        );
+											$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+											// Log entry end
 								    	}
 						    		}
 						    	}
@@ -5469,183 +5534,184 @@ class Hotels_Model extends CI_Model {
 
 		  //       // }
 		  //   }
-		} else {
+		} 
+		// else {
 
-	    	foreach ($request['bulk-alt-season'] as $reqkey => $reqvalue) {
-	    		$this->db->select('*');
-	    		$this->db->from('hotel_tbl_season');
-	    		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-	    		$this->db->where('hotel_id',$request['hotel_id']);
-	    		$this->db->where('id',$request['bulk-alt-season'][$reqkey]);
-	    		$result_data = $this->db->get()->result();
+	 //    	foreach ($request['bulk-alt-season'] as $reqkey => $reqvalue) {
+	 //    		$this->db->select('*');
+	 //    		$this->db->from('hotel_tbl_season');
+	 //    		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+	 //    		$this->db->where('hotel_id',$request['hotel_id']);
+	 //    		$this->db->where('id',$request['bulk-alt-season'][$reqkey]);
+	 //    		$result_data = $this->db->get()->result();
 	    		
-		    	$start_date=date_create($result_data[0]->FromDate);
-		        $end_date=date_create($result_data[0]->ToDate);
-		        $no_of_days=date_diff($start_date,$end_date);
-		        $tot_days = $no_of_days->format("%a");
-		        if (isset($request['bulk-alt-room_id'])) {
-			        foreach ($request['bulk-alt-room_id'] as $key => $value) {	
-			        	foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
-				        	for($i = 0; $i <= $tot_days; $i++) {
-				        		if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
+		//     	$start_date=date_create($result_data[0]->FromDate);
+		//         $end_date=date_create($result_data[0]->ToDate);
+		//         $no_of_days=date_diff($start_date,$end_date);
+		//         $tot_days = $no_of_days->format("%a");
+		//         if (isset($request['bulk-alt-room_id'])) {
+		// 	        foreach ($request['bulk-alt-room_id'] as $key => $value) {	
+		// 	        	foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
+		// 		        	for($i = 0; $i <= $tot_days; $i++) {
+		// 		        		if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
 				        			
-							       $result[$i]= date('Y-m-d', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'));
-							      	$this->db->select('*');
-							      	$this->db->from('hotel_tbl_allotement');
-							    	$this->db->where('room_id',$value);
-							    	$this->db->where('hotel_id',$request['hotel_id']);
-							    	$this->db->where('allotement_date',$result[$i]);
-							    	$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-							    	$query=$this->db->get();
-						        	$query_out[$i] = $query->result();
-						    		if (count($query_out[$i])!=0) {
-						    			if ($contract_type[0]->contract_type!="Main") {
-						    				foreach ($request['RwAmount'] as $AMCKkey => $AMvalue) 
-					    					{
-							    				if ($request['RwAmount'][$AMCKkey]!="") {
-										    		$data['amount'] =backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]);
-										    		$data['allotement'] =  0;
-										    		$data['cut_off'] =  0;
-											    	$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-										    		$this->db->where('room_id',$value);
-										    		$this->db->where('hotel_id',$request['hotel_id']);
-										    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
-										    		$this->db->update('hotel_tbl_allotement',$data);
-										    	}
+		// 					       $result[$i]= date('Y-m-d', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'));
+		// 					      	$this->db->select('*');
+		// 					      	$this->db->from('hotel_tbl_allotement');
+		// 					    	$this->db->where('room_id',$value);
+		// 					    	$this->db->where('hotel_id',$request['hotel_id']);
+		// 					    	$this->db->where('allotement_date',$result[$i]);
+		// 					    	$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 					    	$query=$this->db->get();
+		// 				        	$query_out[$i] = $query->result();
+		// 				    		if (count($query_out[$i])!=0) {
+		// 				    			if ($contract_type[0]->contract_type!="Main") {
+		// 				    				foreach ($request['RwAmount'] as $AMCKkey => $AMvalue) 
+		// 			    					{
+		// 					    				if ($request['RwAmount'][$AMCKkey]!="") {
+		// 								    		$data['amount'] =backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]);
+		// 								    		$data['allotement'] =  0;
+		// 								    		$data['cut_off'] =  0;
+		// 									    	$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 								    		$this->db->where('room_id',$value);
+		// 								    		$this->db->where('hotel_id',$request['hotel_id']);
+		// 								    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
+		// 								    		$this->db->update('hotel_tbl_allotement',$data);
+		// 								    	}
 										    	
 
-										    }
+		// 								    }
 
-						    			} else {
+		// 				    			} else {
 
-							    			if ($request['RwAmount'][$key]!="") {
-									    		$data['amount'] = backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]);
-									    	}
-									    	if ($request['RwAllotment'][$key]!="") {
-									    		$data['allotement'] = $request['RwAllotment'][$key];
-									    	}
-									    	if ($request['RwCutoff'][$key]!="") {
-									    		$data['cut_off'] =  $request['RwCutoff'][$key];
-									    	}
-									    	if ($request['RwAmount'][$key]!="" || $request['RwAllotment'][$key]!="" || $request['RwCutoff'][$key]!="") {
-									    		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-									    		$this->db->where('room_id',$value);
-									    		$this->db->where('hotel_id',$request['hotel_id']);
-									    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
-									    		$this->db->update('hotel_tbl_allotement',$data);
-									    	}
-						    			}
-							    	} else {
-						    			if ($contract_type[0]->contract_type!="Main") {
-						    				$data1 = array('amount'    => backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]),
-								    					  'allotement' => 0,
-								    					  'cut_off'    => 0,
-								    					  'allotement_date'=> $result[$i],
-								    					  'room_id'=> $value,
-								    					  'hotel_id'=> $request['hotel_id'],
-							    						  'contract_id' => $request['bulk_alt_contract_id']
-								    		);
-								    		$this->db->insert('hotel_tbl_allotement',$data1);
-					    				} else {
-								    		$data1 = array('amount'=> backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]),
-								    					  'allotement'=> $request['RwAllotment'][$key],
-								    					  'cut_off'=> $request['RwCutoff'][$key],
-								    					  'allotement_date'=> $result[$i],
-								    					  'room_id'=> $value,
-								    					  'hotel_id'=> $request['hotel_id'],
-							    						  'contract_id' => $request['bulk_alt_contract_id']
-								    		);
-								    		$this->db->insert('hotel_tbl_allotement',$data1);
+		// 					    			if ($request['RwAmount'][$key]!="") {
+		// 							    		$data['amount'] = backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]);
+		// 							    	}
+		// 							    	if ($request['RwAllotment'][$key]!="") {
+		// 							    		$data['allotement'] = $request['RwAllotment'][$key];
+		// 							    	}
+		// 							    	if ($request['RwCutoff'][$key]!="") {
+		// 							    		$data['cut_off'] =  $request['RwCutoff'][$key];
+		// 							    	}
+		// 							    	if ($request['RwAmount'][$key]!="" || $request['RwAllotment'][$key]!="" || $request['RwCutoff'][$key]!="") {
+		// 							    		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 							    		$this->db->where('room_id',$value);
+		// 							    		$this->db->where('hotel_id',$request['hotel_id']);
+		// 							    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
+		// 							    		$this->db->update('hotel_tbl_allotement',$data);
+		// 							    	}
+		// 				    			}
+		// 					    	} else {
+		// 				    			if ($contract_type[0]->contract_type!="Main") {
+		// 				    				$data1 = array('amount'    => backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]),
+		// 						    					  'allotement' => 0,
+		// 						    					  'cut_off'    => 0,
+		// 						    					  'allotement_date'=> $result[$i],
+		// 						    					  'room_id'=> $value,
+		// 						    					  'hotel_id'=> $request['hotel_id'],
+		// 					    						  'contract_id' => $request['bulk_alt_contract_id']
+		// 						    		);
+		// 						    		$this->db->insert('hotel_tbl_allotement',$data1);
+		// 			    				} else {
+		// 						    		$data1 = array('amount'=> backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]),
+		// 						    					  'allotement'=> $request['RwAllotment'][$key],
+		// 						    					  'cut_off'=> $request['RwCutoff'][$key],
+		// 						    					  'allotement_date'=> $result[$i],
+		// 						    					  'room_id'=> $value,
+		// 						    					  'hotel_id'=> $request['hotel_id'],
+		// 					    						  'contract_id' => $request['bulk_alt_contract_id']
+		// 						    		);
+		// 						    		$this->db->insert('hotel_tbl_allotement',$data1);
 
-							    		}
-							    	}
-							    }
-						    }
-					    }
-			        }
-		        }
+		// 					    		}
+		// 					    	}
+		// 					    }
+		// 				    }
+		// 			    }
+		// 	        }
+		//         }
 
-		        $start1_date=date_create($result_data[0]->FromDate);
-		        $end1_date=date_create($result_data[0]->ToDate);
-		        $no_of_days1=date_diff($start1_date,$end1_date);
-		        $tot_days1 = $no_of_days1->format("%a");
-		        foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
-			    	for($i = 0; $i <= $tot_days1; $i++) {
-			    		if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
-				       		$result1[$i]= date('Y-m-d', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'));
-			    		}
-			        }
-		        }
-		        // print_r($query_out[0]->room_id);
-		        // exit();
-			  //   if (isset($request['bulk-alt-closedout'])) {
-					// // if ($contract_type[0]->contract_type=="Main") {
-				 //        foreach ($result1 as $key1 => $value1) {
+		//         $start1_date=date_create($result_data[0]->FromDate);
+		//         $end1_date=date_create($result_data[0]->ToDate);
+		//         $no_of_days1=date_diff($start1_date,$end1_date);
+		//         $tot_days1 = $no_of_days1->format("%a");
+		//         foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
+		// 	    	for($i = 0; $i <= $tot_days1; $i++) {
+		// 	    		if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
+		// 		       		$result1[$i]= date('Y-m-d', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'));
+		// 	    		}
+		// 	        }
+		//         }
+		//         // print_r($query_out[0]->room_id);
+		//         // exit();
+		// 	  //   if (isset($request['bulk-alt-closedout'])) {
+		// 			// // if ($contract_type[0]->contract_type=="Main") {
+		// 		 //        foreach ($result1 as $key1 => $value1) {
 				        	
-			  //       		$implode_room_types = "";
-					// 		if (isset($request['bulk-alt-room_id'])) {
-					// 			$implode_room_types = implode(",", $request['bulk-alt-room_id']);
-					// 		}
-				 //        	$this->db->select('*');
-				 //        	$this->db->from('hotel_tbl_closeout_period');
-					// 		$this->db->where('closedDate',$value1);
-					// 		$this->db->where('hotel_id',$request['hotel_id']);
-					// 		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-			  //     	  		$query1[$key1]=$this->db->get()->result();
-			  //     	  		if (count($query1[$key1])!=0) {
-			  // 	  				$data= array('roomType'      =>$implode_room_types,
-					// 				          'reason'       => "",
+		// 	  //       		$implode_room_types = "";
+		// 			// 		if (isset($request['bulk-alt-room_id'])) {
+		// 			// 			$implode_room_types = implode(",", $request['bulk-alt-room_id']);
+		// 			// 		}
+		// 		 //        	$this->db->select('*');
+		// 		 //        	$this->db->from('hotel_tbl_closeout_period');
+		// 			// 		$this->db->where('closedDate',$value1);
+		// 			// 		$this->db->where('hotel_id',$request['hotel_id']);
+		// 			// 		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 	  //     	  		$query1[$key1]=$this->db->get()->result();
+		// 	  //     	  		if (count($query1[$key1])!=0) {
+		// 	  // 	  				$data= array('roomType'      =>$implode_room_types,
+		// 			// 				          'reason'       => "",
 									          
-					// 			        );
-					// 			$this->db->where('closedDate',$value1);
-					// 			$this->db->where('hotel_id',$request['hotel_id']);
-					// 			$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-					// 			$this->db->update('hotel_tbl_closeout_period',$data);
-			  //     	  		} else {
-			  //     	  			$data= array( 'hotel_id'     => $request['hotel_id'],
-					// 				          'contract_id'  => $request['bulk_alt_contract_id'],
-					// 				          'closedDate'   => $value1,
-					// 				          'reason'       => "",
-					// 				          'roomType'     => $implode_room_types,
-					// 				          'delflg'       => 1,
-					// 				        );
-					// 			$this->db->insert('hotel_tbl_closeout_period',$data);
-			  //     	  		}
-				 //        }
-			  //       // }
-			  //   } else {
-					// // if ($contract_type[0]->contract_type=="Main") {
-				 //    	foreach ($result1 as $key1 => $value1) {
-				 //        	$this->db->select('*');
-				 //        	$this->db->from('hotel_tbl_closeout_period');
-					// 		$this->db->where('closedDate',$value1);
-					// 		$this->db->where('hotel_id',$request['hotel_id']);
-					// 		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-			  //     	  		$query1[$key1]=$this->db->get()->result();
-			  //     	  		if (count($query1[$key1])!=0) {
-					// 			$explodeCoRR = explode(",", $query1[$key1][0]->roomType);
-			  //     	  			$arr_1 = array_diff($explodeCoRR,$request['bulk-alt-room_id']);
-			  //     	  			if (count($arr_1)!=0) {
-			  //     	  				$implodeCoRR = implode(",", $arr_1);
-				 //      	  				$data= array('roomType'   	 => $implodeCoRR,
-					// 					          	 'reason'     	 => "",
-					// 				        );
-					// 				$this->db->where('closedDate',$value1);
-					// 				$this->db->where('hotel_id',$request['hotel_id']);
-					// 				$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-					// 				$this->db->update('hotel_tbl_closeout_period',$data);
-			  //     	  			} else {
-			  //     	  				$this->db->where('closedDate',$value1);
-					// 				$this->db->where('hotel_id',$request['hotel_id']);
-					// 				$this->db->where('contract_id',$request['bulk_alt_contract_id']);
-					// 				$this->db->delete('hotel_tbl_closeout_period');
-			  //     	  			}
-			  //     	  		} 
-				 //        }
-			  //       // }
-			  //   }
-	    	}
-	    }
+		// 			// 			        );
+		// 			// 			$this->db->where('closedDate',$value1);
+		// 			// 			$this->db->where('hotel_id',$request['hotel_id']);
+		// 			// 			$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 			// 			$this->db->update('hotel_tbl_closeout_period',$data);
+		// 	  //     	  		} else {
+		// 	  //     	  			$data= array( 'hotel_id'     => $request['hotel_id'],
+		// 			// 				          'contract_id'  => $request['bulk_alt_contract_id'],
+		// 			// 				          'closedDate'   => $value1,
+		// 			// 				          'reason'       => "",
+		// 			// 				          'roomType'     => $implode_room_types,
+		// 			// 				          'delflg'       => 1,
+		// 			// 				        );
+		// 			// 			$this->db->insert('hotel_tbl_closeout_period',$data);
+		// 	  //     	  		}
+		// 		 //        }
+		// 	  //       // }
+		// 	  //   } else {
+		// 			// // if ($contract_type[0]->contract_type=="Main") {
+		// 		 //    	foreach ($result1 as $key1 => $value1) {
+		// 		 //        	$this->db->select('*');
+		// 		 //        	$this->db->from('hotel_tbl_closeout_period');
+		// 			// 		$this->db->where('closedDate',$value1);
+		// 			// 		$this->db->where('hotel_id',$request['hotel_id']);
+		// 			// 		$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 	  //     	  		$query1[$key1]=$this->db->get()->result();
+		// 	  //     	  		if (count($query1[$key1])!=0) {
+		// 			// 			$explodeCoRR = explode(",", $query1[$key1][0]->roomType);
+		// 	  //     	  			$arr_1 = array_diff($explodeCoRR,$request['bulk-alt-room_id']);
+		// 	  //     	  			if (count($arr_1)!=0) {
+		// 	  //     	  				$implodeCoRR = implode(",", $arr_1);
+		// 		 //      	  				$data= array('roomType'   	 => $implodeCoRR,
+		// 			// 					          	 'reason'     	 => "",
+		// 			// 				        );
+		// 			// 				$this->db->where('closedDate',$value1);
+		// 			// 				$this->db->where('hotel_id',$request['hotel_id']);
+		// 			// 				$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 			// 				$this->db->update('hotel_tbl_closeout_period',$data);
+		// 	  //     	  			} else {
+		// 	  //     	  				$this->db->where('closedDate',$value1);
+		// 			// 				$this->db->where('hotel_id',$request['hotel_id']);
+		// 			// 				$this->db->where('contract_id',$request['bulk_alt_contract_id']);
+		// 			// 				$this->db->delete('hotel_tbl_closeout_period');
+		// 	  //     	  			}
+		// 	  //     	  		} 
+		// 		 //        }
+		// 	  //       // }
+		// 	  //   }
+	 //    	}
+	 //    }
 	    // print_r($request['RWAmount']);
      //    exit();
 
@@ -6759,6 +6825,22 @@ class Hotels_Model extends CI_Model {
 								    		$this->db->where('hotel_id',$request['hotel_id']);
 								    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
 								    		$this->db->update('hotel_tbl_allotement',$data);
+											// Log entry start
+											    $dataLOG= array( 
+											         'id'               => $query_out[$i][0]->id,
+											         'room_id'          => $value,
+											         'hotel_id'         => $request['hotel_id'],
+											         'allotement_date'  => $query_out[$i][0]->allotement_date,
+											         'amount'           => $data['amount'],
+											         'allotement'       => $data['allotement'],
+											         'cut_off'          => $data['cut_off'],
+											         'contract_id'      => $request['bulk_alt_contract_id'],
+											         'CreatedDate'      => date('Y-m-d H:i:s'),
+											         'CreatedBy'        => $this->session->userdata('id'),
+											         'Status'           => 'updated'
+											        );
+											$this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+											// Log entry end
 								    	}
 								    	
 
@@ -6781,6 +6863,22 @@ class Hotels_Model extends CI_Model {
 							    		$this->db->where('hotel_id',$request['hotel_id']);
 							    		$this->db->where('allotement_date',$query_out[$i][0]->allotement_date);
 							    		$this->db->update('hotel_tbl_allotement',$data);
+		                                // Log entry start
+		                                    $dataLOG= array( 
+		                                         'id'               => $query_out[$i][0]->id,
+		                                         'room_id'          => $value,
+		                                         'hotel_id'         => $request['hotel_id'],
+		                                         'allotement_date'  => $query_out[$i][0]->allotement_date,
+		                                         'amount'           => $data['amount'],
+		                                         'allotement'       => $data['allotement'],
+		                                         'cut_off'          => $data['cut_off'],
+		                                         'contract_id'      => $request['bulk_alt_contract_id'],
+		                                         'CreatedDate'      => date('Y-m-d H:i:s'),
+		                                         'CreatedBy'        => $this->session->userdata('id'),
+		                                         'Status'           => 'updated'
+		                                        );
+		                                $this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+		                                // Log entry end
 							    	}
 				    			}
 					    	} else {
@@ -6794,6 +6892,23 @@ class Hotels_Model extends CI_Model {
 					    						  'contract_id' => $request['bulk_alt_contract_id']
 						    		);
 						    		$this->db->insert('hotel_tbl_allotement',$data1);
+						    		$id = $this->db->insert_id();
+	                                // Log entry start
+	                                    $dataLOG= array( 
+	                                         'id'               => $id,
+	                                         'room_id'          => $value,
+	                                         'hotel_id'         => $request['hotel_id'],
+	                                         'allotement_date'  => $result[$i],
+	                                         'amount'           => $data1['amount'],
+	                                         'allotement'       => 0,
+	                                         'cut_off'          => 0,
+	                                         'contract_id'      => $request['bulk_alt_contract_id'],
+	                                         'CreatedDate'      => date('Y-m-d H:i:s'),
+	                                         'CreatedBy'        => $this->session->userdata('id'),
+	                                         'Status'           => 'inserted'
+	                                        );
+	                                $this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+	                                // Log entry end
 			    				} else {
 						    		$data1 = array('amount'=> backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['RwAmount'][$key]),
 						    					  'allotement'=> $request['RwAllotment'][$key],
@@ -6804,6 +6919,23 @@ class Hotels_Model extends CI_Model {
 					    						  'contract_id' => $request['bulk_alt_contract_id']
 						    		);
 						    		$this->db->insert('hotel_tbl_allotement',$data1);
+						    		$id = $this->db->insert_id();
+	                                // Log entry start
+	                                    $dataLOG= array( 
+	                                         'id'               => $id,
+	                                         'room_id'          => $value,
+	                                         'hotel_id'         => $request['hotel_id'],
+	                                         'allotement_date'  => $result[$i],
+	                                         'amount'           => $data1['amount'],
+	                                         'allotement'       => $request['RwAllotment'][$key],
+	                                         'cut_off'          => $request['RwCutoff'][$key],
+	                                         'contract_id'      => $request['bulk_alt_contract_id'],
+	                                         'CreatedDate'      => date('Y-m-d H:i:s'),
+	                                         'CreatedBy'        => $this->session->userdata('id'),
+	                                         'Status'           => 'inserted'
+	                                        );
+	                                $this->db->insert('hotel_tbl_allotement_log',$dataLOG);
+	                                // Log entry end
 
 					    		}
 					    	}
