@@ -461,7 +461,7 @@ function currency_type($usr_c,$c_type) {
   $final= $query->result();
   $db_amount=$final[0]->amount;
   $converted_amount = $db_amount*$c_type;
-  return number_format((float)$converted_amount, 4, '.', '');
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function xml_currency_change($amount,$dc_type,$c_type) {
   $ci =& get_instance();
@@ -484,7 +484,7 @@ function xml_currency_change($amount,$dc_type,$c_type) {
   $c_out = $final1[0]->amount;
 
   $converted_amount = $c_out*$dc_divided;
-  return number_format((float)$converted_amount, 4, '.', '');
+  return number_format((float)$converted_amount, 2, '.', '');
 }
 function currency_type1($usr_c,$c_type) {
   $ci =& get_instance();

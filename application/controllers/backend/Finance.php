@@ -794,6 +794,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              "recordsTotal" => $SRL->num_rows(),
              "recordsFiltered" => $SRL->num_rows(),
              "data" => $data,
+             "TotalSelling" => 567567657,
         );
         echo json_encode($output);
         exit();
