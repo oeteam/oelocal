@@ -972,8 +972,45 @@
                         addToast('Amount must greater than 0','orange');
                         $("#bulk-alt-amount").focus();
                     } else {
-                        $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotementBlkupdate');
-                        $("#bulk-update-form").submit();
+                       $(".progressive-section").removeClass('hide');
+                       $(".form-entry").addClass('hide');
+                       $(".progressive-section").append('<div class="prog"><label>Other Season</label><div class="progress" ><div class="progress-bar" style="width: 0%;"></div><div class="percent" >0%</div></div></div>');
+                       $.ajax({
+                                xhr: function() {
+                                    var xhr = new window.XMLHttpRequest();
+                                    xhr.upload.addEventListener("progress", function(evt) {
+                                        if (evt.lengthComputable) {
+                                            var percentComplete = (evt.loaded / evt.total) * 100;
+                                            //Do something with upload progress here
+                                            var percentValue = percentComplete + '%';
+                                            $(".progress-bar").animate({
+                                                width: '90%'
+                                            }, {
+                                                duration: 5000,
+                                                easing: "linear",
+                                                step: function (x) {
+                                                percentText = Math.round(x * 100 / percentComplete);
+                                                    if (percentText < 91) {
+                                                        $(".progress-bar").width(percentText + "%");
+                                                        $(".percent").text(percentText + "%");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                   }, false);
+                                   return xhr;
+                                },
+                                type: 'POST',
+                                    url: base_url+'backend/hotels/allotementBlkupdate',
+                                    data: $('#bulk-update-form').serialize(),
+                                    success: function(data){
+                                        //Do something on success
+                                        console.log("end");
+                                        $(".progress-bar").width("100%");
+                                        $(".percent").text("100%");
+                                        $(".blk-btn-progress").removeClass('hide')
+                                    }
+                              });
                     }
                } else {
                     if(dayss=="") {
