@@ -763,4 +763,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     public function salesReport() {
         $this->load->view('backend/finance/salesReport');
     }
+    public function salespReportList() {
+        $data = array();
+        // Datatables Variables
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+        $SRL = $this->Company_Model->salespReportList($_REQUEST);
+        foreach ($SRL->result() as $key => $r) {
+            $total = $this->Payment_Model->TotalBookingAmountDetailsGet($r->id);
+            $Totselling = $total['Selling'];
+            $TotCost = $total['Cost'];
+            $AdminProfit = $total['AdminProfit'];
+            $AgentProfit = $total['AgentProfit'];
+            $data[] = array(
+                $key+1,
+                $r->booking_id,
+                date('d/m/Y',strtotime($r->Created_Date)),
+                $TotCost,
+                $Totselling,
+                $AdminProfit,
+                0,
+                $AgentProfit,
+                0,
+                $r->agent,
+            );
+        }
+        $output = array(
+            "draw" => $draw,
+             "recordsTotal" => $SRL->num_rows(),
+             "recordsFiltered" => $SRL->num_rows(),
+             "data" => $data,
+        );
+        echo json_encode($output);
+        exit();
+    }
 }	

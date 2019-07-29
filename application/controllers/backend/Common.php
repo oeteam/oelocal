@@ -1190,6 +1190,7 @@ class Common extends MY_Controller {
             $r->amount,
             $r->hotel_name,
             $r->contract_id,
+            $r->Status,
             $r->CreatedDate,
             $r->Name,
           );
@@ -1239,6 +1240,7 @@ class Common extends MY_Controller {
             $mandatory,
             $r->hotel_name,
             $r->contract_id,
+            $r->Status,
             $r->CreatedDate,
             $r->Name,
           );
@@ -1281,6 +1283,7 @@ class Common extends MY_Controller {
             $r->amount,
             $r->hotel_name,
             $r->contract_id,
+            $r->Status,
             $r->CreatedDate,
             $r->Name,
           );
@@ -1293,6 +1296,8 @@ class Common extends MY_Controller {
       );
       echo json_encode($output);
       exit();
+  }
+  public function cancellationLog() {
   }
 }
 

@@ -922,4 +922,13 @@
     }
     
   }
+  public function salespReportList($request) {
+    $this->db->select('a.*,CONCAT(b.First_Name," ",b.Last_Name,"(",b.Agent_Code,")") as agent');
+    $this->db->from('hotel_tbl_booking a');
+    $this->db->join('hotel_tbl_agents b','b.id=a.agent_id','inner');
+    $this->db->where('Date(a.Created_Date) >=',$request['from_date']);
+    $this->db->where('Date(a.Created_Date) <=',$request['to_date']);
+    $this->db->order_by('a.Created_Date','desc');
+    return $this->db->get();
+  }
 }    

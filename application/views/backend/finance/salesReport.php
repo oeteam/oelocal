@@ -10,7 +10,7 @@
     display: none ! important;
   }
 
-  #searchTable_wrapper .btn  {
+  #salesReportTable_wrapper .btn  {
       height: 27px;
       font-size: 12px;
       line-height: 28px;
@@ -47,14 +47,14 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                           <label for="from_date">Type</label>
-                                          <select name="ConSelect" id="ConSelect">
+                                          <select name="type" id="type">
                                             <option value="Agent">Agent</option>
                                             <option value="Hotel">Hotel</option>
                                             <option value="Supplier">Supplier</option>
                                           </select>
                                     </div>
                                   <div class="form-group col-md-2 ">
-                                          <input type="button" class="mar_top_23 btn-sm btn-primary" id="SearchFormReportButton" value="Search">
+                                          <input type="button" class="mar_top_23 btn-sm btn-primary" id="salesReportButton" value="Search">
                                   </div>
                                 </div>
                       </form>
@@ -63,19 +63,18 @@
                     <div class="col-md-12">
                         <input type="hidden" id="filter" value="1">
                         <div class="table-responsive table-desi">
-                            <table class="table table-condensed table-hover" id="searchTable">
+                            <table class="table table-condensed table-hover" id="salesReportTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Date</th>
-                                        <th>Location</th>
-                                        <th>Check In</th>
-                                        <th>Check Out</th>
-                                        <th>Hotel Name</th>
-                                        <th>Adults</th>
-                                        <th>Child</th> 
-                                        <th>No of Rooms</th> 
-                                        <th>Nationality</th>
+                                        <th>BookingID</th>
+                                        <th>Booking Date</th>
+                                        <th>Cost</th>
+                                        <th>Selling</th>
+                                        <th>Admin Profit</th> 
+                                        <th>Admin.pro %</th> 
+                                        <th>Agent Profit</th> 
+                                        <th>Agent.pro %</th> 
                                         <th>Agent</th>
                                     </tr>
                                 </thead>
@@ -90,8 +89,11 @@
 </div>
 </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
 <script>
+  salesreportfun();
+  $("#salesReportButton").click(function() {
+    salesreportfun();
+  })
     $("#from_date").datepicker({
       yearRange: "2016:<?php echo date('Y' ,strtotime('+2 year')) ?>",
       altField: "#alternate1",
@@ -116,23 +118,26 @@
     $("#alternate2").click(function() {
         $( "#to_date" ).trigger('focus');
     });
-    var from_date = $("#from_date").val();
-    var to_date   = $("#to_date").val();
-    var SearchReportTable = $('#searchTable').dataTable({
-        "bDestroy": true,
-         dom: 'lBfrtip',
-          buttons: [
-              'copy', 'csv', 'excel', 'pdf', 'print'
-          ],
-        "ajax": {
-          url : base_url+'backend/report/SearchReportList?from_date='+from_date+'&to_date='+to_date,
-          type : 'POST' 
-          },
+    function salesreportfun() {
+      var from_date = $("#from_date").val();
+      var to_date   = $("#to_date").val();
+      var type   = $("#type").val();
+      var salesReportTable = $('#salesReportTable').dataTable({
+          "bDestroy": true,
+           dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+          "ajax": {
+            url : base_url+'backend/finance/salespReportList?from_date='+from_date+'&to_date='+to_date+'&type='+type,
+            type : 'POST' 
+            },
 
-        "fnDrawCallback": function(settings){
-               $('[data-toggle="tooltip"]').tooltip();          
-        }
-    });
+          "fnDrawCallback": function(settings){
+                 $('[data-toggle="tooltip"]').tooltip();          
+          }
+      });
+    }
 </script>
 <?php init_tail(); ?>
 

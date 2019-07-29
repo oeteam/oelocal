@@ -72,6 +72,7 @@
                                         <th>Mandatory</th>
                                         <th>Hotel Name</th>
                                         <th>Contract ID</th>
+                                        <th>Status</th>
                                         <th title="Created Date">C.Date</th>
                                         <th title="Created By">C.By</th>
                                     </tr>
