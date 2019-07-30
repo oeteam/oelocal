@@ -770,21 +770,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
         $SRL = $this->Company_Model->salespReportList($_REQUEST);
+        $TotCostArr = array();
+        $TotsellingArr = array();
+        $AdminProfitArr = array();
+        $AgentProfitArr = array();
         foreach ($SRL->result() as $key => $r) {
             $total = $this->Payment_Model->TotalBookingAmountDetailsGet($r->id);
             $Totselling = $total['Selling'];
             $TotCost = $total['Cost'];
             $AdminProfit = $total['AdminProfit'];
             $AgentProfit = $total['AgentProfit'];
+            $TotCostArr[$key] = number_format((float)$TotCost, 2, '.', '');
+            $TotsellingArr[$key] = number_format((float)$Totselling, 2, '.', '');
+            $AdminProfitArr[$key] = number_format((float)$AdminProfit, 2, '.', '');
+            $AgentProfitArr[$key] = number_format((float)$AgentProfit, 2, '.', '');
             $data[] = array(
                 $key+1,
                 $r->booking_id,
                 date('d/m/Y',strtotime($r->Created_Date)),
-                $TotCost,
-                $Totselling,
-                $AdminProfit,
+                number_format((float)$TotCost, 2, '.', ''),
+                number_format((float)$Totselling, 2, '.', ''),
+                number_format((float)$AdminProfit, 2, '.', ''),
                 0,
-                $AgentProfit,
+                number_format((float)$AgentProfit, 2, '.', ''),
                 0,
                 $r->agent,
             );
@@ -794,7 +802,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              "recordsTotal" => $SRL->num_rows(),
              "recordsFiltered" => $SRL->num_rows(),
              "data" => $data,
-             "TotalSelling" => 567567657,
+             "TotCost" => number_format((float)array_sum($TotCostArr), 2, '.', ''),
+             "Totselling" => number_format((float)array_sum($TotsellingArr), 2, '.', ''),
+             "AdminProfit" => number_format((float)array_sum($AdminProfitArr), 2, '.', ''),
+             "AgentProfit" => number_format((float)array_sum($AgentProfitArr), 2, '.', ''),
         );
         echo json_encode($output);
         exit();

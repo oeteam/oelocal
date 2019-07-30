@@ -639,7 +639,7 @@
 										<div class="col-xs-3 room1-child<?php echo $l; ?> <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'hide' ?>" style="padding-right: 0;">
 											<select name="room1-childAge[]" class="form-control mySelectBoxClass room1-childAges<?php echo $l; ?>" <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'disabled' ?>  id="room1-childAge<?php echo $l; ?>">
 												<?php for ($i=0; $i <18 ; $i++) { 
-													if ($_REQUEST['room1-childAge'][$l-1]==$i) { ?>
+													if (isset($_REQUEST['room1-childAge'][$l-1]) && $_REQUEST['room1-childAge'][$l-1]==$i) { ?>
 														<option selected=""  value="<?php echo $i ?>"><?php echo $i ?></option>
 													<?php } else { ?>
 														<option  value="<?php echo $i ?>"><?php echo $i ?></option>
@@ -726,7 +726,7 @@
 							<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
-							<input type="hidden" name="mark_up" value="<?php echo $_REQUEST['mark_up'] ?>">
+							<input type="hidden" name="mark_up" value="0">
 							<input type="hidden" name="Check_in" value="<?php echo $_REQUEST['Check_in'] ?>">
 							<input type="hidden" name="Check_out" value="<?php echo $_REQUEST['Check_out'] ?>">
 							<input type="hidden" name="view_type" value="<?php echo $_REQUEST['view_type'] ?>">
@@ -1140,7 +1140,7 @@
 							<div class="col-xs-3 room1-child<?php echo $l; ?> <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'hide' ?>" style="padding-right: 0;">
 								<select name="room1-childAge[]" class="form-control mySelectBoxClass room1-childAges<?php echo $l; ?>" <?php echo isset($_REQUEST['Child'][0]) && $_REQUEST['Child'][0]!="" && $_REQUEST['Child'][0]!=0 && $_REQUEST['Child'][0] >= $l ? '' : 'disabled' ?>  id="room1-childAge<?php echo $l; ?>">
 									<?php for ($i=0; $i <18 ; $i++) { 
-										if ($_REQUEST['room1-childAge'][$l-1]==$i) { ?>
+										if (isset($_REQUEST['room1-childAge'][$l-1]) && $_REQUEST['room1-childAge'][$l-1]==$i) { ?>
 											<option selected=""  value="<?php echo $i ?>"><?php echo $i ?></option>
 										<?php } else { ?>
 											<option  value="<?php echo $i ?>"><?php echo $i ?></option>

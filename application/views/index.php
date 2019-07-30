@@ -100,7 +100,7 @@ $Hotelsbanner = Hotelsbanner();
 
                                              <div class="col-xs-4 col-sm-4 col-md-4">
                                                 <div class="btn-hldr">
-                                                   <button type="submit" class="btn btn-primary" type="submit" id="login_form_frontend_button">Sign In</button>
+                                                   <button type="button" class="btn btn-primary" id="login_form_frontend_button">Sign In</button>
                                                 </div>
                                              </div>
                                           </form>

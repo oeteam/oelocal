@@ -23,8 +23,9 @@ $(document).ready(function() {
         }
       });
 
-    });
-  $('#login_form_frontend_button').click(function (e) {
+    }); 
+
+   $('#login_form_frontend_button').off().on("click", function(e) {
     var url = $("#front_login").attr("action");
       e.preventDefault();
       $.ajax({
@@ -42,7 +43,6 @@ $(document).ready(function() {
           }
         }
       });
-
     });
   $("#check1").click(function(){
     if($(this).is(':checked')){     

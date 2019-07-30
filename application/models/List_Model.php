@@ -670,7 +670,7 @@ class List_Model extends CI_Model {
 
     
     $OtelseasyHotels = $this->db->query(" SELECT contract_id, room_id,hotel_id as HotelCode,min(amount) as TotalPrice,min(amount) as OriginalPrice,min(amount) as oldPrice,h.hotel_name as HotelName,h.location as HotelAddress,
- concat('http://localhost/works/oelocal/uploads/gallery/',n.hotel_id,'/',h.Image1) as HotelPicture,h.hotel_description as HotelDescription, h.rating as Rating,'".$agent_currency."' as Currency,'otelseasy' as DataType, h.rating as RatingImg,h.starsrating as ReviewImg,h.starsrating as reviews ,'' as BookBtn ,'' as HotelRequest,'' as Inclusion  FROM (SELECT m.*,GROUP_CONCAT(room_id) as GroupRoomID,GROUP_CONCAT(RoomIndex) as GroupRoomIndex ,GROUP_CONCAT(dd) as GroupRoomAmount,sum(dd) as amount ,count(*) as roomcount  FROM ( ".$room1.$room2.$room3.$room4.$room5.$room6.") m GROUP BY m.contract_id HAVING roomcount >= ".count($_REQUEST['adults']).") n INNER JOIN hotel_tbl_hotels h ON h.id = n.hotel_id GROUP BY n.hotel_id")->result();
+ concat('".base_url()."uploads/gallery/',n.hotel_id,'/',h.Image1) as HotelPicture,h.hotel_description as HotelDescription, h.rating as Rating,'".$agent_currency."' as Currency,'otelseasy' as DataType, h.rating as RatingImg,h.starsrating as ReviewImg,h.starsrating as reviews ,'' as BookBtn ,'' as HotelRequest,'' as Inclusion  FROM (SELECT m.*,GROUP_CONCAT(room_id) as GroupRoomID,GROUP_CONCAT(RoomIndex) as GroupRoomIndex ,GROUP_CONCAT(dd) as GroupRoomAmount,sum(dd) as amount ,count(*) as roomcount  FROM ( ".$room1.$room2.$room3.$room4.$room5.$room6.") m GROUP BY m.contract_id HAVING roomcount >= ".count($_REQUEST['adults']).") n INNER JOIN hotel_tbl_hotels h ON h.id = n.hotel_id GROUP BY n.hotel_id")->result();
     }
 
     $TBOHotels = array();

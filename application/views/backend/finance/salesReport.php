@@ -26,6 +26,8 @@
                     <div class="inn-title">
                         <span> Sales Report </span>
                     </div>
+                    <input type="hidden" class="ad_pro" value="0">
+                    <input type="hidden" class="ag_pro" value="0">
                     <form method="get" id="bookingReport_filter">
                                   <div class="col-md-12"> 
                                             <div class="form-group col-md-2">
@@ -80,6 +82,18 @@
                                 </thead>
                                 <tbody>
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="3">Total</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>100</td>
+                                    <td>0</td>
+                                    <td>100</td>
+                                    <td></td>
+                                  </tr>
+                                </tfoot>
                             </table>
                         </div>
                 </div>
@@ -92,6 +106,7 @@
 <script>
   salesreportfun();
   $("#salesReportButton").click(function() {
+    salesreportfun();
     salesreportfun();
   })
     $("#from_date").datepicker({
@@ -119,6 +134,7 @@
         $( "#to_date" ).trigger('focus');
     });
     function salesreportfun() {
+      var tot = 0;
       var from_date = $("#from_date").val();
       var to_date   = $("#to_date").val();
       var type   = $("#type").val();
@@ -130,13 +146,29 @@
             ],
           "ajax": {
             url : base_url+'backend/finance/salespReportList?from_date='+from_date+'&to_date='+to_date+'&type='+type,
-            type : 'POST' 
-            },
+            type : 'POST',
 
+          },
+          "initComplete": function( settings, json ) {
+            $("#salesReportTable").find('tfoot').find('td:eq(1)').text(json.TotCost);
+            $("#salesReportTable").find('tfoot').find('td:eq(2)').text(json.Totselling);
+            $("#salesReportTable").find('tfoot').find('td:eq(3)').text(json.AdminProfit);
+            $("#salesReportTable").find('tfoot').find('td:eq(5)').text(json.AgentProfit);
+            $('.ad_pro').val(json.AdminProfit);
+            $('.ag_pro').val(json.AgentProfit);
+          },
           "fnDrawCallback": function(settings){
-                 $('[data-toggle="tooltip"]').tooltip();          
-                console.log(settings.json);
-          }
+                 $('[data-toggle="tooltip"]').tooltip(); 
+          },
+          "createdRow": function(  row, data, index ) {
+            var tot_ad_pro = $(".ad_pro").val();
+            var tot_ag_pro = $(".ag_pro").val();
+            var ad_pro = $(row).find('td:eq(5)').text();
+            var ag_pro = $(row).find('td:eq(7)').text();
+            
+            $(row).find('td:eq(6)').text(ad_pro/tot_ad_pro*100);
+            $(row).find('td:eq(9)').text(ag_pro/tot_ag_pro*100);
+          },
       });
     }
 </script>

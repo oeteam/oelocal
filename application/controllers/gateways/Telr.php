@@ -79,7 +79,7 @@ class Telr extends CI_Controller
         $data['currency']     = $this->input->get('currency');
         $details = $this->Common_Model->telrdetails();
         $max_id = getTransactionid();
-        $max_transid = "OTELSEASYHOTEL-".$max_id;
+        $max_transid = "OTELSEASYHOTEL-0".$max_id;
         $params = array(
             'ivp_method'  => 'create',
             'ivp_store'   => $details[0]->store_id,
