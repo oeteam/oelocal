@@ -2398,6 +2398,17 @@ $("#bulk-allotement").click(function() {
                                         console.log("end");
                                         $(".progress-bar").width("100%");
                                         $(".percent").text("100%");
+                                        $(".progress-bar").animate({
+                                                width: '100%'
+                                            }, {
+                                            duration: 5000,
+                                            easing: "linear",
+                                            step: function (x) {
+                                            percentText = 100;
+                                              $(".progress-bar").width(percentText + "%");
+                                              $(".percent").text(percentText + "%");
+                                            }
+                                        });
                                         $(".blk-btn-progress").removeClass('hide')
                                     }
                               });
@@ -2452,6 +2463,18 @@ $("#bulk-allotement").click(function() {
                                         console.log("end");
                                         $(".progress-bar:eq("+i+")").width("100%");
                                         $(".percent:eq("+i+")").text("100%");
+                                        $(".progress-bar:eq("+i+")").animate({
+                                                width: '100%'
+                                            }, {
+                                                duration: 5000,
+                                              easing: "linear",
+                                              step: function (x) {
+                                              percentText = 100;
+                                                $(".progress-bar:eq("+i+")").width(percentText + "%");
+                                                $(".percent:eq("+i+")").text(percentText + "%");
+                                              }
+                                          });
+
                                         blk_push.push(1);
                                         console.log(blk_push.length);
                                         if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
@@ -2469,7 +2492,7 @@ $("#bulk-allotement").click(function() {
                }
             }
             
-      });
+});
 $("#extrabed_submit").off().click(function() {
   var Season= $("#Season").val();
   var fromDate= $("#fromDate").val();

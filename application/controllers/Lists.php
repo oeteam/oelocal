@@ -241,7 +241,7 @@ class lists extends MY_Controller {
           } else {
             $moreDetails = '<a class="hotel-more-btn" onclick="MoreDetailsToggle('.$value->HotelCode.',\''.$value->DataType.'\')"><span>More Details</span> <i class="fa fa-chevron-down"></i></a>';
           }
-          // $moreDetails = '';
+          $moreDetails = '';
             $data['list'][] =  '<div class="offset-2">
             <div class="col-md-3 offset-0">
             <div class="listitem">

@@ -245,7 +245,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
@@ -322,7 +322,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
@@ -397,7 +397,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
@@ -471,7 +471,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
@@ -545,7 +545,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
@@ -619,7 +619,7 @@ class List_Model extends CI_Model {
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
        ((select IF(min(discount)!='',discount,0) from hoteldiscount where Discount_flag = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
+      AND FIND_IN_SET(a.room_id,room) > 0 AND FIND_IN_SET(a.contract_id,contract) > 0 AND (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND BkFrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND BkTo >= '".date('Y-m-d',strtotime($data['Check_out']))."') AND Bkbefore < ".$tot_days." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 limit 1)/100)
          ) as TtlPrice,count(*) as counts,
 
         (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100),amount+ExtrabedMarkup),amount),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 

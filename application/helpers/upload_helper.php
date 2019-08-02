@@ -40,12 +40,14 @@ function handle_agent_profile_image_upload($id = '')
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
                 $CI =& get_instance();
                 $config                   = array();
+                $config['library_path']  = "/usr/bin"; 
                 $config['image_library']  = 'gd2';
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = 'thumb_' . $filename;
                 $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -94,8 +96,9 @@ function handle_license_upload($id = '')
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = $filename;
                 $config['maintain_ratio'] = true;
-                // $config['width']          = 160;
-                // $config['height']         = 160; 
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -143,8 +146,9 @@ function handle_agent_logo_upload($id = '')
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = $filename;
                 $config['maintain_ratio'] = true;
-                // $config['width']          = 160;
-                // $config['height']         = 160; 
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -262,8 +266,9 @@ function handle_user_profile_image_upload($id = '')
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = 'thumb_' . $filename;
                 $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -313,8 +318,9 @@ function handle_ico_image_upload($id = '')
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = $filename;
                 $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -369,8 +375,9 @@ function handle_hotel_gallery_image_upload($id = '',$key)
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = 'thumb_' . "image".$key.".".$extension;
                 $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -422,16 +429,17 @@ function handle_hotel_room_image_upload($count,$id = '')
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                 $CI =& get_instance();
-                // $config                   = array();
-                // $config['image_library']  = 'gd2';
-                // $config['source_image']   = $newFilePath;
-                // $config['new_image']      = $filename;
-                // $config['maintain_ratio'] = true;
-                // $config['width']          = 255;
-                // $config['height']         = 144;
-                // $CI->load->library('image_lib', $config);
-                // $CI->image_lib->resize();
-                // $CI->image_lib->clear();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
                 $CI->db->where('id', $id);
                 $CI->db->update('hotel_tbl_hotel_room_type', array(
                     'images' => $filename
@@ -476,16 +484,17 @@ function handle_hotel_room_image_login_upload($hotel_room_id = '')
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                 $CI =& get_instance();
-                // $config                   = array();
-                // $config['image_library']  = 'gd2';
-                // $config['source_image']   = $newFilePath;
-                // $config['new_image']      = $filename;
-                // $config['maintain_ratio'] = true;
-                // $config['width']          = 255;
-                // $config['height']         = 144;
-                // $CI->load->library('image_lib', $config);
-                // $CI->image_lib->resize();
-                // $CI->image_lib->clear();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
                 $CI->db->where('id', $hotel_room_id);
                 $CI->db->update('hotel_tbl_hotel_room_type', array(
                     'images' => $filename
@@ -532,8 +541,9 @@ function handle_hotel_review_image_upload($id = '')
                 $config['source_image']   = $newFilePath;
                 $config['new_image']      = 'thumb_' . $filename;
                 $config['maintain_ratio'] = true;
-                $config['width']          = 160;
-                $config['height']         = 160;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
                 $CI->load->library('image_lib', $config);
                 $CI->image_lib->resize();
                 $CI->image_lib->clear();
@@ -637,12 +647,29 @@ function about_image_upload() {
             $newFilePath = $path . $filename;
             
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', 1);
-           $CI->db->update('aboutdetails', array(
+
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', 1);
+                $CI->db->update('aboutdetails', array(
                     'wall_image' => $filename
                 ));
+                // Remove original image
+                // unlink($newFilePath);
+
+                return true;
+            }
         }
     }
     if (isset($_FILES['front_image']['name']) && $_FILES['front_image']['name'] != '') {
@@ -673,12 +700,29 @@ function about_image_upload() {
             $newFilePath = $path . $filename;
             
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', 1);
-           $CI->db->update('aboutdetails', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', 1);
+                $CI->db->update('aboutdetails', array(
                     'front_image' => $filename
                 ));
+                // Remove original image
+                // unlink($newFilePath);
+
+                return true;
+            }
+          
         }
     }
     if (isset($_FILES['back_image']['name']) && $_FILES['back_image']['name'] != '') {
@@ -709,12 +753,28 @@ function about_image_upload() {
             $newFilePath = $path . $filename;
             
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', 1);
-           $CI->db->update('aboutdetails', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', 1);
+                $CI->db->update('aboutdetails', array(
                     'back_image' => $filename
                 ));
+                // Remove original image
+                // unlink($newFilePath);
+
+                return true;
+            }
         }
     }
     return true;
@@ -749,13 +809,28 @@ function event_gallery_image_upload($id = '')
             $filename    = $_FILES["event_image"]["name"];
             $newFilePath = $path . $filename;
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', $id);
-           $CI->db->update('eventdetails', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', $id);
+                $CI->db->update('eventdetails', array(
                     'event_image' => $filename
                 ));
-           return true;
+                // Remove original image
+                // unlink($newFilePath);
+
+                return true;
+            }
         }
     }
     return false;
@@ -790,13 +865,27 @@ function tour_service_image_upload($id = '')
             $filename    = $_FILES["image"]["name"];
             $newFilePath = $path . $filename;
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', $id);
-           $CI->db->update('tbl_tour_types', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', $id);
+                $CI->db->update('tbl_tour_types', array(
                     'image' => $filename
                 ));
-           return true;
+                // Remove original image
+                // unlink($newFilePath);
+                return true;
+            }
         }
     }
     return false;
@@ -828,13 +917,27 @@ function visa_request_passport_image_upload($id = '')
             $filename    = $_FILES["image"]["name"];
             $newFilePath = $path . $filename;
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', $id);
-           $CI->db->update('visa_tbl_requests', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', $id);
+                $CI->db->update('visa_tbl_requests', array(
                     'image' => $filename
                 ));
-           return true;
+                // Remove original image
+                // unlink($newFilePath);
+                return true;
+            }
         }
     }
     return false;
@@ -867,13 +970,27 @@ function vehicle_image_upload($id = '')
             $filename    = $_FILES["profile_image"]["name"];
             $newFilePath = $path . $filename;
             // Upload the file into the company uploads dir
-           move_uploaded_file($tmpFilePath, $newFilePath);
-           $CI =& get_instance();
-           $CI->db->where('id', $id);
-           $CI->db->update('transfer_vehicle', array(
+            if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                $CI =& get_instance();
+                $config                   = array();
+                $config['image_library']  = 'gd2';
+                $config['source_image']   = $newFilePath;
+                $config['new_image']      = $filename;
+                $config['maintain_ratio'] = true;
+                $config['width']          = 400;
+                $config['height']         = 300;
+                $config['quality']       = 100;
+                $CI->load->library('image_lib', $config);
+                $CI->image_lib->resize();
+                $CI->image_lib->clear();
+                $CI->db->where('id', $id);
+                $CI->db->update('transfer_vehicle', array(
                     'vehicle_image' => $filename
                 ));
-           return true;
+                // Remove original image
+                // unlink($newFilePath);
+                return true;
+            }
         }
     }
     return false;

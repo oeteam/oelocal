@@ -101,7 +101,7 @@ $(document).ready(function() {
 
   search_ajax();
   FullLoading('stop');
-  setTimeout(function(){ search_ajax(); }, 3000);
+  // setTimeout(function(){ search_ajax(); }, 3000);
   var jslide_change = "1";
   $("#name_order").change(function() {
     search_ajax();

@@ -189,7 +189,23 @@ $(document).ready(function() {
       }
   });
 
-  $("#locationsm").bind('keypress',function(e) {
+  
+
+  $('ul.txtcountry').on('click', 'li a', function () {
+      // alert(tpj(this).attr('CityCode'));
+            $('#locationsm').val($(this).text());
+            $('.citycode').val($(this).attr('CityCode'));
+            $('.cityid').val($(this).attr('CityId'));
+            $('.cityname').val($(this).attr('CityName'));
+            $('.countryname').val($(this).attr('CountryName'));
+            $('#DropdownCountrysm').slideUp('fast');
+            $('#DropdownCountrysm li').remove();
+  });
+});
+function locationSearchfun() {
+  var xhrTimer;
+  var theXRequest;
+  // $("#locationsm").bind('keypress',function(e) {
       $('#DropdownCountrysm').slideUp('fast');
       $('.citycode').val("");
       $('.cityid').val("");
@@ -206,6 +222,7 @@ $(document).ready(function() {
             cache: false,
             async: true,
             success: function (data) {
+            $('#DropdownCountrysm li').remove();
               $.each(data, function (key,value) {
                 if (data.length >= 0)
                  $('#DropdownCountrysm').append('<li  role="displayCountries" ><a CityId="'+value.cityid+'" CityCode="'+value.CityCode+'" CountryName="'+value.CountryName+'" CityName="'+value.CityName+'" role="menuitem dropdownCountryli"  class="dropdownlivalue"><i class="fa fa-map-marker"></i>' + value.CityName + ',<span> ' + value.CountryName + '</span></a></li>');
@@ -216,16 +233,5 @@ $(document).ready(function() {
 
           });
       }, 500); 
-  });
-
-  $('ul.txtcountry').on('click', 'li a', function () {
-      // alert(tpj(this).attr('CityCode'));
-            $('#locationsm').val($(this).text());
-            $('.citycode').val($(this).attr('CityCode'));
-            $('.cityid').val($(this).attr('CityId'));
-            $('.cityname').val($(this).attr('CityName'));
-            $('.countryname').val($(this).attr('CountryName'));
-            $('#DropdownCountrysm').slideUp('fast');
-            $('#DropdownCountrysm li').remove();
-  });
-});
+  // });
+}

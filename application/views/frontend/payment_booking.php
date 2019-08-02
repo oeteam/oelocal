@@ -461,7 +461,7 @@
 	            				</thead>
 	            				<tbody>
 	            					<?php for ($i=1; $i <=$tot_days ; $i++) {
-            						$result[$i]['amount'] = special_offer_amount($result[1+$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
+            						$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
             						$result[$i]['roomName'] = roomnameGET($RoomId,$_REQUEST['hotel_id']);
 	            					$FextrabedAmount[$i-1]  = 0;
 	            					$TFextrabedAmount[$i-1]  = 0;

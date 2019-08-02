@@ -105,7 +105,7 @@ $(document).ready(function() {
 	var theXRequest;
 
 	/* Destination search key events start */
-	tpj("#location").keydown(function(e) {
+	tpj("#location").on('keydown', function(e) {
 		if (e.keyCode == '38') {
 	        if (tpj(".search-dropdown li").hasClass("focus-li")) {
 	        	index = tpj(".search-dropdown").children('li.focus-li').index();

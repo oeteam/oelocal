@@ -10,7 +10,7 @@
     display: none ! important;
   }
 
-  #ExtrabedTable_wrapper .btn  {
+  #allotmentTable_wrapper .btn  {
       height: 27px;
       font-size: 12px;
       line-height: 28px;
@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="box-inn-sp">
                     <div class="inn-title">
-                        <span> Extrabed Log </span>
+                        <span> Allotment Log </span>
                     </div>
                     <form method="get" id="bookingReport_filter">
                                   <div class="col-md-12"> 
@@ -46,7 +46,7 @@
                                           </div>
                                     </div>
                                   <div class="form-group col-md-2 ">
-                                          <input type="button" class="mar_top_23 btn-sm btn-primary" id="ExtrabedButton" value="Search">
+                                          <input type="button" class="mar_top_23 btn-sm btn-primary" id="allotmentButton" value="Search">
                                   </div>
                                 </div>
                       </form>
@@ -55,19 +55,15 @@
                     <div class="col-md-12">
                         <input type="hidden" id="filter" value="1">
                         <div class="table-responsive table-desi">
-                            <table class="table table-condensed table-hover" id="ExtrabedTable">
+                            <table class="table table-condensed table-hover" id="allotmentTable">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>id</th>
-                                        <th>Room Type</th>
-                                        <th>Season</th>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Child Age From</th>
-                                        <th>Child Age To</th>
-                                        <th>Child Amount</th>
-                                        <th>Adult Amount</th>
+                                        <th>Date</th>
+                                        <th>Allotment</th>
+                                        <th>Amount</th>
+                                        <th>Cutt-off</th>
+                                        <th>Room</th>
                                         <th>Hotel Name</th>
                                         <th>Contract ID</th>
                                         <th>Status</th>
@@ -88,9 +84,9 @@
 </div>
 <!-- <script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script> -->
 <script>
-	ExtrabedTableLoad();
-	$("#ExtrabedButton").click(function() {
-		ExtrabedTableLoad();
+	allotmentTableLoad();
+	$("#allotmentButton").click(function() {
+		allotmentTableLoad();
 	})
     $("#from_date").datepicker({
       yearRange: "2016:<?php echo date('Y' ,strtotime('+2 year')) ?>",
@@ -124,17 +120,17 @@
     $("#alternate2").click(function() {
         $( "#to_date" ).trigger('focus');
     });
-    function ExtrabedTableLoad() {
+    function allotmentTableLoad() {
     	var from_date = $("#from_date").val();
     	var to_date   = $("#to_date").val();
-	    var ExtrabedTable = $('#ExtrabedTable').dataTable({
+	    var allotmentTable = $('#allotmentTable').dataTable({
 	        "bDestroy": true,
 	         dom: 'lBfrtip',
 	          buttons: [
 	              'copy', 'csv', 'excel', 'pdf', 'print'
 	          ],
 	        "ajax": {
-	          url : base_url+'backend/common/extrabedLogList?from_date='+from_date+'&to_date='+to_date,
+	          url : base_url+'backend/common/allotmentLogList?from_date='+from_date+'&to_date='+to_date,
 	          type : 'POST' 
 	          },
 

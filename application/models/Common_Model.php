@@ -850,5 +850,17 @@ class Common_Model extends CI_Model {
     $result = $this->db->get();
     return $result; 
   }
+  public function allotmentLogList($request) {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_allotement_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
+    $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
 }
 

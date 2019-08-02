@@ -1411,6 +1411,40 @@ class Common extends MY_Controller {
       echo json_encode($output);
       exit();
   }
+  public function allotmentLog() {
+    $this->load->view('backend/general/allotmentLog');
+  }
+  public function allotmentLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->allotmentLogList($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+          $data[] = array(
+            $key+1,
+            $r->allotement_date,
+            $r->allotement,
+            $r->amount,
+            $r->cut_off,
+            get_room_name_type($r->room_id),
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->CreatedDate,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
 }
 
 

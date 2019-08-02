@@ -1053,7 +1053,7 @@
 			<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
         	<div class="hotelstab2" style="overflow-y: scroll;height: 535px;overflow-x: hidden">
 				<span class="opensans size1 dest_err">Enter Destination</span>
-				<input type="text" name="location" id="locationsm" class="form-control" placeholder="Enter country name" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>" autocomplete="off">
+				<input type="text" name="location" id="locationsm" class="form-control" placeholder="Enter country name" value="<?php echo isset($_REQUEST['location']) ? $_REQUEST['location'] : '' ?>" autocomplete="off"  onkeyup="locationSearchfun()">
 				
 				<ul class="txtcountry search-dropdown" style="margin-right:0px;display:none;overflow-y: scroll;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountrysm"></ul>
 				<div class="clearfix pbottom15"></div>
