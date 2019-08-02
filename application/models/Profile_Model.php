@@ -187,6 +187,19 @@ class Profile_Model extends CI_Model {
         $this->db->order_by('id','asce');
         $query=$this->db->get();
         return $query->result();
+    }
+    public function add_credit_agent_($credit,$amount){
+      $data= array( 'Agent_id'       => $this->session->userdata('agent_id'),
+                    'credit_amount'  => $amount,
+                    'Total_credit'   => $credit+$amount,
+                    'created_date'   => date('Y-m-d H:i:s'),
+                    'created_by'     => $this->session->userdata('agent_name'),
+                );
+      $this->db->insert('hotel_tbl_agent_credit_detail',$data);
+      $data1= array( 'Credit_amount'   => $amount+$credit,);
+      $this->db->where('id',$this->session->userdata('agent_id'));
+      $this->db->update('hotel_tbl_agents',$data1);
+      return true;
   }
 
 }

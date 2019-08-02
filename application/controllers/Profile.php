@@ -12,7 +12,8 @@ class Profile extends MY_Controller {
           $this->load->helper('html');
           $this->load->helper('upload');
           $this->load->helper('common');
-
+          $this->load->library('gateways/App_gateway', '', 'App_gateway');
+          $this->load->library('gateways/Telr_gateway', '', 'Telr_gateway');
      }
 	
 	public function index()
@@ -129,5 +130,36 @@ class Profile extends MY_Controller {
   public function StateSelect() {
       $data = $this->Profile_Model->SelectState($_REQUEST['Conid']);
       echo json_encode($data);
+  }
+  public function creditamount()
+  {
+    if ($this->session->userdata('agent_name')=="") {
+      redirect("index");
+    }
+    $data['credit'] = $this->db->query("select Credit_amount from hotel_tbl_agents where id='".$this->session->userdata('agent_id')."'")->result();
+    $this->load->view('frontend/creditAmount',$data);
+  }
+  public function loadcreditamount() {
+        $pay_currency = agent_currency();
+        if($pay_currency!='AED') {
+          $amt = currency_type(agent_currency(),$_REQUEST['amount']);
+        } else {
+          $amt = $_REQUEST['amount'];
+        }
+        $this->session->set_userdata('credit_currency','AED');
+        $this->session->set_userdata('credit_amount',$amt);
+        $details   = $this->Common_Model->telrdetails();
+        $this->Telr_gateway->process_payment_creditAmount($details);
+  }
+  public function loadcreditamount_response() {
+      if ($_REQUEST['msg']=='success') {
+        $credit = $this->db->query("select Credit_amount from hotel_tbl_agents where id='".$this->session->userdata('agent_id')."'")->result();
+        $amount=$_REQUEST['amount'];
+        $add_credit= $this->Profile_Model->add_credit_agent_($credit[0]->Credit_amount,$amount);
+        redirect("../profile/creditamount");
+      }
+      else if($_REQUEST['msg']=='failed') {
+        redirect("../profile/creditamount");
+      }
   }
 }

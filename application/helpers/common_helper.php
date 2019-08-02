@@ -4783,3 +4783,16 @@ function getchatuser($id) {
     $final= $query->result();
     return $final;
 }
+function getmax_creditid() {
+    $ci =& get_instance();
+    $ci->db->select_max('id'); 
+    $ci->db->from('hotel_tbl_agent_credit_detail'); 
+    $query = $ci->db->get()->result(); 
+    if (count($query)==0 || !isset($query[0]->id)) {
+      $maxID = 1;
+    } else {
+      $maxID = $query[0]->id+1;
+    }
+    return $maxID;
+
+}
