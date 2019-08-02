@@ -460,7 +460,8 @@ function init_front_tail()
 function init_front_head_dashboard($aside = true)
 {
     $CI =& get_instance();
-    $CI->load->view('frontend/components/dashboard_header');
+    $data['credit'] = $CI->db->query("select Credit_amount from hotel_tbl_agents where id='".$CI->session->userdata('agent_id')."'")->result();
+    $CI->load->view('frontend/components/dashboard_header',$data);
 }
 function init_front_head_footer($aside = true)
 {

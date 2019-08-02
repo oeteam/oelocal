@@ -400,94 +400,106 @@ s0.parentNode.insertBefore(s1,s0);
                       <div class="clearfix"></div>
                 </div>
                 <div class="navbar-collapse collapse">
-                      <ul class="nav navbar-nav navbar-right">
-                          <li><a href="<?php echo base_url(); ?>dashboard">Home</a></li>
-                          <li><a href="<?php echo base_url(); ?>hotels" class="active">Hotels</a></li>
-                          <li><a href="<?php echo base_url(); ?>transfer" class="active">Transfer</a></li>
-                          <li><a href="<?php echo base_url(); ?>tour" class="active">Tour</a></li>
-                         <!--  <li><a href="#">Sights</a></li>
-                          <li><a href="#">Transfer</a></li> -->
-                          <li class="favourite_dropdown dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-heart-o"></i><span class="d-mes active">0</span></a>
-                            <ul class="dropdown-menu">
-                                
-                            </ul>
-                          </li>
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $notify_count ?></span></a>
-                            <ul class="dropdown-menu">
-                              <li role="presentation">
-                                <a href="#" class="dropdown-menu-header">Notifications</a>
+                      <div class="row">
+                        <div class=" col-md-offset-3 col-md-2" style="margin-top:18px;font-weight: bold;">
+                          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: white;text-decoration: none;"><span><?php if($credit[0]->Credit_amount==0) {
+                             echo "Credit amount is 0";
+                           } else if($credit[0]->Credit_amount<100) {
+                              echo "Credit amount is low";
+                           }
+                          ?></span></a>
+                        </div>
+                        <div class="col-md-7">
+                          <ul class="nav navbar-nav navbar-right">
+                              <li><a href="<?php echo base_url(); ?>dashboard">Home</a></li>
+                              <li><a href="<?php echo base_url(); ?>hotels" class="active">Hotels</a></li>
+                              <li><a href="<?php echo base_url(); ?>transfer" class="active">Transfer</a></li>
+                              <li><a href="<?php echo base_url(); ?>tour" class="active">Tour</a></li>
+                             <!--  <li><a href="#">Sights</a></li>
+                              <li><a href="#">Transfer</a></li> -->
+                              <li class="favourite_dropdown dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-heart-o"></i><span class="d-mes active">0</span></a>
+                                <ul class="dropdown-menu">
+                                    
+                                </ul>
                               </li>
-                                <?php  if ($notify_count!=0) { ?>
-                                  <ul class="timeline timeline-icons timeline-sm" style="margin:10px;width:210px">
-                                    <?php foreach ($notify as $key => $value) {
-                                      if ($value->booking_flag==1) { ?>
-                                        <?php if ($value->readed==2){ ?>
-                                              <li class='msgbox  offset-0'>
-                                            <?php }else{ ?><li class='msgbox read offset-0'><?php } ?>
-                                            <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
-                                          <span class='opensans size13 dark'><b><?php echo $value->hotel_name ?></b></span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> Approved your booking</span></a></li>
-                                      <?php } 
-                                      if ($value->booking_flag==0) { ?>
-                                        <?php if ($value->readed==2){ ?>
-                                              <li class='msgbox  offset-0'>
-                                            <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
-                                          <span class='opensans size13 dark'><b> Rejected request</b> </span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> rejected your booking</span></a></li>
-                                      <?php }
-                                      if ($value->booking_flag==2) { ?>
-                                        <?php if ($value->readed==2){ ?>
-                                              <li class='msgbox  offset-0'>
-                                              <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
-                                            <span class='opensans size13 dark'><b>New booking request</b></span></br><span class='opensans size12 dark'>You are booked <?php echo $value->hotel_name ?></span></a></li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="d-mes active"><?php echo $notify_count ?></span></a>
+                                <ul class="dropdown-menu">
+                                  <li role="presentation">
+                                    <a href="#" class="dropdown-menu-header">Notifications</a>
+                                  </li>
+                                    <?php  if ($notify_count!=0) { ?>
+                                      <ul class="timeline timeline-icons timeline-sm" style="margin:10px;width:210px">
+                                        <?php foreach ($notify as $key => $value) {
+                                          if ($value->booking_flag==1) { ?>
+                                            <?php if ($value->readed==2){ ?>
+                                                  <li class='msgbox  offset-0'>
+                                                <?php }else{ ?><li class='msgbox read offset-0'><?php } ?>
+                                                <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                              <span class='opensans size13 dark'><b><?php echo $value->hotel_name ?></b></span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> Approved your booking</span></a></li>
+                                          <?php } 
+                                          if ($value->booking_flag==0) { ?>
+                                            <?php if ($value->readed==2){ ?>
+                                                  <li class='msgbox  offset-0'>
+                                                <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                              <span class='opensans size13 dark'><b> Rejected request</b> </span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> rejected your booking</span></a></li>
+                                          <?php }
+                                          if ($value->booking_flag==2) { ?>
+                                            <?php if ($value->readed==2){ ?>
+                                                  <li class='msgbox  offset-0'>
+                                                  <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                                <span class='opensans size13 dark'><b>New booking request</b></span></br><span class='opensans size12 dark'>You are booked <?php echo $value->hotel_name ?></span></a></li>
+                                          <?php } ?>
+                                        <?php }  ?>
+                                      </ul>
+                                         <li class='text-center viewmore'><a href='<?php echo base_url(); ?>Payment/all_notification'>view more</a></li>
+                                    <?php }  else { ?>
+                                       <li class='text-center viewmore'><a href="#">No Notifications</a></li> 
+                                   <?php } ?>
+                                 
+                                </ul>
+                              </li>
+                              <li class="dropdown">
+                                 <?php if ($flag_img!=""){ ?>
+                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #ffffff;"> / <?php echo $flag ?></span><b class="lightcaret mt-2"></b></a>
+                                      <?php } else {
+                                        $on_flag = onload_currency();
+                                        $onflag_i = substr($on_flag, 0, 2);
+                                        $onflag_img = strtolower($onflag_i);
+                                        ?>
+                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2"></b></a>
                                       <?php } ?>
-                                    <?php }  ?>
-                                  </ul>
-                                     <li class='text-center viewmore'><a href='<?php echo base_url(); ?>Payment/all_notification'>view more</a></li>
-                                <?php }  else { ?>
-                                   <li class='text-center viewmore'><a href="#">No Notifications</a></li> 
-                               <?php } ?>
-                             
-                            </ul>
-                          </li>
-                          <li class="dropdown">
-                             <?php if ($flag_img!=""){ ?>
-                                  <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #ffffff;"> / <?php echo $flag ?></span><b class="lightcaret mt-2"></b></a>
-                                  <?php } else {
-                                    $on_flag = onload_currency();
-                                    $onflag_i = substr($on_flag, 0, 2);
-                                    $onflag_img = strtolower($onflag_i);
-                                    ?>
-                                  <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2"></b></a>
-                                  <?php } ?>
-                            <ul class="dropdown-menu" style="width: 300px;">
-                               <?php  foreach ($contry as $key => $value2) { 
-                                  $country = $value2->currency_name;
-                                  $con= ($value2->currency_type);
-                                  $result = substr($con, 0, 2);
-                                  $img = strtolower($result);
-                                  $type= $value2->currency_type;
-                                  ?>
-                                <div class="col-sm-3 text-center">
-                                   <div class="row">
-                                        <li class="dropdown-header" title="<?php echo $country; ?>" style="cursor: pointer;"><a 
-                                          onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo base_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a></li> 
-                                        </li>
-                                   </div>
-                                </div>
-                               <?php    } ?>
-                            </ul>
-                          </li>
-                           <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo base_url(); ?>dashboard"><?php echo $name ?> <b class="lightcaret mt-2"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></li> 
-                                <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
-                                <li><a href="<?php echo base_url(); ?>backend/logout/agent_logout">Logout</a></li>
-                            </ul>
-                          </li> 
-                      </ul> -->
+                                <ul class="dropdown-menu" style="width: 300px;">
+                                   <?php  foreach ($contry as $key => $value2) { 
+                                      $country = $value2->currency_name;
+                                      $con= ($value2->currency_type);
+                                      $result = substr($con, 0, 2);
+                                      $img = strtolower($result);
+                                      $type= $value2->currency_type;
+                                      ?>
+                                    <div class="col-sm-3 text-center">
+                                       <div class="row">
+                                            <li class="dropdown-header" title="<?php echo $country; ?>" style="cursor: pointer;"><a 
+                                              onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo base_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a></li> 
+                                            </li>
+                                       </div>
+                                    </div>
+                                   <?php    } ?>
+                                </ul>
+                              </li>
+                               <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo base_url(); ?>dashboard"><?php echo $name ?> <b class="lightcaret mt-2"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></li> 
+                                    <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
+                                    <li><a href="<?php echo base_url(); ?>backend/logout/agent_logout">Logout</a></li>
+                                </ul>
+                              </li> 
+                          </ul> 
+                        </div>
                       </div>
+                    </div>
               <!-- LEFT MENU -->
               <!-- RIGHT CPNTENT -->
             <div class="dashboard-right  offset-0">

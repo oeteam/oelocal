@@ -23,6 +23,11 @@ class Telr_gateway extends App_gateway {
         $total = $this->ci->session->userdata('totalamount');
         redirect(site_url('gateways/telr/make_payment_xml_booking?total=' . $total.'&currency='.$currency));
     }
+    public function process_payment_creditAmount($data)  {
+        $currency = $this->ci->session->userdata('credit_currency');
+        $total = $this->ci->session->userdata('credit_amount');
+        redirect(site_url('gateways/telr/make_payment_creditAmount?total=' . $total.'&currency='.$currency));
+    }
 }
 
 
