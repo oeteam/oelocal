@@ -48,14 +48,27 @@
                                           <label for="to_date" class="input-group-addon"><i class="fa fa-calendar"></i></label>
                                           </div>
                                     </div>
-                                    <div class="col-md-4">
+                                   <div class="col-md-2">
                                       <div class="form-group">
-                                         <label>Select Hotel</label>
-                                          <select name="hotels" id="hotels">
+                                         <label>Select User</label>
+                                          <select name="user" id="user">
                                             <option value="">--select--</option>
                                             <?php 
-                                              foreach ($view as $key => $value) { ?>
-                                                  <option value="<?php echo $value->hotel_id; ?>"><?php echo $value->hotel_name; ?></option>
+                                              foreach ($users as $key => $value) { ?>
+                                                  <option value="<?php echo $value->id; ?>"><?php echo $value->First_Name." ".$value->Last_Name; ?></option>
+
+                                            <?php } ?>
+                                          </select>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div class="form-group">
+                                         <label>Select Hotel</label>
+                                          <select name="hotels" id="hotels" onchange="contractSelect();">
+                                            <option value="">--select--</option>
+                                            <?php 
+                                              foreach ($hotels as $key => $value) { ?>
+                                                  <option value="<?php echo $value->id; ?>"><?php echo $value->hotel_name; ?></option>
 
                                             <?php } ?>
                                           </select>
@@ -63,10 +76,12 @@
                                   </div>
                                   <div class="col-md-2">
                                       <div class="form-group">
-                                         <label>Select Contract</label>
-                                         <select name="hotel_contract" id="hotel_contract">
+                                         <label for="contracts">Select Contract</label>
+                                          <div class="multi-select-mod multi-select-trans1 input-hide">
+                                          <select name="contracts" id="contracts" class="form-control">
                                             <option value="">--select--</option>
                                           </select>
+                                        </div>
                                       </div>
                                   </div>
                                   <div class="form-group col-md-2 ">
@@ -156,6 +171,9 @@
     function CancellationPolicyTableLoad() {
     	var from_date = $("#from_date").val();
     	var to_date   = $("#to_date").val();
+      var hotel = $('#hotels option:selected').val();
+      var user = $('#user option:selected').val();
+      var contract = $('#contracts option:selected').val();
 	    var CancellationPolicyTable = $('#CancellationPolicyTable').dataTable({
 	        "bDestroy": true,
 	         dom: 'lBfrtip',
@@ -163,7 +181,7 @@
 	              'copy', 'csv', 'excel', 'pdf', 'print'
 	          ],
 	        "ajax": {
-	          url : base_url+'backend/common/CancellationPolicyLogList?from_date='+from_date+'&to_date='+to_date,
+	          url : base_url+'backend/common/CancellationPolicyLogList?from_date='+from_date+'&to_date='+to_date+'&hotel='+hotel+'&user='+user+'&contract='+contract,
 	          type : 'POST' 
 	          },
 
@@ -171,6 +189,22 @@
 	               $('[data-toggle="tooltip"]').tooltip();          
 	        }
 	    });
+    }
+    function contractSelect(){
+        $('#contracts option').remove();
+        var hotel = $('#hotels option:selected').val();
+        $.ajax({
+            url: base_url+'backend/Common/ContractSelect?hotelid='+hotel,
+            type: "POST",
+            data:{},
+            dataType: "json",
+            success:function(data) {
+              $('#contracts').append('<option value="">Select</option>');
+                $.each(data, function(i, v) {
+                  $('#contracts').append('<option value="'+v.contract_id +'">'+ v.contract_id +'</option>');
+                });
+            }
+        });
     }
     
 </script>

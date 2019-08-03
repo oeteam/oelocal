@@ -1161,6 +1161,8 @@ class Common extends MY_Controller {
     echo json_encode($return);
   }
   public function boardsupplementLog() {
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
     $data['view']= $this->Hotels_Model->check_room();
     $this->load->view('backend/general/boardsupplementLog',$data);
   }
@@ -1205,7 +1207,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function generalsupplementLog() {
-    $this->load->view('backend/general/generalsupplementLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/generalsupplementLog',$data);
   }
   public function GeneralSupplementLogList() {
     $data = array();
@@ -1255,7 +1259,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function extrabedLog() {
-    $this->load->view('backend/general/extrabedLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/extrabedLog',$data);
   }
   public function extrabedLogList() {
     $data = array();
@@ -1298,7 +1304,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function cancellationLog() {
-    $this->load->view('backend/general/cancellationLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/cancellationLog',$data);
   }
   public function CancellationPolicyLogList() {
     $data = array();
@@ -1341,7 +1349,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function minimumstayLog() {
-    $this->load->view('backend/general/minimumstayLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/minimumstayLog',$data);
   }
   public function MinimumStayLogList() {
     $data = array();
@@ -1375,7 +1385,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function closedoutLog() {
-    $this->load->view('backend/general/closedoutLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/closedoutLog',$data);
   }
   public function closedoutLogList() {
     $data = array();
@@ -1412,7 +1424,9 @@ class Common extends MY_Controller {
       exit();
   }
   public function allotmentLog() {
-    $this->load->view('backend/general/allotmentLog');
+    $data['users'] = $this->Common_Model->user_select();
+    $data['hotels'] = $this->Common_Model->hotel_select();
+    $this->load->view('backend/general/allotmentLog',$data);
   }
   public function allotmentLogList() {
     $data = array();
@@ -1444,6 +1458,10 @@ class Common extends MY_Controller {
       );
       echo json_encode($output);
       exit();
+  }
+  public function ContractSelect() {
+      $data = $this->Common_Model->ContractSelect($_REQUEST['hotelid']);
+      echo json_encode($data);
   }
 }
 

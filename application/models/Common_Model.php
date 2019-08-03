@@ -785,6 +785,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -797,6 +806,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+     if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -809,6 +827,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -821,6 +848,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -833,6 +869,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -845,6 +890,15 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+      $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
@@ -857,10 +911,43 @@ class Common_Model extends CI_Model {
     $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
     $this->db->where('DATE(a.CreatedDate) >=',$request['from_date']);
     $this->db->where('DATE(a.CreatedDate) <=',$request['to_date']);
+    if(isset($request['user']) && $request['user']!="") {
+        $this->db->where('a.CreatedBy',$request['user']);
+    }
+    if(isset($request['hotel']) && $request['hotel']!="") {
+      $this->db->where('a.hotel_id',$request['hotel']);
+    }
+    if(isset($request['contract']) && $request['contract']!="") {
+      $this->db->where('a.contract_id',$request['contract']);
+    }
     $this->db->order_by('a.id','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
     return $result; 
+  }
+  public function user_select() {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_user');
+    $this->db->where('Del_Flag',1);
+    $this->db->order_by('id','desc');
+    $query=$this->db->get();
+    return $query->result();
+  }
+  public function hotel_select() {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_hotels');
+    $this->db->where('delflg',1);
+    $this->db->order_by('id','desc');
+    $query=$this->db->get();
+    return $query->result();
+  }
+  public function ContractSelect($hotelid) {
+    $this->db->select('*');
+    $this->db->from('hotel_tbl_contract');
+    $this->db->where('hotel_id',$hotelid);
+    $this->db->order_by('id','desc');
+    $query=$this->db->get();
+    return $query->result();
   }
 }
 
