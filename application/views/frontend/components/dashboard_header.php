@@ -402,12 +402,14 @@ s0.parentNode.insertBefore(s1,s0);
                 <div class="navbar-collapse collapse">
                       <div class="row">
                         <div class=" col-md-offset-3 col-md-2" style="margin-top:18px;font-weight: bold;">
-                          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: white;text-decoration: none;"><span><?php if($credit[0]->Credit_amount==0) {
-                             echo "Credit amount is 0";
-                           } else if($credit[0]->Credit_amount<100) {
-                              echo "Credit amount is low";
-                           }
-                          ?></span></a>
+                          <?php if($credit[0]->Credit_amount==0) { ?>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount is 0"; ?></span></a>
+                          <?php  } else if($credit[0]->Credit_amount<100) { ?>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount is low"; ?></span></a>
+                          <?php } else { ?>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: white;text-decoration: none;"><span><?php echo "Credit amount is ".$credit[0]->Credit_amount;?></span></a>
+                          <?php } ?>
+                          
                         </div>
                         <div class="col-md-7">
                           <ul class="nav navbar-nav navbar-right">

@@ -205,6 +205,8 @@
       <div class="container">
 		<div class="navbar mtnav">
 			<div class="container offset-3">
+        <div class="row">
+          <div class="col-md-2">
 			  <!-- Navigation-->
 			  <div class="navbar-header">
 				<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
@@ -214,6 +216,17 @@
 				</button>
 				<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo base_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
 			  </div>
+      </div>
+      <div class="col-md-2" style="margin-top: 22px">
+        <?php if($credit[0]->Credit_amount==0) { ?>
+          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount is 0"; ?></span></a>
+        <?php  } else if($credit[0]->Credit_amount<100) { ?>
+          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount is low"; ?></span></a>
+        <?php } else { ?>
+          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: black;text-decoration: none;"><span><?php echo "Credit amount is ".$credit[0]->Credit_amount;?></span></a>
+        <?php } ?>
+      </div>
+      <div class="col-md-8">
 			  <div class="navbar-collapse collapse">
 			  	<?php $all_notification_count = agent_portal_notify_count();
                       $all_count = count(($all_notification_count));
@@ -332,6 +345,9 @@
             </li>
 				</ul>
 			  </div>
+      </div>
+    </div>
+
 			  <!-- /Navigation-->			  
 			</div>
         </div>

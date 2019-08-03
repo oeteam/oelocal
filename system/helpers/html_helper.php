@@ -446,7 +446,8 @@ function init_front_side($aside = true)
 function init_front_head_menu()
 {
     $CI =& get_instance();
-    $CI->load->view('frontend/components/headermenu');
+    $data['credit'] = $CI->db->query("select Credit_amount from hotel_tbl_agents where id='".$CI->session->userdata('agent_id')."'")->result();
+    $CI->load->view('frontend/components/headermenu',$data);
 }
 /**
  * Init admin footer/tails
