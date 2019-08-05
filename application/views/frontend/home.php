@@ -224,9 +224,13 @@
 		        <a href="#"><div class="circle-tile-heading dark-blue"><i class="fa fa-credit-card fa-fw fa-3x"></i></div></a>
 		        <div class="circle-tile-content dark-blue">
 		          <div class="circle-tile-number text-faded">Credit Info</div>
-		          <div class="circle-tile-description text-faded">Available<span class="countervenue"><?php echo currency_type($available[0]->Preferred_Currency,$available[0]->Credit_amount).' '.$available[0]->Preferred_Currency ?></span><span>:</span></div>
-		          <div class="circle-tile-description text-faded">Used<span class="countervenue"><?php echo currency_type($available[0]->Preferred_Currency,$used).' '.$available[0]->Preferred_Currency ?></span><span>:</span></div>
-		          <div class="circle-tile-description text-faded"> Total<span class="countervenue"><?php echo currency_type($available[0]->Preferred_Currency,$available[0]->Credit_amount+$used).' '.$available[0]->Preferred_Currency ?></span><span>:</span></div>
+		          <div class="circle-tile-description text-faded">Available<span class="countervenue"><?php //echo currency_type($available[0]->Preferred_Currency,$available[0]->Credit_amount).' '.$available[0]->Preferred_Currency;
+              echo  agent_currency()." ".currency_type(agent_currency(),$available[0]->Credit_amount)?></span><span>:</span></div>
+		          <div class="circle-tile-description text-faded">Used<span class="countervenue"><?php //echo currency_type($available[0]->Preferred_Currency,$used).' '.$available[0]->Preferred_Currency;
+              echo  agent_currency()." ".currency_type(agent_currency(),$used) 
+              ?></span><span>:</span></div>
+		          <div class="circle-tile-description text-faded"> Total<span class="countervenue"><?php //echo currency_type($available[0]->Preferred_Currency,$available[0]->Credit_amount+$used).' '.$available[0]->Preferred_Currency;
+              echo  agent_currency()." ".currency_type(agent_currency(),$available[0]->Credit_amount+$used)  ?></span><span>:</span></div>
 		        </div>
 	     	</div>
 		</div>

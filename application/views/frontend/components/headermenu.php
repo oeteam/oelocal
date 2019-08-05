@@ -223,7 +223,7 @@
         <?php  } else if($credit[0]->Credit_amount<100) { ?>
           <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount is low"; ?></span></a>
         <?php } else { ?>
-          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: black;text-decoration: none;"><span><?php echo "Credit amount is ".$credit[0]->Credit_amount;?></span></a>
+          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: black;text-decoration: none;"><span><?php echo "Credit amount is ".agent_currency()." ".currency_type(agent_currency(),$credit[0]->Credit_amount)?></span></a>
         <?php } ?>
       </div>
       <div class="col-md-8">

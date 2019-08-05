@@ -973,7 +973,7 @@
 					    ?>
 		              	<h5 class="b-rates--grand">GRAND TOTAL : 
 		              	<span class="right"><?php echo agent_currency(); ?> 
-			              	<span class="b-rates--grand-total"><?php echo currency_type(agent_currency(),$finalAmount) ?> </span>
+			              	<span class="b-rates--grand-total"><?php echo currency_type(agent_currency(),$finalAmount);?> </span>
 						</span>
 						</h5>
 						<?php 

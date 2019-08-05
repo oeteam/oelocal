@@ -12,7 +12,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h3>Load Credit Amount</h3>	<br>
-							<p>Your credit amount is <?php echo $credit[0]->Credit_amount ?></p>						
+							<p>Your credit amount is <?php echo  agent_currency()." ".currency_type(agent_currency(),$credit[0]->Credit_amount) ?></p>						
 						</div>
 						<div class="clearfix"></div>
 						</br>
@@ -51,3 +51,4 @@
         }
     });
 </script>
+<?php init_front_head_footer(); ?> 
