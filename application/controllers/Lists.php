@@ -32,6 +32,13 @@ class lists extends MY_Controller {
     $data['nationality'] = $this->List_Model->getNationality();
     $data['hotel_facilities_list'] = $this->List_Model->hotel_facilities_list();
     // permission_get();
+     //  $this->output->enable_profiler(TRUE);
+     //  $sections = array(
+     //    'config'  => TRUE,
+     //    'queries' => TRUE
+     //  );
+
+     // $this->output->set_profiler_sections($sections);
     $this->load->view('frontend/lists/index',$data); 
   }
   public function fav_search_list(){

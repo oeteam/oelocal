@@ -1739,10 +1739,20 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       echo json_encode(true);
     }
     public function dummy() {
-     // $total = $this->Payment_Model->TotalBookingAmountDetailsGet(136);
+      $this->output->enable_profiler(TRUE);
+      $sections = array(
+        'config'  => TRUE,
+        'queries' => TRUE
+      );
+
+     $this->output->set_profiler_sections($sections);
+     // $this->benchmark->mark('starting_point');
+     // $this->benchmark->mark('ending_point');
+     
+     $total = $this->Payment_Model->hotel_details_view(48);
      // print_r($total);
       // xmlbookingMailNotification(1);
-     emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'65','137','','0','On Requst');
+     // emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'65','137','','0','On Requst');
     }
     public function offlineRequest() {
       $this->load->view('frontend/offlineRequest');

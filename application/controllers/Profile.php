@@ -142,7 +142,7 @@ class Profile extends MY_Controller {
   public function loadcreditamount() {
         $pay_currency = agent_currency();
         if($pay_currency!='AED') {
-          $amt = currency_type('AED',$_REQUEST['amount']);
+          $amt = currency_type_aed($pay_currency,'AED',$_REQUEST['amount']);
         } else {
           $amt = $_REQUEST['amount'];
         }

@@ -729,7 +729,7 @@
 							<input type="hidden" name="mark_up" value="0">
 							<input type="hidden" name="Check_in" value="<?php echo $_REQUEST['Check_in'] ?>">
 							<input type="hidden" name="Check_out" value="<?php echo $_REQUEST['Check_out'] ?>">
-							<input type="hidden" name="view_type" value="<?php echo $_REQUEST['view_type'] ?>">
+							<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
 							<input type="hidden" name="location" value="<?php echo $_REQUEST['location'] ?>">
 							<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
 							<input type="hidden" name="hotel_name" value="<?php echo $_REQUEST['hotel_name'] ?>">
