@@ -7,7 +7,12 @@ function redirect_ssl() {
     if(!in_array($class,$exclude)) {
         // redirecting to ssl.
         $CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
-        if ($_SERVER['HTTP_X_FORWARDED_PROTO']=='http') {
+            
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            if ($_SERVER['HTTP_X_FORWARDED_PROTO']=='http') {
+                redirect(base_url().$CI->uri->uri_string());
+            }
+        } else {
             redirect(base_url().$CI->uri->uri_string());
         }
         if ($_SERVER['SERVER_PORT'] != 80) redirect($CI->uri->uri_string());
