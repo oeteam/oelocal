@@ -2,6 +2,15 @@
 
 function redirect_ssl() {
     $CI =& get_instance();
+
+    // Maintainance page start
+    $blockurl  = 'http://localhost/works/oelocal/index.php';
+    if (current_url()==$blockurl) {
+        $CI->load->view('index1');
+
+    }
+    // Maintainance page end
+
     $class = $CI->router->fetch_class();
     $exclude =  array('client');  // add more controller name to exclude ssl.
     if(!in_array($class,$exclude)) {
