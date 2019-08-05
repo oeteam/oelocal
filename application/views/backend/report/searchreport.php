@@ -58,7 +58,7 @@
                                     <div class="form-group col-md-2">
                                           <label for="from_date">Country</label>
                                           <select name="ConSelect" id="ConSelect">
-                                            <option value=""></option>
+                                            <option value="">Select</option>
                                             <?php $count=count($view);
                                             for ($i=0; $i <$count ; $i++) { ?>
                                             <option value="<?php echo $view[$i]->id;?>"><?php echo $view[$i]->name; ?></option>
@@ -123,8 +123,18 @@
 </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
+<link href="<?php echo base_url(); ?>assets/select2/select2.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo base_url(); ?>assets/select2/select2.min.js" type="text/javascript"></script>
 <script>
-    $("#from_date").datepicker({
+  $("#agent_id").select2({
+    width: '100%'
+  });
+  $("#ConSelect").select2({
+    width: '100%'
+  });
+  $("#rooms").select2({
+    width: '100%'
+  });    $("#from_date").datepicker({
       yearRange: "2016:<?php echo date('Y' ,strtotime('+2 year')) ?>",
       altField: "#alternate1",
       // altField: "#alternate",
