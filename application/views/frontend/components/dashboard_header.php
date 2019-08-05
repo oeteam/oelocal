@@ -403,16 +403,16 @@ s0.parentNode.insertBefore(s1,s0);
                       <div class="row">
                         <div class=" col-md-offset-3 col-md-2" style="margin-top:18px;font-weight: bold;">
                           <?php if($credit[0]->Credit_amount==0) { ?>
-                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount is 0"; ?></span></a>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount : 0"; ?></span></a>
                           <?php  } else if($credit[0]->Credit_amount<100) { ?>
-                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount is low"; ?></span></a>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount : ".currency_type(agent_currency(),$credit[0]->Credit_amount)." ".agent_currency()?></span></a>
                           <?php } else { ?>
-                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: white;text-decoration: none;"><span><?php echo "Credit amount is ".agent_currency()." ".currency_type(agent_currency(),$credit[0]->Credit_amount)?></span></a>
+                            <a href="<?php echo base_url(); ?>profile/creditamount" style="color: white;text-decoration: none;"><span><?php echo "Credit amount : ".currency_type(agent_currency(),$credit[0]->Credit_amount)." ".agent_currency()?></span></a>
                           <?php } ?>
                           
                         </div>
                         <div class="col-md-7">
-                          <ul class="nav navbar-nav navbar-right">
+                          <ul class="nav navbar-nav navbar-right" style="margin-right: 2%;">
                               <li><a href="<?php echo base_url(); ?>dashboard">Home</a></li>
                               <li><a href="<?php echo base_url(); ?>hotels" class="active">Hotels</a></li>
                               <li><a href="<?php echo base_url(); ?>transfer" class="active">Transfer</a></li>

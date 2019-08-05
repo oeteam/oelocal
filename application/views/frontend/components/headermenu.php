@@ -217,14 +217,8 @@
 				<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo base_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
 			  </div>
       </div>
-      <div class="col-md-2" style="margin-top: 22px">
-        <?php if($credit[0]->Credit_amount==0) { ?>
-          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount is 0"; ?></span></a>
-        <?php  } else if($credit[0]->Credit_amount<100) { ?>
-          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount is low"; ?></span></a>
-        <?php } else { ?>
-          <a href="<?php echo base_url(); ?>profile/creditamount" style="color: black;text-decoration: none;"><span><?php echo "Credit amount is ".agent_currency()." ".currency_type(agent_currency(),$credit[0]->Credit_amount)?></span></a>
-        <?php } ?>
+      <div class="col-md-2">
+        
       </div>
       <div class="col-md-8">
 			  <div class="navbar-collapse collapse">
@@ -255,7 +249,17 @@
 	                    $notify_count = "0";
 	                 }
 	            ?>
-				<ul class="nav navbar-nav navbar-right" style="margin-top: 5px">
+              <p style="margin-bottom: 0px;text-align: right;font-size: 12px;">
+            <?php if($credit[0]->Credit_amount==0) { ?>
+              <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span> <?php echo "Credit amount : 0"; ?></span></a>
+            <?php  } else if($credit[0]->Credit_amount<100) { ?>
+              <a href="<?php echo base_url(); ?>profile/creditamount" style="color: red;text-decoration: none;"><span><?php echo "Credit amount : ".currency_type(agent_currency(),$credit[0]->Credit_amount)." ".agent_currency()?></span></a>
+            <?php } else { ?>
+              <a href="<?php echo base_url(); ?>profile/creditamount" style="color: #0074b9;text-decoration: none;"><span><?php echo "Credit amount : ".currency_type(agent_currency(),$credit[0]->Credit_amount)." ".agent_currency()?></span></a>
+            <?php } ?>
+            </p>
+				<ul class="nav navbar-nav navbar-right" sstyle="margin-top: 5px">
+            
 					  <li><a href="<?php echo base_url(); ?>dashboard">Home</a></li>
 					  <li><a href="<?php echo base_url(); ?>hotels" class="active">Hotels</a></li>
             <li><a href="<?php echo base_url(); ?>transfer" class="active">Transfer</a></li>
