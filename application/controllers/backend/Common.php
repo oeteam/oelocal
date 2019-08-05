@@ -1020,7 +1020,7 @@ class Common extends MY_Controller {
         foreach($paymentdata->result() as $key => $r) {
             $data[] = array(
               $key+1,
-              $r->bookingid,
+              $r->bookingId,
               date('d/m/Y' ,strtotime($r->date)),
               $r->transactionId,
               $r->orderNumber,

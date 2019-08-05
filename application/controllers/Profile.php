@@ -156,6 +156,16 @@ class Profile extends MY_Controller {
         $credit = $this->db->query("select Credit_amount from hotel_tbl_agents where id='".$this->session->userdata('agent_id')."'")->result();
         $amount=$_REQUEST['amount'];
         $add_credit= $this->Profile_Model->add_credit_agent_($credit[0]->Credit_amount,$amount);
+        $data = array('bookingId' => 'AgentCredit-'.$add_credit,
+                    'amount' => $amount,
+                    'currency' => $_REQUEST['currency'],
+                    'transactionId' => $_REQUEST['transid'],
+                    'orderNumber' => $_REQUEST['ordernumber'],
+                    'method' => $_REQUEST['gateway'],
+                    'date' => date('Y-m-d H:i:s'),
+                    'agentId' => $this->session->userdata('agent_id'),
+                    'provider' => 'Agent Credit');
+        $result = $this->Profile_Model->addpaymentrecords($data);
         redirect("../profile/creditamount");
       }
       else if($_REQUEST['msg']=='failed') {

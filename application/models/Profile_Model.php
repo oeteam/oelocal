@@ -196,9 +196,14 @@ class Profile_Model extends CI_Model {
                     'created_by'     => $this->session->userdata('agent_name'),
                 );
       $this->db->insert('hotel_tbl_agent_credit_detail',$data);
+      $insert_id = $this->db->insert_id();
       $data1= array( 'Credit_amount'   => $amount+$credit,);
       $this->db->where('id',$this->session->userdata('agent_id'));
       $this->db->update('hotel_tbl_agents',$data1);
+      return $insert_id;
+  }
+  public function addpaymentrecords($data) {
+      $this->db->insert('tbl_onlinepaymentrecords',$data);
       return true;
   }
 
