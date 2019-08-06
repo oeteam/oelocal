@@ -3146,6 +3146,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       }
       else if($_REQUEST['msg']=='failed') {
         $data = $this->session->userdata('booking_data');
+        //sprint_r($data);exit;
         $data = array_merge($data,$_REQUEST);
         redirect(base_url().'/Payment/payment_booking?'.http_build_query($data));
       }

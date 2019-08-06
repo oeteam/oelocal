@@ -441,6 +441,7 @@
         				// stay and pay dicount end 
 
 					?>
+					<input type="hidden" name="Room<?php echo $RAkey+1?>" value="<?php echo $contractId.'-'.$RoomId ?>">
 					<input type="hidden" name="RoomIndex[]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
 	            	<div class="row payment-table-wrap">
 	            		<div class="col-md-12">
