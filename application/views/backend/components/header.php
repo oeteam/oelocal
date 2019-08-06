@@ -88,7 +88,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
 
     <script type="text/javascript">
     // var socket = io.connect("http://162.144.60.192:8890?adminid=<?php echo $this->session->userdata('id') ?>");
-    var socket = io.connect("http://localhost:8890?adminid=<?php echo $this->session->userdata('id') ?>");
+    // var socket = io.connect("http://localhost:8890?adminid=<?php echo $this->session->userdata('id') ?>");
 
         var base_url = "<?php  echo base_url();?>"; 
         // var myVar = setInterval(myTimer, 1000);
@@ -349,7 +349,7 @@ $(window).load(function() {
                         <?php if (count($Booking)!=0 && isset($Booking[0]->view) && $Booking[0]->view!=0) { ?>
                         <a class="waves-effect btn-noti dropdown-toggle" id="calendar_filter" href="<?php echo base_url(); ?>backend/booking"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
                 <?php } ?>
-                <a class="waves-effect btn-noti dropdown-toggle" id="open_chat_list"  href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a>
+                <!-- <a class="waves-effect btn-noti dropdown-toggle" id="open_chat_list"  href="#"><i class="fa fa-wechat" aria-hidden="true"></i></a> -->
 </div>                  
 
                 <!-- Dropdown Structure -->

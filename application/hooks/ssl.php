@@ -4,11 +4,9 @@ function redirect_ssl() {
     $CI =& get_instance();
 
     // Maintainance page start
-    $blockurl  = 'http://localhost/works/oelocal/index.php';
-    if (current_url()==$blockurl) {
-        $CI->load->view('index1');
-
-    }
+    // if (count(explode('http://otelseasy.com', current_url()))==2) {
+    //     $CI->load->view('index1');
+    // }
     // Maintainance page end
 
     $class = $CI->router->fetch_class();
@@ -17,6 +15,10 @@ function redirect_ssl() {
         // redirecting to ssl.
         $CI->config->config['base_url'] = str_replace('http://', 'https://', $CI->config->config['base_url']);
             
+        $url = explode("www", $_SERVER['HTTP_HOST']);
+        if (count($url)==2) {
+            redirect(base_url().$CI->uri->uri_string());
+        }
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             if ($_SERVER['HTTP_X_FORWARDED_PROTO']=='http') {
                 redirect(base_url().$CI->uri->uri_string());
