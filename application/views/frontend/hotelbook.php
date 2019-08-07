@@ -449,6 +449,17 @@ let RoomCombination = new Array();
 RoomCombination = <?php echo json_encode($RoomCombination) ?>;
 $(".xml-default").remove();
 function RoomCombinationinitCheck() {
+  
+  $(".r-type--room .r-type--list").each(function(j,u) {
+      var defVal = $(u).find(".roomlist .com-amnt").val();
+    $(u).find(".roomlist").each(function(i,v){
+        if (defVal > $(v).find(".com-amnt").val()) {
+            $(u).prepend($(this));
+        }
+      })
+  })
+  $('input[name="Room1"]:first').prop('checked',true);
+  
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {
    if (isNaN(RoomCombination.RoomIndex)) {
@@ -520,18 +531,22 @@ function goBack() {
 }
 //defaultRateCheck(); 
 function defaultcheck() {
-  var room1 =  $('input[name="Room1"]:checked').val();
-  $.each(RoomCombination,function(j,v) {
-    if (isNaN(RoomCombination.RoomIndex)) {
-      if (v.RoomIndex[0]==room1) {
-        for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
-           if (j==0) {
-              $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
-          }
-        }
-      }
+  
+  // var room1 =  $('input[name="Room1"]:checked').val();
+  // $.each(RoomCombination,function(j,v) {
+  //   if (isNaN(RoomCombination.RoomIndex)) {
+  //     if (v.RoomIndex[0]==room1) {
+  //       for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+  //          if (j==0) {
+  //             $('#Room'+i+v.RoomIndex[i-1]).prop('checked',true);
+  //         }
+  //       }
+  //     }
+  //   }
+  // });
+  for (var i = 2; i <= <?php echo count($_REQUEST['adults']) ?>; i++) {
+        $('input[name="Room'+i+'"]:first').prop('checked',true);
     }
-  });
 }
 function defaultRateCheck() {
 	if ($("#def_rid").val()!="" && $("#def_cid").val()!="") {

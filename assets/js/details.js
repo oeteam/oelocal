@@ -427,7 +427,7 @@ function available_check(){
 }
 function sortDetailsPrice() {
   $(".contractCheckDiv .roomRateCheckdiv").each(function(j,u) {
-      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      var defVal = $(u).find(" .price").attr('srt-price');
       $(u).find(" .price").each(function(i,v){
         if (defVal < $(v).attr('srt-price') ) {
             $(u).prepend($(this).closest('.col-md-12'));
@@ -436,7 +436,7 @@ function sortDetailsPrice() {
   })
 
   $(".contractCheckDiv .roomRateCheckdiv").each(function(j,u) {
-      var defVal = $(u).find(" .price:first-child").attr('srt-price');
+      var defVal = $(u).find(" .price").attr('srt-price');
       $(u).find(" .price").each(function(i,v){
         if (defVal > $(v).attr('srt-price') ) {
             $(u).prepend($(this).closest('.col-md-12'));
