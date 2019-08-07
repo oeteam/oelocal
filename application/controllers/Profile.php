@@ -106,7 +106,7 @@ class Profile extends MY_Controller {
 	  $result = $this->Profile_Model->agent_reg_insert($_REQUEST,$data['agent_max_id']);
     handle_license_upload($result);
     OtherlogActivity('New agent registered [ID: '.$result.', Agent ID: '.$data['agent_max_id'].']');
-	  RegisteringMail($result,'agent');
+	  // RegisteringMail($result,'agent');
     	// $data = $this->Profile_Model->agent_reg_insert($_REQUEST);
     redirect("../profile/agent_registered");
 

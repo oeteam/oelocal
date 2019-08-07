@@ -397,8 +397,8 @@ $data = title();
       <div class="col-sm-1"></div>
       <div class="col-sm-12">
         <div class="row">
-         <div class="col-sm-3"></div>
-         <div class="col-sm-5">
+         
+         <div class="col-sm-6">
            <div class=form-horizondal>
             <div class="form-group">
               <label for="username" class="col-sm-3 control-label fontstyl" style="">Username<span class="starcolor">*</span></label>
@@ -433,8 +433,14 @@ $data = title();
             </div>
           </div>                              
         </div>
-        <div class="col-sm-6">
-        </div>
+        <div class="col-sm-4">
+          <div class="form-horizondal">
+            <div class="col-md-12">
+              <div id="captureSignature" class="" style="width: 100%;height: 200px;"></div>
+              <button type="button" class="clearSign btn btn-sm btn-primary"> clear</button>
+            </div>
+          </div>
+         </div>
       </div>  
       <div class="modal-footer regclassfooter">
       </div>
@@ -518,11 +524,24 @@ $data = title();
 </div>
 </div>
 </div>
+<textarea id="signatureJSON" class="hide" name="signature"></textarea>
 </form>
-
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
+<link type="text/css" href="http://keith-wood.name/css/jquery.signature.css" rel="stylesheet"> 
 
 <!-- End of Container  -->
-
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#captureSignature').signature({syncField: '#signatureJSON'}); 
+        var syncFormat = 'PNG'; 
+        $('#captureSignature').signature('option', 'syncFormat', syncFormat); 
+        
+        $('.clearSign').click(function() { 
+          $('#captureSignature').signature('clear'); 
+        }); 
+   })
+</script>
 <!-- Javascript  -->
 <script src="<?php echo base_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
 <script src="<?php echo base_url(); ?>skin/assets/js/jquery.easing.js"></script>

@@ -179,7 +179,7 @@
                                                 ?>
                                                 <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                         <?php } else {
-                                            if($i==date('m')) {?>
+                                            if(!isset($_REQUEST['month']) && $i==date('m')) {?>
                                                 <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
 
                                          <?php } else {
