@@ -167,7 +167,9 @@ function hotelLoading(flag) {
     }
 }
 function search_ajax() {
-
+  $(".itemscontainer").animate({
+          scrollTop:  0
+     });
   var page = 0;
     $(".itemscontainer").scroll(function() {
         if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
