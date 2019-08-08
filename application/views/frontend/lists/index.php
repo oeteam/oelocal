@@ -720,7 +720,7 @@
 							</form>
 					</div>
 						<!-- END OF BOOK FILTERS -->	
-
+						<input type="hidden" id="scroll-cnt" value="1">
 						<div class="line2 hidden-xs"></div>
 						<form id="search_form"  method="post" class="hidden-xs">
 							<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">

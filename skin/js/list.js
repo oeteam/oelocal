@@ -99,6 +99,44 @@ $(document).ready(function() {
     
   });
 
+    var page = 0;
+    $(".itemscontainer").scroll(function() {
+        // if($(".itemscontainer").scrollTop() + $(".itemscontainer").height() >= $(".itemscontainer").height()) {
+        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+            page++;
+            if ($("#scroll-cnt").val()!=0) {
+              $("#page").val(page);
+              loadMoreData(page);
+            }
+        }
+    });
+
+ function loadMoreData(page) {
+    $.ajax(
+          {
+              url: base_url+'lists/search_list',
+              data: $('#search_form').serialize(),
+              type: "get",
+              dataType: 'json',
+              cache: false,
+              beforeSend: function()
+              {
+                  // $('.ajax-load').show();
+              }
+          })
+          .done(function(response)
+          {
+              $("#scroll-cnt").val(response.cnt);
+              console.log(response.cnt);
+              if (response.cnt!=0) {
+                $("#result_search").append(response.list);
+              }
+          })
+          .fail(function(jqXHR, ajaxOptions, thrownError)
+          {
+                alert('server not responding...');
+          });
+}
   search_ajax();
   FullLoading('stop');
   // setTimeout(function(){ search_ajax(); }, 3000);
@@ -154,6 +192,8 @@ function hotelLoading(flag) {
     }
 }
 function search_ajax() {
+  $("#page").val(0);
+  $("#scroll-cnt").val(1);
   if ($("#datepicker").val()=="") {
     alert("Must select check in date");
   } else if ($("#datepicker2").val()=="") {
@@ -173,11 +213,6 @@ function search_ajax() {
         $("#result_search").html(response.list);
         count(response.counthotel,response.countprice);        
         StartAnime2();
-        // var random = Math.floor((Math.random() * 10) + 1);
-        // if (response.maxprice!=undefined) {
-        //   $(".Slider-class").html('<input id="Slider'+random+'" type="slider" name="price" value="10;'+response.maxprice+'" />');
-        //   $("#Slider"+random).slider({ from: 10, to: response.maxprice, step: 5, smooth: true, round: 0, dimension: response.currency, skin: "round" });
-        // }
         $('.hotel-more-btn').click(function() {
           var toggled = $(this).closest('.offset-2').find('.more-wrap').hasClass('in');
         $('.hotel-more-btn').children('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');

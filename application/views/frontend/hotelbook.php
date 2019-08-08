@@ -448,8 +448,37 @@
 let RoomCombination = new Array();
 RoomCombination = <?php echo json_encode($RoomCombination) ?>;
 $(".xml-default").remove();
+
+function bubbleSort(array) {
+  var done = false;
+  while (!done) {
+    done = true;
+    for (var i = 1; i < array.length; i += 1) {
+    
+      if (parseInt($(array[i - 1]).find(".com-amnt").val()) > parseInt($(array[i]).find(".com-amnt").val())) {
+    console.log(array[i - 1]);
+        done = false;
+        var tmp = array[i - 1];
+        array[i - 1] = array[i];
+        array[i] = tmp;
+      }
+    }
+  }
+
+  return array;
+}
+
+
 function RoomCombinationinitCheck() {
-  
+
+  //   $(".r-type--room .r-type--list").each(function(j,u) {
+  //   var arr = $(u).find(".roomlist");
+  //   bubbleSort(arr);
+
+  //   console.log(arr);
+  //   // $(u).html(numbers);
+  // })
+
   $(".r-type--room .r-type--list").each(function(j,u) {
       var defVal = $(u).find(".roomlist .com-amnt").val();
     $(u).find(".roomlist").each(function(i,v){
@@ -459,7 +488,7 @@ function RoomCombinationinitCheck() {
       })
   })
   $('input[name="Room1"]:first').prop('checked',true);
-  
+
   $(".r-type").find('input').prop('disabled',true);
   $.each(RoomCombination,function(j,v) {
    if (isNaN(RoomCombination.RoomIndex)) {
@@ -531,7 +560,7 @@ function goBack() {
 }
 //defaultRateCheck(); 
 function defaultcheck() {
-  
+
   // var room1 =  $('input[name="Room1"]:checked').val();
   // $.each(RoomCombination,function(j,v) {
   //   if (isNaN(RoomCombination.RoomIndex)) {

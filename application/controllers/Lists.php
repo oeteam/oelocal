@@ -199,7 +199,7 @@ class lists extends MY_Controller {
     if (!isset($_REQUEST['page']) || $_REQUEST['page']=="") {
       $page = 0;
     } else {
-      $page = $_REQUEST['page'];
+      $page = $_REQUEST['page']*$config['per_page'];
     }
     $result["links"] = $this->ajax_pagination->create_links();
     $displayOrder =$this->List_Model->getDisplayOrder();
@@ -391,6 +391,7 @@ class lists extends MY_Controller {
     }
     $data['currency'] = agent_currency(); 
     $data['counthotel'][] = $config['total_rows'];
+    $data['cnt'] = count($HotelList);
     echo json_encode($data);
   }
   public function search_list1() {
