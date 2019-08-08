@@ -127,14 +127,14 @@ $(document).ready(function() {
           .done(function(response)
           {
               $("#scroll-cnt").val(response.cnt);
-              console.log(response.cnt);
+              // console.log(response.cnt);
               if (response.cnt!=0) {
                 $("#result_search").append(response.list);
               }
           })
           .fail(function(jqXHR, ajaxOptions, thrownError)
           {
-                alert('server not responding...');
+                // alert('server not responding...');
           });
 }
   search_ajax();
