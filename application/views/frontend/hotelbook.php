@@ -449,44 +449,28 @@ let RoomCombination = new Array();
 RoomCombination = <?php echo json_encode($RoomCombination) ?>;
 $(".xml-default").remove();
 
-function bubbleSort(array) {
+function bubbleSort(ul) {
   var done = false;
   while (!done) {
     done = true;
-    for (var i = 1; i < array.length; i += 1) {
-    
-      if (parseInt($(array[i - 1]).find(".com-amnt").val()) > parseInt($(array[i]).find(".com-amnt").val())) {
-    console.log(array[i - 1]);
-        done = false;
-        var tmp = array[i - 1];
-        array[i - 1] = array[i];
-        array[i] = tmp;
+    for (var i = 1; i < ul.find(".roomlist").length; i += 1) {
+      if (parseInt($(ul).find(".roomlist:eq("+[i-1]+")").find(".com-amnt").val()) > parseInt($(ul).find(".roomlist:eq("+[i]+")").find(".com-amnt").val())) {
+         done = false;
+        $(ul).prepend($(ul).find(".roomlist:eq("+[i]+")"));
       }
     }
   }
-
-  return array;
+  return ul;
 }
 
 
 function RoomCombinationinitCheck() {
 
-  //   $(".r-type--room .r-type--list").each(function(j,u) {
-  //   var arr = $(u).find(".roomlist");
-  //   bubbleSort(arr);
-
-  //   console.log(arr);
-  //   // $(u).html(numbers);
-  // })
-
   $(".r-type--room .r-type--list").each(function(j,u) {
-      var defVal = $(u).find(".roomlist .com-amnt").val();
-    $(u).find(".roomlist").each(function(i,v){
-        if (defVal > $(v).find(".com-amnt").val()) {
-            $(u).prepend($(this));
-        }
-      })
+    var arr = $(u);
+    bubbleSort(arr);
   })
+
   $('input[name="Room1"]:first').prop('checked',true);
 
   $(".r-type").find('input').prop('disabled',true);
