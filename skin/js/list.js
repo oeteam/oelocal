@@ -111,32 +111,7 @@ $(document).ready(function() {
         }
     });
 
- function loadMoreData(page) {
-    $.ajax(
-          {
-              url: base_url+'lists/search_list',
-              data: $('#search_form').serialize(),
-              type: "get",
-              dataType: 'json',
-              cache: false,
-              beforeSend: function()
-              {
-                  // $('.ajax-load').show();
-              }
-          })
-          .done(function(response)
-          {
-              $("#scroll-cnt").val(response.cnt);
-              // console.log(response.cnt);
-              if (response.cnt!=0) {
-                $("#result_search").append(response.list);
-              }
-          })
-          .fail(function(jqXHR, ajaxOptions, thrownError)
-          {
-                // alert('server not responding...');
-          });
-}
+
   search_ajax();
   FullLoading('stop');
   // setTimeout(function(){ search_ajax(); }, 3000);
@@ -192,6 +167,19 @@ function hotelLoading(flag) {
     }
 }
 function search_ajax() {
+
+  var page = 0;
+    $(".itemscontainer").scroll(function() {
+        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+            page++;
+            if ($("#scroll-cnt").val()!=0) {
+              $("#page").val(page);
+              loadMoreData(page);
+            }
+        }
+    });
+
+
   $("#page").val(0);
   $("#scroll-cnt").val(1);
   if ($("#datepicker").val()=="") {
@@ -242,6 +230,34 @@ function search_ajax() {
   }
   $("#listarray").val("");
   $("#temp").val(0);
+}
+
+ function loadMoreData(page) {
+    $.ajax(
+          {
+              url: base_url+'lists/search_list',
+              data: $('#search_form').serialize(),
+              type: "post",
+              dataType: 'json',
+              cache: false,
+              beforeSend: function()
+              {
+                  // $('.ajax-load').show();
+              }
+          })
+          .done(function(response)
+          {
+              $("#scroll-cnt").val(response.cnt);
+              // console.log(response.cnt);
+              if (response.cnt!=0) {
+                $("#result_search").append(response.list);
+                StartAnime2();          
+              }
+          })
+          .fail(function(jqXHR, ajaxOptions, thrownError)
+          {
+                // alert('server not responding...');
+          });
 }
 function MoreDetailsToggle(hotel_id,type) {
   $("#hotel_id").val(hotel_id);
