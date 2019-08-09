@@ -125,6 +125,7 @@ class Profile_Model extends CI_Model {
                   'accounts_password'           =>$data['password_accounts'],
                   'reservation_password'        =>$data['password_reservation'],
                   'management_password'         =>$data['password_management'],
+                  'signature'         => $data['signature'],
                   'delflg' => '2',
                   'Created_Date' => date('Y-m-d'),
                   'Created_By' =>  "new",

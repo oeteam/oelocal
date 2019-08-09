@@ -163,8 +163,7 @@ class List_Model extends CI_Model {
       }
     }
 
-    $searchHotel_id = implode("','", array_unique($searchHotel_id));
-
+    $searchHotel_id = implode(",", array_unique($searchHotel_id));
     $ignore = array();
     /*contract check start*/
     $contractHotelId = array('');
@@ -175,7 +174,7 @@ class List_Model extends CI_Model {
     $mangsData = array();
     $extrabedAmount = array();
     $ot = $this->db->query("SELECT contract_id,hotel_id,contract_type,linkedContract FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where   a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$data['nationality']."', IFNULL(nationalityPermission,'')) = 0
-     AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND hotel_id IN ('".$searchHotel_id."') AND from_date <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND contract_flg  = 1")->result();
+     AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND hotel_id IN (".$searchHotel_id.") AND from_date <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND contract_flg  = 1")->result();
 
     foreach ($ot as $key5 => $value5) {
       if ($value5->contract_type=="Sub") {
@@ -193,8 +192,8 @@ class List_Model extends CI_Model {
 
     foreach ($outData as $key8 => $value8) {
     // All condition check start
-      $contractHotelId[] = $value8['hotel_id'];
-      $contractConId[] = $value8['contract_id'];
+      $contractHotelId[$key8] = $value8['hotel_id'];
+      $contractConId[$key8] = $value8['contract_id'];
     // All condition check end
     } 
 
@@ -207,7 +206,7 @@ class List_Model extends CI_Model {
       $dateAlt[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
     }
     $implode_data = implode("','", $dateAlt);
-    $implode_data1 = implode("','", array_unique($contractHotelId));
+    $implode_data1 = implode(",", array_unique($contractHotelId));
     $implode_data2 = implode("','", array_unique($contractConId));
 
 
@@ -290,7 +289,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND f.occupancy >= ".$data['adults'][0]." AND f.occupancy_child >= ".$data['Child'][0].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND f.occupancy >= ".$data['adults'][0]." AND f.occupancy_child >= ".$data['Child'][0].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
 
     }
     if (isset($data['adults'][1])) {
@@ -367,7 +366,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child >= ".$data['Child'][1].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][1]+$data['Child'][1])." AND f.occupancy >= ".$data['adults'][1]." AND f.occupancy_child >= ".$data['Child'][1].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
     }
     if (isset($data['adults'][2])) {
     //   $room3 =" AND (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].")";
@@ -442,7 +441,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][2]+$data['Child'][2])." AND f.occupancy >= ".$data['adults'][2]." AND f.occupancy_child >= ".$data['Child'][2].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
     }
     if (isset($data['adults'][3])) {
     //   $room4 =" AND (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].")";
@@ -516,7 +515,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][3]+$data['Child'][3])." AND f.occupancy >= ".$data['adults'][3]." AND f.occupancy_child >= ".$data['Child'][3].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
     }
     if (isset($data['adults'][4])) {
     //   $room5 =" AND (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].")";
@@ -590,7 +589,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][4]+$data['Child'][4])." AND f.occupancy >= ".$data['adults'][4]." AND f.occupancy_child >= ".$data['Child'][4].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
     }
     if (isset($data['adults'][5])) {
     //   $room6 =" AND (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].")";
@@ -664,7 +663,7 @@ class List_Model extends CI_Model {
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < ".$Bkbefore." AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN ('".$implode_data1."') AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id where (f.max_total >= ".($data['adults'][5]+$data['Child'][5])." AND f.occupancy >= ".$data['adults'][5]." AND f.occupancy_child >= ".$data['Child'][5].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id IN (".$implode_data1.") AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off GROUP BY a.hotel_id,a.room_id,a.contract_id Having counts >= ".$tot_days.") discal) x GROUP By x.contract_id";
     }
     
 
@@ -4651,7 +4650,7 @@ public function loadRequest($action,$arr_value) {
     } else {
       $this->db->order_by('round(TotalPrice)','asc');
     }
-    // $this->db->limit($limit, $start);
+    $this->db->limit($limit, $start);
     $query = $this->db->get()->result();
     return $query; 
   }

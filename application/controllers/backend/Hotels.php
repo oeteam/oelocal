@@ -2803,7 +2803,7 @@ class Hotels extends MY_Controller {
 		$checkout_date=date_create($_REQUEST['end']);
 		$no_of_days=date_diff($checkin_date,$checkout_date);
 		$tot_days = $no_of_days->format("%a");
-		if ($tot_days!=0) {
+		// if ($tot_days!=0) {
 		    for($i = 0; $i <= $tot_days; $i++) {
 		        $result['date'][$i] = date('Y-m-d', strtotime($_REQUEST['start']. ' + '.$i.'  days'));
 		        $result['day'][$i] = date('d', strtotime($_REQUEST['start']. ' + '.$i.'  days'));
@@ -2811,7 +2811,7 @@ class Hotels extends MY_Controller {
 		        $result['monthYear'][$i] = date('M Y', strtotime($_REQUEST['start']. ' + '.$i.'  days'));
 	        }
 			$result['count'] = $tot_days;
-		} 
+		// } 
     	echo json_encode($result);
     }
     public function StateSelect() {

@@ -1677,11 +1677,23 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
       }
     $remarks = $ci->Payment_Model->get_policy_contract($hotel_id,$booking[0]->contract_id);
     
-    $discountCode = '';
-    $contractName = $ci->db->query('select contractName,BookingCode from hotel_tbl_contract where contract_id = "'.$booking[0]->contract_id.'"')->result();
+    
     if ($booking[0]->discountCode!='') {
-      $discountCode = $booking[0]->discountCode;
+        $tempdis = explode(",", $booking[0]->discountCode);
+        $discountCodeTemp = array();
+        foreach ($tempdis as $key => $value) {
+            if ($value=="") {
+                $contractName = $ci->db->query('select contractName,BookingCode from hotel_tbl_contract where contract_id = "'.$booking[0]->contract_id.'"')->result();
+                if ($contractName[0]->BookingCode!='') {
+                  $discountCodeTemp[$key] = $contractName[0]->BookingCode;
+                }
+            } else {
+                $discountCodeTemp[$key] = $value;
+            }
+        }
+        $discountCode = implode(",", $discountCodeTemp);
     } else {
+      $contractName = $ci->db->query('select contractName,BookingCode from hotel_tbl_contract where contract_id = "'.$booking[0]->contract_id.'"')->result();
       if ($contractName[0]->BookingCode!='') {
         $discountCode = $contractName[0]->BookingCode;
       }

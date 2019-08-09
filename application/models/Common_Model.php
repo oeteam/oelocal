@@ -899,7 +899,7 @@ class Common_Model extends CI_Model {
     if(isset($request['contract']) && $request['contract']!="") {
       $this->db->where('a.contract_id',$request['contract']);
     }
-    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.closedDate','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
     return $result; 
@@ -920,7 +920,7 @@ class Common_Model extends CI_Model {
     if(isset($request['contract']) && $request['contract']!="") {
       $this->db->where('a.contract_id',$request['contract']);
     }
-    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.allotement_date','asc');
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
     return $result; 
