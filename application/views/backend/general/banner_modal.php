@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/prettify.css" />
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/prettify.css" />
 
   <div class="modal-content col-md-12">
         <div class="modal-header">
@@ -47,9 +47,9 @@
             <input type="button" id="update_hotels_banner" class="no-border btn-sm btn-success" value="Update">
         </div>
     </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/general_settings.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/general_settings.js"></script>
 <script type="text/javascript">
 // $(document).ready(function() {
     

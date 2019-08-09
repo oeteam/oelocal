@@ -74,7 +74,7 @@
            
         </div>
     </div>
-<script src="<?php echo base_url(); ?>assets/js/general_settings.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/general_settings.js"></script>
 <script>   $( "#plus" ).on("click", function() {
 
             $( ".multiple-phone" ).append( '<br><input type="text" name="phone[]" class="form-control" placeholder="Phone"/>');

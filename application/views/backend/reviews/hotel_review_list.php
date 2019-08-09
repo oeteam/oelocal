@@ -43,6 +43,6 @@ $Review = menuPermissionAvailability($this->session->userdata('id'),'Reviews','H
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/review.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/review.js"></script>
 <?php init_tail(); ?>
 

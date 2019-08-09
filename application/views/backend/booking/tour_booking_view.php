@@ -1,5 +1,5 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/booking.js"></script>
 
 <div class="sb2-2">
     <div class="sb2-2-3">
@@ -13,7 +13,7 @@
 				            <div class="text-center mb-sm-0" style="background-color: #eaeaea">
 				            	<?php  
 				            		if (isset($view[0]->image)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/tour_services_images/<?php echo $view[0]->tour_id ?>/<?php echo $view[0]->image ?>" width="70%"  >
+                                            <img src="<?php echo images_url(); ?>uploads/tour_services_images/<?php echo $view[0]->tour_id ?>/<?php echo $view[0]->image ?>" width="70%"  >
                                             <?php  } else {  { ?>
                                             <img src="">
                                 <?php  } }?>

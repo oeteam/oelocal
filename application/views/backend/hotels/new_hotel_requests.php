@@ -259,7 +259,7 @@
            
         </div>
     </div>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/offlinerequests.js"></script> 
+  <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/offlinerequests.js"></script> 
  <script type="text/javascript">
       var nextDay = new Date($("#CheckIn").val());
       nextDay.setDate(nextDay.getDate() + 1);

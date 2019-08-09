@@ -67,7 +67,7 @@ $Booking = menuPermissionAvailability($this->session->userdata('id'),'Booking','
 </div>
 <div class="modal fade delete_modal" id="rejectModel" role="dialog">
 </div>
-<script src="<?php echo base_url(); ?>assets/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/booking.js"></script>
 <script type="text/javascript">
 // $(document).ready(function() {
     var hotel_booking_table = $('#hotel_booking_table').dataTable({

@@ -1,10 +1,10 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <div class="sb2-2">
         <div class="sb2-2-add-blog sb2-2-1">
             <div class="inn-title">
                         <span>Close Out Period</span>
-                        <span class="pull-right"><a href="<?php echo base_url(); ?>backend/hotels"  class="btn-sm btn-primary">Back</a></span>
+                        <span class="pull-right"><a href="<?php echo static_url(); ?>backend/hotels"  class="btn-sm btn-primary">Back</a></span>
                         <span class="pull-right" style="margin-right: 5px;"><a href="#" data-toggle="modal" data-target="#close_out_add" class="btn-sm btn-success">Add</a></span>
                     </div>
             </br>

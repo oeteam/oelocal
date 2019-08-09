@@ -1,5 +1,5 @@
 <?php init_head();  ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/trumbowyg.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
     <div class="sb2-2">
         <div class="sb2-2-add-blog sb2-2-1">
             <div class="col s12">
@@ -39,7 +39,7 @@
            
         </div>
     </div>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trumbowyg.min.js"></script> 
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
 
 <script>
     $('#conditions').trumbowyg();

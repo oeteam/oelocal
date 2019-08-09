@@ -160,9 +160,9 @@
                                         <div class="col-md-12 text-center">
                                             <span class="single-upload-img">
                                              <?php if (isset($edit[0]->Img) && $edit[0]->Img!="") { ?>
-                                                <img id="load_image" src="<?php echo base_url();?>uploads/user_profile_pic/<?php echo $edit[0]->id;?>/thumb_<?php echo $edit[0]->Img;?>" alt="">
+                                                <img id="load_image" src="<?php echo images_url();?>uploads/user_profile_pic/<?php echo $edit[0]->id;?>/thumb_<?php echo $edit[0]->Img;?>" alt="">
                                                <?php } else { ?>
-                                                <img id="load_image" src="<?php echo base_url() ?>assets/images/user/1.png" alt="">
+                                                <img id="load_image" src="<?php echo static_url() ?>assets/images/user/1.png" alt="">
                                                <?php } ?>
                                             </span>
                                         </div>
@@ -194,7 +194,7 @@
 </div>
 </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/user.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/user.js"></script>
 <script type="text/javascript">
     // var tpj=jQuery;
     // $( document ).ready(function() {

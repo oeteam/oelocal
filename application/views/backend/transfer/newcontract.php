@@ -1,7 +1,7 @@
 <?php init_head();  ?>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places&callback=initMap"
         async defer></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/prettify.css" />
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/prettify.css" />
 <style type="text/css">
 <style>
     .hide {
@@ -261,9 +261,9 @@ function locationRemove(e) {
            
         </div>
     </div>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/transfer.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/transfer.js"></script>
 <script>
 
     $("#valid_from").datepicker({

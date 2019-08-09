@@ -1,5 +1,5 @@
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/prettify.css" />
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/prettify.css" />
 <style type="text/css">
     .multi-select-mod .btn-group, .multi-select-mod button, .multi-select-mod .dropdown-menu {
         top: 0px ! important;
@@ -198,7 +198,7 @@
     </div>
   </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/bootstrap-multiselect.js"></script>
 <script type="text/javascript">
     $(document).ready(function()  {
         $('#market').multiselect({
@@ -207,8 +207,8 @@
         });
     });
 </script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
     var nextDay = new Date($("#date_picker1").val());
     nextDay.setDate(nextDay.getDate() + 1);

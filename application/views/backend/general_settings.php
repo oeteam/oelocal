@@ -24,7 +24,7 @@ $Settings = menuPermissionAvailability($this->session->userdata('id'),'General',
                         <input type="file" onchange="return ValidateFileUpload();" id="fav_icon" name="fav_icon" class="form-control">
                     </div>
                     <div class="col-md-2" style="line-height: 74px;">
-                        <span class="upload-img"><img src="<?php base_url(); ?>../../assets/images/fav.ico" alt="" id="load_image"></span>
+                        <span class="upload-img"><img src="<?php static_url(); ?>../../assets/images/fav.ico" alt="" id="load_image"></span>
                     </div>
                     <div class="form-group favicon_upload col-md-4">
                         <label for="favicon" class="control-label">Logo</label>
@@ -32,7 +32,7 @@ $Settings = menuPermissionAvailability($this->session->userdata('id'),'General',
                     </div>
                     <div class="col-md-2" style="line-height: 74px;">
                         <span class="logo_img">
-                                <img src="<?php base_url(); ?>../../assets/images/logo1.png" alt="" id="load_image1">
+                                <img src="<?php static_url(); ?>../../assets/images/logo1.png" alt="" id="load_image1">
                         </span>
                     </div>
                     <div class="form-group col-md-6">
@@ -60,5 +60,5 @@ $Settings = menuPermissionAvailability($this->session->userdata('id'),'General',
     </div>
     <div id="myModalbanner" class="delete_modal modal">
 </div>
-<script src="<?php echo base_url(); ?>assets/js/general_settings.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/general_settings.js"></script>
 <?php init_tail(); ?>

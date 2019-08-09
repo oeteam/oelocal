@@ -1,7 +1,7 @@
 <?php init_head(); 
 $AgentReport = menuPermissionAvailability($this->session->userdata('id'),'Report','Agent Report'); 
 ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel_finance.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

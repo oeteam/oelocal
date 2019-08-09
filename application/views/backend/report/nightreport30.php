@@ -1,5 +1,5 @@
 <?php init_head();?>
-<script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel_finance.js"></script>
 <style type="text/css">
 .multi-select-trans1 .form-control {
     padding: 0px 0 !important;
@@ -99,7 +99,7 @@
 </div>
 <?php init_tail(); ?>
 
-<script src="<?php echo base_url(); ?>assets/js/user.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/user.js"></script>
 <script type="text/javascript">
     var tpj=jQuery;
     $( document ).ready(function() {

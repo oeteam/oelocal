@@ -2,8 +2,8 @@
 $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Profile'); 
 ?>
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&sensor=false&libraries=places'></script>
-<script src="<?php echo base_url(); ?>assets/js/locationpicker.jquery.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/locationpicker.jquery.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <div class="sb2-2">
         <div class="sb2-2-add-blog sb2-2-1 hotel-view-readonly">
             <h2>Hotel Details <span class="pull-right"><a href="<?php echo base_url(); ?>backend/hotels"  class="btn-sm btn-primary">Back</a></span>
@@ -254,7 +254,7 @@ $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels
                                         <?php 
                                         }
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>" class="img1preview" >
+                                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>" class="img1preview" >
                                             <?php  } else { if(isset($_REQUEST['hotels_edit_id'])) { ?>
                                             <p class="center">No Records</p>
                                         <?php  } }?>
@@ -644,7 +644,7 @@ $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels
    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     
   <div class="modal-dialog" role="document">
-        <img alt="" src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>">
+        <img alt="" src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>">
     
   </div>
   <div class="col-md-3"></div>

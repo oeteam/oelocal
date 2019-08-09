@@ -12,26 +12,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--== FAV ICON ==-->
-    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
+    <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet">
 
     <!-- FONT-AWESOME ICON CSS -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/font-awesome.min.css">
 
     <!--== ALL CSS FILES ==-->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/mob.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/materialize.css" />
-    <link href="<?php echo base_url(); ?>assets/css/toast.style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/mob.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/materialize.css" />
+    <link href="<?php echo static_url(); ?>assets/css/toast.style.min.css" rel="stylesheet">
     <!--======== SCRIPT FILES =========-->
-    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/toast.script.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/login.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/jquery.min.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/bootstrap.min.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/materialize.min.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/toast.script.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/login.js"></script>
     <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
         $(document).ready(function () {

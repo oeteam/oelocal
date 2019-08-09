@@ -1,9 +1,9 @@
 <?php init_head(); ?>
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&sensor=false&libraries=places'></script>
-<script src="<?php echo base_url(); ?>assets/js/locationpicker.jquery.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/trumbowyg.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/summernote.css">
-<script src="<?php echo base_url(); ?>assets/js/sight_seeing.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/locationpicker.jquery.js"></script>
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/summernote.css">
+<script src="<?php echo static_url(); ?>assets/js/sight_seeing.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#imp_remarks').trumbowyg();
@@ -233,7 +233,7 @@
                             if (isset($view[0]->gallery_images)) {
                          $gallery = explode(",", $view[0]->gallery_images);
                             foreach ($gallery as $key => $value) { ;?>
-                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id; ?>/<?php echo $value;?>" width="10%" height ="100x">
+                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id; ?>/<?php echo $value;?>" width="10%" height ="100x">
                             <?php } } else { if(isset($_REQUEST['hotels_edit_id'])) { ?>
                             <p class="center">No Records</p>
                             <?php } } ?>
@@ -479,5 +479,5 @@
   </div>
 </div>
 <?php init_tail(); ?>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trumbowyg.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/summernote.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/summernote.js"></script> 

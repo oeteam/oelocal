@@ -155,7 +155,7 @@
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/moment.min.js"></script>
 <script type="text/javascript">
   $.datetimepicker.setDateFormatter({
           parseDate: function (date, format) {

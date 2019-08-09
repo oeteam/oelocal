@@ -1,5 +1,5 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <style>
 table {
     font-family: arial, sans-serif;

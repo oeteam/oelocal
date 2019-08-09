@@ -2,16 +2,16 @@
 $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','');
 ?>
 
-<link rel="stylesheet" href="<?php echo base_url(); ?>skin/dist/css/bootstrap.min.css">
-<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" type="text/javascript" src="<?php echo base_url();?>assets/DataTables/js/jquery.dataTables.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/js/dataTables.bootstrap4.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Responsive/js/dataTables.responsive.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Responsive/js/responsive.bootstrap4.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
+<link rel="stylesheet" href="<?php echo static_url(); ?>skin/dist/css/bootstrap.min.css">
+<script src="<?php echo static_url(); ?>assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" type="text/javascript" src="<?php echo static_url();?>assets/DataTables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/js/dataTables.bootstrap4.min.js"></script> 
+<script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Responsive/js/dataTables.responsive.min.js"></script> 
+<script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Responsive/js/responsive.bootstrap4.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/jquery-ui.js"></script>
 <!--== BODY INNER CONTAINER ==-->
  <div class="sb2-2 <?php echo count($usersmenu)=="" ? "hide" : '' ?>">
     <!--== DASHBOARD INFO ==-->

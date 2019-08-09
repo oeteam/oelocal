@@ -1,5 +1,5 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/booking.js"></script>
 <?php if (count($view)==0) { ?>
 		<p>No records found in this booking!</p>
 <?php } else { ?>

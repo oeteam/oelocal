@@ -1,5 +1,5 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/company.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/company.js"></script>
 <!-- <script src="//code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>

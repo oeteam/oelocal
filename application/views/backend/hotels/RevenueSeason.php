@@ -37,5 +37,5 @@
 <div id="Revenueseason_modal" class="delete_modal modal fade col-md-12" role="dialog" style="max-height: 78%; width: 90%;">
  
 </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <?php init_tail(); ?>

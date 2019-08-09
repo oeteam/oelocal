@@ -125,9 +125,9 @@
 </div>
 </div>
 </div>
-<!-- <script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script> -->
-<link href="<?php echo base_url(); ?>assets/select2/select2.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo base_url(); ?>assets/select2/select2.min.js" type="text/javascript"></script>
+<!-- <script src="<?php echo static_url(); ?>assets/js/hotel_finance.js"></script> -->
+<link href="<?php echo static_url(); ?>assets/select2/select2.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo static_url(); ?>assets/select2/select2.min.js" type="text/javascript"></script>
 <script>
   $("#hotels").select2({
     width: '100%'

@@ -12,59 +12,59 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--== FAV ICON ==-->
-    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/socket.io.js"></script>
+    <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/socket.io.js"></script>
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,700" rel="stylesheet">
 
     <!-- FONT-AWESOME ICON CSS -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/font-awesome.min.css">
 
     <!--== ALL CSS FILES ==-->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/mob.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>skin/css/chat_box.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/mob.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>skin/css/chat_box.css">
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/jquery-ui.css">
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/materialize.css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/toast.style.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/DataTables/css/dataTables.bootstrap4.min.css"> 
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/DataTables/Responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/DataTables/Buttons/css/buttons.dataTables.min.css"> 
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/DataTables/Buttons/css/buttons.bootstrap4.min.css"> 
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/materialize.css" />
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/toast.style.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="<?php echo static_url();?>assets/DataTables/css/dataTables.bootstrap4.min.css"> 
+    <link rel="stylesheet" href="<?php echo static_url();?>assets/DataTables/Responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo static_url();?>assets/DataTables/Buttons/css/buttons.dataTables.min.css"> 
+    <link rel="stylesheet" href="<?php echo static_url();?>assets/DataTables/Buttons/css/buttons.bootstrap4.min.css"> 
     <!--======== SCRIPT FILES =========-->
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/chat_box.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/js/chat_box.js"></script>
     <?php 
     // init_load_chat_list(); 
     ?>
     <!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script> -->
     <!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.min.js"></script> -->
     
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/jquery-ui.js"></script>
 
 
-    <script src="<?php echo base_url(); ?>assets/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap-multiselect.css"></link>
+    <script src="<?php echo static_url(); ?>assets/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/bootstrap-multiselect.css"></link>
 
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/toast.script.js"></script> 
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/materialize.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/toast.script.js"></script> 
     
-    <script type="text/javascript" type="text/javascript" src="<?php echo base_url();?>assets/DataTables/js/jquery.dataTables.min.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/js/dataTables.bootstrap4.min.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Responsive/js/dataTables.responsive.min.js"></script> 
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Responsive/js/responsive.bootstrap4.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/pdfmake/build/pdfmake.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/pdfmake/build/vfs_fonts.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url();?>assets/DataTables/Buttons/js/buttons.colVis.min.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/custom.js"></script>
+    <script type="text/javascript" type="text/javascript" src="<?php echo static_url();?>assets/DataTables/js/jquery.dataTables.min.js"></script> 
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/js/dataTables.bootstrap4.min.js"></script> 
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Responsive/js/dataTables.responsive.min.js"></script> 
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Responsive/js/responsive.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/pdfmake/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/pdfmake/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url();?>assets/DataTables/Buttons/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/custom.js"></script>
 
 
     <!-- Chartist Charts -->
@@ -185,8 +185,8 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
 <body>
 
     <div class="spinner-wrap">
-        <img src="<?php echo base_url();?>assets/images/logo.png" alt="Logo" class="spinner-logo">
-        <img src="<?php echo base_url();?>assets/images/spinner.gif" alt="Loading..." class="spinner">
+        <img src="<?php echo static_url();?>assets/images/logo.png" alt="Logo" class="spinner-logo">
+        <img src="<?php echo static_url();?>assets/images/spinner.gif" alt="Loading..." class="spinner">
         <p></p>
     </div>
 
@@ -310,7 +310,7 @@ $(window).load(function() {
             <div class="col-md-2 col-sm-3 col-xs-6 sb1-1">
                 <a href="#" class="btn-close-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
                 <a href="#" class="atab-menu"><i class="fa fa-bars tab-menu" aria-hidden="true"></i></a>
-                <a href="<?php echo base_url() ?>backend/dashboard" class="logo"><img src="<?php echo base_url(); ?>assets/images/logo-white.png" alt="" /></a>
+                <a href="<?php echo base_url() ?>backend/dashboard" class="logo"><img src="<?php echo static_url(); ?>assets/images/logo-white.png" alt="" /></a>
             </div>
             <!--== SEARCH ==-->
             <div class="col-lg-7 col-md-7 col-sm-5 hidden-xs">
@@ -382,4 +382,4 @@ $(window).load(function() {
           $('#chat_list').removeClass('in');
     })
 </script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/realtimebackend.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/realtimebackend.js"></script>

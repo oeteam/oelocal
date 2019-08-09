@@ -155,9 +155,9 @@
     </div>
 </div>
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/offlinerequests.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/offlinerequests.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/moment.min.js"></script>
 <script type="text/javascript">
   // @datetimepicker
   //datetimepicker with alternate days for arrival time and departure time

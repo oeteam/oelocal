@@ -169,7 +169,7 @@
     </div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js/general_settings.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/general_settings.js"></script>
 
 <?php init_tail(); ?>
 

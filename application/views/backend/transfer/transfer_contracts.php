@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/transfer.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/transfer.js"></script>
 <script>
 function contractStatus(id) {
   var contractStatus = $("#contractStatus"+id).val();

@@ -1,6 +1,6 @@
 <?php init_head(); 
 ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript" src="https://www.2checkout.com/checkout/api/2co.min.js"> </script>
 <script src="https://js.braintreegateway.com/js/braintree-2.30.0.min.js"></script>
 <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
@@ -555,7 +555,7 @@
 </div>
  </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/paymentgateway.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/paymentgateway.js"></script>
 <script>
 // window.onload = function() {
 //     window.setTimeout(function(){

@@ -146,7 +146,7 @@
                             <input type="file" name="image" class="form-control" id="image" onchange="return ValidateFileUpload();">
                         </div>
                         <div class="col-md-2" style="line-height: 74px;">
-                            <span class="upload-img"><img src="<?php echo base_url()?>/uploads/tour_services_images/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->image) ? $edit[0]->image : ''; ?>" alt="" id="load_image"></span>
+                            <span class="upload-img"><img src="<?php echo images_url()?>/uploads/tour_services_images/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->image) ? $edit[0]->image : ''; ?>" alt="" id="load_image"></span>
                         </div> 
                       </div> 
                       <div class="row">
@@ -168,9 +168,9 @@
            
         </div>
     </div>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/offlinerequests.js"></script> 
+  <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/offlinerequests.js"></script> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+  <script src="<?php echo static_url(); ?>assets/js/moment.min.js"></script>
  <script type="text/javascript">
       $(window).load(function() {
        //datepicker

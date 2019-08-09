@@ -177,9 +177,9 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel_finance.js"></script>
 
-<script src="<?php echo base_url(); ?>assets/js/user.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/user.js"></script>
 <script type="text/javascript">
     // $( document ).ready(function() {
             ConSelectFun();

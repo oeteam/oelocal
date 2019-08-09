@@ -69,7 +69,7 @@ $Booking = menuPermissionAvailability($this->session->userdata('id'),'Booking','
 </div>
 <div class="modal fade delete_modal" id="booking_modal" role="dialog">
 </div>
-<script src="<?php echo base_url(); ?>assets/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/booking.js"></script>
 <script type="text/javascript">
 // $(document).ready(function() {
     var offline_booking_table = $('#offline_booking_table').dataTable({

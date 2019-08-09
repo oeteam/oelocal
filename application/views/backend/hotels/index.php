@@ -60,7 +60,7 @@ $Profilemenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript">
 function filter(val) {
    var hotel_table = $('#hotel_table').dataTable({

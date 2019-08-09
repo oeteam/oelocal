@@ -1,6 +1,6 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/review.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/review.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/bootstrap.min.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

@@ -1,5 +1,5 @@
 <?php init_head();  ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/prettify.css" />
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/prettify.css" />
 
 <style>
   .hide {
@@ -201,9 +201,9 @@
                         <div class="col-md-12 text-center">
                             <span class="single-upload-img">
                              <?php if (isset($edit[0]->vehicle_image) && $edit[0]->vehicle_image!="") { ?>
-                                <img id="load_image" src="<?php echo base_url();?>uploads/vehicle_images/<?php echo $edit[0]->id;?>/<?php echo $edit[0]->vehicle_image;?>" alt="">
+                                <img id="load_image" src="<?php echo images_url();?>uploads/vehicle_images/<?php echo $edit[0]->id;?>/<?php echo $edit[0]->vehicle_image;?>" alt="">
                                <?php } else { ?>
-                                <img id="load_image" src="<?php echo base_url() ?>assets/images/user/1.png" alt="">
+                                <img id="load_image" src="<?php echo static_url() ?>assets/images/user/1.png" alt="">
                                <?php } ?>
                             </span>
                         </div>
@@ -226,9 +226,9 @@
             <hr/>
             </form>
     </div>
-       <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/multiselect.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/transfer.js"></script>
+       <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/transfer.js"></script>
 <script type="text/javascript">
     ConSelectFun();
     window.prettyPrint && prettyPrint();

@@ -39,5 +39,5 @@
     </div>
         </div>
     </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <?php init_tail(); ?>

@@ -88,7 +88,7 @@
            
         </div>
     </div>
-<script src="<?php echo base_url(); ?>assets/js/general_settings.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/general_settings.js"></script>
 <script>   
 $("#about_update_submit_button").click(function(){
     addToast('Updated Successfully','green');

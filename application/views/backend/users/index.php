@@ -57,6 +57,6 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     </div>
 </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js/user.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/user.js"></script>
 <?php init_tail(); ?>
 

@@ -183,7 +183,7 @@
            
         </div>
     </div>
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/offlinerequests.js"></script> 
+  <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/offlinerequests.js"></script> 
  <script type="text/javascript">
      $("#tdate").datepicker({
             minDate: 0,

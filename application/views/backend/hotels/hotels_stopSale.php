@@ -1,9 +1,9 @@
 <?php init_head(); 
 $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','S/O Sales & Availability'); 
 ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/trumbowyg.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/summernote.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/calendar.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/summernote.css">
+<link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>assets/css/calendar.css">
 
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
 
@@ -316,10 +316,10 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
 
           </div>
         </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trumbowyg.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/summernote.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/summernote.js"></script> 
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript">
     // $(document).ready(function() {
         $('#imp_remarks').trumbowyg();

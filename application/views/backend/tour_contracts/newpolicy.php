@@ -71,7 +71,7 @@
            
         </div>
     </div>
-<script src="<?php echo base_url(); ?>assets/js/policy.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/policy.js"></script>
 <script>
     $("#from_date").datepicker({
             altField: "#alternate1",

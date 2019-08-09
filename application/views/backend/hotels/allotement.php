@@ -1,10 +1,10 @@
 <?php init_head(); ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/calendar.css">
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>assets/css/calendar.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/toast.script.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/toast.script.js"></script> 
 <script type="text/javascript">
             // When the document is ready
     $(document).ready(function () {

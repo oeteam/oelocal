@@ -1,7 +1,7 @@
 <?php init_head(); 
 $RepProfit = menuPermissionAvailability($this->session->userdata('id'),'Report','Profit Report'); 
 ?>
-<script src="<?php echo base_url(); ?>assets/js/hotel_finance.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel_finance.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

@@ -26,7 +26,7 @@
                             <input type="file" class="form-control" id="event_image" name="event_image" placeholder="Event Image" onchange="return ValidateFileUpload();">
                         </div>
                         <div class="col-md-2" style="line-height: 74px;">
-                            <span class="upload-img"><img src="../../uploads/events/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->event_image) ? $edit[0]->event_image : ''; ?>" alt="" id="load_image"></span>
+                            <span class="upload-img"><img src="<?php echo images_url() ?>uploads/events/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->event_image) ? $edit[0]->event_image : ''; ?>" alt="" id="load_image"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -81,7 +81,7 @@
            
         </div>
     </div>
-<script src="<?php echo base_url(); ?>assets/js/events.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/events.js"></script>
 <script>   
 
 $("#start_date").datepicker({

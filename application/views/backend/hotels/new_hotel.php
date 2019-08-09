@@ -1,6 +1,6 @@
 <?php init_head(); ?>
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script>
-<script src="<?php echo base_url(); ?>assets/js/locationpicker.jquery.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/locationpicker.jquery.js"></script>
 <style type="text/css">
     #room_add_table tbody {
         display:block;
@@ -510,7 +510,7 @@
                                         <?php 
 
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview" >
+                                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview" >
                                             <?php  } else {  ?>
                                            <img src="" class="img1preview" >
                                         <?php   }?>
@@ -528,7 +528,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                             if (isset($view[0]->Image2)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
+                                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
                                             <?php  } else {  ?>
                                             <img src="" class="img2preview" >
                                         <?php  } ?>
@@ -544,7 +544,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                             if (isset($view[0]->Image3)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
+                                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
                                             <?php  } else {  ?>
                                             <img src="" class="img3preview" >
                                         <?php  } ?>
@@ -560,7 +560,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                             if (isset($view[0]->Image4)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image4;?>" class="img4preview" >
+                                            <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image4;?>" class="img4preview" >
                                             <?php  } else {  ?>
                                             <img src="" class="img4preview" >
                                         <?php  } ?>
@@ -577,7 +577,7 @@
                                 <div class="js--image-preview">
                                         <?php 
                                         if (isset($view[0]->Image5)) { ?>
-                                        <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
+                                        <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
                                         <?php  } else {  ?>
                                         <img src="" class="img5preview" >
                                         <?php   }?>
@@ -1144,7 +1144,7 @@
         selectAllValue: 0
     });
 </script>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 
 <?php init_tail(); ?>
 

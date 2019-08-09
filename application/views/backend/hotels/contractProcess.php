@@ -1,9 +1,9 @@
 <?php init_head(); ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/trumbowyg.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/summernote.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/calendar.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/summernote.css">
+<link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>assets/css/calendar.css">
 
-<script src="<?php echo base_url(); ?>assets/js/jquery.form.min.js"></script>   -->
+<script src="<?php echo static_url(); ?>assets/js/jquery.form.min.js"></script>   -->
 
 <style type="text/css">
     .progress {
@@ -499,8 +499,8 @@
 <div id="datewise_modal" class="modal-bg-fix modal fade" role="dialog" style="width: 95%; max-height: 78%;">
  
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trumbowyg.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/summernote.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/summernote.js"></script> 
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -745,7 +745,7 @@
 <!-- Cancellation Modal -->
 <div id="canModal" name = "canModal" class="modal fade-scale" role="dialog" data-toggle="modal" data-target="#canModal">
 </div>
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 
 <script>
                 

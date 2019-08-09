@@ -135,8 +135,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/multiselect1.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect1.min.js"></script>
 <script type="text/javascript">
     // 
         // make code pretty

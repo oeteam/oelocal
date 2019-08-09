@@ -1,7 +1,7 @@
 <?php 
 $this->load->helper('common');
  ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/chat/chat.css">
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/chat/chat.css">
 <style>
 .circle {
     display: inline-block;
@@ -93,8 +93,8 @@ img {
                                  <!-- Contact avatar-->
                                  <img
 
-                                     src="<?php if(!empty($v_user->Img)){ ?><?= base_url() ?>uploads/user_profile_pic/<?= $v_user->id ?>/<?= 'thumb_'.$v_user->Img?> <?php }else{ ?>
-                                    <?= base_url() ?>skin/images/dash/no-avatar.jpg ?>/<?= 'thumb_'.$v_user->Img?>
+                                     src="<?php if(!empty($v_user->Img)){ ?><?= images_url() ?>uploads/user_profile_pic/<?= $v_user->id ?>/<?= 'thumb_'.$v_user->Img?> <?php }else{ ?>
+                                    <?= static_url() ?>skin/images/dash/no-avatar.jpg ?>/<?= 'thumb_'.$v_user->Img?>
                                     <?php } ?>"
                                      alt="" class="media-box-object img-circle thumb48">
                               </span>
@@ -121,7 +121,7 @@ img {
         </div>
         <div id="chat_box"></div>
         <audio id="chat-tune" controls="">
-            <source src="<?= base_url() ?>assets/chat/chat_tune.mp3" type="audio/mpeg">
+            <source src="<?= static_url() ?>assets/chat/chat_tune.mp3" type="audio/mpeg">
         </audio>
     </div>
     <!--End live_chat_section-->

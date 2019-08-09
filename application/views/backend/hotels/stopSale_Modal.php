@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/hotel.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

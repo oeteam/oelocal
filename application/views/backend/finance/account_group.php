@@ -1,5 +1,5 @@
 <?php init_head_company_popup(); ?>
-<script src="<?php echo base_url(); ?>assets/js/company.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/company.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         //initialize all modals

@@ -4,9 +4,9 @@
         <div id='calendarFilter'></div>
     </div>
 </div>
-<script src='<?php echo base_url(); ?>assets/js/moment.min.js'></script>
-<script src='<?php echo base_url(); ?>assets/js/fullcalendar.min.js'></script>
-<link href='<?php echo base_url(); ?>assets/css/fullcalendar.min.css' rel='stylesheet' />
+<script src='<?php echo static_url(); ?>assets/js/moment.min.js'></script>
+<script src='<?php echo static_url(); ?>assets/js/fullcalendar.min.js'></script>
+<link href='<?php echo static_url(); ?>assets/css/fullcalendar.min.css' rel='stylesheet' />
 <script>
 
   $(document).ready(function() {

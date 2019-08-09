@@ -219,7 +219,7 @@
                                         <div class="col-md-12 text-center">
                                             <span class="single-upload-img">
                                              <?php if (isset($edit[0]->profile_image) && $edit[0]->profile_image!="") { ?>
-                                                <img id="load_image" src="<?php echo static_url();?>uploads/agent_profile_pic/<?php echo $edit[0]->id;?>/thumb_<?php echo $edit[0]->profile_image;?>" alt="">
+                                                <img id="load_image" src="<?php echo images_url()?>uploads/agent_profile_pic/<?php echo $edit[0]->id;?>/thumb_<?php echo $edit[0]->profile_image;?>" alt="">
                                                <?php } else { ?>
                                                 <img id="load_image" src="<?php echo static_url() ?>assets/images/user/1.png" alt="">
                                                <?php } ?>
@@ -376,14 +376,14 @@
                                 </div>
                                 <div class="col-md-4">
                                         <label for="tradefile">Trade license  : </label><?php  if ( isset($edit[0]->tradefile)) { ?>
-                                           <span><a class="pull-right" href="<?php echo static_url(); ?>uploads/trade_license/<?php echo $edit[0]->id ?>/<?php echo $edit[0]->tradefile ?>"><?php echo isset($edit[0]->tradefile) ? $edit[0]->tradefile : '' ?></a></span>
+                                           <span><a class="pull-right" href="<?php echo images_url(); ?>uploads/trade_license/<?php echo $edit[0]->id ?>/<?php echo $edit[0]->tradefile ?>"><?php echo isset($edit[0]->tradefile) ? $edit[0]->tradefile : '' ?></a></span>
                                        <?php } ?>
                                         <input type="file" id="tradefile" name="tradefile" class="form-control" onchange="return TradeFileUpload();">
                                 </div>
 
                                 <div class="col-md-4">
                                         <label for="logo">Logo  : </label><?php  if ( isset($edit[0]->logo)) { ?>
-                                           <span><a class="pull-right" href="<?php echo static_url(); ?>uploads/agent_logo/<?php echo $edit[0]->id ?>/<?php echo $edit[0]->logo ?>"><?php echo isset($edit[0]->logo) ? $edit[0]->logo : '' ?></a></span>
+                                           <span><a class="pull-right" href="<?php echo images_url(); ?>uploads/agent_logo/<?php echo $edit[0]->id ?>/<?php echo $edit[0]->logo ?>"><?php echo isset($edit[0]->logo) ? $edit[0]->logo : '' ?></a></span>
                                        <?php } ?>
                                         <input type="file" id="logo" name="logo" class="form-control" onchange="return AgentLogoUpload();">
                                 </div>
