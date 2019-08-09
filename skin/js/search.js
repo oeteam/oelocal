@@ -136,7 +136,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	tpj("#location").bind('keypress',function(e) {
+	tpj("#location").on('input',function(e) {
     	tpj('#DropdownCountry').slideUp('fast');
     	tpj('#citycode').val("");
       	tpj('#cityname').val("");

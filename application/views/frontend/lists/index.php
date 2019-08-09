@@ -543,7 +543,7 @@
 							<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
 
-							<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>">
+							<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? $_REQUEST['page'] : 0 ?>">
 							<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
 							<!-- HOTELS TAB -->
 						<div class="hotelstab2">
@@ -721,6 +721,7 @@
 					</div>
 						<!-- END OF BOOK FILTERS -->	
 						<input type="hidden" id="scroll-cnt" value="1">
+						<input type="hidden" id="scroll-form" value="search_form">
 						<div class="line2 hidden-xs"></div>
 						<form id="search_form"  method="post" class="hidden-xs">
 							<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
@@ -733,7 +734,7 @@
 							<input type="hidden" name="location" value="<?php echo $_REQUEST['location'] ?>">
 							<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
 							<input type="hidden" name="hotel_name" value="<?php echo $_REQUEST['hotel_name'] ?>">
-							<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>" id="page">
+							<input type="hidden" class="page" name="page" value="<?php echo isset($_REQUEST['page']) ? $_REQUEST['page'] : 0 ?>">
 							<input type="hidden" name="view_type" id="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
 							<?php foreach ($_REQUEST['adults'] as $key => $value) { ?>
 								<input type="hidden" name="adults[]" value="<?php echo $value ?>">
@@ -1049,7 +1050,7 @@
 			<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
 			<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
 
-			<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>">
+			<input type="hidden" class="page" name="page" value="<?php echo isset($_REQUEST['page']) ? $_REQUEST['page'] : 0 ?>">
 			<input type="hidden" name="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
         	<div class="hotelstab2" style="overflow-y: scroll;height: 535px;overflow-x: hidden">
 				<span class="opensans size1 dest_err">Enter Destination</span>
@@ -1246,7 +1247,7 @@
 			<input type="hidden" name="location" value="<?php echo $_REQUEST['location'] ?>">
 			<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
 			<input type="hidden" name="hotel_name" value="<?php echo $_REQUEST['hotel_name'] ?>">
-			<input type="hidden" name="page" value="<?php isset($_REQUEST['page']) ? $_REQUEST['page'] : "1" ?>" id="page">
+			<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? $_REQUEST['page'] : 0 ?>" class="page">
 			<input type="hidden" name="view_type" id="view_type" value="<?php echo isset($_REQUEST['view_type']) ? $_REQUEST['view_type'] : 'list' ?>">
 			<?php foreach ($_REQUEST['adults'] as $key => $value) { ?>
 				<input type="hidden" name="adults[]" value="<?php echo $value ?>">
@@ -1424,6 +1425,22 @@
 				applyfilter();
 			}
 			function applyfilter() {
+  				$("#scroll-form").val('search_form_sm');
+				$(".itemscontainer").animate({
+			          scrollTop:  0
+			     });
+			    var page = 0;
+			    $(".itemscontainer").scroll(function() {
+			        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+           				page++;
+			    		$(".page").val(page);
+			            if ($("#scroll-cnt").val()!=0) {
+			              loadMoreData(page);
+			            }
+			        }
+			    });
+			    $(".page").val(page);
+  				$("#scroll-cnt").val(1);
 				$(".close").trigger("click");
 			  hotelLoading('start');
 			  $.ajax({

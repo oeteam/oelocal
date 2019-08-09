@@ -510,7 +510,8 @@ function init_front_head_supplier($aside = true)
     $CI->load->view('frontend/components/supplier_header');
 }
 function static_url() {
-	return "http://static.otelseasy.com/";
+	return "http://dev.otelseasy.com/";
+	// return "http://static.otelseasy.com/";
 }
 function images_url() {
 	return "http://images.otelseasy.com/";

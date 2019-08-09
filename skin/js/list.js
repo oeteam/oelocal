@@ -99,17 +99,7 @@ $(document).ready(function() {
     
   });
 
-    var page = 0;
-    $(".itemscontainer").scroll(function() {
-        // if($(".itemscontainer").scrollTop() + $(".itemscontainer").height() >= $(".itemscontainer").height()) {
-        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
-            page++;
-            if ($("#scroll-cnt").val()!=0) {
-              $("#page").val(page);
-              loadMoreData(page);
-            }
-        }
-    });
+
 
 
   search_ajax();
@@ -166,23 +156,34 @@ function hotelLoading(flag) {
         spinWrapper.fadeOut();
     }
 }
+ var page = 0;
+  $(".itemscontainer").scroll(function() {
+      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+        page++;
+        $(".page").val(page);
+        if ($("#scroll-cnt").val()!=0) {
+          loadMoreData(page);
+        }
+      }
+  });
 function search_ajax() {
+  $("#scroll-form").val('search_form');
   $(".itemscontainer").animate({
           scrollTop:  0
      });
-  var page = 0;
-    $(".itemscontainer").scroll(function() {
-        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
-            page++;
-            if ($("#scroll-cnt").val()!=0) {
-              $("#page").val(page);
-              loadMoreData(page);
-            }
-        }
-    });
+   var page = 0;
+  $(".itemscontainer").scroll(function() {
+      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+          page++;
+          $(".page").val(page);
+         if ($("#scroll-cnt").val()!=0) {
+            loadMoreData(page);
+          }
+      }
+  });
 
 
-  $("#page").val(0);
+  $(".page").val(page);
   $("#scroll-cnt").val(1);
   if ($("#datepicker").val()=="") {
     alert("Must select check in date");
@@ -235,10 +236,11 @@ function search_ajax() {
 }
 
  function loadMoreData(page) {
+  var fromName = $("#scroll-form").val();
     $.ajax(
           {
               url: base_url+'lists/search_list',
-              data: $('#search_form').serialize(),
+              data: $('#'+fromName).serialize(),
               type: "post",
               dataType: 'json',
               cache: false,
