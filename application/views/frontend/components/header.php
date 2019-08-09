@@ -9,12 +9,12 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	   <title><?php echo $data[0]->Title ?></title>
-       <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
+       <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
         <!-- Bootstrap -->
-        <link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-        <link href="<?php echo get_cdn_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
-        <link href="<?php echo get_cdn_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
-        <link href="<?php echo get_cdn_url(); ?>skin/updates/update1/css/style01.css" rel="stylesheet" media="screen">   
+        <link href="<?php echo static_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="<?php echo static_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
+        <link href="<?php echo static_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
+        <link href="<?php echo static_url(); ?>skin/updates/update1/css/style01.css" rel="stylesheet" media="screen">   
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="assets/js/html5shiv.js"></script>
@@ -24,25 +24,25 @@
         <link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>   
         <!-- Font-Awesome -->
-        <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome.min.css" media="screen" />
-        <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
+        <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/assets/css/font-awesome.min.css" media="screen" />
+        <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
         <!-- REVOLUTION BANNER CSS SETTINGS -->
-        <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/css/fullscreen.css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/rs-plugin/css/settings.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/css/fullscreen.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/rs-plugin/css/settings.css" media="screen" />
         <!-- Picker --> 
-        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/assets/css/jquery-ui.css" />
-        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/assets/css/daterangepicker.min.css">
+        <link rel="stylesheet" href="<?php echo static_url(); ?>skin/assets/css/jquery-ui.css" />
+        <link rel="stylesheet" href="<?php echo static_url(); ?>skin/assets/css/daterangepicker.min.css">
         <!-- bin/jquery.slider.min.css -->
-        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.css" type="text/css">
-        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.round.css" type="text/css">    
+        <link rel="stylesheet" href="<?php echo static_url(); ?>skin/plugins/jslider/css/jslider.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo static_url(); ?>skin/plugins/jslider/css/jslider.round.css" type="text/css">    
         <!-- jQuery --> 
-        <script src="<?php echo get_cdn_url(); ?>skin/js/custom.js"></script>
+        <script src="<?php echo static_url(); ?>skin/js/custom.js"></script>
          <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/moment.min.js"></script>
-        <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
-        <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.daterangepicker.min.js"></script>
-        <script src="<?php echo get_cdn_url(); ?>skin/assets/js/sweet-alert.js"></script>
-        <script src="<?php echo get_cdn_url(); ?>skin/js/common.js"></script>
+        <script type="text/javascript" src="<?php echo static_url(); ?>skin/js/moment.min.js"></script>
+        <script src="<?php echo static_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+        <script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/jquery.daterangepicker.min.js"></script>
+        <script src="<?php echo static_url(); ?>skin/assets/js/sweet-alert.js"></script>
+        <script src="<?php echo static_url(); ?>skin/js/common.js"></script>
         <!-- Sweet-Alert Custom Style -->
         <style>
             .swal2-popup .swal2-styled {

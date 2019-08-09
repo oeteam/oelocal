@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/booking.js"></script>
 <div class="booking-view">
 <div class="row">
 	<div class="col-md-6">
@@ -26,7 +26,7 @@
 			<div class="col-md-12">
 				<div class="col-md-4">
 					<div class="pro-bg">
-					<img  class="img_size_custom"   width="300" src="<?php echo get_cdn_url(); ?>uploads/vehicle_images/<?php echo $view[0]->vehicleid ?>/<?php echo $view[0]->vehicle_image ?>" class="left" alt="">
+					<img  class="img_size_custom"   width="300" src="<?php echo static_url(); ?>uploads/vehicle_images/<?php echo $view[0]->vehicleid ?>/<?php echo $view[0]->vehicle_image ?>" class="left" alt="">
 				</div>
 				</div>
 				<div class="col-md-8">

@@ -2,7 +2,7 @@
 <?php init_front_head_menu(); 
 	$CustomerSupport = CustomerSupport();
 ?> 
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/payment.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/payment.js"></script>
 <style>
 	.m-0 {
 	  margin: 0;
@@ -634,7 +634,7 @@ function FullLoading(flag, dest, from, to) {
 
   </style>
   <div class="empty-state">
-    <img src="<?php echo get_cdn_url(); ?>skin/images/empty-state.png" alt="No Records">
+    <img src="<?php echo static_url(); ?>skin/images/empty-state.png" alt="No Records">
     <h4 class="empty-state__message">No results found!</h4>
     <p class="empty-state__info">This service is temporary unavailable !</p>
   </div>
@@ -671,13 +671,13 @@ function FullLoading(flag, dest, from, to) {
 
 		          <div class="row">
 		            <div class="col-sm-3">
-		              <img src="<?php echo get_cdn_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20 hidden-xs" width="100%" alt="">
+		              <img src="<?php echo images_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20 hidden-xs" width="100%" alt="">
 		              <p><span class="bold"><?php echo $view[0]->hotel_name ?></span></p>
 		              <p>
 		              	<?php if ($view[0]->rating==10) { ?>
 		              		<label style="width:100px;" class="hotel-rating"><i class="fa fa-building" style="color: #258732;"></i> Apartment</label>
 		              	<?php } else { ?>
-		              		<img src="<?php echo get_cdn_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/>
+		              		<img src="<?php echo static_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/>
 		              	<?php } ?>
 		              	</p>
 								
@@ -990,7 +990,7 @@ function FullLoading(flag, dest, from, to) {
                             $image = 'Image'.$q;
                            ?>
                           
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
+                          <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
                         <?php } ?>          
                       </div>
                     </div>
@@ -999,14 +999,14 @@ function FullLoading(flag, dest, from, to) {
                         <?php for ($q=1; $q <= 5; $q++) { 
                             $image = 'Image'.$q;
                          ?>
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
+                          <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
                        <?php } ?>              
                       </div>
                     </div>
                   </div>
                   <div class="clearfix"></div>
-                  <button id="prev_btn2" class="prev2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>
-                  <button id="next_btn2" class="next2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>   
+                  <button id="prev_btn2" class="prev2"><img src="<?php echo static_url(); ?>skin/images/spacer.png" alt=""/></button>
+                  <button id="next_btn2" class="next2"><img src="<?php echo static_url(); ?>skin/images/spacer.png" alt=""/></button>   
                     
                   </div>
                 </div> <!-- /c-carousel -->

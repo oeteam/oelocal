@@ -3,7 +3,7 @@
 
 <style>
   .banner-bottom {
-    background-image: url("<?php echo get_cdn_url() ?>uploads/about/<?php echo $view[0]->wall_image ?>");
+    background-image: url("<?php echo images_url() ?>uploads/about/<?php echo $view[0]->wall_image ?>");
     height: 60%;
     position: relative;
   }
@@ -57,7 +57,7 @@
 
       <!--baner-->
                   <!--carosel fade-->
-             <!-- <img src="<?php echo base_url() ?>uploads/about/<?php echo $view[0]->wall_image ?>" > -->
+             <!-- <img src="<?php echo images_url() ?>uploads/about/<?php echo $view[0]->wall_image ?>" > -->
       <!--baner-->
       <section class="banner-bottom">
         <p class="aboutus-title">About Us</p>
@@ -71,8 +71,8 @@
                </div>
                 <div class="col-lg-5">
                   <div class="aboutus-img-wrap">
-                    <img src="<?php echo get_cdn_url() ?>uploads/about/<?php echo $view[0]->back_image; ?>">
-                    <img width="100px" src="<?php echo get_cdn_url() ?>uploads/about/<?php echo $view[0]->front_image; ?>" style="position:absolute">
+                    <img src="<?php echo images_url() ?>uploads/about/<?php echo $view[0]->back_image; ?>">
+                    <img width="100px" src="<?php echo images_url() ?>uploads/about/<?php echo $view[0]->front_image; ?>" style="position:absolute">
                   </div>
                </div>
               

@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/booking.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

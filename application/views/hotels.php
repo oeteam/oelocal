@@ -3,7 +3,7 @@
 
 <style>
   .banner-bottom {
-    background-image: url("<?php echo get_cdn_url() ?>agentLoginStyle/img/hotelheader.jpg");
+    background-image: url("<?php echo static_url() ?>agentLoginStyle/img/hotelheader.jpg");
     height: 79%;
     position: relative;
   }
@@ -47,7 +47,7 @@
                           foreach($view as $hotel_value){ ?>
                          <a href="<?php echo base_url()?>hotels_view/<?php echo $hotel_value->id ?>">  <div class="col-lg-4">
                               <div class="cuadro_intro_hover" style="height:230px">
-                                 <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $hotel_value->id?>/<?php echo $hotel_value->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
+                                 <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $hotel_value->id?>/<?php echo $hotel_value->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
                                  <div class="caption">
                                     <div class="blur"></div>
                                     <div class="caption-text">

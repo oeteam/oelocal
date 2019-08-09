@@ -1,9 +1,9 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
 <!-- <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script> -->
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/list.js"></script>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/destination_autocomplete.js"></script>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/advertisement.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/list.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/destination_autocomplete.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/advertisement.js"></script>
 <script>
     FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
 	$(document).ready(function() {
@@ -807,7 +807,7 @@
 										<input type="checkbox" class="rating" checked="" name="rating5" value="5">
 									<?php } else { ?> 
 										<input type="checkbox" class="rating"  name="rating5" value="5">
-										<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
+										<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
 									</label>
 								</div>
 								<div class="checkbox">
@@ -816,7 +816,7 @@
 										<input type="checkbox" class="rating" checked="" name="rating4" value="4">
 									<?php } else { ?> 
 										<input type="checkbox" class="rating"  name="rating4" value="4">
-										<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
+										<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
 									</label>
 								</div>
 								<div class="checkbox">
@@ -825,7 +825,7 @@
 										<input type="checkbox" class="rating" checked="" name="rating3" value="3">
 									<?php } else { ?> 
 										<input type="checkbox" class="rating"  name="rating3" value="3">
-										<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
+										<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
 									</label>
 								</div>
 								<div class="checkbox">
@@ -834,7 +834,7 @@
 										<input type="checkbox" class="rating" checked="" name="rating2" value="2">
 									<?php } else { ?> 
 										<input type="checkbox" class="rating"  name="rating2" value="2">
-										<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
+										<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
 									</label>
 								</div>
 								<div class="checkbox">
@@ -843,7 +843,7 @@
 										<input type="checkbox" class="rating" checked="" name="rating1" value="1">
 									<?php } else { ?> 
 										<input type="checkbox" class="rating"  name="rating1" value="1">
-										<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-1.png" class="imgpos1" alt=""/> 1 Star
+										<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-1.png" class="imgpos1" alt=""/> 1 Star
 									</label>
 								</div>
 								<div class="checkbox">
@@ -918,7 +918,7 @@
 					<!-- LIST CONTENT-->
 					<div class="rightcontent col-md-9 offset-0">
 						<div class="spin-wrapper" style="display: none">
-							<img src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+							<img src="<?php echo static_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
 						</div>
 
 						<div class="hpadding20">
@@ -1323,7 +1323,7 @@
 							<input type="checkbox" class="rating-sm" checked="" name="rating5" value="5">
 						<?php } else { ?> 
 							<input type="checkbox" class="rating-sm"  name="rating5" value="5">
-							<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
+							<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-5.png" class="imgpos1" alt=""/> 5 Stars
 						</label>
 					</div>
 					<div class="checkbox">
@@ -1332,7 +1332,7 @@
 							<input type="checkbox" class="rating-sm" checked="" name="rating4" value="4">
 						<?php } else { ?> 
 							<input type="checkbox" class="rating-sm"  name="rating4" value="4">
-							<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
+							<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-4.png" class="imgpos1" alt=""/> 4 Stars
 						</label>
 					</div>
 					<div class="checkbox">
@@ -1341,7 +1341,7 @@
 							<input type="checkbox" class="rating-sm" checked="" name="rating3" value="3">
 						<?php } else { ?> 
 							<input type="checkbox" class="rating-sm"  name="rating3" value="3">
-							<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
+							<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-3.png" class="imgpos1" alt=""/> 3 Stars
 						</label>
 					</div>
 					<div class="checkbox">
@@ -1350,7 +1350,7 @@
 							<input type="checkbox" class="rating-sm" checked="" name="rating2" value="2">
 						<?php } else { ?> 
 							<input type="checkbox" class="rating-sm"  name="rating2" value="2">
-							<?php }?><img src="<?php echo get_cdn_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
+							<?php }?><img src="<?php echo static_url(); ?>skin/images/filter-rating-2.png" class="imgpos1" alt=""/> 2 Stars
 						</label>
 					</div>
 					<div class="checkbox">
@@ -1476,6 +1476,6 @@
   </div>
 </div>
 <?php init_front_black_tail(); ?> 
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
 
 

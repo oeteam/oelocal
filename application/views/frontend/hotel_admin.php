@@ -141,7 +141,7 @@
                                     </option>
                                     <?php foreach ($hotel_facilties as $key =>
                                     $value) { ?>
-                                    <option data-icon="<?php echo get_cdn_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id ?>">
+                                    <option data-icon="<?php echo static_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id ?>">
                                         <?php echo $value->
                                         Hotel_Facility ?>
                                     </option>
@@ -161,7 +161,7 @@
                                     </span>
                                     <?php foreach ($room_facilties as $key =>
                                     $value) { ?>
-                                    <option data-icon="<?php echo get_cdn_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id ?>">
+                                    <option data-icon="<?php echo static_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id ?>">
                                         <?php echo $value->
                                         Room_Facility ?>
                                     </option>

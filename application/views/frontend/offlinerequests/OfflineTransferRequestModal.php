@@ -1,4 +1,4 @@
-<script src="<?php echo get_cdn_url(); ?>skin/js/agentrequests.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/agentrequests.js"></script>
 <!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>

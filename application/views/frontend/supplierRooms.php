@@ -1,5 +1,5 @@
 <?php init_front_head_supplier(); ?>
-<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/booking.js"></script>
 <style>
  .nav-tabs li {
   background: black;

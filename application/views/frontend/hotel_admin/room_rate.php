@@ -1,6 +1,6 @@
 <?php init_hotel_login_header(); ?>
- <script src="<?php echo get_cdn_url(); ?>skin/js/payment.js"></script>
- <link href="<?php echo get_cdn_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
+ <script src="<?php echo static_url(); ?>skin/js/payment.js"></script>
+ <link href="<?php echo static_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
 <style>
 table {
     font-family: arial, sans-serif;

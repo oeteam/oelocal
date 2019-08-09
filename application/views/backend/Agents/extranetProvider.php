@@ -61,6 +61,6 @@
         });
     }
 </script>
-<script src="<?php echo get_cdn_url(); ?>assets/js/agent.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/agent.js"></script>
 <?php init_tail(); ?>
 

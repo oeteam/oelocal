@@ -1,4 +1,4 @@
-<script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/hotelportel.js"></script>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -126,7 +126,7 @@
                     <div class="form-group">
                         <label for="max_occ_childe" class="col-sm-3 control-label fontstyl" style="">Room Image</label>
                         <div class="col-sm-9">
-                        <img width="100" src="<?php echo get_cdn_url();?>uploads/rooms/<?php echo $view[0]->room_id; ?>/<?php echo $view[0]->images; ?>">
+                        <img width="100" src="<?php echo static_url();?>uploads/rooms/<?php echo $view[0]->room_id; ?>/<?php echo $view[0]->images; ?>">
                         <!-- </div> -->
                     </div>
                 </div>

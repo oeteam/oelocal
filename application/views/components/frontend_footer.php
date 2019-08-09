@@ -66,23 +66,23 @@ $CustomerSupport = CustomerSupport();
             </ul>
          </div>
          <div>
-            <img class="pull-right" src="<?php echo get_cdn_url()?>agentLoginStyle\img\visa.png">
-            <img class="pull-right" src="<?php echo get_cdn_url()?>agentLoginStyle\img\mastercard.png">
+            <img class="pull-right" src="<?php echo static_url()?>agentLoginStyle\img\visa.png">
+            <img class="pull-right" src="<?php echo static_url()?>agentLoginStyle\img\mastercard.png">
          </div>
       </div>
       <p class="footer-copy">Copyright @ 2018- All Rights Reserved</p>
    </div>
 </section>
-<script src="<?php echo get_cdn_url(); ?>assets/js/login.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/login.js"></script>
 
-<script src="<?php echo get_cdn_url(); ?>agentLoginStyle/bootstrap/js/bootstrap.js"></script>
-<script src="<?php echo get_cdn_url(); ?>agentLoginStyle/js/menu/script.js"></script>
+<script src="<?php echo static_url(); ?>agentLoginStyle/bootstrap/js/bootstrap.js"></script>
+<script src="<?php echo static_url(); ?>agentLoginStyle/js/menu/script.js"></script>
 <!-- Javascript  -->
-<script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
-<script src="<?php echo get_cdn_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
-<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.easing.js"></script>
+<script src="<?php echo static_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo static_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
+<script src="<?php echo static_url(); ?>skin/assets/js/jquery.easing.js"></script>
 <!-- Load Animo -->
-<script src="<?php echo get_cdn_url(); ?>skin/plugins/animo/animo.js"></script>
+<script src="<?php echo static_url(); ?>skin/plugins/animo/animo.js"></script>
 <script>
  function errorMessage(){
   $('.login-wrap').animo( { animation: 'tada' } );

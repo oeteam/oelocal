@@ -1,5 +1,5 @@
 <?php init_hotel_login_header(); ?>
-<link href="<?php echo get_cdn_url(); ?>skin/css/hotel_portel.css" rel="stylesheet" media="screen">
+<link href="<?php echo static_url(); ?>skin/css/hotel_portel.css" rel="stylesheet" media="screen">
   <!-- Content Here -->
 
 <div class="row">
@@ -27,7 +27,7 @@
                       <?php 
 
                           if (isset($view[0]['Image1'])) { ?>
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]['id'];; ?>/<?php echo $view[0]['Image1'];?>" class="img1preview" >
+                          <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]['id'];; ?>/<?php echo $view[0]['Image1'];?>" class="img1preview" >
                           <?php  } else {  ?>
                          <img src="" class="img1preview" >
                       <?php   }?>
@@ -45,7 +45,7 @@
               <div class="js--image-preview">
                       <?php 
                           if (isset($view[0]['Image2'])) { ?>
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image2'];?>" class="img2preview" >
+                          <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image2'];?>" class="img2preview" >
                           <?php  } else {  ?>
                          <img src="" class="img2preview" >
                       <?php   }?>
@@ -63,7 +63,7 @@
 
                       <?php 
                           if (isset($view[0]['Image3'])) { ?>
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image3'];?>" class="img3preview" >
+                          <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image3'];?>" class="img3preview" >
                           <?php  } else {  ?>
                          <img src="" class="img3preview" >
                       <?php   }?>
@@ -79,7 +79,7 @@
               <div class="js--image-preview">
                       <?php 
                           if (isset($view[0]['Image4'])) { ?>
-                          <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image4'];?>" class="img4preview" >
+                          <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image4'];?>" class="img4preview" >
                           <?php  } else {  ?>
                          <img src="" class="img4preview" >
                       <?php   }?>
@@ -95,7 +95,7 @@
               <div class="js--image-preview">
                       <?php 
                       if (isset($view[0]['Image5'])) { ?>
-                      <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image5'];?>" class="img5preview" >
+                      <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]['id']; ?>/<?php echo $view[0]['Image5'];?>" class="img5preview" >
                       <?php  } else {  ?>
                          <img src="" class="img5preview" >
                       <?php   }?>
@@ -115,7 +115,7 @@
     </form>
   </div>
 </div>
-<script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/hotelportel.js"></script>
 <script>
   $(document).ready(function() {
       $("#submit_image").click(function() {

@@ -1,5 +1,5 @@
 <?php init_head(); ?>
-<script src="<?php echo get_cdn_url(); ?>assets/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/booking.js"></script>
 <style type="text/css">
 	.stay-pay-tag {
 	    background: red;
@@ -25,7 +25,7 @@
 				            <div class="text-center mb-sm-0" style="background-color: #eaeaea">
 				            	<?php  
 				            		if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id; ?>/<?php echo $view[0]->Image1;?>" width="70%"  >
+                                            <img src="<?php echo static_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id; ?>/<?php echo $view[0]->Image1;?>" width="70%"  >
                                             <?php  } else {  { ?>
                                             <img src="">
                                 <?php  } }?>

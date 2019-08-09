@@ -2,7 +2,7 @@
 <?php init_front_head_menu(); 
 $defaultNationality = defaultNationalityGET(); 
 ?> 
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/search.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/search.js"></script>
 <!-- id="dajy" was here -->
 <style>
     .full-loading {
@@ -185,20 +185,20 @@ $defaultNationality = defaultNationalityGET();
 			<!-- papercut fade turnoff flyin slideright slideleft slideup slidedown-->
 			<!-- FADE -->
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
 				
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
 			</li>
 			
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
 			</li>
 			
 
@@ -632,13 +632,13 @@ function currency_change(type){
 							if ($value->rating==10) {
 								$star = '<label style="width:100px;" class="hotel-rating"><i class="fa fa-building" style="color: #258732;"></i> Apartment</label>';
 							} else {
-								$star = '<img src="'.get_cdn_url().'skin/images/filter-rating-'.$value->rating.$value->rating.'.png">';
+								$star = '<img src="'.static_url().'skin/images/filter-rating-'.$value->rating.$value->rating.'.png">';
 							}
 							?>
 							<a href="<?php echo base_url() ?>details?search_id=<?php echo $value->id; ?>&&mark_up=&&Check_in=<?php echo date('m/d/Y',strtotime( '+2 days' )) ?>&&Check_out=<?php echo date('m/d/Y',strtotime( '+3 days' )) ?>&&adults[]=2&&Child[]=0&&Room1ChildAges=&&Room2ChildAges=&&Room3ChildAges=&&Room4ChildAges=&&Room5ChildAges=&&Room6ChildAges=&&Room7ChildAges=&&Room8ChildAges=&&Room9ChildAges=&&Room10ChildAges=&&contract_id=&providers=otelseasy&nationality=">
 								<div class="col-lg-4">
 									<div class="cuadro_intro_hover ">
-										<img class="img-responsive" src="<?php echo get_cdn_url().'uploads/gallery/'.$value->id.'/'.$value->Image1 ?>">
+										<img class="img-responsive" src="<?php echo images_url().'uploads/gallery/'.$value->id.'/'.$value->Image1 ?>">
 										<div class="caption-text">
 		                                       <h3 class="news-title"><?php echo $value->hotel_name; ?></h3>
 		                               </div>

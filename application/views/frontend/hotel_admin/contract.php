@@ -92,7 +92,7 @@ $(document).ready(function() {
 });
 </script>
 <?php init_hotel_login_footer(); ?>
-<script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/toast.script.js"></script>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/jquery.toaster.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/hotelportel.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/toast.script.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/jquery.toaster.js"></script>
 

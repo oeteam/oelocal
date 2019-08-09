@@ -1,5 +1,5 @@
 <?php init_hotel_login_header(); ?>
- <script src="<?php echo get_cdn_url(); ?>skin/js/payment.js"></script>
+ <script src="<?php echo static_url(); ?>skin/js/payment.js"></script>
 <style>
 table {
     font-family: arial, sans-serif;

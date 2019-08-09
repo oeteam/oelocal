@@ -7,12 +7,12 @@
     
     <!-- Bootstrap -->
     <!-- <link href="<?php echo base_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen"> -->
-    <link href="<?php echo get_cdn_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
+    <link href="<?php echo static_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
 
     <!-- Animo css-->
-    <link href="<?php echo get_cdn_url(); ?>skin/plugins/animo/animate+animo.css" rel="stylesheet" media="screen">
+    <link href="<?php echo static_url(); ?>skin/plugins/animo/animate+animo.css" rel="stylesheet" media="screen">
     
-    <link href="<?php echo get_cdn_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
+    <link href="<?php echo static_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="assets/js/html5shiv.js"></script>
@@ -23,21 +23,21 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>   
     <!-- Font-Awesome -->
-    <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
     <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
-    <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>assets/css/toast.style.min.css" rel="stylesheet">
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/toast.script.js"></script>
+    <link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/toast.style.min.css" rel="stylesheet">
+    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/toast.script.js"></script>
     <!-- Load jQuery -->
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+    <script src="<?php echo static_url(); ?>skin/dist/js/bootstrap.min.js"></script>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
-    <script src="<?php echo get_cdn_url(); ?>assets/js/login.js"></script> 
-    <script src="<?php echo get_cdn_url(); ?>assets/js/pop_up.js"></script> 
+    <script src="<?php echo static_url(); ?>assets/js/login.js"></script> 
+    <script src="<?php echo static_url(); ?>assets/js/pop_up.js"></script> 
     <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
     </script> 
@@ -49,7 +49,7 @@
     <div class="login-fullwidith">
         <!-- Login Wrap  -->
         <div class="login-wrap">
-            <img src="<?php echo get_cdn_url() ?>skin/images/logo.png" class="login-img" alt="logo"/><br/>
+            <img src="<?php echo static_url() ?>skin/images/logo.png" class="login-img" alt="logo"/><br/>
             <form method="post" action="<?php echo base_url('dashboard/hotel_login'); ?>" id="hotel_panel_login">
             <div class="login-c1">
                 <span class="error_msg"></span>
@@ -98,7 +98,7 @@
     <div class="modal-content">
      <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><img src="<?php echo get_cdn_url(); ?>/assets/images/closeall.png" width="20px"> </button>
+        <button type="button" class="close" data-dismiss="modal"><img src="<?php echo static_url(); ?>/assets/images/closeall.png" width="20px"> </button>
       </div>
       <div class="modal-body">
       <div class="col-sm-12">
@@ -307,10 +307,10 @@
 </div>
     <script type="text/javascript"></script>
     <!-- Javascript  -->
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.easing.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.easing.js"></script>
     <!-- Load Animo -->
-    <script src="<?php echo get_cdn_url(); ?>skin/plugins/animo/animo.js"></script>
+    <script src="<?php echo static_url(); ?>skin/plugins/animo/animo.js"></script>
     <script>
     function errorMessage(){
         $('.login-wrap').animo( { animation: 'tada' } );

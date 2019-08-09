@@ -2,7 +2,7 @@
 <?php init_front_head_menu(); ?> 
 <!-- <script type="text/javascript" src="<?php echo base_url(); ?>skin/js/transfer_autocomplete.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/moment.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places&callback=initMap"
         async defer></script>
@@ -84,20 +84,20 @@
 			<!-- papercut fade turnoff flyin slideright slideleft slideup slidedown-->
 			<!-- FADE -->
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
 				
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
 			</li>
 			
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
+				<img src="<?php echo static_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
 			</li>
 			
 

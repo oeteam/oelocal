@@ -4,16 +4,16 @@
     <title>Hotel | Login</title>
     <meta charset="utf-8">
     <meta name=viewport content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
+    <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- Main Style (Normalize Included) -->
-    <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/css/hotel_login_style.css"></style>
-    <link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/css/hotel_login_style.css"></style>
+    <link href="<?php echo static_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
 
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>assets/js/pop_up.js"></script> 
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+    <script src="<?php echo static_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/pop_up.js"></script> 
     <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
     </script> 
@@ -44,7 +44,7 @@
         <div class="right-wrapper">
             <div class="right-content">
                 <div class="product-logo">
-                    <img src="<?php echo get_cdn_url() ?>skin/images/logo.png" alt="LOGO">
+                    <img src="<?php echo static_url() ?>skin/images/logo.png" alt="LOGO">
                 </div>
                   <form method="post" action="<?php echo base_url('dashboard/hotel_panel'); ?>" id="hotel_panel_login">
                     <h2>Hotel Login</h2>
@@ -79,7 +79,7 @@
     <div class="modal-content">
      <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
       <div class="modal-header">
-        <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo get_cdn_url(); ?>/assets/images/closeall.png" width="20px"> </button>
+        <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo static_url(); ?>/assets/images/closeall.png" width="20px"> </button>
       </div>
       <div class="modal-body">
       <div class="col-sm-12">
@@ -401,5 +401,5 @@
 
 
 </body>
-    <script src="<?php echo get_cdn_url(); ?>assets/js/login.js"></script>
+    <script src="<?php echo static_url(); ?>assets/js/login.js"></script>
 </html>

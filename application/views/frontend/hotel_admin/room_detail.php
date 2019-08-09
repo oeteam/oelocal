@@ -1,6 +1,6 @@
 <?php init_hotel_login_header(); ?>
- <script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
- <link href="<?php echo get_cdn_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
+ <script src="<?php echo static_url(); ?>skin/js/hotelportel.js"></script>
+ <link href="<?php echo static_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
 <div class="row">
         <div class="col-md-12">
         	<?php if (isset($_REQUEST['proc'])) { ?>
@@ -123,7 +123,7 @@
                         <div class="col-sm-9">
                             <select name="room_facilti[]" class="form-control multi-select2" id="room_facilti" data-placeholder="Select Facilities" multiple="multiple">
                               <?php foreach ($room_facilties as $key => $value) { ?>
-                            <option data-icon="<?php echo get_cdn_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id; ?>"><?php echo $value->Room_Facility; ?></option>
+                            <option data-icon="<?php echo static_url() ?><?php echo $value->icon_src ?>" value="<?php echo $value->id; ?>"><?php echo $value->Room_Facility; ?></option>
                              <?php } ?>
                             </select> 
                             
@@ -341,7 +341,7 @@
     </div>
 </div>
 </div>
-<script src="<?php echo get_cdn_url(); ?>skin/distn/js/bootstrap-imageupload.js"></script>
+<script src="<?php echo static_url(); ?>skin/distn/js/bootstrap-imageupload.js"></script>
 
         <script>
             var $imageupload = $('.imageupload');

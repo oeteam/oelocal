@@ -1,4 +1,4 @@
-<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/booking.js"></script>
 <style type="text/css">
   .modal-backdrop {
     z-index: 500;

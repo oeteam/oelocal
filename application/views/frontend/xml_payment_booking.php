@@ -1,6 +1,6 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/xml_payment.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/xml_payment.js"></script>
 <script type="text/javascript">
 	$(".xml-default").remove();
 	$(document).ready(function() {
@@ -194,7 +194,7 @@
 						} else if($HotelRating =='FiveStar') {
 							$star = '5';
 						} ?>
-						<p><img src="<?php echo get_cdn_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
+						<p><img src="<?php echo static_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
 				    </div>		
 		            <div class="line3"></div>
 		            <div class="hpadding20 margtop20">

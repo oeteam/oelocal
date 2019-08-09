@@ -11,9 +11,9 @@ $data = title();
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 <title><?php echo $data[0]->Title ?></title>
-<link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
-<link  a href="<?php echo get_cdn_url(); ?>landingpage/css/style.css" rel="stylesheet" type="text/css">
-<link  a href="<?php echo get_cdn_url(); ?>landingpage/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
+<link  a href="<?php echo static_url(); ?>landingpage/css/style.css" rel="stylesheet" type="text/css">
+<link  a href="<?php echo static_url(); ?>landingpage/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet">
 </head>
@@ -24,7 +24,7 @@ $data = title();
             <div class="row">
                <div class="col-md-4">
                   <!-- <div class="logo"><img src="http://localhost/works/landingpage/img/logo.png" class="img-responsive"  alt=""/></div> -->
-                  <div class="logo"><img src="<?php echo get_cdn_url(); ?>skin/images/logo.png" class="img-responsive"  alt=""/></div>
+                  <div class="logo"><img src="<?php echo static_url(); ?>skin/images/logo.png" class="img-responsive"  alt=""/></div>
                </div>
                <div class="col-md-4"></div>
                <div class="col-md-4">
@@ -124,15 +124,15 @@ $data = title();
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <!--<script src="js/jquery.min.js"></script>-->
-<script src="<?php echo get_cdn_url(); ?>landingpage/bootstrap/js/bootstrap.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/bootstrap/js/bootstrap.js"></script>
 
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/TweenLite.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/EasePack.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/header-animate.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/jquery_002.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/Landing.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/owl.carousel.min.js"></script>
-<script src="<?php echo get_cdn_url(); ?>landingpage/js/wow.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/TweenLite.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/EasePack.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/header-animate.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/jquery_002.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/Landing.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/owl.carousel.min.js"></script>
+<script src="<?php echo static_url(); ?>landingpage/js/wow.js"></script>
 
  <script type="text/javascript">// <![CDATA[
 

@@ -1,5 +1,5 @@
-<script src="<?php echo get_cdn_url(); ?>assets/js/hotel.js"></script>
-<link rel="stylesheet" href="<?php echo get_cdn_url(); ?>assets/css/prettify.css" />
+<script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/prettify.css" />
 
   <div class="modal-content col-md-6 col-md-offset-3">
         <div class="modal-header">
@@ -44,8 +44,8 @@
             <input type="button" id="update_country_permission" class="no-border btn-sm btn-success" value="Update">
         </div>
     </div>
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/prettify.min.js"></script>
-<script src="<?php echo get_cdn_url(); ?>assets/js/multiselect.min.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     

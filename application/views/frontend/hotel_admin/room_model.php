@@ -1,5 +1,5 @@
-<script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
- <link href="<?php echo get_cdn_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
+<script src="<?php echo static_url(); ?>skin/js/hotelportel.js"></script>
+ <link href="<?php echo static_url(); ?>skin/distn/css/bootstrap-imageupload.css" rel="stylesheet">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -205,7 +205,7 @@
         </div>
       </div>
     </div>
-<script src="<?php echo get_cdn_url(); ?>skin/distn/js/bootstrap-imageupload.js"></script>
+<script src="<?php echo static_url(); ?>skin/distn/js/bootstrap-imageupload.js"></script>
 
         <script>
             var $imageupload = $('.imageupload');

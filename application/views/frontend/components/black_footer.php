@@ -8,18 +8,18 @@
 		<div class="col-md-3">
 			<span class="ftitleblack">Let's socialize</span>
 			<div class="scont">
-				<a href="#" class="social1b"><img src="<?php echo get_cdn_url(); ?>skin/images/icon-facebook.png" alt=""/></a>
-				<a href="#" class="social2b"><img src="<?php echo get_cdn_url(); ?>skin/images/icon-twitter.png" alt=""/></a>
-				<a href="#" class="social3b"><img src="<?php echo get_cdn_url(); ?>skin/images/icon-gplus.png" alt=""/></a>
-				<a href="#" class="social4b"><img src="<?php echo get_cdn_url(); ?>skin/images/icon-youtube.png" alt=""/></a>
+				<a href="#" class="social1b"><img src="<?php echo static_url(); ?>skin/images/icon-facebook.png" alt=""/></a>
+				<a href="#" class="social2b"><img src="<?php echo static_url(); ?>skin/images/icon-twitter.png" alt=""/></a>
+				<a href="#" class="social3b"><img src="<?php echo static_url(); ?>skin/images/icon-gplus.png" alt=""/></a>
+				<a href="#" class="social4b"><img src="<?php echo static_url(); ?>skin/images/icon-youtube.png" alt=""/></a>
 				<br/><br/><br/>
-				<a href="#"><img class="logo" src="<?php echo get_cdn_url(); ?>assets/images/logo.png" alt="" /></a><br/>
+				<a href="#"><img class="logo" src="<?php echo static_url(); ?>assets/images/logo.png" alt="" /></a><br/>
 				<span class="grey2">&copy; 2017  |  <a href="#">Otelseasy</a><br/>
 				All Rights Reserved </span>
 				<br/><br/>
 				<div>
-				    <img class="" src="<?php echo get_cdn_url()?>agentLoginStyle\img\visa.png">
-				    <img class="" src="<?php echo get_cdn_url()?>agentLoginStyle\img\mastercard.png">
+				    <img class="" src="<?php echo static_url()?>agentLoginStyle\img\visa.png">
+				    <img class="" src="<?php echo static_url()?>agentLoginStyle\img\mastercard.png">
 				 </div>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
 			<span class="ftitleblack">Newsletter</span>
 			<div class="relative">
 				<input type="email" class="form-control fccustom2black" id="exampleInputEmail1" placeholder="Enter email">
-				<button type="submit" class="btn btn-default btncustom">Submit<img src="<?php echo get_cdn_url(); ?>skin/images/arrow.png" alt=""/></button>
+				<button type="submit" class="btn btn-default btncustom">Submit<img src="<?php echo static_url(); ?>skin/images/arrow.png" alt=""/></button>
 			</div>
 			<br/><br/>
 			<span class="ftitleblack">Customer support</span><br/>
@@ -84,27 +84,27 @@
 	</div>
 </div>
 
-	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/initialize-google-map.js"></script>
-	<script type='text/javascript' src='<?php echo get_cdn_url(); ?>skin/assets/js/jquery.customSelect.js'></script>
+	<script src="<?php echo static_url(); ?>skin/assets/js/initialize-google-map.js"></script>
+	<script type='text/javascript' src='<?php echo static_url(); ?>skin/assets/js/jquery.customSelect.js'></script>
 	
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/functions.js"></script>
-	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.nicescroll.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/functions.js"></script>
+	<script src="<?php echo static_url(); ?>skin/assets/js/jquery.nicescroll.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+	<script src="<?php echo static_url(); ?>skin/assets/js/jquery.carouFredSel-6.2.1-packed.js"></script>
 
-	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/helper-plugins/jquery.touchSwipe.min.js"></script>
-	<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
-	<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/assets/js/helper-plugins/jquery.transit.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/assets/js/helper-plugins/jquery.ba-throttle-debounce.min.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/counter.js"></script>	
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/js/carousel.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.easing.js"></script>
+	<script src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.touchSwipe.min.js"></script>
+	<script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.transit.min.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/counter.js"></script>	
+    <script src="<?php echo static_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script>
+    <script src="<?php echo static_url(); ?>skin/js/carousel.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.easing.js"></script>
     
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/js-dashboard.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/js-dashboard.js"></script>
      <!-- Javascript -->	
-	<script type='text/javascript' src='<?php echo get_cdn_url(); ?>skin/js/lightbox.js'></script>	
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/js-list4.js"></script>	
+	<script type='text/javascript' src='<?php echo static_url(); ?>skin/js/lightbox.js'></script>	
+    <script src="<?php echo static_url(); ?>skin/assets/js/js-list4.js"></script>	
 	
     <!-- Custom Select -->
 	
@@ -121,17 +121,17 @@
     <!-- Nicescroll  -->	
 	
     <!-- Picker -->	
-	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery-ui.js"></script>
+	<script src="<?php echo static_url(); ?>skin/assets/js/jquery-ui.js"></script>
 	
     <!-- Bootstrap	 -->
-    <script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo static_url(); ?>skin/dist/js/bootstrap.min.js"></script>
 
         <!-- bin/jquery.slider.min.js -->
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jshashtable-2.1_src.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.numberformatter-1.2.3.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/tmpl.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.dependClass-0.1.js"></script>
-    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/draggable-0.1.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/jshashtable-2.1_src.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/jquery.numberformatter-1.2.3.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/tmpl.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/jquery.dependClass-0.1.js"></script>
+    <script type="text/javascript" src="<?php echo static_url(); ?>skin/plugins/jslider/js/draggable-0.1.js"></script>
    
   </body>
 </html>

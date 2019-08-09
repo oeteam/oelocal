@@ -15,20 +15,20 @@
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
+    <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
     <title><?php echo $data[0]->Title ?></title>
-    <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
+    <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
     <!-- Bootstrap -->
-    <link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="<?php echo get_cdn_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
-    <link href="<?php echo get_cdn_url(); ?>skin/assets/css/dashboard.css" rel="stylesheet" media="screen">
+    <link href="<?php echo static_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="<?php echo static_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
+    <link href="<?php echo static_url(); ?>skin/assets/css/dashboard.css" rel="stylesheet" media="screen">
     <!-- Carousel -->
-	  <link href="<?php echo get_cdn_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
+	  <link href="<?php echo static_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
     <!-- Font-Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome.css" media="screen" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/assets/css/font-awesome.css" media="screen" /> -->
   	<!-- PIECHART -->
-  	<link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/jquery.easy-pie-chart.css">
+  	<link rel="stylesheet" type="text/css" href="<?php echo static_url(); ?>skin/assets/css/jquery.easy-pie-chart.css">
     <!-- MORRIS CHARTS -->
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> -->
 
@@ -36,18 +36,18 @@
    
     
     <!-- Picker UI-->	
-	  <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/assets/css/jquery-ui.css" />		
-    <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/assets/css/jquery.dataTables.min.css" />  
+	  <link rel="stylesheet" href="<?php echo static_url(); ?>skin/assets/css/jquery-ui.css" />		
+    <link rel="stylesheet" href="<?php echo static_url(); ?>skin/assets/css/jquery.dataTables.min.css" />  
     <!-- jQuery -->	
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+    <script src="<?php echo static_url(); ?>skin/assets/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&sensor=false&libraries=places'></script>
     <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
     </script> 
-    <script src="<?php echo get_cdn_url(); ?>skin/js/jquery.toaster.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/js/tost.js"></script>
-    <script src="<?php echo get_cdn_url(); ?>skin/js/common.js"></script>
+    <script src="<?php echo static_url(); ?>skin/js/jquery.toaster.js"></script>
+    <script src="<?php echo static_url(); ?>skin/js/tost.js"></script>
+    <script src="<?php echo static_url(); ?>skin/js/common.js"></script>
     <style>
     .timeline {
       list-style: none;
@@ -290,7 +290,7 @@ s0.parentNode.insertBefore(s1,s0);
 
                    <!-- <br/><br/>-->
                    <div class="logo-sec">
-                      <a href="<?php echo base_url(); ?>/hotels"><img src="<?php echo get_cdn_url(); ?>skin/images/dash/logo.png" width="109px;height: 40px;" alt=""/></a>
+                      <a href="<?php echo base_url(); ?>/hotels"><img src="<?php echo static_url(); ?>skin/images/dash/logo.png" width="109px;height: 40px;" alt=""/></a>
                       </div>
                       
                      
@@ -298,7 +298,7 @@ s0.parentNode.insertBefore(s1,s0);
                          <span class="size16 new-bl lh5">Agent Panel</span><br/>
 
                       <div class="sidebar-userpic">
-                                                <img src="<?php echo get_cdn_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="img-responsive" alt=""> </div>
+                                                <img src="<?php echo images_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="img-responsive" alt=""> </div>
                       <div class="profile-usertitle">
                         
                                             <div class="sidebar-userpic-name"> <?php echo $this->session->userdata('agent_name') ?></div>
@@ -319,7 +319,7 @@ s0.parentNode.insertBefore(s1,s0);
                                       </div>
 
 
-                      <!-- <a href="#"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></a><br/>
+                      <!-- <a href="#"><img src="<?php echo images_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></a><br/>
                       <span class="size12 dark">Administrator</span><br/>
                       <a href="<?php echo base_url(); ?>backend/logout/agent_logout"><img src="<?php echo base_url(); ?>skin/images/dash/logout.png" alt=""/></a><br/>
                       <br/><br/> -->
@@ -438,19 +438,19 @@ s0.parentNode.insertBefore(s1,s0);
                                             <?php if ($value->readed==2){ ?>
                                                   <li class='msgbox  offset-0'>
                                                 <?php }else{ ?><li class='msgbox read offset-0'><?php } ?>
-                                                <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                                <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                               <span class='opensans size13 dark'><b><?php echo $value->hotel_name ?></b></span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> Approved your booking</span></a></li>
                                           <?php } 
                                           if ($value->booking_flag==0) { ?>
                                             <?php if ($value->readed==2){ ?>
                                                   <li class='msgbox  offset-0'>
-                                                <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                                <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                               <span class='opensans size13 dark'><b> Rejected request</b> </span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> rejected your booking</span></a></li>
                                           <?php }
                                           if ($value->booking_flag==2) { ?>
                                             <?php if ($value->readed==2){ ?>
                                                   <li class='msgbox  offset-0'>
-                                                  <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                                  <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                                 <span class='opensans size13 dark'><b>New booking request</b></span></br><span class='opensans size12 dark'>You are booked <?php echo $value->hotel_name ?></span></a></li>
                                           <?php } ?>
                                         <?php }  ?>
@@ -464,13 +464,13 @@ s0.parentNode.insertBefore(s1,s0);
                               </li>
                               <li class="dropdown">
                                  <?php if ($flag_img!=""){ ?>
-                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #ffffff;"> / <?php echo $flag ?></span><b class="lightcaret mt-2"></b></a>
+                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo static_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #ffffff;"> / <?php echo $flag ?></span><b class="lightcaret mt-2"></b></a>
                                       <?php } else {
                                         $on_flag = onload_currency();
                                         $onflag_i = substr($on_flag, 0, 2);
                                         $onflag_img = strtolower($onflag_i);
                                         ?>
-                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2"></b></a>
+                                      <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo static_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2"></b></a>
                                       <?php } ?>
                                 <ul class="dropdown-menu" style="width: 300px;">
                                    <?php  foreach ($contry as $key => $value2) { 
@@ -483,7 +483,7 @@ s0.parentNode.insertBefore(s1,s0);
                                     <div class="col-sm-3 text-center">
                                        <div class="row">
                                             <li class="dropdown-header" title="<?php echo $country; ?>" style="cursor: pointer;"><a 
-                                              onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a></li> 
+                                              onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo static_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a></li> 
                                             </li>
                                        </div>
                                     </div>
@@ -493,7 +493,7 @@ s0.parentNode.insertBefore(s1,s0);
                                <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo base_url(); ?>dashboard"><?php echo $name ?> <b class="lightcaret mt-2"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li class="dropdown-header"><img src="<?php echo get_cdn_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></li> 
+                                    <li class="dropdown-header"><img src="<?php echo images_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar" alt=""/></li> 
                                     <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
                                     <li><a href="<?php echo base_url(); ?>backend/logout/agent_logout">Logout</a></li>
                                 </ul>

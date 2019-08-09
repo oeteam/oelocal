@@ -6,7 +6,7 @@
 
   <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
 
-      <link rel="stylesheet" href="<?php echo get_cdn_url() ?>skin/leftmenu/lcss/style.css">
+      <link rel="stylesheet" href="<?php echo static_url() ?>skin/leftmenu/lcss/style.css">
 
   
 </head>
@@ -71,7 +71,7 @@
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
 
-    <script  src="<?php echo get_cdn_url() ?>skin/leftmenu/ljs/index.js"></script>
+    <script  src="<?php echo static_url() ?>skin/leftmenu/ljs/index.js"></script>
 
 </body>
 </html>

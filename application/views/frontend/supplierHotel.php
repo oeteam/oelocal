@@ -198,5 +198,5 @@
   });
 
  </script>
- <script src="<?php echo get_cdn_url(); ?>skin/js/supplier.js"></script>
+ <script src="<?php echo static_url(); ?>skin/js/supplier.js"></script>
 <?php init_front_head_footer(); ?> 

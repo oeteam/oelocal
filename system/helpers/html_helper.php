@@ -509,6 +509,9 @@ function init_front_head_supplier($aside = true)
     $CI =& get_instance();
     $CI->load->view('frontend/components/supplier_header');
 }
-function get_cdn_url() {
-	return "http://dev.otelseasy.com/";
+function static_url() {
+	return "http://static.otelseasy.com/";
+}
+function images_url() {
+	return "http://images.otelseasy.com/";
 }

@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?> 
-<script src="<?php echo get_cdn_url(); ?>skin/js/profile.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/profile.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		ConSelectFun();
@@ -41,9 +41,9 @@
 									<div class="pro-bg">
 	                                        <span class="list-img">
 											    <?php if ($view[0]->profile_image!="") { ?>
-												<img id="load_image" class="img_size_custom" src="<?php echo get_cdn_url();?>uploads/agent_profile_pic/<?php echo $view[0]->id;?>/thumb_<?php echo $view[0]->profile_image;?>" alt="">
+												<img id="load_image" class="img_size_custom" src="<?php echo images_url();?>uploads/agent_profile_pic/<?php echo $view[0]->id;?>/thumb_<?php echo $view[0]->profile_image;?>" alt="">
 												<?php } else { ?>
-												<img id="load_image" class="img_size_custom" src="<?php echo get_cdn_url() ?>assets/images/user/1.png" alt="">
+												<img id="load_image" class="img_size_custom" src="<?php echo static_url() ?>assets/images/user/1.png" alt="">
 												<?php } ?>
 											</span>
 											<br>
@@ -55,9 +55,9 @@
 									<div class="btn">
 	                                        <span class="list-img">
 											    <?php if ($view[0]->logo!="") { ?>
-												<img id="load_image" class="img_size_custom" src="<?php echo get_cdn_url();?>uploads/agent_logo/<?php echo $view[0]->id;?>/<?php echo $view[0]->logo;?>" alt="">
+												<img id="load_image" class="img_size_custom" src="<?php echo images_url();?>uploads/agent_logo/<?php echo $view[0]->id;?>/<?php echo $view[0]->logo;?>" alt="">
 												<?php } else { ?>
-												<img id="load_image" class="img_size_custom" src="<?php echo get_cdn_url() ?>assets/images/user/1.png" alt="">
+												<img id="load_image" class="img_size_custom" src="<?php echo static_url() ?>assets/images/user/1.png" alt="">
 												<?php } ?>
 											</span>
 											<br>

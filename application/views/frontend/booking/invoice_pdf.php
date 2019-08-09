@@ -57,7 +57,7 @@
                     <div class="clearfix">
                         <div class="pull-left">
                             <h4 class="text-right">
-                                <img width="100" src="<?php echo get_cdn_url(); ?>skin/images/logo.png" alt="Logo" />
+                                <img width="100" src="<?php echo static_url(); ?>skin/images/logo.png" alt="Logo" />
                             </h4>
                         </div>
                         <div class="pull-right">

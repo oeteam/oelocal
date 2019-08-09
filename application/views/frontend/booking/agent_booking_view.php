@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo static_url(); ?>skin/js/booking.js"></script>
 <style type="text/css">
 	.stay-pay-tag {
 	    background: red;
@@ -39,7 +39,7 @@
 			<div class="col-md-12">
 				<div class="col-md-4">
 					<div class="pro-bg">
-					<img  class="img_size_custom"   width="300" src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id ?>/<?php echo $view[0]->Image1 ?>" class="left" alt="">
+					<img  class="img_size_custom"   width="300" src="<?php echo images_url(); ?>uploads/gallery/<?php echo $view[0]->hotel_id ?>/<?php echo $view[0]->Image1 ?>" class="left" alt="">
 				</div>
 				</div>
 				<div class="col-md-8">
@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					<div class="col-md-6">
-						<p><img src="<?php echo get_cdn_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
+						<p><img src="<?php echo static_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
 						<div class="row">
 							<div class="col-md-12">
 								<h4>Location</h4>

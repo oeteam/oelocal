@@ -3,7 +3,7 @@
   $CustomerSupport = CustomerSupport();
 
 ?> 
-<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/xml_payment.js"></script>
+<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/xml_payment.js"></script>
 <script>
   function divLoading(flag) {
   var spinWrapper = $('.spin-wrapper');
@@ -812,7 +812,7 @@ $(".details").on("click", function( e ) {
             } else if($HotelRating =='FiveStar' || $HotelRating =='5') {
               $star = '5';
             } ?>
-              <p><img src="<?php echo get_cdn_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
+              <p><img src="<?php echo static_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
             
               <p class="text-muted"><?php echo $HotelAdrs; ?></p>
             </div>
@@ -1019,7 +1019,7 @@ $(".details").on("click", function( e ) {
                 </style>
                 <div class="empty-state">
                   <h4 class="text-green margtop10">Room Types</h4>
-                  <img src="<?php echo get_cdn_url(); ?>skin/images/empty-state.png" alt="No Records">
+                  <img src="<?php echo static_url(); ?>skin/images/empty-state.png" alt="No Records">
                   <h4 class="empty-state__message">No rooms available!</h4>
                   <p class="empty-state__info">Please try another roomgroup/hotel.</p>
                 </div>
@@ -1031,7 +1031,7 @@ $(".details").on("click", function( e ) {
               </div>
               <div class="col-md-2 col-md-offset-5">
                   <div class="spin-wrapper" style="">
-                    <img style="width: 100px;" src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+                    <img style="width: 100px;" src="<?php echo static_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
                   </div>
               </div>
             </div>
@@ -1237,8 +1237,8 @@ $(".details").on("click", function( e ) {
                     </div>
                   </div>
                   <div class="clearfix"></div>
-                  <button id="prev_btn2" class="prev2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>
-                  <button id="next_btn2" class="next2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>   
+                  <button id="prev_btn2" class="prev2"><img src="<?php echo static_url(); ?>skin/images/spacer.png" alt=""/></button>
+                  <button id="next_btn2" class="next2"><img src="<?php echo static_url(); ?>skin/images/spacer.png" alt=""/></button>   
                     
                   </div>
                 </div> <!-- /c-carousel -->

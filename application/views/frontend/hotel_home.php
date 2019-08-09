@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard_hotel(); ?> 
-<script src="<?php echo get_cdn_url(); ?>assets/js/hotel_user.js"></script>
+<script src="<?php echo static_url(); ?>assets/js/hotel_user.js"></script>
  <div class="container">
 	<div class="container mt25 offset-0">
 		<!-- CONTENT -->
