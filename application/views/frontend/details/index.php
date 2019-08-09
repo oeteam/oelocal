@@ -83,10 +83,10 @@ $adults = $_REQUEST['adults'] ?>
 	<?php } ?>
 </script>
 <!-- Bootstrap -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">
         <!-- jQuery-->  
-        <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>  
-        <script src="<?php echo base_url(); ?>assets/js/details.js"></script>  
+        <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery-ui.js"></script>  
+        <script src="<?php echo get_cdn_url(); ?>assets/js/details.js"></script>  
         <!-- end -->
 <div class="container breadcrub">
 	<input type="hidden" id="lat_val" value="<?php echo $view[0]->lattitude ?>">
@@ -124,14 +124,14 @@ $adults = $_REQUEST['adults'] ?>
 										$image = 'Image'.$q;
 									 ?>
 									
-									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
+									<img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
 								<?php } ?>		
 								<?php 
 									for ($q=1; $q <= 5; $q++) { 
 										$image = 'Image'.$q;
 									 ?>
 									
-									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
+									<img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" alt=""/>
 								<?php } ?>						
 							</div>
 						</div>
@@ -140,19 +140,19 @@ $adults = $_REQUEST['adults'] ?>
 								<?php for ($q=1; $q <= 5; $q++) { 
 										$image = 'Image'.$q;
 								 ?>
-									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
+									<img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
 								<?php } ?>		
 								<?php for ($q=1; $q <= 5; $q++) { 
 										$image = 'Image'.$q;
 								 ?>
-									<img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
+									<img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->$image; ?>" width="120" height="68" alt=""/>
 								<?php } ?>						
 							</div>
 						</div>
 					</div>
 					<div class="clearfix"></div>
-					<button id="prev_btn2" class="prev2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>
-					<button id="next_btn2" class="next2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>		
+					<button id="prev_btn2" class="prev2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>
+					<button id="next_btn2" class="next2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>		
 						
 					</div>
 				</div> <!-- /c-carousel -->
@@ -162,7 +162,7 @@ $adults = $_REQUEST['adults'] ?>
 			<div class="col-md-4 detailsright offset-0">
 				<div class="padding20">
 					<h4 class="lh1"><?php echo $view[0]->hotel_name ?></h4>
-					<img src="<?php echo base_url(); ?>skin/images/smallrating-<?php echo $view[0]->rating ?>.png" alt=""/>
+					<img src="<?php echo get_cdn_url(); ?>skin/images/smallrating-<?php echo $view[0]->rating ?>.png" alt=""/>
 				</div>
 				
 				<div class="line3"></div>
@@ -530,7 +530,7 @@ $adults = $_REQUEST['adults'] ?>
 						<div class="dateCheckLoad">
 							<div class="line2"></div>
 							<div class="spin-wrapper" style="/* display: none; */text-align: center;">
-								<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
+								<img src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
 							</div>
 							<div class="line2"></div>
 						</div>
@@ -557,9 +557,9 @@ $adults = $_REQUEST['adults'] ?>
 									<div class="padding20">
 										<div class="col-md-4 offset-0">
 											<?php if ($value->images!="") { ?>
-												<a href="#"><img src="<?php echo base_url(); ?>uploads/rooms/<?php echo $value->id ?>/<?php echo $value->images; ?>" alt="" class="fwimg"/></a>
+												<a href="#"><img src="<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->id ?>/<?php echo $value->images; ?>" alt="" class="fwimg"/></a>
 											<?php  } else { ?>
-												<a href="#"><img src="<?php echo base_url(); ?>skin/images/items2/item1.jpg" alt="" class="fwimg"/></a>
+												<a href="#"><img src="<?php echo get_cdn_url(); ?>skin/images/items2/item1.jpg" alt="" class="fwimg"/></a>
 											<?php } ?>
 										</div>
 										<div class="col-md-8 offset-0">
@@ -924,5 +924,5 @@ $adults = $_REQUEST['adults'] ?>
 </div>
 
 <?php init_front_black_tail(); ?> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
 

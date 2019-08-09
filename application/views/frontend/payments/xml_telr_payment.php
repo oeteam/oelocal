@@ -1,6 +1,6 @@
 <?php init_front_head(); ?> 
 <head>
-    <script src="<?php echo base_url(); ?>skin/js/common.js"></script>
+    <script src="<?php echo get_cdn_url(); ?>skin/js/common.js"></script>
 </head>
 <body id="top" class="thebg">
 	<div class="container offset-3"> 
@@ -10,7 +10,7 @@
 				  <span class="icon-bar"></span>
 				  <span class="icon-bar"></span>
 			</button>
-			<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo base_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
+			<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo get_cdn_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
 		</div>
 	</div>
 	<div class="container breadcrub">

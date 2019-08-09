@@ -8,16 +8,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo $data[0]->Title ?></title>
-    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
+    <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
 	
 	<!-- Bootstrap -->
-	<link href="<?php echo base_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+	<link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
 	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>	
 	<!-- Font-Awesome -->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>skin/assets/css/font-awesome.min.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome.min.css" media="screen" />
 	<!-- Load jQuery -->
-	<script src="<?php echo base_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+	<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
     <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
     </script> 
@@ -65,7 +65,7 @@
 		</div>
 		<div class="col-md-offset-3 col-md-6 margtop40">
 			<div class="row">
-				<p class="text-center"><a href="<?php echo base_url(); ?>" class="lblue">Back to Login</a></p>
+				<p class="text-center"><a href="<?php echo get_cdn_url(); ?>" class="lblue">Back to Login</a></p>
 			</div>
 		</div>
 	</div>

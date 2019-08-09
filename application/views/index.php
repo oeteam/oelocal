@@ -206,7 +206,7 @@ $Hotelsbanner = Hotelsbanner();
                           ?>
                            <div class="col-lg-3">
                               <div class="cuadro_intro_hover ">
-                                 <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
+                                 <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
                                  <div class="caption">
                                     <div class="blur"></div>
                                     <div class="caption-text">
@@ -271,7 +271,7 @@ $Hotelsbanner = Hotelsbanner();
                               <?php if (count($Hotelsbanner)!=0) { ?>
                               <div class="cuadro_intro_hover" style="height:275px">
                                  <div>
-                                 <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $Hotelsbanner[0]->id."/".$Hotelsbanner[0]->Image1 ?>" class="img-responsive"  alt="" style="height:100%;margin: 0 auto;"/>
+                                 <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $Hotelsbanner[0]->id."/".$Hotelsbanner[0]->Image1 ?>" class="img-responsive"  alt="" style="height:100%;margin: 0 auto;"/>
                                  </div>
                                  <div class="caption" style="top:200px">
                                     <div class="blur"></div>
@@ -293,7 +293,7 @@ $Hotelsbanner = Hotelsbanner();
                    <div class="modal-content">
                     <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
                      <div class="modal-header">
-                       <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo base_url(); ?>/assets/images/closeall.png" width="20px"> </button>
+                       <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo get_cdn_url(); ?>/assets/images/closeall.png" width="20px"> </button>
                     </div>
                     <div class="modal-body">
                      <div class="col-sm-12">

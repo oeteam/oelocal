@@ -1,12 +1,12 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/transfer.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/transfer.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/moment.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places&callback=initMap"
         async defer></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/transfer_autocomplete.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/transfer_autocomplete.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
 <script>
 
@@ -569,7 +569,7 @@
 
 				<div class="itemscontainer offset-1">
 					<div class="spin-wrapper" style="display: none">
-						<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
+						<img src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="">
 					</div>
 					<div id="result_search">
 						
@@ -612,5 +612,5 @@
 </script>
 
 <?php init_front_black_tail(); ?> 
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
 

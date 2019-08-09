@@ -197,7 +197,7 @@
   </style>
 </style>
 <head>
-    <script src="<?php echo base_url(); ?>skin/js/common.js"></script>
+    <script src="<?php echo get_cdn_url(); ?>skin/js/common.js"></script>
 </head>
   <body id="top" class="thebg">
 	<!-- Top wrapper -->			  
@@ -214,7 +214,7 @@
 				  <span class="icon-bar"></span>
 				  <span class="icon-bar"></span>
 				</button>
-				<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo base_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
+				<a href="<?php echo base_url(); ?>/hotels" class="navbar-brand"><img src="<?php echo get_cdn_url(); ?>skin/images/logo.png" alt="Hotels" class="logo"/></a>
 			  </div>
       </div>
       <div class="col-md-2">
@@ -285,19 +285,19 @@
                                         <?php if ($value->readed==2){ ?>
                                               <li class='msgbox  offset-0'>
                                             <?php }else{ ?><li class='msgbox read offset-0'><?php } ?>
-                                            <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                            <a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                           <span class='opensans size13 dark'><b><?php echo $value->hotel_name ?></b></span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> Approved your booking</span></a></li>
                                       <?php } 
                                       if ($value->booking_flag==0) { ?>
                                         <?php if ($value->readed==2){ ?>
                                               <li class='msgbox  offset-0'>
-                                            <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                            <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                           <span class='opensans size13 dark'><b> Rejected request</b> </span><br/><span class='opensans size12'><?php echo $value->hotel_name ?> rejected your booking</span></a></li>
                                       <?php }
                                       if ($value->booking_flag==2) { ?>
                                         <?php if ($value->readed==2){ ?>
                                               <li class='msgbox  offset-0'>
-                                              <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo base_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
+                                              <?php }else{ ?><li class='msgbox read offset-0'><?php } ?><a href='<?php echo base_url(); ?>Payment/agent_booking_view?id=<?php echo $value->bk_id?>'><span class="timeline-icon"><img src='<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/></span>
                                             <span class='opensans size13 dark'><b>New booking request</b></span></br><span class='opensans size12 dark'>You are booked <?php echo $value->hotel_name ?></span></a></li>
                                       <?php } ?>
                                     <?php }  ?>
@@ -311,13 +311,13 @@
            </li>
            <li class="dropdown">
                     <?php if ($flag_img!=""){ ?>
-                    <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $flag ?></span><b class="lightcaret mt-2 xml-default"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $flag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $flag ?></span><b class="lightcaret mt-2 xml-default"></b></a>
                     <?php	} else {
                     	$on_flag = onload_currency();
                       $onflag_i = substr($on_flag, 0, 2);
                       $onflag_img = strtolower($onflag_i);
                       ?>
-                    <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo base_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2 xml-default"></b></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle"><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $onflag_img; ?>.png"><span  style="color: #607D8B;"> / <?php echo $on_flag ?></span><b class="lightcaret mt-2 xml-default"></b></a>
                     <?php } ?>
 
               <ul class="dropdown-menu xml-default" style="width: 300px;">
@@ -331,7 +331,7 @@
                   <div class="col-sm-3 text-center">
                      <div class="row">
                      		<li class="dropdown-header" title="<?php echo $country; ?>" style="cursor: pointer;"><a 
-                          	onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo base_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a>
+                          	onclick="currency_change('<?php echo $type ?>');" ><img src="<?php echo get_cdn_url();?>assets/images/flg/<?php echo $img; ?>.png"><span>  <?php echo $con; ?></span></a>
                           </li>
                           </li>
                      </div>
@@ -342,7 +342,7 @@
 					  <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#"><?php echo $name ?><b class="lightcaret mt-2"></b></a>
               <ul class="dropdown-menu">
-                  <li class="dropdown-header" style="background: url('<?php echo base_url().'skin/images/dash/no-avatar.jpg' ?>'); height: 122px; background-size: cover;   width: 110px;"><img src="<?php echo base_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar img_size_custom" alt=""/></li> 
+                  <li class="dropdown-header" style="background: url('<?php echo get_cdn_url().'skin/images/dash/no-avatar.jpg' ?>'); height: 122px; background-size: cover;   width: 110px;"><img src="<?php echo get_cdn_url();?>uploads/agent_profile_pic/<?php echo $id;?>/thumb_<?php echo $view;?>" class="dash-avatar img_size_custom" alt=""/></li> 
                   <li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
                   <li><a href="<?php echo base_url(); ?>backend/logout/agent_logout">Logout</a></li>
               </ul>
@@ -408,7 +408,7 @@
       <div class="modal-content">
         <div class="succesimage">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <img style="width: 100%;" src="<?php echo base_url(); ?>skin/images/booking-successful.jpg">
+              <img style="width: 100%;" src="<?php echo get_cdn_url(); ?>skin/images/booking-successful.jpg">
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
 	<div class="row">
 		<div class="col-md-12">
 			<h3>Profit Booking List</h3>

@@ -1,7 +1,7 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
   
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/payment.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/payment.js"></script>
 <style type="text/css">
 	.stay-pay-tag {
 	    background: red;
@@ -110,13 +110,13 @@
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
 						<!-- <span class="opensans size18 dark bold">Book Hotel Details</span> <br> <br> -->
-						<img src="<?php echo base_url();?>uploads/rooms/<?php echo $_REQUEST['room_id'] ?>/<?php echo $view[0]->images ?>" class="left margright20" width="100%" alt=""/>
+						<img src="<?php echo get_cdn_url();?>uploads/rooms/<?php echo $_REQUEST['room_id'] ?>/<?php echo $view[0]->images ?>" class="left margright20" width="100%" alt=""/>
 						
 						
 					<div class="clearfix"></div>
 					<div class="hpadding20 margtop20">
 						<p><span class="opensans size20 bold"><?php echo $view[0]->hotel_name?></span></p>
-					    <p><img src="<?php echo base_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/></p>
+					    <p><img src="<?php echo get_cdn_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/></p>
 				    </div>		
 		            <div class="line3"></div>
 		            <div class="hpadding20 margtop20">
@@ -288,12 +288,12 @@
 											<?php 
 												if ($this->session->userdata($frvalue)['supplementType']==$frvalue && $this->session->userdata($frvalue)['contract_id']==$_REQUEST['contract_id'] && $this->session->userdata($frvalue)['room_id']==$_REQUEST['room_id']  && $this->session->userdata($frvalue)['token']==$_REQUEST['token']) { ?>
 												<a href="#" class="additional-food disabled">
-													<img src="<?php echo base_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
+													<img src="<?php echo get_cdn_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
 													<p>Add <?php echo $frvalue; ?></p>
 												</a>
 											<?php } else { ?>
 												<a href="#" onclick="aditionalfoodRequest1('board%5B%5D','<?php echo $frvalue; ?>');" class="additional-food">
-													<img src="<?php echo base_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
+													<img src="<?php echo get_cdn_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
 													<p>Add <?php echo $frvalue; ?></p>
 												</a>
 											<?php	} ?>
@@ -320,7 +320,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/breakfast.png" width="25px" alt="breakfast"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo get_cdn_url();?>assets/images/breakfast.png" width="25px" alt="breakfast"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Breakfast',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>
@@ -341,7 +341,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/lunch.png" width="25px" alt="lunch"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo get_cdn_url();?>assets/images/lunch.png" width="25px" alt="lunch"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Lunch',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>
@@ -360,7 +360,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/dinner.png" width="25px" alt="dinner"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo get_cdn_url();?>assets/images/dinner.png" width="25px" alt="dinner"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Dinner',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>

@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
 <div class="row">
 	<div class="col-md-6">
 		<h3>Booking view</h3>
@@ -20,12 +20,12 @@
 			</div>
 			<div class="col-md-12">
 				<div class="col-md-4">
-					<img width="300" src="<?php echo base_url(); ?>uploads/rooms/<?php echo $view[0]->room_id ?>/<?php echo $view[0]->images ?>" class="left" alt="">
+					<img width="300" src="<?php echo get_cdn_url(); ?>uploads/rooms/<?php echo $view[0]->room_id ?>/<?php echo $view[0]->images ?>" class="left" alt="">
 				</div>
 				<div class="col-md-8">
 					<div class="col-md-6">
 						<p><span class="opensans size17 bold"><?php echo $view[0]->hotel_name ?></span></p>
-						<p><img src="<?php echo base_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
+						<p><img src="<?php echo get_cdn_url(); ?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""></p>
 						<div class="row">
 							<div class="col-md-12">
 								<h4>Address</h4>

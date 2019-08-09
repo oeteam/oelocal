@@ -4,7 +4,7 @@
  ?> 
 <?php $adults = explode(",", $_REQUEST['adults']) ?>
 <?php $child = explode(",", $_REQUEST['child']) ?>
-<script src="<?php echo base_url(); ?>assets/js/details.js"></script>  
+<script src="<?php echo get_cdn_url(); ?>assets/js/details.js"></script>  
 <div class="container breadcrub">
 	<input type="hidden" id="lat_val" value="<?php echo $details['Latitude'] ?>">
 	<input type="hidden" id="long_val" value="<?php echo $details['Longitude'] ?>">
@@ -46,8 +46,8 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
-					<button id="prev_btn2" class="prev2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>
-					<button id="next_btn2" class="next2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>		
+					<button id="prev_btn2" class="prev2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>
+					<button id="next_btn2" class="next2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>		
 						
 					</div>
 				</div> <!-- /c-carousel -->
@@ -57,7 +57,7 @@
 			<div class="col-md-4 detailsright offset-0">
 				<div class="padding20">
 					<h4 class="lh1"><?php echo $details['HotelName'] ?></h4>
-					<img src="<?php echo base_url(); ?>skin/images/smallrating-<?php echo $details['Rating'] ?>.png" alt=""/>
+					<img src="<?php echo get_cdn_url(); ?>skin/images/smallrating-<?php echo $details['Rating'] ?>.png" alt=""/>
 				</div>
 				
 				<div class="line3"></div>
@@ -299,7 +299,7 @@
 						<div class="dateCheckLoad">
 							<div class="line2"></div>
 							<div class="spin-wrapper" style="/* display: none; */text-align: center;">
-								<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
+								<img src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
 							</div>
 							<div class="line2"></div>
 						</div>

@@ -137,7 +137,7 @@ $(document).ready(function() {
 				<div class="pagecontainer2 paymentbox grey">
 					<div class="padding30">
 						<span class="opensans size18 dark bold">Book Tour Details</span> <br> <br>
-						<img src="<?php echo base_url();?>uploads/tour_services_images/<?php echo $tourdetails[0]->tour_type ?>/<?php echo $tourdetails[0]->image ?>" class="left margright20" width="100%" alt=""/>
+						<img src="<?php echo get_cdn_url();?>uploads/tour_services_images/<?php echo $tourdetails[0]->tour_type ?>/<?php echo $tourdetails[0]->image ?>" class="left margright20" width="100%" alt=""/>
 						<p><span class="opensans size17 bold"><?php echo $tourdetails[0]->type?></span></p>
 						
 						<br> <br>

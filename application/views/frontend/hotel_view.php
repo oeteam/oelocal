@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/locationpicker.jquery.js"></script>
+<script src="<?php echo get_cdn_url(); ?>assets/js/locationpicker.jquery.js"></script>
 <style type="text/css">
   .modal-backdrop {
     z-index: 500;
@@ -389,7 +389,7 @@
                                         <?php 
                                         }
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>" class="img1preview" >
+                                            <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->hotels_edit_id; ?>/<?php echo $view[0]->$image;?>" class="img1preview" >
                                             <?php  } else { if(isset($_REQUEST['hotels_edit_id'])) { ?>
                                             <p class="center">No Records</p>
                                         <?php  } }?>

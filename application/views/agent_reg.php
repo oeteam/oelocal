@@ -9,16 +9,16 @@ $data = title();
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $data[0]->Title ?></title>
-  <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
+  <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
   
   <!-- Bootstrap -->
-  <link href="<?php echo base_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-  <link href="<?php echo base_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
+  <link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="<?php echo get_cdn_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
 
   <!-- Animo css-->
-  <link href="<?php echo base_url(); ?>skin/plugins/animo/animate+animo.css" rel="stylesheet" media="screen">
+  <link href="<?php echo get_cdn_url(); ?>skin/plugins/animo/animate+animo.css" rel="stylesheet" media="screen">
   
-  <link href="<?php echo base_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
+  <link href="<?php echo get_cdn_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
     <script src="assets/js/html5shiv.js"></script>
@@ -29,12 +29,12 @@ $data = title();
   <link href='//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Open+Sans:700,400,300,300italic' rel='stylesheet' type='text/css'>  
   <!-- Font-Awesome -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>skin/assets/css/font-awesome.css" media="screen" />
   <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
   
   <!-- Load jQuery -->
-  <script src="<?php echo base_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
-  <script src="<?php echo base_url(); ?>skin/js/agent.js"></script>
+  <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.v2.0.3.js"></script>
+  <script src="<?php echo get_cdn_url(); ?>skin/js/agent.js"></script>
   <script type="text/javascript">
     var base_url = "<?php  echo base_url();?>"; 
   </script> 
@@ -508,7 +508,7 @@ $data = title();
   <div class="modal-footer regclassfooter"></div>
   <div class="col-sm-12">
     <div class="text-left">
-    <span><a href="<?php echo base_url(); ?>uploads/OTELSEASYAgreement.pdf" download><i class="fa fa-download"></i> Click to download  the Otelseasy agreement.</a></span>
+    <span><a href="<?php echo get_cdn_url(); ?>uploads/OTELSEASYAgreement.pdf" download><i class="fa fa-download"></i> Click to download  the Otelseasy agreement.</a></span>
   </div>
    <div class="text-right">
     <button type="button" class="btn btn-warning" id="login_form_agent_reg" name="login_form_agent_reg">Send</button>
@@ -524,10 +524,10 @@ $data = title();
 <!-- End of Container  -->
 
 <!-- Javascript  -->
-<script src="<?php echo base_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
-<script src="<?php echo base_url(); ?>skin/assets/js/jquery.easing.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/assets/js/initialize-loginpage.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery.easing.js"></script>
 <!-- Load Animo -->
-<script src="<?php echo base_url(); ?>skin/plugins/animo/animo.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/plugins/animo/animo.js"></script>
 <script>
   function errorMessage(){
     $('.login-wrap').animo( { animation: 'tada' } );
@@ -535,6 +535,6 @@ $data = title();
 </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<?php echo base_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

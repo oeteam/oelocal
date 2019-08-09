@@ -1,6 +1,6 @@
 <?php init_hotel_login_header(); ?>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/trumbowyg.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/summernote.css">
+<link rel="stylesheet" href="<?php echo get_cdn_url(); ?>assets/css/trumbowyg.css">
+<link rel="stylesheet" href="<?php echo get_cdn_url(); ?>assets/css/summernote.css">
 <!--  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/toast.style.min.css"> -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -121,8 +121,8 @@
 
 
 <?php init_hotel_login_footer(); ?>  
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/trumbowyg.min.js"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/summernote.js"></script> 
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/trumbowyg.min.js"></script> 
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/summernote.js"></script> 
 
 
 

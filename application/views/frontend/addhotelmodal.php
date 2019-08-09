@@ -1,5 +1,5 @@
 <!-- <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script>  -->
-<script src="<?php echo base_url(); ?>assets/js/locationpicker.jquery.js"></script>
+<script src="<?php echo get_cdn_url(); ?>assets/js/locationpicker.jquery.js"></script>
 <style type="text/css">
   .modal-backdrop {
     z-index: 500;
@@ -499,10 +499,10 @@
                                 <div class="js--image-preview">
                                          <?php 
                                             if (isset($view[0]->Image1)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview img-rounded" >
+                                            <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image1;?>" class="img1preview img-rounded" >
                                             <?php  } else {  ?>
       
-                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img1preview">
+                                           <img src="<?php echo get_cdn_url(); ?>skin/images/upload.jpg" class="img1preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
@@ -518,10 +518,10 @@
                                 <div class="js--image-preview">
                                            <?php 
                                             if (isset($view[0]->Image2)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
+                                            <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image2;?>" class="img2preview" >
                                             <?php  } else {  ?>
                                            
-                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img2preview">
+                                           <img src="<?php echo get_cdn_url(); ?>skin/images/upload.jpg" class="img2preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
@@ -535,10 +535,10 @@
                                 <div class="js--image-preview">
                                           <?php 
                                             if (isset($view[0]->Image3)) { ?>
-                                            <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
+                                            <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image3;?>" class="img3preview" >
                                             <?php  } else {  ?>
                                         </label>
-                                           <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img3preview">
+                                           <img src="<?php echo get_cdn_url(); ?>skin/images/upload.jpg" class="img3preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
@@ -569,9 +569,9 @@
                                 <div class="js--image-preview">
                                         <?php 
                                         if (isset($view[0]->Image5)) { ?>
-                                        <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
+                                        <img src="<?php echo get_cdn_url(); ?>uploads/gallery/<?php echo $view[0]->id; ?>/<?php echo $view[0]->Image5;?>" class="img5preview" >
                                         <?php  } else {  ?>
-                                      <img src="<?php echo base_url(); ?>skin/images/upload.jpg" class="img5preview">
+                                      <img src="<?php echo get_cdn_url(); ?>skin/images/upload.jpg" class="img5preview">
                                         <?php   }?>
                                 </div>
                                 <div class="upload-options">
@@ -868,4 +868,4 @@
       // CitySelectFun();
   }
 </script>
-<script src="<?php echo base_url(); ?>skin/js/supplier.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/supplier.js"></script>

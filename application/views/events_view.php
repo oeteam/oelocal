@@ -24,7 +24,7 @@
       margin-left: 20px;
   }
   .banner-bottom {
-      background-image: url("<?php echo base_url() ?>agentLoginStyle/img/eventheader.jpg");
+      background-image: url("<?php echo get_cdn_url() ?>agentLoginStyle/img/eventheader.jpg");
       height: 60%;
       position: relative;
       margin-bottom: 10px;
@@ -60,7 +60,7 @@
         <p class="text-center content-title"><?php echo $view[0]->event_name ?></p>
         <div class="col-md-6">
           <!-- <section class="banner-bottom"> -->
-          <img src="<?php echo base_url()?>uploads/events/<?php echo $view[0]->id ?>/<?php echo $view[0]->event_image ?>" style="width: 100%" class="img-responsive">
+          <img src="<?php echo get_cdn_url()?>uploads/events/<?php echo $view[0]->id ?>/<?php echo $view[0]->event_image ?>" style="width: 100%" class="img-responsive">
       <!--   </section> -->
         </div>
         <div class="col-md-6">

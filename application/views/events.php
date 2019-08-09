@@ -3,7 +3,7 @@
 
 <style>
   .banner-bottom {
-    background-image: url("<?php echo base_url() ?>agentLoginStyle/img/eventheader.jpg");
+    background-image: url("<?php echo get_cdn_url() ?>agentLoginStyle/img/eventheader.jpg");
     height: 60%;
     position: relative;
   }
@@ -51,7 +51,7 @@
                           foreach($view as $event_value){ ?>
                           <a href="<?php echo base_url()?>events_view/<?php echo $event_value->id ?>"> <div class="col-lg-4">
                               <div class="cuadro_intro_hover" style="height:245px">
-                                 <img src="<?php echo base_url(); ?>uploads/events/<?php echo $event_value->id."/".$event_value->event_image ?>" class="img-responsive" width="100%"  alt=""/>
+                                 <img src="<?php echo get_cdn_url(); ?>uploads/events/<?php echo $event_value->id."/".$event_value->event_image ?>" class="img-responsive" width="100%"  alt=""/>
                                  <div class="caption">
                                     <div class="blur"></div>
                                     <div class="caption-text text-left">

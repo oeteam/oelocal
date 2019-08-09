@@ -55,10 +55,10 @@
 	});
 </script>
 <!-- Bootstrap -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">
         <!-- jQuery-->  
-        <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>  
-        <script src="<?php echo base_url(); ?>assets/js/details.js"></script>  
+        <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery-ui.js"></script>  
+        <script src="<?php echo get_cdn_url(); ?>assets/js/details.js"></script>  
         <!-- end -->
 <div class="container breadcrub">
     <div>
@@ -89,13 +89,13 @@
 					<div id="inner">
 						<div id="caroufredsel_wrapper2">
 							<div id="carousel">							
-									<img src="<?php echo base_url(); ?>uploads/tour_services_images/<?php echo $view[0]->tourid; ?>/<?php echo $view[0]->image; ?>" alt=""/>	
+									<img src="<?php echo get_cdn_url(); ?>uploads/tour_services_images/<?php echo $view[0]->tourid; ?>/<?php echo $view[0]->image; ?>" alt=""/>	
 							</div>
 						</div>
 					</div>
 					<div class="clearfix"></div>
-					<button id="prev_btn2" class="prev2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>
-					<button id="next_btn2" class="next2"><img src="<?php echo base_url(); ?>skin/images/spacer.png" alt=""/></button>		
+					<button id="prev_btn2" class="prev2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>
+					<button id="next_btn2" class="next2"><img src="<?php echo get_cdn_url(); ?>skin/images/spacer.png" alt=""/></button>		
 						
 					</div>
 				</div> <!-- /c-carousel -->
@@ -269,7 +269,7 @@
 						<div class="dateCheckLoad">
 							<div class="line2"></div>
 							<div class="spin-wrapper" style="/* display: none; */text-align: center;">
-								<img src="<?php echo base_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
+								<img src="<?php echo get_cdn_url(); ?>/assets/images/ellipsis-spinner.gif" alt="" style="width: 100px;">
 							</div>
 							<div class="line2"></div>
 						</div>
@@ -330,5 +330,5 @@
 </div>
 
 <?php init_front_black_tail(); ?> 
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
 

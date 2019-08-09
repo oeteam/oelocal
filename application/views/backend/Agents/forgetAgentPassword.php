@@ -1,6 +1,6 @@
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/forget_password.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/forget_password/forgetcss/style.css" media="screen" />
+  <script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/jquery.min.js"></script>
+  <script src="<?php echo get_cdn_url(); ?>assets/js/forget_password.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo get_cdn_url(); ?>assets/forget_password/forgetcss/style.css" media="screen" />
       <script type="text/javascript">
         var base_url = "<?php  echo base_url();?>"; 
     </script> 

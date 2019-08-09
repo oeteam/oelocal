@@ -18,7 +18,7 @@
 	<img style="width: 200px" src="https://secure.otelseasy.com/skin/images/logo.png" alt="Hotels" class="logo">
     <h1>We&rsquo;ll be back soon!</h1>
     <div>
-        <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:support@otelseast.com">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
+        <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:support@otelseasy.com">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
         <p style="text-align: right;"> The Otelseasy Team</p>
     </div>
 </article>

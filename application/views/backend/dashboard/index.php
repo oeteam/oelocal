@@ -52,6 +52,239 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
 
         </div>
         <div class="row">
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+            <h4 class="pull-left">Search Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="SearchLogTable">
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Location</th>
+                          <th>Check In</th>
+                          <th>Check Out</th>
+                          <th>Hotel Name</th>
+                          <th>Adults</th>
+                          <th>Child</th> 
+                          <th>No of Rooms</th> 
+                          <th>Nationality</th>
+                          <th>Agent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+              <h4 class="pull-left">Allotment Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="allotmentLogTable">
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Allotment</th>
+                          <th>Amount</th>
+                          <th>Cutt-off</th>
+                          <th>Room</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+            <h4 class="pull-left">Board Supplement Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="BoardLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Board</th>
+                          <th>Room Type</th>
+                          <th>Season</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Start Age</th>
+                          <th>Final Age</th>
+                          <th>Amount</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+              <h4 class="pull-left">General Supplement Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="generalLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Type</th>
+                          <th>Room Type</th>
+                          <th>Season</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Min Child Age</th>
+                          <th>Adult Amount</th>
+                          <th>Child Amount</th>
+                          <th>Application</th>
+                          <th>Mandatory</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+            <h4 class="pull-left">Extrabed Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="ExtrabedLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Room Type</th>
+                          <th>Season</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Child Age From</th>
+                          <th>Child Age To</th>
+                          <th>Child Amount</th>
+                          <th>Adult Amount</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+              <h4 class="pull-left">Cancellation Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="CancellationLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Season</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Day From</th>
+                          <th>Day To</th>
+                          <th>Cancellation %</th>
+                          <th>Room Type</th>
+                          <th>Application</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+            <h4 class="pull-left">Minimum Stay - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="MinimumStayLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Season</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>Days</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6"> 
+            <div class="chart-wrap">
+              <h4 class="pull-left">ClosedOut Log - Today</h4><br><br>
+              <div class="col-md-12">
+                <div class="table-responsive table-desi">
+                  <table class="table table-condensed table-hover" id="ClosedLogTable">
+                    <thead>
+                        <tr>
+                          <th>id</th>
+                          <th>Closed Date</th>
+                          <th>Room type</th>
+                          <th>Hotel Name</th>
+                          <th>Contract ID</th>
+                          <th>Status</th>
+                          <th title="Created By">C.By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-12">
             <div class="chart-wrap" style="height: 500px">
               
@@ -488,6 +721,94 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
 <div class="clearfix">
 </div>
 <script type="text/javascript">
+  var SearchLogTable = $('#SearchLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/searchlogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });
+  var allotmentLogTable = $('#allotmentLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/allotmentLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });  
+  var BoardLogTable = $('#BoardLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/BoardSupplementLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });  
+  var generalLogTable = $('#generalLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/GeneralSupplementLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  }); 
+  var ExtrabedLogTable = $('#ExtrabedLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/extrabedLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });
+  var CancellationLogTable = $('#CancellationLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/CancellationPolicyLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });
+  var MinimumStayLogTable = $('#MinimumStayLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/MinimumStayLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });
+  var ClosedLogTable = $('#ClosedLogTable').dataTable({
+        "bDestroy": true,
+        "ajax": {
+          url : base_url+'backend/Dashboard/closedoutLogList',
+          type : 'POST' 
+          },
+
+        "fnDrawCallback": function(settings){
+               $('[data-toggle="tooltip"]').tooltip();          
+        },
+  });
   var TranChart = new Chart(document.getElementById("TransactionsChart"), {
     type: 'doughnut',
     data : {

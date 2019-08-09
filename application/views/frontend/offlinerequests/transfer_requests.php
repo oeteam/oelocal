@@ -1,7 +1,7 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo base_url(); ?>skin/js/agentrequests.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/agentrequests.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/moment.min.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

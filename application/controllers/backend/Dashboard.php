@@ -472,7 +472,289 @@ class Dashboard extends MY_Controller {
   public function MBCReport() {
     $data['mbcdata'] = $this->Common_Model->Report_country_booking_count($_REQUEST['filter'],$_REQUEST['year']);
     echo json_encode($data);
-
+  }
+  public function searchlogList() {
+    $data = array();
+    $noTotal = array();
+    $LeadTime = array();
+    $totper = array();
+      // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $ReportFilter= $this->Common_Model->SearchReportList($_REQUEST);
+    foreach($ReportFilter as $key => $r) {
+      $data[] = array(
+          $key+1,
+          $r->location,
+          $r->check_in,
+          $r->check_out,
+          $r->hotel_name,
+          $r->adults,
+          $r->child,
+          $r->noRooms,
+          $r->country,
+          $r->Name,
+      );
+    }
+    $output = array(
+          "draw" => $draw,
+        "recordsTotal" => count($ReportFilter),
+        "recordsFiltered" => count($ReportFilter),
+        "data" => $data
+    );
+    echo json_encode($output);
+  }
+  public function allotmentLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->allotmentLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+          $data[] = array(
+            $key+1,
+            $r->allotement,
+            $r->amount,
+            $r->cut_off,
+            get_room_name_type($r->room_id),
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function BoardSupplementLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->BoardSupplementLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+          $explode_data[$key]= explode(",", $r->roomType);
+          foreach ($explode_data[$key] as $key1 => $value1) {
+             $room_type_data[$key][$key1] = get_room_name_type($value1);
+          }
+          $implode_data[$key] = implode(", ", $room_type_data[$key]);
+          $data[] = array(
+            $r->id,
+            $r->board,
+            $implode_data[$key],
+            $r->season,
+            $r->fromDate,
+            $r->toDate,
+            $r->startAge,
+            $r->finalAge,
+            $r->amount,
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function GeneralSupplementLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->GeneralSupplementLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+        if ($r->mandatory==1) {
+          $mandatory = '<span class="bold text-success">Yes</span>';
+        } else {
+          $mandatory = '<span class="bold text-danger">No</span>';
+        }
+        $explode_data[$key]= explode(",", $r->roomType);
+        foreach ($explode_data[$key] as $key1 => $value1) {
+           $room_type_data[$key][$key1] = get_room_name_type($value1);
+        }
+        $implode_data[$key] = implode(", ", $room_type_data[$key]);
+          $data[] = array(
+            $r->id,
+            $r->type,
+            $implode_data[$key],
+            $r->season,
+            $r->fromDate,
+            $r->toDate,
+            $r->MinChildAge,
+            $r->adultAmount,
+            $r->childAmount,
+            $r->application,
+            $mandatory,
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function extrabedLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->extrabedLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+        $explode_data[$key]= explode(",", $r->roomType);
+        foreach ($explode_data[$key] as $key1 => $value1) {
+           $room_type_data[$key][$key1] = get_room_name_type($value1);
+        }
+        $implode_data[$key] = implode(", ", $room_type_data[$key]);
+          $data[] = array(
+            $r->id,
+            $implode_data[$key],
+            $r->season,
+            $r->from_date,
+            $r->to_date,
+            $r->ChildAgeFrom,
+            $r->ChildAgeTo,
+            $r->ChildAmount,
+            $r->amount,
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function CancellationPolicyLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->CancellationPolicyLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+        $explode_data[$key]= explode(",", $r->roomType);
+        foreach ($explode_data[$key] as $key1 => $value1) {
+           $room_type_data[$key][$key1] = get_room_name_type($value1);
+        }
+        $implode_data[$key] = implode(", ", $room_type_data[$key]);
+          $data[] = array(
+            $r->id,
+            $r->season,
+            $r->fromDate,
+            $r->toDate,
+            $r->daysFrom,
+            $r->daysTo,
+            $r->cancellationPercentage,
+            $implode_data[$key],
+            $r->application,
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function MinimumStayLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->MinimumStayLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+          $data[] = array(
+            $key+1,
+            $r->id,
+            $r->season,
+            $r->fromDate,
+            $r->toDate,
+            $r->minDay,
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->CreatedDate,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function closedoutLogList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $BSL = $this->Common_Model->closedoutLogDashboard($_REQUEST);
+      foreach($BSL->result() as $key => $r) {
+        $explode_data[$key]= explode(",", $r->roomType);
+        foreach ($explode_data[$key] as $key1 => $value1) {
+           $room_type_data[$key][$key1] = get_room_name_type($value1);
+        }
+        $implode_data[$key] = implode(", ", $room_type_data[$key]);
+          $data[] = array(
+            $r->id,
+            $r->closedDate,
+            $implode_data[$key],
+            $r->hotel_name,
+            $r->contract_id,
+            $r->Status,
+            $r->Name,
+          );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $BSL->num_rows(),
+       "recordsFiltered" => $BSL->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
   }
 }
 

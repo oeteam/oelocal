@@ -1,7 +1,7 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/destination_autocomplete.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/tourlist.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/destination_autocomplete.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/tourlist.js"></script>
 <script>
     FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['arrivaldate'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['departdate'])) ?>');
 	$(document).ready(function() {
@@ -591,5 +591,5 @@
 </script>
 
 <?php init_front_black_tail(); ?> 
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider - Copy.js"></script>
 

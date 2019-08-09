@@ -25,7 +25,7 @@
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
 						<!-- <span class="opensans size18 dark bold">Book Hotel Details</span> <br> <br> -->
-						<img src="<?php echo base_url();?>uploads/tour_services_images/<?php echo $_REQUEST['tourid'] ?>/<?php echo $tourdetails[0]->image ?>" class="left margright20" width="100%" alt=""/>
+						<img src="<?php echo get_cdn_url();?>uploads/tour_services_images/<?php echo $_REQUEST['tourid'] ?>/<?php echo $tourdetails[0]->image ?>" class="left margright20" width="100%" alt=""/>
 						
 						
 					<div class="clearfix"></div>

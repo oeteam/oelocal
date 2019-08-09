@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
 <div class="modal-dialog" style="height: auto;">
     	<!-- Modal content-->
   	<div class="modal-content">

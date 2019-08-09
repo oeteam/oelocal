@@ -1,8 +1,8 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/moment.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/tour.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/js/tour.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
 <!-- id="dajy" was here -->
 <style type="text/css"> 
@@ -71,20 +71,20 @@
 			<!-- papercut fade turnoff flyin slideright slideleft slideup slidedown-->
 			<!-- FADE -->
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo base_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
+				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider1.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
 				
-				<img src="<?php echo base_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
+				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider2.jpg" width="100%" alt=""/>
 			</li>	
 
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo base_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
+				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider3.jpg" width="100%" alt=""/>
 			</li>
 			
 			<li data-transition="fade" data-slotamount="1" data-masterspeed="300"> 										
-				<img src="<?php echo base_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
+				<img src="<?php echo get_cdn_url(); ?>skin/images/slider/slider4.jpg" width="100%" alt=""/>
 			</li>
 			
 

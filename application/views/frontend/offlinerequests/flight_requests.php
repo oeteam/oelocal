@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo base_url(); ?>skin/js/agentrequests.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/agentrequests.js"></script>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/js/hotelportel.js"></script>
+<script src="<?php echo get_cdn_url(); ?>assets/js/hotelportel.js"></script>
  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -161,7 +161,7 @@
       </div>
     </div>
   </div>
-<script src="<?php echo base_url(); ?>skin/js/hotelportel.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/hotelportel.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         maincontractCheck();

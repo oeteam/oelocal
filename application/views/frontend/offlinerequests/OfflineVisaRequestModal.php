@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>skin/js/agentrequests.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/agentrequests.js"></script>
 <style type="text/css">
   .modal-backdrop {
     z-index: 500;
@@ -118,7 +118,7 @@
                   <input type="file" name="image" class="form-control" id="image" onchange="return ValidateFileUpload();">
                 </div>
                 <div class="col-md-1" style="line-height: 74px;">
-                  <span class="upload-img"><img src="<?php echo base_url()?>/uploads/tour_services_images/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->image) ? $edit[0]->image : ''; ?>" alt="" id="load_image" style="width:30px;height: 30px"></span>
+                  <span class="upload-img"><img src="<?php echo get_cdn_url()?>/uploads/tour_services_images/<?php echo isset($edit[0]->id) ? $edit[0]->id : ''; ?>/<?php echo isset($edit[0]->image) ? $edit[0]->image : ''; ?>" alt="" id="load_image" style="width:30px;height: 30px"></span>
                 </div> 
             </div>      
             <div class="row">

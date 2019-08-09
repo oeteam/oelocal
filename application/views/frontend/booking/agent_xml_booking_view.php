@@ -1,5 +1,5 @@
 <?php init_front_head_dashboard(); ?>
-<script src="<?php echo base_url(); ?>skin/js/booking.js"></script>
+<script src="<?php echo get_cdn_url(); ?>skin/js/booking.js"></script>
 <div class="booking-view">
 	<div class="row">
 		<div class="col-md-6">
@@ -39,7 +39,7 @@
 						} else if($view['Rating']=='FiveStar') {
 							$star = '5';
 						} ?>
-						<p><img src="<?php echo base_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
+						<p><img src="<?php echo get_cdn_url();?>skin/images/bigrating-<?php echo $star ?>.png" alt=""/></p>
 						<div class="row">
 							<div class="col-md-12">
 								<h4>Address</h4>

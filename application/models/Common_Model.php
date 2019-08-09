@@ -949,5 +949,91 @@ class Common_Model extends CI_Model {
     $query=$this->db->get();
     return $query->result();
   }
+  public function SearchReportList() {
+    $this->db->select('a.*,b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,c.id,c.name as country');
+    $this->db->from('agents_tbl_search a');
+    $this->db->join('hotel_tbl_agents b','a.agentId=b.id');
+    $this->db->join('countries c','a.nationality=c.id');
+    $this->db->where('DATE(searchDate)=',date('Y-m-d'));
+    $query = $this->db->get()->result();
+    return $query;
+  }
+  public function allotmentLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_allotement_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function BoardSupplementLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_boardsupplement_logs a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function GeneralSupplementLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_generalsupplement_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function extrabedLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_extrabed_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function CancellationPolicyLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_cancellationfee_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function MinimumStayLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_minimumstay_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
+  public function closedoutLogDashboard() {
+    $this->db->select('a.*,d.hotel_name,CONCAT(e.First_Name,"",e.Last_Name) as Name');
+    $this->db->from('hotel_tbl_closeout_period_log a');
+    $this->db->join('hotel_tbl_hotels d','d.id=a.hotel_id','inner');
+    $this->db->join('hotel_tbl_user e','e.id=a.CreatedBy','inner');
+    $this->db->where('DATE(a.CreatedDate) =',date('Y-m-d'));
+    $this->db->order_by('a.id','asc');
+    $this->db->order_by('a.CreatedDate','asc');
+    $result = $this->db->get();
+    return $result; 
+  }
 }
 

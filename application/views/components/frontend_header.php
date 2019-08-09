@@ -8,24 +8,24 @@ $data = title();
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $data[0]->Title ?></title>
-  <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/fav.ico">
+  <link rel="shortcut icon" href="<?php echo get_cdn_url() ?>assets/images/fav.ico">
   <!-- Fonts -->  
-  <link  href="<?php echo base_url(); ?>agentLoginStyle/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+  <link  href="<?php echo get_cdn_url(); ?>agentLoginStyle/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet">
   <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="assets/css/font-awesome-ie7.css" media="screen" /><![endif]-->
 
-  <link href="<?php echo base_url(); ?>agentLoginStyle/css/style.css" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url(); ?>agentLoginStyle/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url(); ?>agentLoginStyle/css/menu/styles.css" rel="stylesheet" type="text/css">
+  <link href="<?php echo get_cdn_url(); ?>agentLoginStyle/css/style.css" rel="stylesheet" type="text/css">
+  <link href="<?php echo get_cdn_url(); ?>agentLoginStyle/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="<?php echo get_cdn_url(); ?>agentLoginStyle/css/menu/styles.css" rel="stylesheet" type="text/css">
 
   <!-- Load jQuery -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
-  <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/login.js"></script> 
-  <script src="<?php echo base_url(); ?>assets/js/pop_up.js"></script> 
+  <script src="<?php echo get_cdn_url(); ?>assets/js/jquery.min.js"></script>
+  <script src="<?php echo get_cdn_url(); ?>assets/js/login.js"></script> 
+  <script src="<?php echo get_cdn_url(); ?>assets/js/pop_up.js"></script> 
   <script type="text/javascript">
     var base_url = "<?php  echo base_url();?>"; 
   </script> 
@@ -59,7 +59,7 @@ s0.parentNode.insertBefore(s1,s0);
   <div class="container">
    <div class="row">
     <div class="col-md-3">
-     <div class="logo"><a href="<?php echo base_url(); ?>"><img width="120" src="<?php echo base_url(); ?>skin/images/agent_login/logo.png"   alt=""/></a></div>
+     <div class="logo"><a href="<?php echo base_url(); ?>"><img width="120" src="<?php echo get_cdn_url(); ?>skin/images/agent_login/logo.png"   alt=""/></a></div>
      <!--logo-->
    </div>
    <?php

@@ -27,7 +27,7 @@
                   
           </div>
       </div>
-<script src="<?php echo base_url(); ?>assets/js/referance_add.js"></script>
+<script src="<?php echo get_cdn_url(); ?>assets/js/referance_add.js"></script>
 <script type="text/javascript">
   // $(document).ready(function() {
 

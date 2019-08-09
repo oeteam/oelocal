@@ -111,21 +111,21 @@
   .wh90percent{width:90%;}
   .wh100percent{width:100%;}
 </style>
- <link href="<?php echo base_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-        <link href="<?php echo base_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
-        <link href="<?php echo base_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
-        <link href="<?php echo base_url(); ?>skin/updates/update1/css/style01.css" rel="stylesheet" media="screen">  
+ <link href="<?php echo get_cdn_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="<?php echo get_cdn_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">
+        <link href="<?php echo get_cdn_url(); ?>skin/examples/carousel/carousel.css" rel="stylesheet">
+        <link href="<?php echo get_cdn_url(); ?>skin/updates/update1/css/style01.css" rel="stylesheet" media="screen">  
     <!-- bin/jquery.slider.min.css -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>skin/plugins/jslider/css/jslider.css" type="text/css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>skin/plugins/jslider/css/jslider.round.css" type="text/css"> 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">    
+        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.round.css" type="text/css"> 
+        <link rel="stylesheet" href="<?php echo get_cdn_url(); ?>skin/plugins/jslider/css/jslider.round-blue.css" type="text/css">    
 
         <!-- jQuery --> 
         <!-- jQuery-->  
-        <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>  
+        <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery-ui.js"></script>  
 
       
-      <section class="banner-bottom" style="background-image: url('<?php echo base_url() ?>agentLoginStyle/img/hotelheader.jpg');">
+      <section class="banner-bottom" style="background-image: url('<?php echo get_cdn_url() ?>agentLoginStyle/img/hotelheader.jpg');">
         <p class="title">Hotels</p>
         <div class="desc text-center">Amazing Services, <br>Locations & Facilities </div>
       </section>
@@ -133,7 +133,7 @@
       <div class="row">
         <p class="text-center content-title"><?php echo $view[0]->hotel_name ?></p>
         <div class="col-md-6">
-          <img src="<?php echo base_url()?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" style="width: 100%" class="img-responsive">
+          <img src="<?php echo get_cdn_url()?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" style="width: 100%" class="img-responsive">
         </div>
         <div class="col-md-6">
           <div class="aboutus-desc">
@@ -311,18 +311,18 @@
 
       
 
-      <script src="<?php echo base_url(); ?>skin/assets/js/jquery-ui.js"></script>
+      <script src="<?php echo get_cdn_url(); ?>skin/assets/js/jquery-ui.js"></script>
   
     <!-- Bootstrap   -->
-    <script src="<?php echo base_url(); ?>skin/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo get_cdn_url(); ?>skin/dist/js/bootstrap.min.js"></script>
 
         <!-- bin/jquery.slider.min.js -->
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jshashtable-2.1_src.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.numberformatter-1.2.3.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/tmpl.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.dependClass-0.1.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/draggable-0.1.js"></script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/details.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jshashtable-2.1_src.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.numberformatter-1.2.3.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/tmpl.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.dependClass-0.1.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/draggable-0.1.js"></script>
+    <script type="text/javascript" src="<?php echo get_cdn_url(); ?>assets/js/details.js"></script>
      <?php init_load_frontend_footer(); ?>
 
-<script type="text/javascript" src="<?php echo base_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
+<script type="text/javascript" src="<?php echo get_cdn_url(); ?>skin/plugins/jslider/js/jquery.slider.js"></script>
