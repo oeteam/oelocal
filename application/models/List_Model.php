@@ -162,7 +162,6 @@ class List_Model extends CI_Model {
         $searchHotel_id[$key85] = $value85->id;
       }
     }
-
     $searchHotel_id = implode(",", array_unique($searchHotel_id));
     $ignore = array();
     /*contract check start*/
@@ -173,7 +172,10 @@ class List_Model extends CI_Model {
     $gsData = array();
     $mangsData = array();
     $extrabedAmount = array();
-    $ot = $this->db->query("SELECT contract_id,hotel_id,contract_type,linkedContract FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where   a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$data['nationality']."', IFNULL(nationalityPermission,'')) = 0
+    if($searchHotel_id == "") {
+      $searchHotel_id = "''";
+    }
+    $ot = $this->db->query("SELECT contract_id,hotel_id,contract_type,linkedContract FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where  a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$data['nationality']."', IFNULL(nationalityPermission,'')) = 0
      AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND hotel_id IN (".$searchHotel_id.") AND from_date <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND to_date >= '".date('Y-m-d',strtotime($data['Check_out']. ' -1 days'))."' AND contract_flg  = 1")->result();
 
     foreach ($ot as $key5 => $value5) {
@@ -207,6 +209,9 @@ class List_Model extends CI_Model {
     }
     $implode_data = implode("','", $dateAlt);
     $implode_data1 = implode(",", array_unique($contractHotelId));
+    if($implode_data1=="") {
+      $implode_data1 = "''";
+    }
     $implode_data2 = implode("','", array_unique($contractConId));
 
 
@@ -744,6 +749,7 @@ class List_Model extends CI_Model {
     
 
     $query =  $this->db->query("SELECT a.id FROM hotel_tbl_hotels a INNER JOIN states b ON  b.id = IF(a.state!='',a.state,3798) INNER JOIN hotel_tbl_hotel_room_type c ON c.hotel_id = a.id WHERE ".$search.$hotelName."  a.delflg = 1 and ((c.max_total >= ".($data['adults'][0]+$data['Child'][0])." AND c.occupancy >= ".$data['adults'][0]." AND c.occupancy_child >= ".$data['Child'][0].") ".$room2.$room3.$room4.$room5.$room6.")  and c.delflg = 1")->result();
+    //echo $this->db->last_query();exit;
 
     return $query;
   }
