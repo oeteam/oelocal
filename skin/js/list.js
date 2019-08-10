@@ -156,23 +156,24 @@ function hotelLoading(flag) {
         spinWrapper.fadeOut();
     }
 }
- var page = 0;
-  $(".itemscontainer").scroll(function() {
-      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
-        page++;
-        $(".page").val(page);
-        if ($("#scroll-cnt").val()!=0) {
-          loadMoreData(page);
-        }
-      }
-  });
+ // var page = $(".page").val();
+ //  $(".itemscontainer").scroll(function() {
+ //      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+ //        page++;
+ //        $(".page").val(page);
+ //        if ($("#scroll-cnt").val()!=0) {
+ //        console.log('Default - '+page);
+ //          loadMoreData(page);
+ //        }
+ //      }
+ //  });
 function search_ajax() {
   $("#scroll-form").val('search_form');
   $(".itemscontainer").animate({
           scrollTop:  0
      });
    var page = 0;
-  $(".itemscontainer").scroll(function() {
+   $(".itemscontainer").off().on( 'scroll', function(){
       if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
           page++;
           $(".page").val(page);

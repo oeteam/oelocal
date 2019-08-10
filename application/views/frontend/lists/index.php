@@ -1010,7 +1010,7 @@
 			        	<button style="width: 100%" class="bottom-btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-star-half-o"></i></button>
 			        	<div class="dropdown-menu">
 						    <li class="btn filter-drom-sm" onclick="filtersmstar('1')">5 to 1</li>
-						    <li class="btn filter-drom-sm" onclick="filtersmstar('1')">1 to 5</li>
+						    <li class="btn filter-drom-sm" onclick="filtersmstar('2')">1 to 5</li>
 					    </div>
 					</div>
 		        	<button class="bottom-btn-sm" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter"></i></button>
@@ -1430,15 +1430,15 @@
 			          scrollTop:  0
 			     });
 			    var page = 0;
-			    $(".itemscontainer").scroll(function() {
-			        if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
-           				page++;
-			    		$(".page").val(page);
-			            if ($("#scroll-cnt").val()!=0) {
-			              loadMoreData(page);
-			            }
-			        }
-			    });
+			   $(".itemscontainer").off().on( 'scroll', function(){
+			      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+			          page++;
+			          $(".page").val(page);
+			         if ($("#scroll-cnt").val()!=0) {
+			            loadMoreData(page);
+			          }
+			      }
+			  });
 			    $(".page").val(page);
   				$("#scroll-cnt").val(1);
 				$(".close").trigger("click");
