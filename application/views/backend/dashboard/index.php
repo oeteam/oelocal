@@ -1,7 +1,15 @@
 <?php init_head(); 
 $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','');
 ?>
-
+<style>
+  .dash-box {
+    text-align: right;
+    margin: 0px 10px 0px 0px;
+    font-weight: 200;
+    color:green;
+    font-size: x-small;
+  }
+</style>
 <link rel="stylesheet" href="<?php echo static_url(); ?>skin/dist/css/bootstrap.min.css">
 <script src="<?php echo static_url(); ?>assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/bootstrap.min.js"></script>
@@ -22,6 +30,8 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
             <div class="row">
                 <div class="col-sm-6 col-md-3">
                     <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $user_active_count ?></p>
+                        <p class="dash-box">Inctive: <?php echo $user_inactive_count ?></p>
                         <h5><b><span class="card-title">Users</span></b></h5>
                         <h4><?php echo $user_count; ?></h4>
                         <a href="<?php echo base_url();?>/backend/users">View more</a>
@@ -29,23 +39,74 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $agent_active_count ?></p>
+                        <p class="dash-box">Inctive: <?php echo $agent_inactive_count ?></p>
                         <h5><b><span class="card-title">Agents</span></b></h5>
                         <h4><?php echo $agent_count; ?></h4>
                         <a href="<?php echo base_url();?>/backend/agents">View more</a>
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="dash-book">
-                        <h5><b><span class="card-title">Hotels</span></b></h5>
+                        <p class="dash-box">Active: <?php echo $hotel_count ?></p>
+                        <p class="dash-box">Pending: <?php echo $hotel_pending_count ?></p>
+                        <p class="dash-box">Blocked: <?php echo $hotel_blocked_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Hotels</span></b></h5>
                         <h4><?php echo $hotel_count; ?></h4>
                         <a href="<?php echo base_url();?>/backend/hotels">View more</a>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="dash-book">
-                        <h5><b><span class="card-title">Bookings</span></b></h5>
+                        <p class="dash-box">Received: <?php echo $booking_received_count ?></p>
+                        <p class="dash-box">Materialized: <?php echo $booking_materialized_count ?></p>
+                        <p class="dash-box">Cancelled: <?php echo $booking_cancelled_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Bookings</span></b></h5>
                         <h4><?php echo $booking_count; ?></h4>
                         <a href="<?php echo base_url();?>/backend/booking">View more</a>
+                    </div>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 5px">
+                <div class="col-sm-6 col-md-3">
+                    <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $contract_active_count ?></p>
+                        <p class="dash-box">Inctive: <?php echo $contract_inactive_count ?></p>
+                        <p class="dash-box">Expired: <?php echo $contract_expired_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Contracts</span></b></h5>
+                        <h4><?php echo $contract_count; ?></h4>
+                        <a href="<?php echo base_url();?>/backend/hotels/contract_menu">View more</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $room_active_count ?></p>
+                        <p class="dash-box">Inctive: <?php echo $room_inactive_count ?></p>
+                        <h5><b><span class="card-title">Rooms</span></b></h5>
+                        <h4><?php echo $room_count; ?></h4>
+                        <a href="<?php echo base_url();?>/backend/hotels">View more</a>
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $discount_active_count ?></p>
+                        <p class="dash-box">Inactive: <?php echo $discount_inactive_count ?></p>
+                        <p class="dash-box">Expired: <?php echo $discount_expired_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Discounts</span></b></h5>
+                        <h4><?php echo $discount_count; ?></h4>
+                        <a href="<?php echo base_url();?>/backend/hotels/Disoffers">View more</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="dash-book">
+                        <p class="dash-box">Active: <?php echo $revenue_active_count ?></p>
+                        <p class="dash-box">Inactive: <?php echo $revenue_inactive_count ?></p>
+                        <p class="dash-box">Expired: <?php echo $revenue_expired_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Revenue</span></b></h5>
+                        <h4><?php echo $revenue_count; ?></h4>
+                        <a href="<?php echo base_url();?>/backend/hotels/Revenue">View more</a>
                     </div>
                 </div>
             </div>

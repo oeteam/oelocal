@@ -75,7 +75,7 @@ class Common_Model extends CI_Model {
       $count= count($final);
       return $count;
     }
-     public function hotel_count() {
+    public function hotel_count() {
       $this->db->select('*');
       $this->db->from('hotel_tbl_hotels');
       $this->db->where('delflg',1);
@@ -1034,6 +1034,227 @@ class Common_Model extends CI_Model {
     $this->db->order_by('a.CreatedDate','asc');
     $result = $this->db->get();
     return $result; 
+  }
+  public function agent_active_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_agents');
+      $this->db->where('delflg',1);
+      $this->db->where('active_status',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function agent_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_agents');
+      $this->db->where('delflg',1);
+      $this->db->where('active_status',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function user_active_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_user');
+      $this->db->where('Del_Flag',1);
+      $this->db->where('active_status',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function user_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_user');
+      $this->db->where('Del_Flag',1);
+      $this->db->where('active_status',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function hotel_pending_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotels');
+      $this->db->where('delflg',2);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function hotel_blocked_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotels');
+      $this->db->where('delflg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function booking_received_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_booking');
+      $this->db->where(array('booking_flag!='=>3,'booking_flag!='=>5,'booking_flag!='=>4,'booking_flag!='=>8));
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function booking_materialized_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_booking');
+      $this->db->where('booking_flag',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function booking_cancelled_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_booking');
+      $this->db->where('booking_flag',3);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function contract_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_contract');
+      //$this->db->where('booking_flag',3);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function contract_active_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_contract');
+      $this->db->where('contract_flg',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function contract_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_contract');
+      $this->db->where('contract_flg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function contract_expired_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_contract');
+      $this->db->where('contract_flg',0);
+      $this->db->where('to_date <',date('Y-m-d'));
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function room_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotel_room_type');
+      //$this->db->where('booking_flag',3);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function room_active_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotel_room_type');
+      $this->db->where('delflg',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function room_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_hotel_room_type');
+      $this->db->where('delflg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function discount_count() {
+      $this->db->select('*');
+      $this->db->from('hoteldiscount');
+      //$this->db->where('delflg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function discount_active_count() {
+      $this->db->select('*');
+      $this->db->from('hoteldiscount');
+      $this->db->where('Discount_flag',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function discount_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hoteldiscount');
+      $this->db->where('Discount_flag',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function discount_expired_count() {
+      $this->db->select('*');
+      $this->db->from('hoteldiscount');
+      $this->db->where('BKTo <',date('Y-m-d'));
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function revenue_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_revenue');
+      //$this->db->where('delflg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function revenue_active_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_revenue');
+      $this->db->where('DelFlg',1);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function revenue_inactive_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_revenue');
+      $this->db->where('DelFlg',0);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function revenue_expired_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_revenue');
+      $this->db->where('ToDate <',date('Y-m-d'));
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
   }
 }
 
