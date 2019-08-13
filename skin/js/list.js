@@ -156,33 +156,32 @@ function hotelLoading(flag) {
         spinWrapper.fadeOut();
     }
 }
- // var page = $(".page").val();
- //  $(".itemscontainer").scroll(function() {
- //      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
- //        page++;
- //        $(".page").val(page);
- //        if ($("#scroll-cnt").val()!=0) {
- //        console.log('Default - '+page);
- //          loadMoreData(page);
- //        }
- //      }
- //  });
+
 function search_ajax() {
   $("#scroll-form").val('search_form');
-  $(".itemscontainer").animate({
-          scrollTop:  0
-     });
+  $('html, body').animate({scrollTop:0}, '300');
+  var btn = $('#button');
    var page = 0;
-   $(".itemscontainer").off().on( 'scroll', function(){
-      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+   $(window).off().on( 'scroll', function(){
+      if($(window).scrollTop() > $(window).height()*page) {
           page++;
           $(".page").val(page);
          if ($("#scroll-cnt").val()!=0) {
             loadMoreData(page);
           }
       }
-  });
 
+      if ($(window).scrollTop() > 300) {
+          btn.addClass('show');
+        } else {
+          btn.removeClass('show');
+        }
+  });
+  
+  btn.on('click', function(e) {
+    e.preventDefault();
+    $('html, body').animate({scrollTop:0}, '300');
+  });
 
   $(".page").val(page);
   $("#scroll-cnt").val(1);

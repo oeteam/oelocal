@@ -387,12 +387,10 @@ function handle_hotel_gallery_image_upload($id = '',$key)
                 ));
                 // Remove original image
                 // unlink($newFilePath);
-
                 return true;
             }
         }
     }
-
     return true;
 }
 /**

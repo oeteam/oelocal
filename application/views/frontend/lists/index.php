@@ -1,9 +1,55 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
-<!-- <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAbjpN_xqyT_yhaKh0ikHujN_xCX7KWot4&libraries=places'></script> -->
+<style type="text/css">
+	body {
+		overflow-x: hidden;
+	}
+	#button {
+        display: inline-block;
+        background-color: #39aeba;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        position: fixed;
+        bottom: 71px;
+        right: 30px;
+        transition: background-color .3s, 
+          opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+      }
+      #button::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+      }
+      #button:hover {
+        cursor: pointer;
+        background-color: #333;
+      }
+      #button:active {
+        background-color: #555;
+      }
+      #button.show {
+        opacity: 1;
+        visibility: visible;
+      }
+       @media(max-width: 600px) {
+       #button {
+       	visibility: hidden ! important;
+       }
+      } 
+
+</style>
 <script type="text/javascript" src="<?php echo static_url(); ?>skin/js/list.js"></script>
 <script type="text/javascript" src="<?php echo static_url(); ?>skin/js/destination_autocomplete.js"></script>
-<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/advertisement.js"></script>
+<!-- <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/advertisement.js"></script> -->
 <script>
     FullLoading('start', '<?php echo $_REQUEST['location'] ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_in'])) ?>', '<?php echo date('d/m/Y' ,strtotime($_REQUEST['Check_out'])) ?>');
 	$(document).ready(function() {
@@ -517,6 +563,7 @@
 
 <!-- CONTENT -->
 <div class="container container-sm">
+	<a id="button"></a>
 	<div class="container pagecontainer offset-0">	
 
 			<!-- FILTERS -->
@@ -987,7 +1034,7 @@
 			<br/><br/>
 			<div class="clearfix"></div>
 
-			<div class="itemscontainer offset-1" style="height: 869px;overflow-y: scroll;padding-bottom: 40px;">
+			<div class="itemscontainer offset-1" style="padding-bottom: 40px;">
 				<div id="rotateBanner"></div>
 				<div id="result_search" class="shide" >
 					
@@ -1409,6 +1456,7 @@
 			<input type="hidden" id="price_order_sm" name="price_order" value="">
   		</form>
   		<script type="text/javascript">
+
   			function clearfilter() {
 				$("#hotel_name_filtersm").val("");
 				$(".rating-sm").prop("checked",false);
@@ -1426,12 +1474,13 @@
 			}
 			function applyfilter() {
   				$("#scroll-form").val('search_form_sm');
-				$(".itemscontainer").animate({
-			          scrollTop:  0
-			     });
+				// $(".itemscontainer").animate({
+			 //          scrollTop:  0
+			 //     });
+			 $('html, body').animate({scrollTop:0}, '300');
 			    var page = 0;
-			   $(".itemscontainer").off().on( 'scroll', function(){
-			      if($(".itemscontainer").scrollTop() > $(".itemscontainer").height()*page) {
+			   $(window).off().on( 'scroll', function(){
+			      if($(window).scrollTop() > $(window).height()*page) {
 			          page++;
 			          $(".page").val(page);
 			         if ($("#scroll-cnt").val()!=0) {
@@ -1486,6 +1535,8 @@
 			      }*/
 			    });
 			}
+
+
   		</script>
       </div>
     </div>
