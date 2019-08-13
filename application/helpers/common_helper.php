@@ -2049,7 +2049,8 @@ function RegisteringMail($id,$type) {
       
       $ci->email->subject($subject);
       $ci->email->message($message);
-      
+      print_r($message);
+      exit();
       $ci->email->send();
   } else {
     $ci->db->select('*');
@@ -4807,4 +4808,13 @@ function getmax_creditid() {
     }
     return $maxID;
 
+}
+function hotelnameGet($id) {
+  $ci =& get_instance();
+  $ci->db->select('hotel_name');
+  $ci->db->from('hotel_tbl_hotels');
+  $ci->db->where('id',$id);
+  $query=$ci->db->get();
+  $final =  $query->result();
+  return $final[0]->hotel_name;
 }

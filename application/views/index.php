@@ -19,8 +19,8 @@ $Hotelsbanner = Hotelsbanner();
          <div class="item active">
             <div class="bnr-ad"></div>
             <div class="carousel-caption">
-               <h3>Top International Hotels and Corporate Partner Are Now Connected</h3>
-               <p>Top International Hotels and Corporate Partner  with otelseasy.com</p>
+               <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
+               <p>  with otelseasy.com</p>
             </div>
          </div>
          <div class="item">

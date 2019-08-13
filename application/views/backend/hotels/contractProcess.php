@@ -94,13 +94,15 @@
 <div class="sb2-2">
     <?php $contractmenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Contract'); ?>
         <div class="sb2-2-add-blog sb2-2-1 hotel-view-readonly">
-            <h2>Contract Details <small>(currency : <?php echo hotel_currency_type($_REQUEST['hotel_id']) ?>)</small>
+            <h2><small><?php echo hotelnameGet($_REQUEST['hotel_id']) ?></small></h2>
+            <p>
+            <h3>Contract Details <small>(currency : <?php echo hotel_currency_type($_REQUEST['hotel_id']) ?>)</small>
                 <span class="pull-right"> 
                     <a href="<?php echo base_url(); ?>backend/hotels/contract_menu"  class="btn-sm btn-primary">Back</a>
                 </span>
                 <?php if($contractmenu[0]->edit!=0) { ?>
                 <span class="pull-right"  style="margin-right: 5px;"> 
-                        <div class="btn-sm btn-primary" id="menu_per" style="transform: translateY(9px);width: 203px;text-align: center;cursor:pointer;">Menu Permission
+                        <div class="btn-sm btn-primary" id="menu_per" style="transform: translateY(3px);width: 203px;text-align: center;cursor:pointer;">Menu Permission
                         </div>
                         <div id="custom-select-option-box" class="btn-sm custom-dd-style">
                             <div class="custom-select-option">
@@ -114,7 +116,8 @@
                         </div>
                 </span>
             <?php } ?>
-            </h2>
+            </h3>
+            </p>
             <input type="hidden" id="contract_id" value="<?php echo $_REQUEST['con_id'] ?>">
             <input type="hidden" id="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
 

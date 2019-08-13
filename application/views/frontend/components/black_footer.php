@@ -88,7 +88,7 @@
 	<script type='text/javascript' src='<?php echo static_url(); ?>skin/assets/js/jquery.customSelect.js'></script>
 	
     <script src="<?php echo static_url(); ?>skin/assets/js/functions.js"></script>
-	<script src="<?php echo static_url(); ?>skin/assets/js/jquery.nicescroll.min.js"></script>
+	<!-- <script src="<?php echo static_url(); ?>skin/assets/js/jquery.nicescroll.min.js"></script> -->
     <script type="text/javascript" src="<?php echo static_url(); ?>skin/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 	<script src="<?php echo static_url(); ?>skin/assets/js/jquery.carouFredSel-6.2.1-packed.js"></script>
 
@@ -97,11 +97,11 @@
 	<script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.transit.min.js"></script>
     <script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.ba-throttle-debounce.min.js"></script>
     <script src="<?php echo static_url(); ?>skin/assets/js/counter.js"></script>	
-    <script src="<?php echo static_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script>
+    <!-- <script src="<?php echo static_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script> -->
     <script src="<?php echo static_url(); ?>skin/js/carousel.js"></script>
     <script src="<?php echo static_url(); ?>skin/assets/js/jquery.easing.js"></script>
     
-    <script src="<?php echo static_url(); ?>skin/assets/js/js-dashboard.js"></script>
+    <!-- <script src="<?php echo static_url(); ?>skin/assets/js/js-dashboard.js"></script> -->
      <!-- Javascript -->	
 	<script type='text/javascript' src='<?php echo static_url(); ?>skin/js/lightbox.js'></script>	
     <script src="<?php echo static_url(); ?>skin/assets/js/js-list4.js"></script>	

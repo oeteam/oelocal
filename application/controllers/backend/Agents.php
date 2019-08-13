@@ -466,7 +466,7 @@ class Agents extends MY_Controller {
     $mail_settings = mail_details();
     $hotel=$this->Agents_Model->GetTitle();
     $agent_details = $this->Agents_Model->agent_details($_REQUEST['id']);
-      $subject = 'Hotel easy accepted your permission';
+      $subject = 'Otelseasy accepted your permission';
       $message = '<div class="wrapper" style="max-width: 400px;
                     width: 100%;
                     margin: 5% auto;
@@ -477,7 +477,7 @@ class Agents extends MY_Controller {
                     <img src="'.base_url().'skin/images/logo.png" alt="" style="width: 200px;">
                   </header>
                   <section style="padding: 10px 10%;text-align: center;">
-                    <h2 style="text-align: center;">Welcome to hotel easy</h2>
+                    <h2 style="text-align: center;">Welcome to Otelseasy</h2>
                     <div style="margin-top: 25px;
                     margin-bottom: 10px;
                     display: inline-block;"><a style="background-color: #0074b9;
@@ -510,7 +510,7 @@ class Agents extends MY_Controller {
       $this->email->message($message);
       
       // $this->email->send();
-    $result = $this->Agents_Model->agents_permission($_REQUEST);
+  $result = $this->Agents_Model->agents_permission($_REQUEST);
     $description = 'Updated an existing agent permission [id:'.$_REQUEST['id'].']';
     AdminlogActivity($description);
     echo json_encode("success");

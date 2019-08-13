@@ -514,5 +514,6 @@ function static_url() {
 	// return "http://test_static.otelseasy.com/";
 }
 function images_url() {
-	return "http://test_images.otelseasy.com/";
+	return "http://dev.otelseasy.com/";
+	// return "http://test_images.otelseasy.com/";
 }
