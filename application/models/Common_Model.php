@@ -1039,7 +1039,6 @@ class Common_Model extends CI_Model {
       $this->db->select('*');
       $this->db->from('hotel_tbl_agents');
       $this->db->where('delflg',1);
-      $this->db->where('active_status',1);
       $query=$this->db->get();
       $final= $query->result();
       $count= count($final);
@@ -1048,8 +1047,16 @@ class Common_Model extends CI_Model {
   public function agent_inactive_count() {
       $this->db->select('*');
       $this->db->from('hotel_tbl_agents');
-      $this->db->where('delflg',1);
-      $this->db->where('active_status',0);
+      $this->db->where('delflg',2);
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function agent_blocked_count() {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_agents');
+      $this->db->where('delflg',0);
       $query=$this->db->get();
       $final= $query->result();
       $count= count($final);
@@ -1133,6 +1140,7 @@ class Common_Model extends CI_Model {
       $this->db->select('*');
       $this->db->from('hotel_tbl_contract');
       $this->db->where('contract_flg',1);
+      $this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
       $query=$this->db->get();
       $final= $query->result();
       $count= count($final);
@@ -1142,6 +1150,7 @@ class Common_Model extends CI_Model {
       $this->db->select('*');
       $this->db->from('hotel_tbl_contract');
       $this->db->where('contract_flg',0);
+      $this->db->where('to_date <',date('Y-m-d'));
       $query=$this->db->get();
       $final= $query->result();
       $count= count($final);
@@ -1150,7 +1159,6 @@ class Common_Model extends CI_Model {
   public function contract_expired_count() {
       $this->db->select('*');
       $this->db->from('hotel_tbl_contract');
-      $this->db->where('contract_flg',0);
       $this->db->where('to_date <',date('Y-m-d'));
       $query=$this->db->get();
       $final= $query->result();

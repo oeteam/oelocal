@@ -29,6 +29,7 @@ class Dashboard extends MY_Controller {
     $data['agent_count'] = $this->Common_Model->agent_count();
     $data['agent_active_count'] = $this->Common_Model->agent_active_count();
     $data['agent_inactive_count'] = $this->Common_Model->agent_inactive_count();
+    $data['agent_blocked_count'] = $this->Common_Model->agent_blocked_count();
     $data['hotel_count'] = $this->Common_Model->hotel_count();
     $data['hotel_pending_count'] = $this->Common_Model->hotel_pending_count();
     $data['hotel_blocked_count'] = $this->Common_Model->hotel_blocked_count();

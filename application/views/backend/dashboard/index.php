@@ -41,7 +41,8 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
                     <div class="dash-book">
                         <p class="dash-box">Active: <?php echo $agent_active_count ?></p>
                         <p class="dash-box">Inctive: <?php echo $agent_inactive_count ?></p>
-                        <h5><b><span class="card-title">Agents</span></b></h5>
+                        <p class="dash-box">Blocked: <?php echo $agent_blocked_count ?></p>
+                        <h5 style="margin-top: -4px"><b><span class="card-title">Agents</span></b></h5>
                         <h4><?php echo $agent_count; ?></h4>
                         <a href="<?php echo base_url();?>/backend/agents">View more</a>
 
