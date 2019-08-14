@@ -34,7 +34,7 @@ License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
     this.modal_id = this.options.modal_id ? this.options.modal_id : 'ekkoLightbox-' + Math.floor((Math.random() * 1000) + 1);
     header = this.options.title ? '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + this.options.title + '</h4></div>' : '';
     footer = this.options.footer ? '<div class="modal-footer">' + this.options.footer + '</div>' : '';
-    $(document.body).append('<div id="' + this.modal_id + '" class="modal fade" tabindex="-1"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body"></div>' + footer + '</div></div></div>');
+    $(document.body).append('<div id="' + this.modal_id + '" class="modal fade lightbox" tabindex="-1"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body"></div>' + footer + '</div></div></div>');
     this.modal = $('#' + this.modal_id);
     this.modal_body = this.modal.find('.modal-body').first();
     this.padding = {

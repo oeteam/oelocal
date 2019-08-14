@@ -97,7 +97,7 @@
 	<script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.transit.min.js"></script>
     <script type="text/javascript" src="<?php echo static_url(); ?>skin/assets/js/helper-plugins/jquery.ba-throttle-debounce.min.js"></script>
     <script src="<?php echo static_url(); ?>skin/assets/js/counter.js"></script>	
-    <!-- <script src="<?php echo static_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script> -->
+    <script src="<?php echo static_url(); ?>skin/assets/js/initialize-carousel-detailspage.js"></script>
     <script src="<?php echo static_url(); ?>skin/js/carousel.js"></script>
     <script src="<?php echo static_url(); ?>skin/assets/js/jquery.easing.js"></script>
     

@@ -1078,7 +1078,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-		    $(".modal-body").html('<img width="100%" src="'+$(this).attr('href')+'"/>'); 
+		    $(".lightbox .modal-body").html('<img width="100%" src="'+$(this).attr('href')+'"/>'); 
 		});
 	});
 </script>
