@@ -1264,5 +1264,23 @@ class Common_Model extends CI_Model {
       $count= count($final);
       return $count;
   }
+  public function active_booked_agents() {
+      $this->db->select('agent_id');
+      $this->db->from('hotel_tbl_booking');
+      $this->db->group_by('agent_id');
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
+  public function active_search_agents() {
+      $this->db->select('agentId');
+      $this->db->from('agents_tbl_search');
+      $this->db->group_by('agentId');
+      $query=$this->db->get();
+      $final= $query->result();
+      $count= count($final);
+      return $count;
+  }
 }
 

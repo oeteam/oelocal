@@ -9,6 +9,25 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
     color:green;
     font-size: x-small;
   }
+  .dash-book ul{
+    display: inline-block;
+    width: 100%;
+  }
+  .dash-book ul li {
+    display: block;
+    float: left;
+    width: 50%;
+    color: #949CA0;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0 10px 0 10px;
+    text-align: left;
+  }
+  .dash-book ul li:first-child {
+    border-right: 1px solid #c2cfd6;
+    text-align: right;
+
+  }
 </style>
 <link rel="stylesheet" href="<?php echo static_url(); ?>skin/dist/css/bootstrap.min.css">
 <script src="<?php echo static_url(); ?>assets/js/jquery.min.js"></script>
@@ -110,6 +129,38 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
                         <a href="<?php echo base_url();?>/backend/hotels/Revenue">View more</a>
                     </div>
                 </div>
+            </div>
+            <div class="row" style="margin-top: 5px">
+              <div class="col-sm-12 col-md-6">
+                    <div class="dash-book">
+                        <h5 style="margin-top: 10px"><b><span class="card-title">Booking Agents</span></b></h5>
+                        <ul>
+                          <li>
+                          <sctrong><span class="count">Active: </span>
+                          <span><?php echo $active_booked_agents; ?></span>
+                          </sctrong></li>
+                          <li>
+                          <sctrong><span class="count">Inactive: </span>
+                          <span><?php echo $agent_count - $active_booked_agents ?></span>
+                          </sctrong></li>
+                        </ul>
+                    </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                    <div class="dash-book">
+                        <h5 style="margin-top: 10px"><b><span class="card-title">Search Agents</span></b></h5>
+                        <ul>
+                          <li>
+                          <sctrong><span class="count">Active: </span>
+                          <span><?php echo $active_search_agents; ?></span>
+                          </sctrong></li>
+                          <li>
+                          <sctrong><span class="count">Inactive: </span>
+                          <span><?php echo $agent_count - $active_search_agents ?></span>
+                          </sctrong></li>
+                        </ul>
+                    </div>
+              </div>
             </div>
 
         </div>

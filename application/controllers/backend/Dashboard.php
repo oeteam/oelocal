@@ -54,6 +54,8 @@ class Dashboard extends MY_Controller {
     $data['revenue_active_count'] = $this->Common_Model->revenue_active_count();
     $data['revenue_inactive_count'] = $this->Common_Model->revenue_inactive_count();
     $data['revenue_expired_count'] = $this->Common_Model->revenue_expired_count();
+    $data['active_booked_agents'] = $this->Common_Model->active_booked_agents();
+    $data['active_search_agents'] = $this->Common_Model->active_search_agents();
     $data['mbcdata'] = $this->Common_Model->Report_country_booking_count(2,date('Y'));
     $total_booking = $this->Common_Model->total_booking();
     foreach ($total_booking as $key => $value) {
