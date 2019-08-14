@@ -1164,4 +1164,78 @@
 			$data = $this->Finance_Model->SelectHotelByCountry($_REQUEST['countryid']);
 			echo json_encode($data);
 		}
+		public function searchAgentReport() {
+			if ($this->session->userdata('name')=="") {
+            	redirect("/logout");
+    		}
+			$searchreportMenu = menuPermissionAvailability($this->session->userdata('id'),'Report','Search Agent Report'); 
+		    if (count($searchreportMenu)!=0 && $searchreportMenu[0]->view==1) {
+		       $this->load->view('backend/Report/searchagentreport');
+		    } else {
+		      redirect(base_url().'backend/dashboard');
+		    }   
+		}
+		public function searchAgentReportList() {
+			$data = array();
+    		$noTotal = array();
+    		$LeadTime = array();
+    		$totper = array();
+        	// Datatables Variables
+        	$draw = intval($this->input->get("draw"));
+        	$start = intval($this->input->get("start"));
+        	$length = intval($this->input->get("length"));
+           	$ReportFilter= $this->Finance_Model->SearchAgentReportList();
+           	foreach($ReportFilter as $key => $r) {
+			    $data[] = array(
+			    		$key+1,
+		    			$r->Agent_Code,
+		    			$r->Name,
+		    			$r->count,
+		    	);
+			}
+			$output = array(
+			   		"draw" => $draw,
+				 	"recordsTotal" => count($ReportFilter),
+				 	"recordsFiltered" => count($ReportFilter),
+				 	"data" => $data
+			);
+		  	echo json_encode($output);
+		}
+		public function bookingAgentReport() {
+			if ($this->session->userdata('name')=="") {
+            	redirect("/logout");
+    		}
+			$bookingreportMenu = menuPermissionAvailability($this->session->userdata('id'),'Report','Booking Agent Report'); 
+		    if (count($bookingreportMenu)!=0 && $bookingreportMenu[0]->view==1) {
+		       $this->load->view('backend/Report/bookingagentreport');
+		    } else {
+		      redirect(base_url().'backend/dashboard');
+		    }   
+		}
+		public function bookingAgentReportList() {
+			$data = array();
+    		$noTotal = array();
+    		$LeadTime = array();
+    		$totper = array();
+        	// Datatables Variables
+        	$draw = intval($this->input->get("draw"));
+        	$start = intval($this->input->get("start"));
+        	$length = intval($this->input->get("length"));
+           	$ReportFilter= $this->Finance_Model->BookingAgentReportList();
+           	foreach($ReportFilter as $key => $r) {
+			    $data[] = array(
+			    		$key+1,
+		    			$r->Agent_Code,
+		    			$r->Name,
+		    			$r->count,
+		    	);
+			}
+			$output = array(
+			   		"draw" => $draw,
+				 	"recordsTotal" => count($ReportFilter),
+				 	"recordsFiltered" => count($ReportFilter),
+				 	"data" => $data
+			);
+		  	echo json_encode($output);
+		}
    }	

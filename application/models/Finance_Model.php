@@ -1514,5 +1514,21 @@ class Finance_Model extends CI_Model {
   		$query = $this->db->get()->result();
 		return $query;
   	}
+  	public function SearchAgentReportList() {
+  		$this->db->select('b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,count(a.id) as count,b.Agent_Code');
+  		$this->db->from('agents_tbl_search a');
+  		$this->db->join('hotel_tbl_agents b','a.agentId=b.id');
+  		$this->db->group_by('a.agentId');
+  		$query = $this->db->get()->result();
+		return $query;
+  	}
+  	public function BookingAgentReportList() {
+   		$this->db->select('b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,count(a.id) as count,b.Agent_Code');
+  		$this->db->from('hotel_tbl_booking a');
+  		$this->db->join('hotel_tbl_agents b','a.agent_id=b.id');
+  		$this->db->group_by('a.agent_id');
+  		$query = $this->db->get()->result();
+		return $query;
+  	}
 }
 

@@ -136,14 +136,17 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
                         <h5 style="margin-top: 10px"><b><span class="card-title">Booking Agents</span></b></h5>
                         <ul>
                           <li>
-                          <sctrong><span class="count">Active: </span>
-                          <span><?php echo $active_booked_agents; ?></span>
-                          </sctrong></li>
+                            <sctrong><span class="count">Active: </span>
+                            <span><?php echo $active_booked_agents; ?></span>
+                            </sctrong>
+                          </li>
                           <li>
-                          <sctrong><span class="count">Inactive: </span>
-                          <span><?php echo $agent_count - $active_booked_agents ?></span>
-                          </sctrong></li>
+                            <sctrong><span class="count">Inactive: </span>
+                            <span><?php echo $agent_count - $active_booked_agents ?></span>
+                            </sctrong>
+                          </li>
                         </ul>
+                        <a href="<?php echo base_url();?>/backend/report/bookingAgentReport">View more</a>
                     </div>
               </div>
               <div class="col-sm-12 col-md-6">
@@ -159,6 +162,7 @@ $usersmenu = menuPermissionAvailability($this->session->userdata('id'),'Users','
                           <span><?php echo $agent_count - $active_search_agents ?></span>
                           </sctrong></li>
                         </ul>
+                        <a href="<?php echo base_url();?>/backend/report/searchAgentReport">View more</a>
                     </div>
               </div>
             </div>

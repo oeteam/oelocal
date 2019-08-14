@@ -65,7 +65,7 @@
                                     $CDdisabled = 'disabled';
                                 } else if(isset($value->sub_menu) && $value->sub_menu=="Payment Gateways") {
                                     $CDdisabled = 'disabled';
-                                }else {
+                                } else {
                                     $CDdisabled = '';
                                 }
                                 if (isset($value->sub_menu) && $value->sub_menu=="Hotel Reviews") {
@@ -82,10 +82,14 @@
                                     $CEDdisabled = 'disabled';
                                 } else if(isset($value->main_menu) && $value->main_menu=="Report") {
                                     $CEDdisabled = 'disabled';
-                                }  else if(isset($value->main_menu) && $value->main_menu=="Error Logs") {
+                                } else if(isset($value->main_menu) && $value->main_menu=="Error Logs") {
                                     $CEDdisabled = "disabled";
                                 } else if(isset($value->sub_menu) && $value->sub_menu=="Provided List") {
                                     $CEDdisabled = "disabled";
+                                } else if(isset($value->sub_menu) && $value->sub_menu=="Search Agent Report") {
+                                    $CEDdisabled = 'disabled';
+                                } else if(isset($value->sub_menu) && $value->sub_menu=="Booking Agent Report") {
+                                    $CEDdisabled = 'disabled';
                                 } else {
                                     $CEDdisabled = '';
                                 }

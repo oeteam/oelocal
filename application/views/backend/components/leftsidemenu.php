@@ -241,7 +241,9 @@
                         $availabilityReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Availability Report');
                         $salesReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Agent Sales Report');
                         $searchReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Search Report');
-                        if ((count($roomnightReport)!=0 && $roomnightReport[0]->view!=0) || (count($bookingReport)!=0 && $bookingReport[0]->view!=0) || (count($patternReport)!=0 && $patternReport[0]->view!=0) || (count($nationalityReport)!=0 && $nationalityReport[0]->view!=0) || (count($allotmentReport)!=0 && $allotmentReport[0]->view!=0) || (count($availabilityReport)!=0 && $availabilityReport[0]->view!=0) || (count($salesReport)!=0 && $salesReport[0]->view!=0) || (count($searchReport)!=0 && $searchReport[0]->view!=0)) { ?> 
+                        $searchAgentReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Search Agent Report');
+                        $bookingAgentReport =menuPermissionAvailability($this->session->userdata('id'),'Report','Booking Agent Report');
+                        if ((count($roomnightReport)!=0 && $roomnightReport[0]->view!=0) || (count($bookingReport)!=0 && $bookingReport[0]->view!=0) || (count($patternReport)!=0 && $patternReport[0]->view!=0) || (count($nationalityReport)!=0 && $nationalityReport[0]->view!=0) || (count($allotmentReport)!=0 && $allotmentReport[0]->view!=0) || (count($availabilityReport)!=0 && $availabilityReport[0]->view!=0) || (count($salesReport)!=0 && $salesReport[0]->view!=0) || (count($searchReport)!=0 && $searchReport[0]->view!=0)|| (count($searchAgentReport)!=0 && $searchAgentReport[0]->view!=0) || (count($bookingAgentReport)!=0 && $bookingAgentReport[0]->view!=0)) { ?> 
                             <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-file-text-o" aria-hidden="true"></i> Report</a>
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>
@@ -276,6 +278,14 @@
                                        if (count($searchReport)!=0 && isset($searchReport[0]->view) && $searchReport[0]->view!=0 ) { ?>
                                         <!-- <li><a href="<?php echo base_url(); ?>backend/report/SearchReport">Search Report</a>
                                         </li> -->
+                                        <?php }   
+                                        if (count($searchAgentReport)!=0 && isset($searchAgentReport[0]->view) && $searchAgentReport[0]->view!=0 ) { ?>
+                                        <li><a href="<?php echo base_url(); ?>backend/report/searchAgentReport">Search Agent Report</a>
+                                        </li>
+                                        <?php }   
+                                        if (count($bookingAgentReport)!=0 && isset($bookingAgentReport[0]->view) && $bookingAgentReport[0]->view!=0 ) { ?>
+                                        <li><a href="<?php echo base_url(); ?>backend/report/bookingAgentReport">Booking Agent Report</a>
+                                        </li>
                                         <?php } ?>
 
                                     </ul>
