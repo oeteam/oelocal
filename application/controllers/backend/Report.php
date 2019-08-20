@@ -1184,7 +1184,7 @@
         	$draw = intval($this->input->get("draw"));
         	$start = intval($this->input->get("start"));
         	$length = intval($this->input->get("length"));
-           	$ReportFilter= $this->Finance_Model->SearchAgentReportList();
+           	$ReportFilter= $this->Finance_Model->SearchAgentReportList($_REQUEST);
            	foreach($ReportFilter as $key => $r) {
 			    $data[] = array(
 			    		$key+1,
@@ -1221,7 +1221,7 @@
         	$draw = intval($this->input->get("draw"));
         	$start = intval($this->input->get("start"));
         	$length = intval($this->input->get("length"));
-           	$ReportFilter= $this->Finance_Model->BookingAgentReportList();
+           	$ReportFilter= $this->Finance_Model->BookingAgentReportList($_REQUEST);
            	foreach($ReportFilter as $key => $r) {
 			    $data[] = array(
 			    		$key+1,

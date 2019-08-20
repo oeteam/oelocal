@@ -1514,18 +1514,30 @@ class Finance_Model extends CI_Model {
   		$query = $this->db->get()->result();
 		return $query;
   	}
-  	public function SearchAgentReportList() {
+  	public function SearchAgentReportList($request) {
   		$this->db->select('b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,count(a.id) as count,b.Agent_Code');
   		$this->db->from('agents_tbl_search a');
   		$this->db->join('hotel_tbl_agents b','a.agentId=b.id');
+  		if(isset($request['from_date']) && $request['from_date']!="") {
+  			$this->db->where('DATE(searchDate)>=',$request['from_date']);
+  		}
+  		if(isset($request['to_date']) && $request['to_date']!="") {
+  			$this->db->where('DATE(searchDate)<=',$request['to_date']);
+  		}
   		$this->db->group_by('a.agentId');
   		$query = $this->db->get()->result();
 		return $query;
   	}
-  	public function BookingAgentReportList() {
+  	public function BookingAgentReportList($request) {
    		$this->db->select('b.id,CONCAT(b.First_Name, " ", b.Last_Name) as Name,count(a.id) as count,b.Agent_Code');
   		$this->db->from('hotel_tbl_booking a');
   		$this->db->join('hotel_tbl_agents b','a.agent_id=b.id');
+  		if(isset($request['from_date']) && $request['from_date']!="") {
+  			$this->db->where('DATE(a.Created_Date)>=',$request['from_date']);
+  		}
+  		if(isset($request['to_date']) && $request['to_date']!="") {
+  			$this->db->where('DATE(a.Created_Date)<=',$request['to_date']);
+  		}
   		$this->db->group_by('a.agent_id');
   		$query = $this->db->get()->result();
 		return $query;
