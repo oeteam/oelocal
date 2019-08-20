@@ -977,6 +977,10 @@
 			              	<span class="b-rates--grand-total"><?php echo currency_type(agent_currency(),$finalAmount);?> </span>
 						</span>
 						</h5>
+						<?php if (agent_currency()!='AED') { ?>
+						<p class="text-right"><small><b>AED 1 => <?php echo agent_currency(); ?> <?php echo currency_type(agent_currency(),1);?></b></small></p>
+						<p class="text-right"><small><b>AED <?php echo $finalAmount ?>  => <?php echo agent_currency(); ?> <?php echo currency_type(agent_currency(),$finalAmount);?> </b></small></p>
+						<?php } ?>
 						<?php 
 							$this->session->set_userdata('tot-'.$_REQUEST['hotel_id'],$finalAmount);
 						?>
