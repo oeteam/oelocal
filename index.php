@@ -1,4 +1,5 @@
 <?php
+ ini_set('max_execution_time',900000000000000000000000);
  ini_set('maxdb_execution_time',900000);
  ini_set('mysql.connect_timeout', 300000);
  ini_set('memory_limit', '128M');
@@ -6,7 +7,7 @@
  * CodeIgniter
  *
  * An open source application development framework for PHP
- *
+ *	
  * This content is released under the MIT License (MIT)
  *
  * Copyright (c) 2014 - 2017, British Columbia Institute of Technology

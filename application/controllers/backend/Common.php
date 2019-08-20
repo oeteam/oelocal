@@ -1463,6 +1463,9 @@ class Common extends MY_Controller {
       $data = $this->Common_Model->ContractSelect($_REQUEST['hotelid']);
       echo json_encode($data);
   }
+  public function api_provider() {
+    $this->load->view('backend/general/api_provider');
+  }
 }
 
 

@@ -184,7 +184,16 @@
                                     </ul>
                                 </div>
                             </li>
-                        <?php } 
+                        <?php } ?>
+                        <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-share-alt-square" aria-hidden="true"></i> API</a>                  
+                                <div class="collapsible-body left-sub-menu">
+                                    <ul>
+                                        <li><a href="<?php echo base_url(); ?>backend/common/api_provider">Provider List</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php 
                         $hotelRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Hotels');
                         $tourRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Tours');
                         $transferRequest = menuPermissionAvailability($this->session->userdata('id'),'Offline Requests','Transfers'); 
