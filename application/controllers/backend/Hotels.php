@@ -1830,11 +1830,11 @@ class Hotels extends MY_Controller {
 	public function SeasonSubmit() {
 		$result = $this->Hotels_Model->SeasonSubmit($_REQUEST);
 		if(isset($_REQUEST['season_id']) && $_REQUEST['season_id']!="") {
-			$description = 'Season details updated [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.$_REQUEST['contract_id'].', Season ID: '.$_REQUEST['season_id'].']';
+			// $description = 'Season details updated [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.$_REQUEST['contract_id'].', Season ID: '.$_REQUEST['season_id'].']';
     	} else {
     		$description = 'New Season details added [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.$_REQUEST['contract_id'].']';
+    		AdminlogActivity($description);
     	}	
-    	AdminlogActivity($description);
 		echo json_encode($result);
 	}
 	public function BoardSupplement_modal() {

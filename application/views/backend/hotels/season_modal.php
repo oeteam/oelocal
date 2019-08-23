@@ -9,6 +9,8 @@
                 <input type="hidden" name="season_id" id="season_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <input type="hidden" name="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
                 <input type="hidden" name="contract_id" value="<?php echo $_REQUEST['contract_id'] ?>">
+                <input type="hidden" name="old_fromdate" value="<?php echo isset($view[0]->FromDate) ? $view[0]->FromDate : '' ?>">
+                <input type="hidden" name="old_todate" value="<?php echo isset($view[0]->ToDate) ?  $view[0]->ToDate :'' ?>">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Season Name</label>
