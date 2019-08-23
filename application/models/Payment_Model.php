@@ -1925,7 +1925,7 @@ class Payment_Model extends CI_Model {
       return $data;
     }
     public function roomList($hotel_id,$key,$data) {
-        $this->db->select('a.id as room_id,a.*,b.Room_Type');
+        $this->db->select('a.id as room_id,b.Room_Type,a.room_name');
         $this->db->from('hotel_tbl_hotel_room_type a');
         $this->db->join('hotel_tbl_room_type b', 'b.id = a.room_type', 'inner');
         $this->db->where('a.max_total >=',($data['adults'][$key]+$data['Child'][$key]));

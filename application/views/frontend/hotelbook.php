@@ -104,6 +104,13 @@
 		border: 1px solid #5cb880 ! important;
 		filter: grayscale(0) ! important;
 	}
+  .on-req.availability {
+    border: 1px solid #fb6330 ! important;
+    filter: grayscale(0) ! important; 
+  }
+  .on-req .text-green {
+    color: #fb6330 ! important;
+  }
     .r-type--room ul > li > label > input[type="radio"]:disabled + div  > h5 > i:first-child {          display: none;
     }
 
@@ -1004,8 +1011,9 @@ $(document).ready(function() {
                     <label for="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>" value="<?php echo $rooms[$i]['RoomIndex'][$key] ?>">
 		                    
-		                    <div class="av-div">
+		                    <div class="av-div <?php echo $rooms[$i]['RequestType'][$key]!="Book" ? 'on-req' : '' ?>">
 		                      <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value ?> - <?php echo $rooms[$i]['board'][$key] ?> 
+                          
                           <?php 
                             if (isset($rooms[$i]['CancellationPolicy'][$key][0]['application']) && $rooms[$i]['CancellationPolicy'][$key][0]['application']=="FREE OF CHARGE") { ?>
                               <span class="pull-right" data-toggle="modal" data-target="#myModalRoom<?php echo $i+1 ?><?php echo $rooms[$i]['RoomIndex'][$key] ?>">Free of Cancellation till <?php echo $rooms[$i]['CancellationPolicy'][$key][0]['before'] ?> <span>
@@ -1029,7 +1037,7 @@ $(document).ready(function() {
 		                      	<input type="hidden" class="room_id" value="<?php echo $rooms[$i]['room_id'][$key] ?>">
 		                      	<input type="hidden" class="contract_id" value="<?php echo $rooms[$i]['contract_id'][$key] ?>">
 		                      	<input type="hidden" class="com-amnt" value="<?php echo currency_type(agent_currency(),$rooms[$i]['price'][$key]); ?>">
-		                      	<small><?php echo agent_currency().' '.currency_type(agent_currency(),$rooms[$i]['price'][$key]); ?></small>
+		                      	<small><?php echo agent_currency().' '.currency_type(agent_currency(),$rooms[$i]['price'][$key]); ?> <?php echo $rooms[$i]['RequestType'][$key]!="Book" ? ' - On Request' : '' ?></small>
 		                      </p>
 		                    </div>
 		                  </label>

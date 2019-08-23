@@ -145,6 +145,14 @@
                 </select>     
                 </div>
             </div>
+            <div class="form-group col-md-4">        
+                <span>Deactivate date <input type="checkbox" id="deactive" <?php echo isset($view[0]->deactive) && $view[0]->deactive==1 ? 'checked' : '' ?> class="deactive" style="opacity: 10;left: 0; float: right;   width: 15px; height: 15px; position: relative;" name="deactive"></span>
+                <input type="text" <?php echo isset($view[0]->deactive) && $view[0]->deactive==1 ? '' : 'disabled' ?> class="datePicker-hide datepicker input-group-addon" id="date_picker3" name="deactiveDate" placeholder="dd/mm/yyyy" value="<?php echo isset($view[0]->deactiveDate) ?  $view[0]->deactiveDate : date('Y-m-d') ?>" />
+                <div class="input-group">
+                    <input class="form-control datepicker date-pic" <?php echo isset($view[0]->deactive) && $view[0]->deactive==1 ? '' : 'disabled' ?> id="alternate3" name="" value="<?php echo isset($view[0]->deactiveDate) ?  date('d/m/Y',strtotime($view[0]->deactiveDate)) : date('d/m/Y') ?>">
+                    <label for="alternate3" class="input-group-addon"><i class="fa fa-calendar"></i></label>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -210,6 +218,15 @@
 <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/prettify.min.js"></script>
 <script src="<?php echo static_url(); ?>assets/js/multiselect.min.js"></script>
 <script type="text/javascript">
+    $("#deactive").change(function() {
+        if ($(this).prop("checked")==true) {
+            $("#alternate3").prop('disabled',false);
+            $("#date_picker3").prop('disabled',false);
+        } else {
+            $("#alternate3").prop('disabled',true);
+            $("#date_picker3").prop('disabled',true);
+        }
+    })
     var nextDay = new Date($("#date_picker1").val());
     nextDay.setDate(nextDay.getDate() + 1);
     $("#date_picker").datepicker({
@@ -234,12 +251,26 @@
         changeYear : true,
         changeMonth : true,
     });
+
+    $("#date_picker3").datepicker({
+        altField: "#alternate3",
+        dateFormat: "yy-mm-dd",
+        altFormat: "dd/mm/yy",
+        minDate: new Date(<?php date('d/m/Y', strtotime('+ 1 day')) ?>),
+        changeYear : true,
+        changeMonth : true,
+    });
+
     $("#alternate1").click(function() {
         $( "#date_picker" ).trigger('focus');
     });
     $("#alternate2").click(function() {
         $( "#date_picker1" ).trigger('focus');
     });
+    $("#alternate3").click(function() {
+        $( "#date_picker3" ).trigger('focus');
+    });
+
     // $(document).ready(function() {
     maincontractCheck();
     window.prettyPrint && prettyPrint();

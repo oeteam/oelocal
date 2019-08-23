@@ -3655,6 +3655,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       if (!isset($_REQUEST['adults'][0])) {
         redirect('../hotels');
       }
+
       $rooms['CIndex'] = array();
       $bookbuttondata = $this->session->userdata('hoteldata');
       $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
@@ -3663,12 +3664,14 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $data['hotel_facilities'][$key] = $this->List_Model->hotel_facilities_data($value);
       }
 
+
       $room_facilities = explode(",",$data['view'][0]->room_facilities); 
       foreach ($room_facilities as $key => $value) {
         $data['room_facilities'][$key] = $this->List_Model->room_facilities_data($value);
       }
       $contracts =$this->List_Model->contractchecking($_REQUEST);
       $agentmarkup = mark_up_get();
+
       for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
         $Rooms = $this->Payment_Model->roomList($_REQUEST['hotel_id'],$i,$_REQUEST);
         foreach ($Rooms as $key => $value) {
