@@ -382,4 +382,4 @@ $(window).load(function() {
           $('#chat_list').removeClass('in');
     })
 </script>
-    <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/realtimebackend.js"></script>
+    <!-- <script type="text/javascript" src="<?php echo static_url(); ?>assets/js/realtimebackend.js"></script> -->

@@ -3063,7 +3063,7 @@ function allotement_update() {
       data: $('#calEditForm').serialize(),
       success: function(data) {
         addToast("Updated Successfully","green");
-        document.location.reload(true);
+        // document.location.reload(true);
       }
   });
   // $('#allotement_update_form').attr("action",base_url+'/backend/hotels/allotement_update');
