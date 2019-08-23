@@ -2926,30 +2926,9 @@ class Hotels_Model extends CI_Model {
 	public function SeasonSubmit($request) {
 		if (isset($request['season_id']) && $request['season_id']!="") {
 			if(isset($request['update_terms']) && $request['update_terms']=="on") {
-				$checked_date =array();
-				$start_date=date_create($request['fromDate']);
-				$end_date=date_create($request['toDate']);
-				$no_of_days=date_diff($start_date,$end_date);
-				$tot_days = $no_of_days->format("%a");
 				if ($request['fromDate'] > $request['toDate']) {
 					$msg = 'To date should greater than From date !';
 				} else {
-					for($i = 0; $i <= $tot_days; $i++) {
-			       		$result[1+$i]['date'] = date('Y-m-d', strtotime($request['fromDate']. ' + '.$i.'  days'));
-				       	$this->db->select('*');
-				        $this->db->from('hotel_tbl_season');
-			            $where = "'".$result[1+$i]['date']."' BETWEEN FromDate AND ToDate";
-				        $this->db->where($where);
-				        $this->db->where('contract_id',$request['contract_id']);
-				        $this->db->where('hotel_id',$request['hotel_id']);
-				        $query[$result[1+$i]['date']]=$this->db->get()->result();
-				        if (count($query[$result[1+$i]['date']])) {
-				        	$checked_date[] = date('d-m-Y',strtotime($result[1+$i]['date']));
-				        } 
-			    	}
-			    	if (count($checked_date)!="") {
-			    		$msg = 'These ('.implode(", ", $checked_date).') days are already Exist !';
-			    	} else {
 		    		   	$data= array( 
 						 'FromDate' 	  => $request['fromDate'],
 						 'ToDate' 	      => $request['toDate'],
@@ -2979,33 +2958,11 @@ class Hotels_Model extends CI_Model {
 						$this->db->update('hotel_tbl_extrabed',$extrabedData);
 					    $msg = true;
 			    	}
-				}
 				return $msg;	
 			} else {
-				$checked_date =array();
-				$start_date=date_create($request['fromDate']);
-				$end_date=date_create($request['toDate']);
-				$no_of_days=date_diff($start_date,$end_date);
-				$tot_days = $no_of_days->format("%a");
 				if ($request['fromDate'] > $request['toDate']) {
 					$msg = 'To date should greater than From date !';
 				} else {
-					for($i = 0; $i <= $tot_days; $i++) {
-			       		$result[1+$i]['date'] = date('Y-m-d', strtotime($request['fromDate']. ' + '.$i.'  days'));
-				       	$this->db->select('*');
-				        $this->db->from('hotel_tbl_season');
-			            $where = "'".$result[1+$i]['date']."' BETWEEN FromDate AND ToDate";
-				        $this->db->where($where);
-				        $this->db->where('contract_id',$request['contract_id']);
-				        $this->db->where('hotel_id',$request['hotel_id']);
-				        $query[$result[1+$i]['date']]=$this->db->get()->result();
-				        if (count($query[$result[1+$i]['date']])) {
-				        	$checked_date[] = date('d-m-Y',strtotime($result[1+$i]['date']));
-				        } 
-			    	}
-			    	if (count($checked_date)!="") {
-			    		$msg = 'These ('.implode(", ", $checked_date).') days are already Exist !';
-			    	} else {
 		    		   $data= array( 
 						 'FromDate' 	  => $request['fromDate'],
 						 'ToDate' 	      => $request['toDate'],
@@ -3016,7 +2973,6 @@ class Hotels_Model extends CI_Model {
 						$this->db->where('id',$request['season_id']);
 						$this->db->update('hotel_tbl_season',$data);
 					    $msg = true;
-			    	}
 				}
 				return $msg;	
 			}	
