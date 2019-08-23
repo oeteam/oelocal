@@ -2946,11 +2946,11 @@ class Hotels_Model extends CI_Model {
 						 'fromDate' 	  => $request['fromDate'],
 						 'toDate' 	      => $request['toDate'],
 						);
-						$this->db->query("update hotel_tbl_boardsupplement set fromDate='".$request['fromDate']."',toDate='".$request['fromDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
-						$this->db->query("update hotel_tbl_generalsupplement set fromDate='".$request['fromDate']."',toDate='".$request['fromDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
-						$this->db->query("update hotel_tbl_cancellationfee set fromDate='".$request['fromDate']."',toDate='".$request['fromDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
-						$this->db->query("update hotel_tbl_minimumstay set fromDate='".$request['fromDate']."',toDate='".$request['fromDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
-						$this->db->query("update hotel_tbl_extrabed set from_date='".$request['fromDate']."',to_date='".$request['fromDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
+						$this->db->query("update hotel_tbl_boardsupplement set fromDate='".$request['fromDate']."',toDate='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
+						$this->db->query("update hotel_tbl_generalsupplement set fromDate='".$request['fromDate']."',toDate='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
+						$this->db->query("update hotel_tbl_cancellationfee set fromDate='".$request['fromDate']."',toDate='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
+						$this->db->query("update hotel_tbl_minimumstay set fromDate='".$request['fromDate']."',toDate='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
+						$this->db->query("update hotel_tbl_extrabed set from_date='".$request['fromDate']."',to_date='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
 
 						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
 						// $this->db->update('hotel_tbl_boardsupplement',$data1);
