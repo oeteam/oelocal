@@ -1719,7 +1719,6 @@ public function contractchecking($request) {
   
   $ot = $this->db->query("SELECT contract_id,(select SUM(amount) from hotel_tbl_allotement where 
       contract_id = a.contract_id AND hotel_id = a.hotel_id AND from_date <= '".date('Y-m-d',strtotime($request['Check_in']))."' AND to_date > '".date('Y-m-d',strtotime($request['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($request['Check_out']))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_out']))."') as price FROM hotel_tbl_contract a WHERE not exists (select 1 from  hotel_agent_permission b where   a.contract_id = b.contract_id and FIND_IN_SET('".$this->session->userdata('agent_id')."', IFNULL(permission,'')) > 0) AND FIND_IN_SET('".$request['nationality']."', IFNULL(nationalityPermission,'')) = 0 AND not exists (select 1 from hotel_country_permission c where a.contract_id = c.contract_id and FIND_IN_SET('".substr($this->session->userdata('currency'),0,2)."', IFNULL(permission,'')) > 0) AND from_date <= '".date('Y-m-d',strtotime($request['Check_in']))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_in']))."' AND  from_date < '".date('Y-m-d',strtotime($request['Check_out']. ' -1 days'))."' AND to_date >= '".date('Y-m-d',strtotime($request['Check_out']. ' -1 days'))."'  AND hotel_id = '".$request['hotel_id']."' AND contract_flg  = 1 order by price asc")->result();
-
   foreach ($ot as $key5 => $value5) {
     $contract_id[] =  $value5->contract_id;
   }

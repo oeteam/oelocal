@@ -19,20 +19,24 @@
 
                     <div class="form-group col-md-6">
                         <label>From Date</label>
-                        <input type="text" class="datePicker-hide datepicker" id="fromDate" name="fromDate" placeholder="dd/mm/yyyy" value="<?php echo isset($view[0]->FromDate) ?  $view[0]->FromDate : date('Y-m-d') ?>" <?php echo isset($_REQUEST['id']) ? 'disabled' : '' ?> >
+                        <input type="text" class="datePicker-hide datepicker" id="fromDate" name="fromDate" placeholder="dd/mm/yyyy" value="<?php echo isset($view[0]->FromDate) ?  $view[0]->FromDate : date('Y-m-d') ?>" >
                         <div class="input-group">
-                            <input class="form-control datepicker date-pic" id="alternate1" name="" value="<?php echo isset($view[0]->FromDate) ?  date('d/m/Y',strtotime($view[0]->FromDate)):date('d/m/Y') ?>" <?php echo isset($_REQUEST['id']) ?'disabled':'' ?> >
+                            <input class="form-control datepicker date-pic" id="alternate1" name="" value="<?php echo isset($view[0]->FromDate) ?  date('d/m/Y',strtotime($view[0]->FromDate)):date('d/m/Y') ?>"  >
                             <label for="alternate1" class="input-group-addon"><i class="fa fa-calendar"></i></label>
                         </div>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label>To Date</label>
-                        <input type="text" class="datePicker-hide datepicker" id="toDate" name="toDate" placeholder="dd/mm/yyyy" value="<?php echo isset($view[0]->ToDate) ?  $view[0]->ToDate : date('Y-m-d') ?>" <?php echo isset($_REQUEST['id']) ? 'disabled' : '' ?> >
+                        <input type="text" class="datePicker-hide datepicker" id="toDate" name="toDate" placeholder="dd/mm/yyyy" value="<?php echo isset($view[0]->ToDate) ?  $view[0]->ToDate : date('Y-m-d') ?>" >
                         <div class="input-group">
-                            <input class="form-control datepicker date-pic" id="alternate2" name="" value="<?php echo isset($view[0]->ToDate) ?  date('d/m/Y',strtotime($view[0]->ToDate)): date('d/m/Y') ?>" <?php echo isset($_REQUEST['id']) ? 'disabled':'' ?> >
+                            <input class="form-control datepicker date-pic" id="alternate2" name="" value="<?php echo isset($view[0]->ToDate) ?  date('d/m/Y',strtotime($view[0]->ToDate)): date('d/m/Y') ?>" >
                             <label for="alternate2" class="input-group-addon"><i class="fa fa-calendar"></i></label>
                         </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <input type="checkbox" class="filled-in" name="update_terms" id="update_terms"  />
+                        <label for="update_terms">Do you want to update this date period on this contract?</label>
                     </div>
                 </div>
             </form>
