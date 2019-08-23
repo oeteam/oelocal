@@ -2966,6 +2966,8 @@ class Hotels_Model extends CI_Model {
 						// );
 						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
 						// $this->db->update('hotel_tbl_extrabed',$extrabedData);
+						$description = 'Season details updated: Fromdate('.$request['old_fromdate'].' changed to '.$request['fromDate'].') and Todate('.$request['old_todate'].' changed to '.$request['toDate'].') [Season id: '.$request['season_id'].', Contract id: '.$request['contract_id'].'] - Auto season change enabled';
+    					AdminlogActivity($description);
 					    $msg = true;
 			    	}
 				return $msg;	
@@ -2982,6 +2984,8 @@ class Hotels_Model extends CI_Model {
 		    			);
 						$this->db->where('id',$request['season_id']);
 						$this->db->update('hotel_tbl_season',$data);
+						$description = 'Season details updated: Fromdate('.$request['old_fromdate'].' changed to '.$request['fromDate'].')   and Todate('.$request['old_todate'].' changed to '.$request['toDate'].') [Season id: '.$request['season_id'].', Contract id: '.$request['contract_id'].'] - Auto season change disabled';
+    					AdminlogActivity($description);
 					    $msg = true;
 				}
 				return $msg;	
