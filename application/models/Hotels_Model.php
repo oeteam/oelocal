@@ -3999,7 +3999,11 @@ class Hotels_Model extends CI_Model {
         return $query=$this->db->get()->result();
 	}
 	public function extrabedsubmit($request) {
-		$adultAmount = backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['Amount']);
+		if ($request['Amount']!='' & $request['Amount']!=0) {
+			$adultAmount = backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['Amount']);
+		} else {
+			$adultAmount = 0;
+		}
 		if ($request['ChildAmount']!='' & $request['ChildAmount']!=0) {
 			$childAmount = backend_Aed_convertion(hotel_currency_type($request['hotel_id']),$request['ChildAmount']);
 		} else {
