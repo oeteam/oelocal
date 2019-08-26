@@ -477,7 +477,7 @@
                                     <select name="Preferred_currency"  id="sell_currency">
                                         <?php foreach ($currency_list as $key => $value) { 
                                             if(isset($view[0]->Preferred_currency) && $view[0]->Preferred_currency==$value->currency_type) {?>
-                                        <option selected="" value="<?php echo $value->currency_name. ' ('.($value->currency_type).')' ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
+                                        <option selected="" value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
                                         <?php } else { ?>
                                             <option  value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
                                         <?php  } } ?>

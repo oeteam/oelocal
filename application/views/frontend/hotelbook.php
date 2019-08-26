@@ -660,7 +660,7 @@ btn.on('click', function(e) {
 	       updateProgress(perc);
 	       setTimeout(animateUpdate, timeoutVal);
 	      } else {
-           	window.location = base_url+"hotels";
+           	// window.location = base_url+"hotels";
 	      }
 	}
 	function updateClock() {

@@ -2952,20 +2952,7 @@ class Hotels_Model extends CI_Model {
 						$this->db->query("update hotel_tbl_minimumstay set fromDate='".$request['fromDate']."',toDate='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
 						$this->db->query("update hotel_tbl_extrabed set from_date='".$request['fromDate']."',to_date='".$request['toDate']."' where season='".$request['season_id']."' and contract_id='".$request['contract_id']."' and hotel_id='".$request['hotel_id']."'");
 
-						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
-						// $this->db->update('hotel_tbl_boardsupplement',$data1);
-						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
-						// $this->db->update('hotel_tbl_generalsupplement',$data1);
-						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
-						// $this->db->update('hotel_tbl_cancellationfee',$data1);
-						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
-						// $this->db->update('hotel_tbl_minimumstay',$data1);
-						// $extrabedData= array( 
-						//  'from_date' 	  => $request['fromDate'],
-						//  'to_date' 	      => $request['toDate'],
-						// );
-						// $this->db->where(array('season'=>$request['season_id'],'contract_id'=>$request['contract_id'],'hotel_id'=>$request['hotel_id']));
-						// $this->db->update('hotel_tbl_extrabed',$extrabedData);
+						
 						$description = 'Season details updated: Fromdate('.$request['old_fromdate'].' changed to '.$request['fromDate'].') and Todate('.$request['old_todate'].' changed to '.$request['toDate'].') [Season id: '.$request['season_id'].', Contract id: '.$request['contract_id'].'] - Auto season change enabled';
     					AdminlogActivity($description);
 					    $msg = true;

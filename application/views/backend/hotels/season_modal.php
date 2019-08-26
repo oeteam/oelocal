@@ -36,10 +36,12 @@
                             <label for="alternate2" class="input-group-addon"><i class="fa fa-calendar"></i></label>
                         </div>
                     </div>
+                    <?php if (isset($_REQUEST['id'])) { ?>
                     <div class="form-group col-md-12">
                         <input type="checkbox" class="filled-in" name="update_terms" id="update_terms"  />
                         <label for="update_terms">Do you want to update this date period on this contract?</label>
                     </div>
+                    <?php } ?>
                 </div>
             </form>
         </div>

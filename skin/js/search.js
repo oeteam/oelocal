@@ -21,7 +21,8 @@ $(document).ready(function() {
 	tpj("#nights").change(function() {
 		total_night_calc();
 	});
-	tpj("#search_btn").click(function() {
+	tpj("#hotel_search_form").submit(function(e) {
+      e.preventDefault();
 		var location = tpj("#location").val();
 		var Nationality = tpj("#Nationality").val();
 		var hotel_name = tpj("#hotel_name").val();
@@ -54,6 +55,42 @@ $(document).ready(function() {
 		}
 
 	});
+
+	 tpj(document).on('keydown', function(event) {
+	   if (event.key == "Enter") {
+	       var location = tpj("#location").val();
+			var Nationality = tpj("#Nationality").val();
+			var hotel_name = tpj("#hotel_name").val();
+			var check_in = tpj("#datepicker3").val();
+			var check_out = tpj("#datepicker2").val();
+			var adults = tpj("#adults").val();
+			var rate = tpj(".rate:checked").val();
+			var altCheckIn = $("#alternate3").val();
+	    	var altCheckOut = $("#alternate2").val();
+			if (location=="" && hotel_name=="") {
+				tpj(".dest_err").css("color","red");
+				tpj(".htl_err").css("color","red");
+			} else if(Nationality=="") {
+				tpj(".dest_err").css("color","white");
+				tpj(".htl_err").css("color","white");
+				tpj(".nat_err").css("color","red");
+			} else if (check_in=="") {
+				tpj(".chckin_err").css("color","red");
+			} else if (check_out=="") {
+				tpj(".chckout_err").css("color","red");
+			} else if (adults=="") {
+				tpj(".adults_err").css("color","red");
+			// } else if (rate==undefined || rate=="") {
+			// 	tpj(".rate_err").css("color","red");
+			} else {
+				var req = tpj("#hotel_search_form").serialize();
+				FullLoading('start', location, altCheckIn, altCheckOut);
+				window.location.href=base_url+'lists/index?'+req;
+				// tpj("#hotel_search_form").submit();
+			}
+	   }
+	});
+	 
 	tpj(".ratingall").click(function() {
 		if(!tpj(".ratingall").is(':checked')){
 			tpj('.rating1').prop('checked', false);

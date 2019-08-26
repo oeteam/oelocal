@@ -3647,8 +3647,38 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         echo 0;
       }
     }
-
     public function index() {
+      if ($this->session->userdata('agent_id')=="") {
+        redirect(base_url());
+      }
+      if (!isset($_REQUEST['adults'][0])) {
+        redirect('../hotels');
+      }
+
+      $bookbuttondata = $this->session->userdata('hoteldata');
+      $data['view'] = $this->Payment_Model->hotelDetails($_REQUEST['hotel_id']);
+      $hotel_facilities = explode(",",$data['view'][0]->hotel_facilities); 
+      foreach ($hotel_facilities as $key => $value) {
+        $data['hotel_facilities'][$key] = $this->List_Model->hotel_facilities_data($value);
+      }
+
+
+      $room_facilities = explode(",",$data['view'][0]->room_facilities); 
+      foreach ($room_facilities as $key => $value) {
+        $data['room_facilities'][$key] = $this->List_Model->room_facilities_data($value);
+      }
+      $contracts =$this->List_Model->contractchecking($_REQUEST);
+      $agentmarkup = mark_up_get();
+      if ($contracts!=false) {
+        for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
+          $rooms[$i] = $this->Payment_Model->roomwisepaxdata($_REQUEST['hotel_id'],$i,$_REQUEST,$contracts['contract_id']);
+        }
+      }
+      $data['rooms'] = $rooms;
+      $data['agent_info'] = $this->Common_Model->agent_info();
+      $this->load->view('frontend/payment',$data);
+    }
+    public function indexOLD() {
       if ($this->session->userdata('agent_id')=="") {
         redirect(base_url());
       }

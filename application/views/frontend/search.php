@@ -308,6 +308,8 @@ $defaultNationality = defaultNationalityGET();
  //        evt.stopPropagation();
  //        tpj('#datepicker3').data('dateRangePicker').open();
  //    });
+
+
  var nextDay = new Date(tpj("#datepicker2").val());
  nextDay.setDate(nextDay.getDate() + 1);
  tpj("#datepicker2").datepicker({
@@ -605,7 +607,7 @@ function currency_change(type){
 											</div>
 										<?php } ?>
 										<div class="col-xs-12 col-md-6 col-md-offset-6">
-											<button type="button" id="search_btn" class="btn-search btn-block">Find Hotels</button>
+											<button type="submit" id="search_btn" class="btn-search btn-block">Find Hotels</button>
 										</div>
 									</div>
 
