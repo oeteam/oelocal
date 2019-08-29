@@ -170,4 +170,28 @@ class Welcome extends CI_Controller {
      }
     }
   }
+  public function tempcurrencyupdate() {
+    $arrContextOptions=array(
+    "ssl"=>array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false,
+      ),
+    "http" =>array(
+        "ignore_errors" => true,
+    ),
+  );
+    $get = file_get_contents("https://api.exchangerate-api.com/v4/latest/AED", false, stream_context_create($arrContextOptions));
+    $get = json_decode($get);
+
+    $this->db->select('*');
+    $this->db->from('currency_update');
+    $query = $this->db->get()->result();
+
+    foreach ($query as $key => $value) {
+      $type = $value->currency_type;
+      if (isset($get->rates->$type)) {
+        $update = $this->Common_Model->added_currency_amount_update($get->rates->$type,$value->id); 
+      }
+    }
+  }
 }

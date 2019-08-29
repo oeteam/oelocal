@@ -1156,7 +1156,11 @@ class Common extends MY_Controller {
     if(isset($get->error)){
      $return['value'] = $get->error;
     } else {
-      $return['value'] =  $get->AED_INR;
+      if ($get!="") {
+         $return['value'] =  $get->AED_INR;
+      } else {
+        $return['value'] = 'failed';
+      }
     }  
     echo json_encode($return);
   }

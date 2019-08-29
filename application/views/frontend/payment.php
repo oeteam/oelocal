@@ -482,9 +482,9 @@ function RoomCombinationinitCheck() {
 function RoomCombinationCheck() {
   var room1 =  $('input[name="Room1"]:checked').val();
   var availableRooms = $('.r-type--room').not(':first-child').find('.availability').closest('li');
-  $.each(availableRooms, function(){
-      $(this).closest('ul').prepend($(this).closest('li'));
-  })
+  // $.each(availableRooms, function(){
+  //     $(this).closest('ul').prepend($(this).closest('li'));
+  // })
   defaultcheck();
   var comAmnt = $('input[type="radio"]:checked').closest('li').find('.com-amnt');
   $("#room_index").val($('input[type="radio"]:checked').closest('li').find('.room_id').val());

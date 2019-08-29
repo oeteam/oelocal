@@ -478,6 +478,7 @@
 	            					$TGCamount[$i-1] = 0;
 
 	            					$RMdiscount = DateWisediscount(date('Y-m-d' ,strtotime($result[$i]['date'])),$_REQUEST['hotel_id'],$RoomId,$contractId,'Room',date('Y-m-d',strtotime($_REQUEST['Check_in'])),date('Y-m-d',strtotime($_REQUEST['Check_out'])),$discountGet['dis']);
+	            					
 	            					$RMdiscountval[$i] = $RMdiscount['discount'];
 	            						$GDis = 0;
 		            					if ($RMdiscount['discount']!=0 && $RMdiscount['General']!=0) { 

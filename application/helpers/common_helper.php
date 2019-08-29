@@ -542,9 +542,13 @@ function currency_type_gc($usr_c,$c_type) {
     if(isset($get->error)){
       return "failed";
     } else {
-      $rate = $get->$resultKey;
-      $converted_amount = $amount*$rate;
-      return number_format((float)$converted_amount, 4, '.', '');
+      if ($get!="") {
+        $rate = $get->$resultKey;
+        $converted_amount = $amount*$rate;
+        return number_format((float)$converted_amount, 4, '.', '');
+      } else {
+        return "failed";
+      }
     }  
   }else{
     return "failed";

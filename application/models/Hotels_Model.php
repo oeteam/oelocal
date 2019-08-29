@@ -1979,10 +1979,11 @@ class Hotels_Model extends CI_Model {
 	        {
 		        foreach ($request['bulk-alt-room_id'] as $key => $value) 
 		        {	
-	    			foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
+	    			// foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
 			        	for($i = 0; $i <= $tot_days; $i++) 
 			        	{
-		        			if ($DayCKvalue==date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'))) {
+			        		if (in_array(date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days')), $_REQUEST['bulk-alt-days'])) {
+		        			// if ($DayCKvalue==date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'))) {
 						       
 						       $result[$i]= date('Y-m-d', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'));
 						      	$this->db->select('*');
@@ -2124,7 +2125,7 @@ class Hotels_Model extends CI_Model {
 						    	}
 						    }
 	        			}
-			    	}
+			    	// }
 		        }
 	        }
 	        $start1_date=date_create($request['bulk-alt-fromDate']);
@@ -5322,10 +5323,12 @@ class Hotels_Model extends CI_Model {
 	        {
 		        foreach ($request['bulk-alt-room_id'] as $key => $value) 
 		        {	
-	    			foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
+	    			// foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
 			        	for($i = 0; $i <= $tot_days; $i++) 
 			        	{
-		        			if ($DayCKvalue==date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'))) {
+			        		if (in_array(date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days')), $_REQUEST['bulk-alt-days'])) {
+			        			
+		        			// if ($DayCKvalue==date('D', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'))) {
 						       
 						       $result[$i]= date('Y-m-d', strtotime($request['bulk-alt-fromDate']. ' + '.$i.'  days'));
 						      	$this->db->select('*');
@@ -5495,7 +5498,7 @@ class Hotels_Model extends CI_Model {
 
 						    }
 	        			}
-			    	}
+			    	// }
 		        }
 	        }
 	        $start1_date=date_create($request['bulk-alt-fromDate']);
@@ -6850,9 +6853,10 @@ class Hotels_Model extends CI_Model {
         $tot_days = $no_of_days->format("%a");
         if (isset($request['bulk-alt-room_id'])) {
 	        foreach ($request['bulk-alt-room_id'] as $key => $value) {	
-	        	foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
+	        	// foreach ($_REQUEST['bulk-alt-days'] as $DayCKkey => $DayCKvalue) {
 		        	for($i = 0; $i <= $tot_days; $i++) {
-		        		if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
+		        		if (in_array(date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days')), $_REQUEST['bulk-alt-days'])) {
+		        		// if ($DayCKvalue==date('D', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'))) {
 		        			
 					       $result[$i]= date('Y-m-d', strtotime($result_data[0]->FromDate. ' + '.$i.'  days'));
 					      	$this->db->select('*');
@@ -6992,7 +6996,7 @@ class Hotels_Model extends CI_Model {
 					    	}
 					    }
 				    }
-			    }
+			    // }
 	        }
         }
     return true;

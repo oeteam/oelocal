@@ -35,7 +35,24 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
             </span>
         </div>
         </br>
-        
+        <?php 
+            foreach ($contract as $key1 => $value1) {
+                // exit();
+                if ($value1->contract_id==$_REQUEST['con_id']) {
+                    $startYear = date('Y' ,strtotime($value1->from_date));
+                    $endYear = date('Y' ,strtotime($value1->to_date));
+                    $designation = $value1->contract_type;
+                    if (date('Y-m-d') > $value1->from_date) {
+                        $sdate = date('Y-m-d');
+                    } else {
+                        $sdate = $value1->from_date;
+                    }
+                     ?>
+                    <input type="hidden" id="from_date" name="from_date" value="<?php echo $sdate ?>">
+                    <input type="hidden" id="to_date" name="to_date" value="<?php echo $value1->to_date ?>">
+                <?php }
+            }
+         ?>
         <div class="bor mar_top_0 ">
             <div class="row">
                 <form method="get" id="allotement_filter" action="<?php echo base_url(); ?>backend/hotels/hotels_stopSale">
@@ -56,20 +73,33 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
                         </div>
                         <div class="form-group col-md-2">
                             <label>Year</label>
-                            <input type="text" class="form-control" name="year" id="year" value="<?php echo isset($_REQUEST['year']) ? $_REQUEST['year'] : date('Y') ?>">
+                            <select name="year" id="year">
+                                <?php
+                                for ($i=$startYear; $i <=$endYear ; $i++) { 
+                                    if (isset($_REQUEST['year']) && $i==$_REQUEST['year']) { ?>
+                                        <option selected="selected" value="<?php echo $i ?>"><?php echo $i ?></option>
+                                    <?php   } else if(date('Y')==$i) { ?>
+                                        <option selected="selected" value="<?php echo $i ?>"><?php echo $i ?></option>
+                                    <?php } else { ?>
+                                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                                    <?php } } ?>
+                            </select>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Month</label>
                             <select name="month"  id="month" onchange="room_change()">
-                                <?php for ($i=01; $i <=12 ; $i++) { 
+                                <?php for ($i=1; $i <=12 ; $i++) { 
                                     if(isset($_REQUEST['month']) && $i==$_REQUEST['month']) {
                                         ?>
-                                    <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php } else if($i==date('m')) { ?>
-                                    <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php } else { ?>
+                                        <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                <?php } else {
+                                    if(!isset($_REQUEST['month']) && $i==date('m')) {?>
+                                        <option selected="" value="<?php echo $i; ?>"><?php echo $i; ?></option>
+
+                                 <?php } else {
+                                 ?>
                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php } } ?>
+                                <?php } } } ?>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
@@ -326,18 +356,18 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
         $('#cancel_policy').trumbowyg();
         $('#imp_notes').trumbowyg();
 
-        $('#year').datepicker({
-            minViewMode: 'years',
-            autoclose: true,
-             format: 'yyyy',
-             orientation: "bottom",
-        });  
+        // $('#year').datepicker({
+        //     minViewMode: 'years',
+        //     autoclose: true,
+        //      format: 'yyyy',
+        //      orientation: "bottom",
+        // });  
         $('#year').change(function() {
            room_change();
         });
-        $('#year').click(function() {
-            $('.datepicker-years').css('display','block');
-        });
+        // $('#year').click(function() {
+        //     $('.datepicker-years').css('display','block');
+        // });
     // });
 </script>
 <script type="text/javascript">
