@@ -140,7 +140,7 @@
 					<span>Nationality : <?php echo NationalityIduseGetName($view[0]->nationality) ?></span>
 					<?php
 					 if ($view[0]->boardName!="") { ?>
-						<br><span>Board : <?php echo $view[0]->boardName ?></span>
+						<!-- <br><span>Board : <?php echo $view[0]->boardName ?></span> -->
 					<?php } ?>
 				</div>
 			</div>
@@ -257,7 +257,7 @@
 					?>
                 	<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
 						<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc; ">
-    						<h3>Booking Amount Breakup - <?php echo $view[0]->contract_id ?>
+    						<h3>Booking Amount Breakup 
     						<span class="pull-right" style="font-size: 18px; text-transform: capitalize;">progress : <?php if ($view[0]->booking_flag==0) { ?>
 							<span class="text-danger">Rejected</span>
 							<?php } else if($view[0]->booking_flag==1) { ?><span class="text-success">Success</span><?php } else if($view[0]->booking_flag==2) { ?><span class="label label-warning">Pending</span> <?php } else if($view[0]->booking_flag==3) { ?><span class="text-danger">Cancelled</span> <?php } else if($view[0]->booking_flag==4) { ?><span class="text-danger">Accepted Pending</span> <?php } else if($view[0]->booking_flag==5) { ?><span class="text-danger">Cancellation Pending</span> <?php } else if($view[0]->booking_flag==8) { ?><span class="label label-warning">ON Request</span><?php } ?></span>
@@ -282,21 +282,21 @@
 					        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
 					        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
 					        $RequestType = explode(",", $view[0]->RequestType);				        
-					        for ($i=1; $i <= $book_room_count; $i++) {
-					        	$varIndividual = 'Room'.$i.'individual_amount';
-					        	if(isset($amenddata[0]->$varIndividual)&&$amenddata[0]->$varIndividual!="") {
+					        
+					       //print_r($amendamount);exit;
+							$boardName = explode(",", $view[0]->boardName);
+							$contract_id = explode(",", $view[0]->contract_id);
+
+							for ($i=1; $i <= $book_room_count; $i++) {
+			        			$varIndividual = 'Room'.$i.'individual_amount';
+			        			if(isset($amenddata[0]->$varIndividual)&&$amenddata[0]->$varIndividual!="") {
 					        		$amendamount[$i-1] = explode(",",$amenddata[0]->$varIndividual);
 					        	}
-					        }
-					       //print_r($amendamount);exit;
-							for ($i=1; $i <= $book_room_count; $i++) {
 								foreach ($amenddata as $key => $value) {
 									if ( $value->status==1) {
-						        		$varIndividual = 'Room'.$i.'individual_amount';
 										$amendmentarr[$i-1][$key] = explode(",",$value->$varIndividual);
 									}
 								}
-
 								if (!isset($ExtrabedDiscount[$i-1])) {
 									$ExtrabedDiscount[$i-1] = 0;
 								}
@@ -348,17 +348,22 @@
 								if($view[0]->$varIndividual!="") {
 									$individual_amount = explode(",", $view[0]->$varIndividual);
 								}
-
 								$varIndividualDis = 'Room'.$i.'Discount';
 								if($view[0]->$varIndividual!="") {
 									$individual_discount = explode(",", $view[0]->$varIndividualDis);
 								}
 
 								$RoomName = roomnameGET($room_id,$view[0]->hotel_id);
+								if (!isset($boardName[$i-1])) {
+									$boardName[$i-1] = $boardName[0];
+								}
+								if (!isset($contract_id[$i-1])) {
+									$contract_id[$i-1] = $contract_id[0];
+								}
 							 ?>
 							<div class="row payment-table-wrap">
 			            		<div class="col-md-12">
-			            			<h4 class="room-name">Room <?php echo $i; ?>  <small style="text-transform: none;font-weight: bolder;"><?php echo isset($RequestType[$i-1]) ? ' - '.$RequestType[$i-1] : '' ?></small></h4>
+			            			<h4 class="room-name">Room <?php echo $i; ?> (<?php echo $contract_id[$i-1].'-'.$boardName[$i-1] ?>)  <small style="text-transform: none;font-weight: bolder;"><?php echo isset($RequestType[$i-1]) ? ' - '.$RequestType[$i-1] : '' ?></small></h4>
 			            			<span class="pull-right">
 			            				<?php if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]!="" && $DisTypExplode[$i-1]!="stay&pay") { ?>
 			            					<small class="text-right red stay-pay-tag"><?php echo $discountCode[$i-1] ?> - <?php echo $DisTypExplode[$i-1] ?></small>
@@ -423,7 +428,7 @@
 		            						<tr>
 			            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
 			            					<td><?php echo $RoomName ?></td>
-			            					<td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
+			            					<td style="text-align: center"><?php echo $boardName[$i-1]; ?></td>
 			            					<td style="text-align: right">
 	            								<p class="new-price">
 		            								<?php 

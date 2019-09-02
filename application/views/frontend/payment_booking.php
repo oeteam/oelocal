@@ -440,9 +440,11 @@
 						  }
         				// stay and pay dicount end 
 
+						$boardName = $this->Payment_Model->contractBoardCheck($contractId);
 					?>
 					<input type="hidden" name="Room<?php echo $RAkey+1?>" value="<?php echo $contractId.'-'.$RoomId ?>">
-					<input type="hidden" name="RoomIndex[]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
+					<input type="hidden" name="RoomIndex[<?php echo $RAkey ?>]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
+					<input type="hidden" name="BoardName[<?php echo $RAkey ?>]" value="<?php echo $boardName ?>">
 	            	<div class="row payment-table-wrap">
 	            		<div class="col-md-12">
 	            			<h4 class="room-name">Room <?php echo $RAkey+1 ?></h4>
@@ -461,7 +463,8 @@
 	            					</tr>
 	            				</thead>
 	            				<tbody>
-	            					<?php for ($i=1; $i <=$tot_days ; $i++) {
+	            					<?php 
+	            					for ($i=1; $i <=$tot_days ; $i++) {
             						$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
             						$result[$i]['roomName'] = roomnameGET($RoomId,$_REQUEST['hotel_id']);
 	            					$FextrabedAmount[$i-1]  = 0;

@@ -856,19 +856,22 @@ class Common extends MY_Controller {
        $cTime = new DateTime();
        $cTime->setTimestamp($fileInfo->getCTime());
        $fileInfo->getFileName() . " file Created " . $cTime->format('Y-m-d h:i:s') .  "<br/>\n";
-       $data[] = array(
-          $i,
-          '<a href="'.base_url().'/backups/'.$fileInfo->getFileName().'">'.$fileInfo->getFileName().'</a>',
-          $size,
-          $cTime->format('Y-m-d h:i:s'),
-          $delete
-       );
+       if ($fileInfo->getFileName()!='index.html') {
+         $data[] = array(
+            $i,
+            '<a href="'.base_url().'/backups/'.$fileInfo->getFileName().'">'.$fileInfo->getFileName().'</a>',
+            $size,
+            $cTime->format('Y-m-d h:i:s'),
+            '<a href="#" onclick="deleteBackupDB(\''.$fileInfo->getFileName().'\')" class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>'
+
+         );
+       }
        $i++;
     }
     $output = array(
           "draw" => $draw,
-           "recordsTotal" => count($files),
-           "recordsFiltered"=> count($files),
+           "recordsTotal" => count($data),
+           "recordsFiltered"=> count($data),
            "data" => $data
       );
 

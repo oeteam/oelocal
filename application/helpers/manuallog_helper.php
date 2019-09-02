@@ -11,5 +11,10 @@ $last_action = $ci->session->userdata('last_action');
 // }
 if ($sess_id=="" && $sess_email=="") {
 	redirect(base_url()."backend");
+} else {
+	$dd =  $ci->db->query('select id from hotel_tbl_user where id = '.$sess_id.' and Del_Flag=1')->result();
+	if (count($dd)==0) {
+		redirect(base_url()."backend");
+	}
 }
 

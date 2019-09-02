@@ -585,7 +585,7 @@ btn.on('click', function(e) {
   var start = new Date($("#startTime").val());
   var maxTime = (30*60)*1000;
   var timeoutVal = Math.floor(maxTime/100);
-  animateUpdate();
+  // animateUpdate();
 
   function updateProgress(percentage) {
     $("#book-progress").val((100-percentage));
@@ -737,8 +737,8 @@ $(document).ready(function() {
       <div class="col-sm-12 mt25 booking-summary">
             <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px">
               <h3 class="text-green">Booking Summary <span class="right text-right booking-timer">
-                  <small>Time Left : <b id="timeLeft">30:18</b></small>
-                  <progress id="book-progress" value="98" max="100"></progress>
+                  <small class="hide">Time Left : <b id="timeLeft">30:18</b></small>
+                  <progress class="hide" id="book-progress" value="98" max="100"></progress>
                 </span>
               </h3>
 
@@ -786,7 +786,7 @@ $(document).ready(function() {
                     </div>
 
                   </div>
-        <input type="hidden" id="startTime" value="<?php echo date('D M d Y H:i:s',strtotime($_REQUEST['token'])); ?>">
+        <input type="hidden" id="startTime" value="<?php echo isset($_REQUEST['token']) ?  date('D M d Y H:i:s',strtotime($_REQUEST['token'])) : date('D M d Y H:i:s'); ?>">
 
               
             <?php foreach ($_REQUEST['adults'] as $key => $value) { ?>

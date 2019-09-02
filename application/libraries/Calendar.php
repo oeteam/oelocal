@@ -145,7 +145,8 @@ class Calendar {
       $ci->db->select('book_room_count');
       $ci->db->from('hotel_tbl_booking');
       $ci->db->where('hotel_id',$hotel_id);
-      $ci->db->where('room_id',$room_id);
+      $ci->db->where('FIND_IN_SET("'.$room_id.'",room_id) > 0');
+      $ci->db->where('FIND_IN_SET("'.$con_id.'", contract_id) > 0 ');
       $ci->db->where('"'.$check_date.'" >= check_in');
       $ci->db->where('"'.$check_date.'" < check_out');
       $ci->db->where('booking_flag !=',0);

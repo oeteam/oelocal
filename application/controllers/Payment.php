@@ -109,36 +109,36 @@ class Payment extends MY_Controller {
         if (isset($_REQUEST['board'])) {
           $data['board'] = $this->Payment_Model->get_PaymentConfirmboard_supplement($_REQUEST);
         }
-      $contractBoardCheck = $this->Payment_Model->contractBoardCheck($_REQUEST['contract_id']);
-      $data['boardName'] = $contractBoardCheck;
-      if ($contractBoardCheck=="RO") {
-        $Breakfast = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Breakfast');
-        if ($Breakfast!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Breakfast';
-        }
-        $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-        if ($Lunch!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Lunch';
-        }
-        $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
-        if ($Dinner!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Dinner';
-        }
-      } else if ($contractBoardCheck=="BB") {
-        $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-        if ($Lunch!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Lunch';
-        }
-        $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
-        if ($Dinner!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Dinner';
-        }
-      } else if ($contractBoardCheck=="HB") {
-        $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-        if ($Lunch!=false) {
-          $data['additionalfoodrequest']['board'][] = 'Lunch';
-        }
-      } 
+      // $contractBoardCheck = $this->Payment_Model->contractBoardCheck($_REQUEST['contract_id']);
+      // $data['boardName'] = $contractBoardCheck;
+      // if ($contractBoardCheck=="RO") {
+      //   $Breakfast = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Breakfast');
+      //   if ($Breakfast!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Breakfast';
+      //   }
+      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+      //   if ($Lunch!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
+      //   }
+      //   $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
+      //   if ($Dinner!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Dinner';
+      //   }
+      // } else if ($contractBoardCheck=="BB") {
+      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+      //   if ($Lunch!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
+      //   }
+      //   $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
+      //   if ($Dinner!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Dinner';
+      //   }
+      // } else if ($contractBoardCheck=="HB") {
+      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+      //   if ($Lunch!=false) {
+      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
+      //   }
+      // } 
       if ($this->session->userdata('Breakfast')!="") { 
        $data['Breakfast'] = $this->Payment_Model->supplementcheck($this->session->userdata('Breakfast'));
       } 
@@ -3887,13 +3887,6 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       $normal_price = array_sum($data['per_day_amount']);
       $agent_currency_type = $this->Payment_Model->agent_currency_type();
       
-      // Contract Board name fetch start 
-      $this->db->select('board');
-      $this->db->from('hotel_tbl_contract');
-      $this->db->where('contract_id',$data['contract_id']);
-      $contract_board = $this->db->get()->result();
-      // Contract Board name fetch end 
-
       // Traveller details declaration start
 
         $Rwadults = implode(",", $data['reqadults']);
@@ -4014,8 +4007,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'bk_contact_lname' => $data['last_name'][0],
               'bk_contact_email' => $data['email'],
               'bk_contact_number' => $data['contact_num'],
-              'contract_id' => $data['contract_id'],
-              'board' => $contract_board[0]->board,
+              'contract_id' => implode(",", $ContractID),
+              'board' => implode(",", $data['BoardName']),
               'Rwadults' => $Rwadults,
               'Rwchild' => $RwChild,
               'Room1ChildAge' => $reqroom1childAge,

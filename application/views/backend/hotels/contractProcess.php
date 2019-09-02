@@ -1004,6 +1004,7 @@
                                    return xhr;
                                 },
                                 type: 'POST',
+                                dataType: "json",
                                     url: base_url+'backend/hotels/allotementBlkupdate',
                                     data: $('#bulk-update-form').serialize(),
                                     success: function(data){
@@ -1024,6 +1025,10 @@
                                         $(".progress-bar").width("100%");
                                         $(".percent").text("100%");
                                         $(".blk-btn-progress").removeClass('hide')
+                                    },
+                                    error: function() {
+                                      $(".progress-bar").css("background","red");
+                                      alert("Other Season upload Failed");
                                     }
                               });
                     }
@@ -1081,6 +1086,7 @@
                                        return xhr;
                                     },
                                     type: 'POST',
+                                    dataType: "json",
                                     url: base_url+'backend/hotels/allotementBlkupdatewizard?season='+$(v).val(),
                                     data: $('#bulk-update-form').serialize(),
                                     success: function(data){
@@ -1103,7 +1109,12 @@
                                         if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
                                             $(".blk-btn-progress").removeClass('hide')
                                         }
+                                    },
+                                    error: function() {
+                                      $(".progress-bar:eq("+i+")").css("background","red");
+                                      alert($(v).text()+" upload failed");
                                     }
+
                                 });
                             });
                         } else {

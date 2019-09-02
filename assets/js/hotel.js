@@ -2391,25 +2391,29 @@ $("#bulk-allotement").click(function() {
                                    return xhr;
                                 },
                                 type: 'POST',
-                                    url: base_url+'backend/hotels/RoomwiseBulkUpdate',
-                                    data: $('#bulk-update-form').serialize(),
-                                    success: function(data){
-                                        //Do something on success
-                                        console.log("end");
-                                        $(".progress-bar").width("100%");
-                                        $(".percent").text("100%");
-                                        $(".progress-bar").animate({
-                                                width: '100%'
-                                            }, {
-                                            duration: 5000,
-                                            easing: "linear",
-                                            step: function (x) {
-                                            percentText = 100;
-                                              $(".progress-bar").width(percentText + "%");
-                                              $(".percent").text(percentText + "%");
-                                            }
-                                        });
-                                        $(".blk-btn-progress").removeClass('hide')
+                                dataType: "json",
+                                url: base_url+'backend/hotels/RoomwiseBulkUpdate',
+                                data: $('#bulk-update-form').serialize(),
+                                success: function(data){
+                                    //Do something on success
+                                    $(".progress-bar").width("100%");
+                                    $(".percent").text("100%");
+                                    $(".progress-bar").animate({
+                                            width: '100%'
+                                        }, {
+                                        duration: 5000,
+                                        easing: "linear",
+                                        step: function (x) {
+                                        percentText = 100;
+                                          $(".progress-bar").width(percentText + "%");
+                                          $(".percent").text(percentText + "%");
+                                        }
+                                    });
+                                    $(".blk-btn-progress").removeClass('hide')
+                                },
+                                    error: function() {
+                                      $(".progress-bar").css("background","red");
+                                      alert("Other Season upload Failed");
                                     }
                               });
 
@@ -2456,6 +2460,7 @@ $("#bulk-allotement").click(function() {
                                    return xhr;
                                 },
                                 type: 'POST',
+                                dataType: "json",
                                     url: base_url+'backend/hotels/RoomwiseBulkUpdateWizard?season='+$(v).val(),
                                     data: $('#bulk-update-form').serialize(),
                                     success: function(data){
@@ -2476,10 +2481,13 @@ $("#bulk-allotement").click(function() {
                                           });
 
                                         blk_push.push(1);
-                                        console.log(blk_push.length);
                                         if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
                                             $(".blk-btn-progress").removeClass('hide')
                                         }
+                                    },
+                                    error: function() {
+                                      $(".progress-bar:eq("+i+")").css("background","red");
+                                      alert($(v).text()+" upload failed");
                                     }
                               });
                             });
