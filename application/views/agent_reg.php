@@ -433,7 +433,7 @@ $data = title();
             </div>
           </div>                              
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 hide">
           <div class="form-horizondal">
             <div class="col-md-12">
               <div id="captureSignature" class="" style="width: 100%;height: 200px;"></div>
@@ -526,21 +526,21 @@ $data = title();
 </div>
 <textarea id="signatureJSON" class="hide" name="signature"></textarea>
 </form>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
-<link type="text/css" href="http://keith-wood.name/css/jquery.signature.css" rel="stylesheet"> 
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+<!-- <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script> -->
+<!-- <link type="text/css" href="http://keith-wood.name/css/jquery.signature.css" rel="stylesheet">  -->
 
 <!-- End of Container  -->
 <script type="text/javascript">
-  $(document).ready(function() {
-      $('#captureSignature').signature({syncField: '#signatureJSON'}); 
-        var syncFormat = 'PNG'; 
-        $('#captureSignature').signature('option', 'syncFormat', syncFormat); 
+  // $(document).ready(function() {
+  //     $('#captureSignature').signature({syncField: '#signatureJSON'}); 
+  //       var syncFormat = 'PNG'; 
+  //       $('#captureSignature').signature('option', 'syncFormat', syncFormat); 
         
-        $('.clearSign').click(function() { 
-          $('#captureSignature').signature('clear'); 
-        }); 
-   })
+  //       $('.clearSign').click(function() { 
+  //         $('#captureSignature').signature('clear'); 
+  //       }); 
+  //  })
 </script>
 <!-- Javascript  -->
 <script src="<?php echo static_url(); ?>skin/assets/js/initialize-loginpage.js"></script>

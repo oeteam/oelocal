@@ -9,7 +9,7 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	   <title><?php echo $data[0]->Title ?></title>
-       <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
+       <link rel="shortcut icon" type="image/x-icon" href="<?php echo static_url() ?>assets/images/fav.ico">
         <!-- Bootstrap -->
         <link href="<?php echo static_url(); ?>skin/dist/css/bootstrap.css" rel="stylesheet" media="screen">
         <link href="<?php echo static_url(); ?>skin/assets/css/custom.css" rel="stylesheet" media="screen">

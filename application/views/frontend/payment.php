@@ -1114,7 +1114,7 @@ $(document).ready(function() {
 
         </div>
       </div>
-      <input type="hidden" name="token" value="<?php echo $_REQUEST['token'] ?>">
+      <input type="hidden" name="token" value="<?php echo isset($_REQUEST['token']) ? $_REQUEST['token'] :  date('D M d Y H:i:s'); ?>">
     </form>
   </div>
     <!-- END OF RIGHT CONTENT -->

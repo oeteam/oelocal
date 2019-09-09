@@ -8,7 +8,7 @@ $(document).ready(function() {
       review_get_data(hotel_id);
       average_ratings(hotel_id);
     } else {
-      TBO_available_check();
+      // TBO_available_check();
     }
     
     $('#details_review_add_button').click(function (e) {
@@ -70,7 +70,7 @@ $(document).ready(function() {
             childAgeoptionsMax();
             requestCheck();
           } else {
-            TBO_available_check();
+            // TBO_available_check();
           }
           
      }
@@ -88,7 +88,7 @@ $(document).ready(function() {
               childAgeoptionsMax();
               requestCheck();
             } else {
-              TBO_available_check();
+              // TBO_available_check();
             }
           }
       });

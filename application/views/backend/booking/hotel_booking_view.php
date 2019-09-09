@@ -137,7 +137,7 @@
 					<span>Booking Id : <?php echo $view[0]->booking_id ?></span><br>
 					<span>Booking date : <?php echo date('d/m/Y',strtotime($view[0]->booking_date)) ?></span>
 					<br>
-					<span>Nationality : <?php echo NationalityIduseGetName($view[0]->nationality) ?></span>
+					<span>Nationality : <?php echo is_numeric($view[0]->nationality) ? NationalityIduseGetName($view[0]->nationality) : $view[0]->nationality ?></span>
 					<?php
 					 if ($view[0]->boardName!="") { ?>
 						<!-- <br><span>Board : <?php echo $view[0]->boardName ?></span> -->

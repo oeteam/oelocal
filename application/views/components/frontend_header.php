@@ -4,11 +4,11 @@ $data = title();
 ?>
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php echo $data[0]->Title ?></title>
-  <link rel="shortcut icon" href="<?php echo static_url() ?>assets/images/fav.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo static_url() ?>assets/images/fav.ico">
   <!-- Fonts -->  
   <link  href="<?php echo static_url(); ?>agentLoginStyle/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700" rel="stylesheet">
