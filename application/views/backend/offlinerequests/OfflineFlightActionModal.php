@@ -4,6 +4,7 @@
 ?>
 <div class="modal-content modal-content  col-md-6 col-md-offset-3">
   <form id="offlineFlightRequestActionForm" method="post">
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
     <input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>">
     <input type="hidden" name="val" value="<?php echo $_REQUEST['val']; ?>">
   <div class="modal-header">

@@ -795,6 +795,7 @@ $(document).ready(function() {
 	<div class="container">
      <a id="button"></a>
 		<form method="get" name="payment_form" id="payment_form">
+      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 			<div class="col-sm-12 mt25 booking-summary">
 		        <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px">
 		          <h3 class="text-green">Booking Summary <span class="right text-right booking-timer">

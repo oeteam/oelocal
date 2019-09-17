@@ -1473,6 +1473,12 @@ class Common extends MY_Controller {
   public function api_provider() {
     $this->load->view('backend/general/api_provider');
   }
+  public function generateKey() {
+    $hash = md5("Otelseasy".date('Y-m-d H:i:s:u').'production'.time());
+    $data = array('hashkey' => $hash);
+    $this->db->update('hotel_tbl_general_settings',$data);
+    echo json_encode($hash);
+  }
 }
 
 

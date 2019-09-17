@@ -37,6 +37,7 @@
 				            <div class="row">
 					            <div class="col-sm-6">
 					               <form class="form-horizontal" role="form">
+					               	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 			                            <div class="form-group">
 			                                <label class="col-sm-6 col-md-6 col-lg-5" style="color: #000; font-size: 13px;">
 			                                    <i class="fa fa-hotel" style="color: #4caf50;"></i>&nbsp;
@@ -79,6 +80,7 @@
 					            </div>
 					            <div class="col-sm-6">
 					                <form class="form-horizontal" role="form">
+					                	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 			                            <div class="form-group">
 			                                <label class="col-sm-6 col-md-6 col-lg-5" style="color: #000; font-size: 13px;">
 			                                <i class="fa fa-address-book-o" style="color: #4caf50;"></i>&nbsp;
@@ -344,7 +346,7 @@
 						        // if ($DisTypExplode[$i-1]=="" && $view[0]->discountCode!="") {
 						        //   $discountType = 'Discount';
 						        // }
-
+						        print_r($view[0]->$varIndividual);
 								if($view[0]->$varIndividual!="") {
 									$individual_amount = explode(",", $view[0]->$varIndividual);
 								}
@@ -1030,6 +1032,7 @@
 		<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
 			<h5 class="bold">Remarks</h5>
 			<form id="bookingRemarkForm">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 				<input type="hidden" name="bkId" value="<?php echo $_REQUEST['id']  ?>">
 				<textarea id="bookingRemark" name="bookingRemark" class="form-control"></textarea>
 				<div class="row"> 
@@ -1115,6 +1118,7 @@
         		</div>
                 <div class="modal-body" style="height: 300px;">
                 	<form   action="" id="invoice_form1" name="invoice_form1" method="post">
+                		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" name="id" id="idz" value="<?php echo $view[0]->bkid ?>">
                     <input type="hidden" name="hotel_id" id="hotelz_id" value="<?php echo $view[0]->hotel_id ?>">
                     <input type="hidden" name="agent_id" id="agentz_id" value="<?php echo $view[0]->agent_id ?>">
@@ -1199,6 +1203,7 @@
         		</div>
                 <div class="modal-body" style="height: 100px;">
       	            <form   action="" id="invoice_form" name="invoice_form" method="post">
+      	            	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
       	                <div class="col-md-6 form-group">
                           		<input type="hidden" class="form-control" id="booking_invoice_id" name="booking_invoice_id" placeholder="Invoice ID" readonly>
                               <input type="hidden" name="id" id="book_id" value="<?php echo $view[0]->bkid ?>">

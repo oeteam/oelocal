@@ -22,6 +22,7 @@
                         <p>Agent Name : <?php echo $view[0]->AFName.' '.$view[0]->ALName ?></p>
                       </div>
                       <form method="post" id="OfflineVisaRequestForm">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                       <div class="col-md-9">
                         <h4 class="bold">Guest Form</h4>
                         <br>

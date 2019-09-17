@@ -38,6 +38,7 @@
 						</div>
 					</div><br><br>
 					 	<form id="2checkout_form_payment" method="post" action="<?php echo base_url(); ?>gateways/stripe/complete_purchase_xml_booking">
+					 		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					 		<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="<?php echo $publish_key ?>" data-amount="<?php echo preg_replace('[,]','',$total) *100?>" data-name="test" data-description="hotel booking payment" data-locale="auto" data-currency="<?php echo $currency ?>"></script>
 					 		 <input name="token" type="hidden" value="" />
 					 		  <input id="currency" type="hidden" name="currency" value="<?php echo $currency; ?>"/>

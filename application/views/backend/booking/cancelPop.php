@@ -7,6 +7,7 @@
                   <div class="modal-body">
                      
                          <form action="" name="cancel_form" id="cancel_form" method="post" enctype="multipart/form-data">
+                          <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                           <div class="row">
                               <div class="col-md-12 form-group">
                                     <label>Do you Want to Cancel this Booking?</label>

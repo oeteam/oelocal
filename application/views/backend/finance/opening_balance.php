@@ -54,6 +54,7 @@
                                     <br>
                                     <div class="row">
                                         <form method="post" name="opening_bal_form" id="opening_bal_form" >
+                                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                             <input type="hidden" name="bal_id" id="bal_id">
                                         <div class="form-group col-md-12">
                                             <label for="acc_head">Account Head</label>

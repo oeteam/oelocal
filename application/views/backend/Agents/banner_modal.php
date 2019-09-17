@@ -29,6 +29,7 @@
                 <div class="col-xs-5">
                     <span>Active Hotels</span>
                     <form id="hotels_banner_form" method="post">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <input type="hidden" name="id" value="<?php echo $_REQUEST['id'] ?>">
                     <select name="hotels_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>
                     </form>

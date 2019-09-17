@@ -19,6 +19,7 @@
 						</br>
 						<div class="col-md-12">
 							<form method="post" id="creditamountform">
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 						        <div class="row">
 				                    <div class="col-md-6 form-group">
 					                <label>Credit Amount</label>

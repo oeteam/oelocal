@@ -133,6 +133,7 @@
               <!-- Modal content-->
               <div class="modal-content">
                 <form name="company_delt"  id="company_delt" action="<?php echo base_url('backend/finance/copmany_dlete'); ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"></h4><br>

@@ -194,7 +194,8 @@
                 <li class="menu5"><a><i class="fa fa-phone" aria-hidden="true"></i> <span>Contact Info</span></a>
                 </li>
             </ul>
-            <form action="<?php echo base_url('hotelsupplier/add_new_hotel') ?>" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data"> 
+            <form action="<?php echo base_url('hotelsupplier/add_new_hotel') ?>" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
               <input type="hidden" name="room_aminities" id="room_aminities" value="<?php echo isset($view[0]->room_aminities) ? $view[0]->room_aminities : '' ?>">
             <input type="hidden" name="keywords" id="keywords" value="<?php echo isset($view[0]->keywords) ? $view[0]->keywords : '' ?>">
             <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->id) ? $view[0]->id : '' ?>">

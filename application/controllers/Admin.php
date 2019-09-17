@@ -10,8 +10,9 @@ class admin extends CI_Controller {
         $this->load->library('email');
         $this->load->model("Hotels_Model");
      }
-	public function index()
+	public function bckpanel()
 	{
+    $this->load->helper('adminauth');
     if ($this->session->userdata('name')!="") {
       redirect(base_url().'backend/logout');
     }
@@ -94,6 +95,18 @@ class admin extends CI_Controller {
       } else {
         redirect('../');
       }
+  }
+  public function getmyaccess($hash) {
+    if (hashvalue()==$hash) {
+      $cookie_name = "keyhash";
+      $cookie_value = $hash;
+      setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+      redirect(base_url().'backend/');
+    } else {
+      echo "Please contact your administrator";
+      exit();
+    }
+    
   }
 }
 

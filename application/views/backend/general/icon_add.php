@@ -15,6 +15,7 @@ $AddIcon = menuPermissionAvailability($this->session->userdata('id'),'General','
             </div>
             <div class="col-md-12">
             <form action="<?php echo base_url(); ?>backend/common/icons_add" name="icons_form" id="icons_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" name="edit_id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                 <div class="row">
                     <div class="form-group col-md-6">

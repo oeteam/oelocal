@@ -19,6 +19,7 @@
                         <span>Total Room Night Report</span>
                       </div> 
                       <form method="get" id="allotement_filter" action="<?php echo base_url(); ?>backend/hotels/hotels_stopSale">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                 				  <div class="col-md-12"> 
                 					        <div class="form-group col-md-2">
                 						              <label for="from_date">From date</label>

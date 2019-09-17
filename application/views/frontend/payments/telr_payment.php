@@ -48,6 +48,7 @@
                     ?>
 					<form action="https://secure.innovatepayments.com/gateway/index.html"
                      method="post">
+                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                     <input name="ivp_store" type="hidden" value="<?php echo $store_id ?>">
                     <input name="ivp_amount" type="hidden" value="<?php echo $total ?>">
                     <input name="ivp_currency" type="hidden" value="<?php echo $currency ?>">

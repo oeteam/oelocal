@@ -38,6 +38,7 @@
                                 <br>
                                 <div class="row">
                                     <form method="post" name="Voucher_type_form" id="Voucher_type_form" >
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                         <input type="hidden" name="voucher_id" id="voucher_id">
                                     <div class="form-group col-md-12">
                                         <label for="Voucher_name">Name</label>

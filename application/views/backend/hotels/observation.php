@@ -6,6 +6,7 @@
     </div>
     <div class="modal-body">
       <form action="<?php echo base_url(); ?>backend/hotels/hotel_observation_comment_update" method="post" id="observation_form" enctype="multipart/form-data">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
           <input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['id'] ?>">
             <div class="row">
               <div class="form-group col-md-12">

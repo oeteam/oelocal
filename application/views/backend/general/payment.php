@@ -24,6 +24,7 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                             <?php } ?>
                             <div class="table-responsive table-desi">
                                 <form action="<?php echo base_url(); ?>backend/common/currency_amount" name="refresh_form" id="refresh_form" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                 <table class="table table-condensed table-hover" id="currency_list">
                                    <thead>
                                     <tr>
@@ -44,6 +45,7 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                                     <br>
                                     <br>
                                     <form action="<?php echo base_url(); ?>backend/common/new_currency_update" name="add_currency_form" id="add_currency_form" method="post" enctype="multipart/form-data">     
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                         <div class="form-group col-md-12">
                                             <label for="list-title"> Currency Type</label>
                                             <input type="text" class="form-control" name="currency_type" id="currency_type">
@@ -104,6 +106,7 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                             <div class="form-group col-md-6">
                                 <label for="list-title">Currency API</label>
                                 <form action="<?php echo base_url(); ?>backend/common/currencyapi_update" name="currencyapi_form" id="currencyapi_form" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                 <br>
                                     <div class="form-group col-md-12">
                                     <input type="text" class="form-control" name="currency_api" id="currency_api" value="<?php if(isset($view[0]->currency_api)) echo $view[0]->currency_api ?>">

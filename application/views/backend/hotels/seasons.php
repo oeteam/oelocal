@@ -20,6 +20,7 @@
                     </div>
                     <div class="tab-inn">
                         <form id="contractChangeForm" action="<?php echo base_url() ?>backend/hotels/seasons">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                             <input type="hidden" id="hotel_id" name="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
                             <div class="row">
                                 <div class="col-md-3 form-group">

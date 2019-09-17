@@ -318,6 +318,7 @@
 				<div class="size30 dark">Transfers</div>				
 					<!-- CARS TAB -->
 					<form id="TransferSearchForm" >
+						<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					<div class="">
 					<br>
 						<p>Type of Transfer</p>
@@ -431,6 +432,7 @@
 				
 				<div class="line2"></div>
 				<form id="TransferSearchReqForm"  method="get">
+					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					<input type="hidden" name="transfertype" value="<?php echo $_REQUEST['transfertype'] ?>">
 					<input type="hidden" name="location" value="<?php echo $_REQUEST['location'] ?>">
 					<input type="hidden" name="region" value="<?php echo $_REQUEST['region'] ?>">

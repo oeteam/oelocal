@@ -6,6 +6,7 @@
 	 	</div>
 	 	<div class="modal-body">
 	 		<form id="refform" enctype="multipart/form-data"> 
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 	 		 		<input type="hidden" name="id" id="id" value="<?php echo $_REQUEST['hotel_id'] ?>" >
         	 		<input type="hidden" name="contract_id" id="contract_id" value="<?php echo isset($_REQUEST['id']) ? $view[0]->contract_id : '' ?>" >
 	 		 		<div class="row">

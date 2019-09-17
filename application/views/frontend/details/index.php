@@ -316,6 +316,7 @@ $adults = $_REQUEST['adults'] ?>
 					<!-- TAB 2 -->
 					<div id="roomrates" class="tab-pane fade active in">
 						<form id="hotel_booking_form_id" name="hotel_booking_form_id" method="get" action="<?php echo base_url();?>payment">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" name="RequestType" id="RequestType">
 					    <div class="hpadding20">
 							<p class="dark">Your travel rates</p>
@@ -726,6 +727,7 @@ $adults = $_REQUEST['adults'] ?>
 						</div>
 						<div class="wh66percent right offset-0">
 							<form name="review_form" method="post" action="<?php echo base_url('details/review_insert'); ?>" id="review_form">
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 								<input type="hidden" name="hotel_id" value="<?php echo $_REQUEST['search_id'] ?>">
 							<script>
 								//This is a fix for when the slider is used in a hidden div

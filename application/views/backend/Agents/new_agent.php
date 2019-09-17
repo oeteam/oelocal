@@ -111,7 +111,7 @@
                         <h2>Add New Agent</h2>
                         <?php }?> -->
                         <form method="post" action="<?php echo base_url('backend/agents/add_new_agent'); ?>" name="agent_form" id="agent_form" enctype="multipart/form-data"> 
-                            
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                             <span class="opensans dark bold"><h3><b>Personal Details</b></h3></span>
                             <br>
                             <input type="hidden" name="edit_id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">

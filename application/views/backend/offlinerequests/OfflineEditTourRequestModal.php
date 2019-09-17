@@ -24,6 +24,7 @@
 
                       </div>
                       <form method="post" id="OfflineTourRequestForm">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                       <div class="col-md-9">
                         <h4 class="bold">Guest Form</h4>
                         <br>

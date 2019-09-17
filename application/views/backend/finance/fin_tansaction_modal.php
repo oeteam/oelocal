@@ -7,6 +7,7 @@
     </div>
     <div class="modal-body">
       <form method="post" id="update_voucher_entry_form">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
       <div class="row">
         <div class="col-md-6 form-group">
             <label>Voucher Number</label>
@@ -67,6 +68,7 @@
         </div>
         <div class="col-md-12">
           <form method="post" id="update_voucher_account">
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
           <table>
               <thead>
                 <tr>

@@ -65,10 +65,10 @@ $route['events_view/(:num)'] = 'welcome/events_view/$1';
 $route['hotels_view/(:num)'] = 'welcome/hotels_view/$1';
 $route['Agentlogin'] = 'welcome/Agentlogin';
 $route['home'] = 'admin/landingpage';
-$route['backend'] = 'admin';
+$route['backend'] = 'admin/bckpanel';
 $route['hotel_panel'] = 'welcome';
 $route['forgetAgentPassword'] = 'admin/forgetAgentPassword';
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
+$route['getmyaccess/(:any)'] = 'admin/getmyaccess/$1';

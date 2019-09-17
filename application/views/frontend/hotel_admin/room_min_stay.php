@@ -30,6 +30,7 @@ tr:nth-child(even) {
              <span class="text-danger min_stay_error"></span>
         </div>
           <form action="<?php echo base_url(); ?>dashboard/hotel_minimum_stay_update" name="hotel_excel_form[]" id="hotel_minimum_stay_form" method="post" enctype="multipart/form-data">
+          	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
           <input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $this->session->userdata('id') ?>">
             <div class="tab-inn">
                 <div class="table-responsive">

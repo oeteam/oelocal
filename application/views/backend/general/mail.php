@@ -7,6 +7,7 @@ $Mail = menuPermissionAvailability($this->session->userdata('id'),'General','Mai
                 <h2>Mail Settings</h2>
             </div>
             <form action="<?php echo base_url(); ?>backend/common/mail_settings_update" name="mail_settings_form" id="mail_settings_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             </br>
             </br>
             </br>
@@ -78,6 +79,7 @@ $Mail = menuPermissionAvailability($this->session->userdata('id'),'General','Mai
             </form>
             <?php if (count($Mail)!=0 && $Mail[0]->edit==1) { ?>
             <form action="<?php echo base_url(); ?>backend/common/test_mail"  name="test_mail_form" id="test_mail_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="form-group col-md-6">
                        <label for="list-title">Test Mail</label>
                        <input type="text" class="form-control" id="test_mail" name="test_mail">

@@ -34,6 +34,7 @@ tr:nth-child(even) {
              <span class="pull-right "><a  href="<?php echo base_url(); ?>backend/hotels/hotel_rooms?id=<?php echo $_REQUEST['id'] ?>" class="btn-sm btn-primary">Back</a></span>
         </div>
         <form action="<?php echo base_url(); ?>backend/hotels/hotel_excel_update" name="hotel_excel_form[]" id="hotel_excel_form" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
           <input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['id'] ?>">
             <div class="tab-inn">
                 <div class="table-responsive">

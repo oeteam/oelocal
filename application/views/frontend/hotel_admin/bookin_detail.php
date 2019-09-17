@@ -81,6 +81,7 @@
             <div class="modal-content">
                 <div class="modal-body" style="height: 200px;">
       	            <form   action="" id="invoice_form" name="invoice_form" method="post">
+                      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                         <div class="col-md-12 form-group">
                         	<p>Do you want Accept this booking?</p>
                         </div>

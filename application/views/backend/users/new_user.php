@@ -16,6 +16,7 @@
                     </div>
                     <div class="tab-inn">
                         <form method="post" action="<?php echo base_url('backend/users/add_new_user'); ?>" id="user_form" name="user_form" enctype="multipart/form-data"> 
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                             <input type="hidden" name="edit_id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                             <?php if (isset($edit[0]->id)) { ?>
                                 <input type="hidden" name="pass_change" id="pass_change" value="1">

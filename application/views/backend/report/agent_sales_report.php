@@ -9,6 +9,7 @@
                         <span>Agent Sales Report</span>
                     </div>
                     <form method="Post" id="agentSale_filter" name="agentSale_filter">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                         <div class="col-md-2 form-group">
                             <label>Month</label>
                             <select name="month" id="month" >

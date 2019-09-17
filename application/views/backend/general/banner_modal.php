@@ -26,6 +26,7 @@
                     <button type="button" id="undo_redo_redo" class="no-border btn-sm btn-primary btn-block">Redo</button>
                 </div>
                 <form id="hotels_banner_form" method="post">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="col-xs-5">
                         <span>Active Hotels</span>
                         

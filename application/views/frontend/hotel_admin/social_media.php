@@ -24,6 +24,7 @@
 	<div class="row">
     <div class="col-md-12">
        <form action="<?php echo base_url(); ?>backend/hotels/socialmedia_update" name="hotel_log_detail_social" id="hotel_log_detail_social" method="post">
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
           <div class="col-md-12">
             <div class="row">
                 <div class="col-md-2">

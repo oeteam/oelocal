@@ -12,6 +12,7 @@
                 </div>
             </div>
             <form method="post" id="OfflineRequestForm">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             <div class="tab-inn">
               <div class="col-md-12">
                 <div class="col-md-12">

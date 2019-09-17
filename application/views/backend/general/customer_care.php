@@ -5,6 +5,7 @@
                 <h2>Customer Care Details</h2>
             </div>
             <form action="<?php echo base_url(); ?>backend/common/customer_care_update" name="customer_care_form" id="customer_care_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             </br>
             </br>
             </br>

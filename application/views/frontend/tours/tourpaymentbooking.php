@@ -70,7 +70,7 @@
             ?>
 			<div class="col-md-8 pagecontainer2 offset-0">
 			<form method="post" name="payment_form" id="payment_form">
-
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 				<?php if (isset($_REQUEST['mulltiServiceDate'])) { 
 				foreach ($_REQUEST['mulltiServiceDate'] as $key => $value) { ?>
 					<input type="hidden" name="mulltiServiceDate[]" value="<?php echo $value ?>">

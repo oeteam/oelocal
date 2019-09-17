@@ -188,6 +188,7 @@
 		<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc;">
 			<h5 class="bold">Remarks</h5>
 			<form id="bookingRemarkForm">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 				<input type="hidden" name="bkId" value="<?php echo $_REQUEST['id']  ?>">
 				<input type="hidden" name="type" value="tour">
 				<textarea id="bookingRemark" name="bookingRemark" class="form-control"></textarea>

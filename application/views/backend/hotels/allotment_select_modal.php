@@ -6,6 +6,7 @@
     </div>
     <div class="modal-body">
       <form id="contract-policy-form" method="post">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
         <input type="hidden" name="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
         <input type="hidden" name="contract_id" value="<?php echo $_REQUEST['id'] ?>">
         <div class="row">

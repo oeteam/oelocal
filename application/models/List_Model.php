@@ -5126,7 +5126,7 @@ public function loadRequest($action,$arr_value) {
       $this->db->where_in('id',$hotelId);
       $result1 = $this->db->get()->result();
     } else {
-      $result1 = $this->db->query('SELECT COUNT(*) as c,b.* FROM hotel_tbl_booking a inner join hotel_tbl_hotels b on a.hotel_id = b.id group by hotel_id order by c desc limit 6')->result(); 
+      $result1 = $this->db->query('SELECT COUNT(*) as c,b.* FROM hotel_tbl_booking a inner join hotel_tbl_hotels b on a.hotel_id = b.id where b.id in (57,24,36,28,143,38) group by hotel_id limit 6')->result(); 
     }
     return $result1;
   }

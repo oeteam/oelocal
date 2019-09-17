@@ -181,6 +181,7 @@
 					<!-- TAB 2 -->
 					<div id="tourrates" class="tab-pane fade active in">
 						<form id="tour_booking_form_id" name="tour_booking_form_id" method="get" action="<?php echo base_url();?>tour/tourview">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" name="RequestType" id="RequestType">
 					    <div class="hpadding20">
 							<p class="dark"></p>

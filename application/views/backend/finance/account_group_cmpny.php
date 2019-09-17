@@ -110,6 +110,7 @@
                                 </div>
                               </div>
                               <form name="group_update"  id="group_update" action="<?php echo base_url('backend/finance/group_add_update'); ?>" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                 <input type="hidden" name="company_id" value="<?php echo $_REQUEST['id'] ?>">
                                 <input type="hidden" name="group_id" id="g_id" value="">
 

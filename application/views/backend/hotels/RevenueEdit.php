@@ -50,6 +50,7 @@
                     </div>
                     <div class="tab-inn">
                         <form method="post" action="RevenueSubmit" name="RevenueForm" id="RevenueForm" enctype="multipart/form-data"> 
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                             <input type="hidden" name="id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                             <div class="row">
                                 <div class="col-md-6">

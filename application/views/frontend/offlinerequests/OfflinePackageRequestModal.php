@@ -55,6 +55,7 @@
         		<h3>Add offline Package request</h3>
             <hr>
             <form method="post" id="OfflinePackageRequestform">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 		        <input type="hidden" name="id" id="id">
 		        <div class="row">
               <div class="col-md-6 form-group">

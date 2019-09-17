@@ -16,6 +16,7 @@
                                 </div>
                             </div>
                             <form action="<?php echo base_url(); ?>backend/hotels/updating_hotel_details" name="hotel_log_detail" id="hotel_log_detail" method="post">
+                              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

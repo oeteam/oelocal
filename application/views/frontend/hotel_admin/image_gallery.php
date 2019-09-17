@@ -20,6 +20,7 @@
 <div class="row">
   <div class="col-md-12">
     <form action="<?php echo base_url(); ?>dashboard/image_update_hotel" method="post" enctype="multipart/form-data" id="image_gallery_form">
+      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
       <div class="row">
           <div class="box">
               <div class="js--image-preview">

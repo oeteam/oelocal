@@ -12,7 +12,8 @@ $(document).ready(function() {
         	if (response.status == "1") {
             addToast(response.error,response.color);
             // window.setTimeout(function(){
-               $("#login_form").submit();
+            window.location = base_url+"backend/dashboard";
+               // $("#login_form").submit();
             // }, 1000);
         	} else {
         		addToast(response.error,response.color);

@@ -39,6 +39,7 @@
 						</div>
 					</div><br><br>
 					 	<form id="2checkout_form_payment" method="post" action="<?php echo base_url(); ?>gateways/authorize_aim/complete_purchase_xml_booking" id="authorize_form">
+					 		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					 		 <input name="token" type="hidden" value="" />
 					 		  <input id="currency" type="hidden" name="currency" value="<?php echo $currency ?>"/>
 					            <input id="total" type="hidden" name="total" value="<?php echo  preg_replace('[,]','',$total) ?>"/>

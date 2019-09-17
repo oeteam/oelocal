@@ -9,6 +9,7 @@
   <h1>Forget Password</h1>
   <h3>If you have forgotten your password you can reset it here.</h3>
     <form method="post" id="agent_forget_password" name="agent_forget_password">
+      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
       <input type="text" name="agent_code" id="agent_code" placeholder="Enter your Agent Code" required="required" />
       <input type="text" name="email" id="email" placeholder="Enter your registerd Email address" required="required" />
       <input type="hidden" id="existing_mail_check" value="2">

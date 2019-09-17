@@ -45,6 +45,7 @@
             </div>
             <input type="hidden" id="BlackOutHistory" value="<?php echo isset($edit[0]->BlackOut) ? $edit[0]->BlackOut : '' ?>">
             <form action="<?php echo base_url(); ?>backend/tour/addcontract" name="add_contract_form" id="add_contract_form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             </br>
             </br>
             </br>

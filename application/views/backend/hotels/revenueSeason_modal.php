@@ -6,6 +6,7 @@
         </div>
         <div class="modal-body">
             <form method="post" id="RevenueSeason_form">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" name="season_id" id="season_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <div class="row">
                     <div class="form-group col-md-6">

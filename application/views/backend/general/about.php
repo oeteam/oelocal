@@ -5,6 +5,7 @@
                 <h2>About us details</h2>
             </div>
             <form action="<?php echo base_url(); ?>backend/common/about_update" name="about_update_form" id="about_update_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             </br>
             </br>
             </br>

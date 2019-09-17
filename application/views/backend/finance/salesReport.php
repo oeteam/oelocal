@@ -29,6 +29,7 @@
                     <input type="hidden" class="ad_pro" value="0">
                     <input type="hidden" class="ag_pro" value="0">
                     <form method="get" id="bookingReport_filter">
+                      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                   <div class="col-md-12"> 
                                             <div class="form-group col-md-2">
                                                       <label for="from_date">From date</label>

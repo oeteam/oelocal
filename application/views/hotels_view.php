@@ -219,6 +219,7 @@
             </div>
                 <div class="wh66percent right offset-0">
               <form name="review_form" method="post" action="<?php echo base_url('welcome/review_add'); ?>" id="review_form">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                 <input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $view[0]->id ?>">
               <script>
                 $(document).ready(function() {
@@ -290,7 +291,7 @@
                 <textarea class="form-control margtop10" rows="3" name="comment" id="comment"></textarea>
                   <i class="comment_error err_hide"></i>
                 <div class="clearfix"></div>
-                <button type="button" class="btn-search4 margtop20" id="frontend_review_add_button" name="frontend_review_add_button">Submit</button> 
+                <button type="Submit" class="btn-search4 margtop20" id="frontend_review_add_button" name="frontend_review_add_button">Submit</button> 
 
               
                 <br/>
@@ -310,7 +311,14 @@
       
 
       
-
+    <script src="https://www.google.com/recaptcha/api.js?render=6LexO7gUAAAAAA5U3Km_1XDKAEaUkavMMf73xMC0"></script>
+    <script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('6LexO7gUAAAAAA5U3Km_1XDKAEaUkavMMf73xMC0', {action: 'homepage'}).then(function(token) {
+         ...
+      });
+  });
+  </script>
       <script src="<?php echo static_url(); ?>skin/assets/js/jquery-ui.js"></script>
   
     <!-- Bootstrap   -->

@@ -51,6 +51,7 @@
 <body>
     <div class="print-wrapper">
         <form id="form1" runat="server">
+            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             <div class="row">
                 <div class="col-md-12">
                     <!-- INVOICE HEAD -->

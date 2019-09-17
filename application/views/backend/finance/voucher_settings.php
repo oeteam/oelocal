@@ -31,6 +31,7 @@
                     <div class="tab-inn">
                         <div class="table-responsive table-desi custom-switch">
                             <form method="post" id="voucher_settings_form">
+                              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                 <input type="hidden" name="voucher_type_id" id="voucher_type_id">
                             <table class="table table-condensed table-hover" id="voucher_settings_tables">
                                 <thead>

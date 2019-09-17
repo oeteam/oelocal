@@ -48,7 +48,8 @@
 <body>
     <div class="blog-login">
         <div class="blog-login-in">
-            <form method="post" action="<?php echo base_url('backend/dashboard'); ?>" id="login_form"> 
+            <form method="post"  id="login_form"> 
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                 <img src="<?php echo base_url(); ?>assets/images/logo.png" width="150px" alt="" />
                 <div class="row">
                     <div class="form-group col-md-12">

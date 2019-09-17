@@ -11,6 +11,7 @@
                 <input type="hidden" id="agent_markup" value="<?php echo $view[0]->agent_markup ?>">
                 <input type="hidden" id="admin_markup" value="<?php echo $view[0]->admin_markup ?>">
                 <form   action="" id="invoice_form" name="invoice_form" method="post">
+                  <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" name="bookid" id="bookid" value="<?php echo $view[0]->id ?>">
                     <input type="hidden" name="vehicleid" id="vehicleid" value="<?php echo $view[0]->vehicleid ?>">
                     <input type="hidden" name="agent_id" id="agents_id" value="<?php echo $view[0]->agent_id ?>">

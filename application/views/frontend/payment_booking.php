@@ -173,6 +173,7 @@
 				</script>
     	    <?php } ?>
 			<form method="post" name="payment_form" id="payment_form">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 				<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
 				<?php foreach ($_REQUEST['RequestType'] as $key => $value) { ?>
 					<input type="hidden" name="RequestType[]" value="<?php echo $value ?>">

@@ -27,6 +27,7 @@
                     <?php } ?>
                     <div class="bor">
                         <form name="company_add"  id="company_add" action="<?php echo base_url('backend/finance/company_add'); ?>" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label>Select Company :</label>
@@ -170,6 +171,7 @@
               <!-- Modal content-->
               <div class="modal-content">
                 <form name="company_delt"  id="company_delt" action="<?php echo base_url('backend/finance/copmany_dlete'); ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"></h4><br>

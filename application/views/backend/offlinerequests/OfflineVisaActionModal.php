@@ -1,5 +1,6 @@
 <div class="modal-content modal-content  col-md-6 col-md-offset-3" id="confirmModal">
   <form id="offlineVisaRequestActionForm" method="post">
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>

@@ -104,6 +104,7 @@
 					<!-- TAB 2 -->
 					<div id="roomrates" class="tab-pane fade active in">
 						<form id="hotel_booking_form_id" name="hotel_booking_form_id" method="get" action="<?php echo base_url();?>payment">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" name="RequestType" id="RequestType">
 							<input type="hidden" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
 							<input type="hidden" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">

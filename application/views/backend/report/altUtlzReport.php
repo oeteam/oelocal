@@ -19,6 +19,7 @@
                         <span>Allotment utilization Report</span>
                       </div> 
                       <form method="get" id="bookingReport_filter">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                         <input type="hidden" id="hiddenState" value="<?php echo isset($_REQUEST['stateSelect'])?$_REQUEST['stateSelect']:''?>" >
                         <input type="hidden" id="hiddenHotel" value="<?php echo isset($_REQUEST['HotelSelect'])?$_REQUEST['HotelSelect']:''?>" >
                 				  <div class="col-md-12"> 

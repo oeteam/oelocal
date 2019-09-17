@@ -244,6 +244,7 @@
 				</script>
     	    <?php } ?>
 			<form method="get" name="xml_payment_form" id="xml_payment_form">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 				<input type="hidden" name="RequestType" value="<?php echo $_REQUEST['RequestType'] ?>">
 				<input type="hidden" name="sessionID"  value="<?php echo $_REQUEST['sessionID'] ?>">
 				<input type="hidden" name="room_index" value="<?php echo $_REQUEST['room_index'] ?>">

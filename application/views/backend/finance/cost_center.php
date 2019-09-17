@@ -10,6 +10,7 @@
                     
                     <div class="bor">
                         <form name="cost_center_form"  id="cost_center_form" action="<?php echo base_url('backend/finance/cost_center_save'); ?>" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="cost_center">Finance Cost Center :</label>
@@ -65,6 +66,7 @@
               <!-- Modal content-->
               <div class="modal-content">
                 <form name="cost_center_delt"  id="cost_center_delt" action="<?php echo base_url('backend/finance/cost_center_dlete'); ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title"></h4><br>

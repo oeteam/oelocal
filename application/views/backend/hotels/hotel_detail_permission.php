@@ -20,6 +20,7 @@
                     <div class="tab-inn">
                         <div class="table-responsive table-desi custom-switch">
                         	<form method="post" id="permission_settings_form">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                 <input type="hidden" name="hotel_id" id="hotel_id" value="<?php echo $_REQUEST['id'] ?>">
                             <table class="table table-condensed table-hover" id="agent_permission_table1">
                                 <thead>

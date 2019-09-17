@@ -35,6 +35,7 @@ tr:nth-child(even) {
         <br>
         
         <form action="<?php echo base_url(); ?>dashboard/updating_room_rate_details" name="hotel_excel_form[]" id="hotel_excel_form" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             <div class="tab-inn">
                 <div class="table-responsive">
                     <table  id="hotel_room_table_excel1">

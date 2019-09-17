@@ -30,6 +30,7 @@
                         <span> Minimum stay Log </span>
                     </div>
                     <form method="get" id="bookingReport_filter">
+                      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                   <div class="col-md-12"> 
                                             <div class="form-group col-md-2">
                                                       <label for="from_date">From date</label>

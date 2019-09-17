@@ -21,6 +21,7 @@
         </div><br><br> <?php } ?>
       </div>
     <form action="hotel_policy_add_update" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data"> 
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
     <input type="hidden" name="hotel_id" value="<?php echo $hotel_log_id; ?>">
         <div class="bor">
             <div class="row">

@@ -129,6 +129,7 @@ function locationRemove(e) {
                 <span class="pull-right"><a href="<?php echo base_url(); ?>backend/transfer/transfer_contracts" class="btn-sm btn-primary">Back</a></span>
             </div>
             <form action="<?php echo base_url(); ?>backend/transfer/addcontract" name="add_contract_form" id="add_contract_form" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             </br>
             </br>
             </br>

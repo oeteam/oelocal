@@ -45,7 +45,8 @@
         </div>
          </br>
 	    <div class="row" style="margin-top: -8%;">
-	        <form action="add_credit" method="post" id="add_credit" name="add_credit" enctype="multipart/form-data"> 
+	        <form action="add_credit" method="post" id="add_credit" name="add_credit" enctype="multipart/form-data">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">  
 	            <input type="hidden" value="<?php echo isset($_REQUEST['id'])?$_REQUEST['id'] : ''?> " name="agent_id">
 	            <input type="hidden" value="<?php echo $view1[0]->Credit_amount ?>" name="credit">
 	             <div class="form-group col-md-12">

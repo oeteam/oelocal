@@ -76,6 +76,7 @@
 			
 			<div class="col-md-8 pagecontainer2 offset-0">
 			<form method="post" name="payment_form" id="payment_form">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 				<input type="hidden" name="RequestType" value="<?php echo $_REQUEST['RequestType'] ?>">
 				<input type="hidden" name="transfertype" value="<?php echo $_REQUEST['transfertype'] ?>">
 				<input type="hidden" name="nationality" id="nationality" value="<?php echo $_REQUEST['nationality']?>">

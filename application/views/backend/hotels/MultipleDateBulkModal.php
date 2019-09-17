@@ -13,7 +13,7 @@
         <div class="modal-header">
             <div class="modal-body">
                 <form id="DW-bulk-update-form" action="<?php echo base_url() ?>backend/hotels/MultipleDateBulkUpdate" method="post">
-                    
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" name="room_id"  id="room_id" value="<?php echo $_REQUEST['room_id'] ?>">
                     <input type="hidden" name="hotel_id"  id="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
                     <input type="hidden" name="bulk_alt_contract_id" id="bulk_alt_contract_id" value="<?php echo $_REQUEST['contract_id'] ?>">

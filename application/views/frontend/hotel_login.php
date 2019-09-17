@@ -51,6 +51,7 @@
         <div class="login-wrap">
             <img src="<?php echo static_url() ?>skin/images/logo.png" class="login-img" alt="logo"/><br/>
             <form method="post" action="<?php echo base_url('dashboard/hotel_login'); ?>" id="hotel_panel_login">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             <div class="login-c1">
                 <span class="error_msg"></span>
                 <div class="cpadding50">
@@ -97,6 +98,7 @@
     <!-- Modal content-->
     <div class="modal-content">
      <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><img src="<?php echo static_url(); ?>/assets/images/closeall.png" width="20px"> </button>
       </div>

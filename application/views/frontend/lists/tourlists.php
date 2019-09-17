@@ -326,6 +326,7 @@
 					<div class="">
 					<br>
 					<form id="main_tour_search_form" method="get">
+						<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					<input type="hidden" name="cityId"  value="<?php echo $_REQUEST['cityId'] ?>">
 						<input type="hidden" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
 						<input type="hidden" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
@@ -434,6 +435,7 @@
 				
 				<div class="line2"></div>
 				<form name="tempForm" id="tempForm" method="get">
+					<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="cityId" class="cityId" value="<?php echo $_REQUEST['cityId'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">

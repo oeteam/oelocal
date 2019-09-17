@@ -8,6 +8,7 @@
       </div>
       <div class="modal-body">
       	<form id="roomAminitieForm" method="post">
+          <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
       		<input type="hidden" name="id" id="id" value="<?php echo isset($view[0]->id) ? $view[0]->id  : '' ?>">
 	        <div class="row">
 	        	<div class="col-md-12 form-group">

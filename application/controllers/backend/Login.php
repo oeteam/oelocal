@@ -68,6 +68,7 @@ class Login extends MY_Controller {
         echo json_encode($Return);
     }
     public function general_settings() {
+      $this->load->helper('manuallog');
       $data['select']=$this->Common_Model->general_settings_select();
       $Settings = menuPermissionAvailability($this->session->userdata('id'),'General','Settings'); 
       if (count($Settings)!=0 && $Settings[0]->view==1) {

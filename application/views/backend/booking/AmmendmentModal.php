@@ -5,6 +5,7 @@
     </div>
     <div class="modal-body">
       <form id="amendmentForm" method="post"  action="<?php echo base_url() ?>backend/booking/amendmentUpdate" >
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
         <input type="hidden" name="id" value="<?php echo $_REQUEST['id'] ?>">
         <div class="row">
           <?php 

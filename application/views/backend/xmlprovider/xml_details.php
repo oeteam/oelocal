@@ -8,7 +8,7 @@
                         <span> XML Providers </span>
                         <?php $xmlMenu = menuPermissionAvailability($this->session->userdata('id'),'XML Providers',''); 
                         if($xmlMenu[0]->create!=0) { ?>
-                            <span class="pull-right"><a href="<?php echo base_url(); ?>backend/xmlprovider/newprovider" class="btn-sm btn-primary">Add</a></span
+                            <span class="pull-right"><a href="<?php echo base_url(); ?>backend/xmlprovider/newprovider" class="btn-sm btn-primary">Add</a></span>
                         <?php } ?>
                     </div>
                     <div class="clearfix">

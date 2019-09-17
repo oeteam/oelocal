@@ -31,6 +31,7 @@
                  <input type="hidden" id="validateDate" value="<?php echo $validateDate ?>">
       
                 <form   action="" id="invoice_form" name="invoice_form" method="post">
+                  <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <div class="row">
                       <div class="col-md-6 form-group">
                             <input type="hidden" class="form-control" id="booking_invoice_id" name="booking_invoice_id" placeholder="Invoice ID" readonly>

@@ -71,6 +71,7 @@
                           </div>
                         </div><br><br>
                         <form action="" name="amendmentForm" id="amendmentForm" method="post" enctype="multipart/form-data">
+                          <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                           <inpt type="hidden" name="count" id="count" value="<?php echo $count ?>">
                           <input type="hidden" name="noRooms" id="noRooms" value="<?php echo $view['NoOfRooms'] ?>">
                           <input type="hidden" name="xmlbookid" value="<?php echo $view['@attributes']['BookingId'] ?>">

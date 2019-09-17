@@ -20,6 +20,7 @@
                       </div> 
                       <input type="hidden" id="filter" value="2">
                       <form method="get" id="bookingpatternReport_filter" >
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                 				  <div class="col-md-12"> 
                 					        <div class="form-group col-md-2">
                 						              <label for="from_date">From date</label>

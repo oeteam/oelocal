@@ -782,6 +782,7 @@ $(".details").on("click", function( e ) {
   <div class="container">
     <a id="button"></a>
     <form id="roomdataform" name="roomdataform">
+      <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
       <input type="hidden" name="hotel_id"  value="<?php echo $_REQUEST['hotel_id'] ?>">
       <textarea class="hide" name="RoomData" 
        style="display:none;"/>
@@ -789,6 +790,7 @@ $(".details").on("click", function( e ) {
       </textarea>
     </form>
   <form method="get" name="xml_payment_form" id="xml_payment_form">
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
   <div class="col-sm-12 mt25 booking-summary">
         <div class="pagecontainer2 padding30 p-t-0" style="padding-bottom: 10px;">
           <h3 class="text-green">Booking Summary <span class="right text-right booking-timer">

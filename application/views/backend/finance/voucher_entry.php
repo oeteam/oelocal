@@ -10,6 +10,7 @@
                     </div>
                     <div class="tab-inn">
                         <form id="voucher_entry_form" method="post">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-3 form-group">

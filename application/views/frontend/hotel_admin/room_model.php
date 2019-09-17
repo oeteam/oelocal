@@ -8,6 +8,7 @@
         <div class="modal-body">
 <div class="container-fluid">
     <form action="update_new_hotel_room" method="post" id="new_hotel_room_detail_form" name="new_hotel_room_detail_form" enctype="multipart/form-data"> 
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
     <div class="mainformdivreg">
         <div class="col-sm-12">
             <div class="col-sm-12">

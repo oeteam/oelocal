@@ -184,6 +184,7 @@ $(document).ready(function() {
 			<!-- RIGHT CONTENT -->
 			<div class="col-md-8 pagecontainer2 offset-0">
 			<form method="get" name="payment_form" id="payment_form">
+				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 			    <input type="hidden" name="RequestType" value="<?php echo isset($_REQUEST['RequestType']) ? $_REQUEST['RequestType'] : 'Book' ?>">
 				<input type="hidden" name="adults" id="adults" value="<?php echo array_sum($_REQUEST['adults']) ?>">
 				<input type="hidden" name="childs" id="childs" value="<?php echo array_sum($_REQUEST['Child']) ?>">	

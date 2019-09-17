@@ -26,6 +26,7 @@ $CustomerSupport = CustomerSupport();
             </div>
             <div class="footer-search">
                <form action="#">
+                  <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                   <!-- Store Search -->
                   <div class="col-lg-12">
                      <div class="block d-flex">

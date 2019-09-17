@@ -52,6 +52,7 @@
                                <span class="pull-right"><a href="<?php echo base_url(); ?>backend/offlinerequest/tour_requests" class="btn-sm btn-primary">Back</a></span>
             </div>
             <form action="<?php echo base_url(); ?>backend/offlinerequest/OfflineTourRequestSubmit" name="add_tour_requests_form" id="add_tour_requests_form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             </br>
             </br>
             </br>

@@ -34,6 +34,7 @@
                 <div class="col-xs-5">
                     <span>Inactive Agent</span>
                     <form id="agent_permission_form" method="post">
+                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <input type="hidden" name="hotel_id" value="<?php echo $_REQUEST['hotel_id'] ?>">
                         <input type="hidden" name="contract_id" value="<?php echo $_REQUEST['id'] ?>">
                     <select name="agent_to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple"></select>

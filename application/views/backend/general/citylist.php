@@ -31,6 +31,7 @@ $Payment = menuPermissionAvailability($this->session->userdata('id'),'General','
                             <div class="col-md-4">
                                 <div class="form-group col-md-12">
                                     <form id="citylistForm" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                                         <label>Upload excel file</label>
                                          <span class="pull-right mar_left_10"><a href="<?php echo base_url(); ?>uploads/samplecityList.xlsx" ><i class="fa fa-download"></i> (Sample.xlsx*)</a></span>
                                         <input type="file" name="citylist" id="citylist"  onchange="return ValidateFileUpload();"/>

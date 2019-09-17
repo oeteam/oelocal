@@ -62,7 +62,8 @@
     <div class="modal-content">
         <div class="modal-body" style="height: 100px;">
         <p>Do you want delete this contract?</p>
-    <form action="<?php echo base_url(); ?>dashboard/contract_del" id="contract_del" name="contract_del method="post">
+    <form action="<?php echo base_url(); ?>dashboard/contract_del" id="contract_del" name="contract_del" method="post">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
         <input type="hidden" name="id" id="id" value="">
         <button type="submit" id="reject_button" class="ml10 btn btn-danger pull-right">Yes</button>
         <button type="button" data-dismiss="modal" id="reject_button" class="close_but btn btn-primary ml10 pull-right">No</button>

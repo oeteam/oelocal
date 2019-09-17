@@ -25,6 +25,7 @@
 				            <div class="row">
 					            <div class="col-sm-6">
 					               <form class="form-horizontal" role="form">
+					               	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 			                            <div class="form-group">
 			                                <label class="col-sm-6 col-md-6 col-lg-5" style="color: #000; font-size: 13px;">
 			                                    <i class="fa fa-hotel" style="color: #4caf50;"></i>&nbsp;
@@ -357,6 +358,7 @@
 	                <span>Do you want cancel this booking?</span>
 	                <button type="button" class="close" data-dismiss="modal">&times;</button>
 	                <form   action="" id="invoice_form1" name="invoice_form1" method="post">
+	                	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 	                    <input type="hidden" name="id" id="idz" value="<?php echo $view[0]->bookid ?>">
 	                    <input type="hidden" name="tourz_id" id="tourz_id" value="<?php echo $view[0]->tour_id ?>">
 	                    <input type="hidden" name="agent_id" id="agentz_id" value="<?php echo $view[0]->agent_id ?>">
@@ -422,6 +424,7 @@
 	                <span>Do you want Accept this booking?</span>
 	                <button type="button" class="close" data-dismiss="modal">&times;</button>
 	                <form   action="" id="invoice_form" name="invoice_form" method="post">
+	                	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 	                	<div class="col-md-6 form-group">
                   		<input type="hidden" class="form-control" id="booking_invoice_id" name="booking_invoice_id" placeholder="Invoice ID" readonly>
                         <input type="hidden" name="id" id="book_id" value="<?php echo $view[0]->bookid ?>">

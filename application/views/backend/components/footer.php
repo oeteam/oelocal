@@ -10,6 +10,7 @@
           </div>
           <div class="modal-footer">
             <form action="<?php echo base_url(); ?>backend/" class="delete_id" id="delete_form">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" id="delete_id" name="delete_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <button type="button" onclick="commonDelete();" class="waves-effect waves-light btn-sm btn-danger pull-right">Delete</button>
             </form>
@@ -27,6 +28,7 @@
           </div>
           <div class="modal-footer">
             <form action="<?php echo base_url(); ?>backend/" class="delete_id" id="delete_form">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" id="delete_id" name="delete_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <button type="button" onclick="commonDelete();" class="waves-effect waves-light btn-sm btn-danger pull-right">Delete</button>
             </form>
@@ -44,7 +46,7 @@
           </div>
           <div class="modal-footer">
             <form action="<?php echo base_url(); ?>backend/Hotels/delete_hotel" id="delete_formhotel" class="delete_id" enctype="multipart/form-data">
-
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" id="delete_id" name="delete_id" class="delete_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <button type="button" onclick="blockHotel();"  class="waves-effect waves-light btn-sm btn-danger pull-right">Block</button>
             </form>
@@ -62,6 +64,7 @@
           </div>
           <div class="modal-footer">
             <form action="<?php echo base_url(); ?>" id="delete_formhotel" class="delete_id" enctype="multipart/form-data">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" name="agent_id" id="agent_id">
                 <input type="hidden" name="request_id" id="request_id">
                 <button type="button"  class="waves-effect waves-light btn-sm btn-danger pull-right" onclick="accept_request()">Accept</button>
@@ -103,7 +106,7 @@
           </div>
           <div class="modal-footer">
             <form action="<?php echo base_url(); ?>backend/Hotels/delete_hotel" id="delete_formhotel" enctype="multipart/form-data">
-
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="text" id="delete_id" name="delete_id" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : '' ?>">
                 <button type="submit"  class="waves-effect waves-light btn-sm btn-danger pull-right">Delete</button>
             </form>

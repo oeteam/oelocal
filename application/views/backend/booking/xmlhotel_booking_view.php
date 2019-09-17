@@ -28,6 +28,7 @@
 				            <div class="row">
 					            <div class="col-sm-6">
 					               <form class="form-horizontal" role="form">
+					               	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 			                            <div class="form-group">
 			                                <label class="col-sm-6 col-md-6 col-lg-5" style="color: #000; font-size: 13px;">
 			                                    <i class="fa fa-hotel" style="color: #4caf50;"></i>&nbsp;
@@ -52,6 +53,7 @@
 					            </div>
 					            <div class="col-sm-6">
 					                <form class="form-horizontal" role="form">
+					                	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
 			                            <div class="form-group">
 			                                <label class="col-sm-6 col-md-6 col-lg-5" style="color: #000; font-size: 13px;">
 			                                <i class="fa fa-address-book-o" style="color: #4caf50;"></i>&nbsp;

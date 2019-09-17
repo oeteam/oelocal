@@ -32,6 +32,7 @@
 					<span class="size16 bold fontstyl">Personal details</span>
 					<div class="line2"></div>
                     <form name="profile_form"  id="profile_form" action="<?php echo base_url('profile/profile_update'); ?>" method="post" enctype="multipart/form-data">
+                    	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 					<div class="col-md-12 offset-0 per-details">
 						<div class="row">
 							<div class="col-md-12 ">
@@ -367,7 +368,7 @@
 				<div class="tab-pane" id="password">
 					<div class="padding40">
 						<form name="change_password_form"  id="change_password_form" action="<?php echo base_url('profile/password_update'); ?>" method="post">
-							
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<span class="dark size18">Change password</span>
 							<div class="line4"></div>
 							<span class="password_error err_hide"></span></br>

@@ -47,6 +47,7 @@ $data = title();
     </div>
   </div>
   <form method="post" id="agent_reg" enctype="multipart/form-data">
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
    <input type="hidden" id="existing_mail_check" value="2">
    <div class="container-fluid">
     <div class="mainformdivreg">

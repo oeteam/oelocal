@@ -2,8 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 function email_validation($mail) {
-  $ci =& get_instance();
-    $query = $ci->db->query("Select Email from hotel_tbl_agents where Email= '".$mail."'");
+    $ci =& get_instance(); 
+    $sql = "Select Email from hotel_tbl_agents where Email= ?"; 
+    $query = $ci->db->query($sql, array($mail));
     $data = $query->result();
     if(count($data) ==0) {
       return 1;
@@ -12,8 +13,10 @@ function email_validation($mail) {
     }
 }
 function forget_email_validation($mail) {
-  $ci =& get_instance();
-    $query = $ci->db->query("Select Email from hotel_tbl_user where Email= '".$mail."'");
+    $ci =& get_instance();
+    $sql = "Select Email from hotel_tbl_user where Email= ?"; 
+    $query = $ci->db->query($sql, array($mail));
+
     $data = $query->result();
     if(count($data) ==0) {
       return 1;
@@ -22,14 +25,15 @@ function forget_email_validation($mail) {
     }
 }
 function user_email_validation($mail) {
-  $ci =& get_instance();
-    $query = $ci->db->query("Select Email from hotel_tbl_user where Email= '".$mail."'");
-    $data=$query->result();
-    if(count($data)==0) {
-      return 1;
-    } else {
-      return 0;
-    }
+    $ci =& get_instance();
+	$sql = "Select Email from hotel_tbl_user where Email= ?"; 
+	$query = $ci->db->query($sql, array($mail));
+	$data=$query->result();
+	if(count($data)==0) {
+	  return 1;
+	} else {
+	  return 0;
+	}
     // print_r($data);
     // exit();
 }
@@ -4821,4 +4825,13 @@ function hotelnameGet($id) {
   $query=$ci->db->get();
   $final =  $query->result();
   return $final[0]->hotel_name;
+}
+function hashvalue() {
+  $ci =& get_instance();
+  $ci->db->select('hashkey');
+  $ci->db->from('hotel_tbl_general_settings');
+  $ci->db->where('id',1);
+  $query=$ci->db->get();
+  $final =  $query->result();
+  return $final[0]->hashkey;
 }

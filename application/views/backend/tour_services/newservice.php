@@ -34,6 +34,7 @@
                 <span class="pull-right"><a href="<?php echo base_url(); ?>backend/tour/tour_services" class="btn-sm btn-primary">Back</a></span>
             </div>
             <form action="<?php echo base_url(); ?>backend/tour/addservice" name="add_service_form" id="add_service_form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
             </br>
             </br>
             </br>

@@ -15,7 +15,8 @@
                     <div class="clearfix"></div>
                     <br>
                     <div class="tab-inn">
-                        <form method="post" id="role_form" action="<?php echo base_url() ?>backend/Common/RoleDetails" name="role_form" enctype="multipart/form-data">        
+                        <form method="post" id="role_form" action="<?php echo base_url() ?>backend/Common/RoleDetails" name="role_form" enctype="multipart/form-data">      
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">  
                             <div class="col-sm-12">
                                 <div class="row">
                                     <div class="form-group col-md-4" style="margin-left: 15px;">

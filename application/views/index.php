@@ -50,7 +50,8 @@ $Hotelsbanner = Hotelsbanner();
                            <div class="tab-content">
                               <div id="Agentlogin" class="tab-pane fade in active register">
                                  <div class="container-fluid">
-                                    <form  method="post" action="<?php echo base_url('hotels'); ?>" id="front_login">
+                                    <form  method="post" action="<?php echo base_url('hotels'); ?>" id="front_login" autocomplete="off">
+                                       <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                        <div class="row">
                                           <div class="row">
                                              <div class="col-xs-12 col-sm-12 col-md-12">
@@ -121,7 +122,8 @@ $Hotelsbanner = Hotelsbanner();
                                  <div id="SupplierLogin" class="tab-pane fade">
                                     <div class="container-fluid">
                                        <div class="row">
-                                          <form method="post" action="<?php echo base_url('dashboard/hotel_panel'); ?>" id="hotel_panel_login">
+                                          <form method="post" action="<?php echo base_url('dashboard/hotel_panel'); ?>" id="hotel_panel_login" autocomplete="off">
+                                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                              <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                                    <div class="form-group">
@@ -229,6 +231,7 @@ $Hotelsbanner = Hotelsbanner();
                               <h3 class="signup-title">The hottest hotel deals.Straight to your inbox</h3>
                               <div class="advance-search">
                                  <form  method="post" action="" >
+                                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                     <div class="row">
                                        <!-- Store Search -->
                                        <div class="col-lg-9">
@@ -290,7 +293,8 @@ $Hotelsbanner = Hotelsbanner();
                  <div class="col-md-10 col-md-offset-1" style="margin-top: 3%">
                    <!-- Modal content-->
                    <div class="modal-content">
-                    <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
+                    <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add" autocomplete="off"> 
+                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                      <div class="modal-header">
                        <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo static_url(); ?>/assets/images/closeall.png" width="20px"> </button>
                     </div>

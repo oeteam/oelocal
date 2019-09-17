@@ -13,6 +13,7 @@
             <input type="hidden" name="contract_end" id="contract_end" value="<?php echo isset($contract_period[0]->to_date) ? $contract_period[0]->to_date : '' ?>" >
         <div class="row" style="margin-top: -8%;">
             <form  method="post" id="update_closeout_hotel" name="add_close_hotel" enctype="multipart/form-data"> 
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" value="<?php echo isset($_REQUEST['id']) ? $_REQUEST['id'] : ''  ?>" name="id">
                     <input type="hidden" value="<?php echo $_REQUEST['hotel_id'] ?>" name="hotel_id">
                     <input type="hidden" value="<?php echo $_REQUEST['contract_id'] ?>" name="contract_id">

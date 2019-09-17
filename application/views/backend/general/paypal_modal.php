@@ -1,5 +1,6 @@
 <div class="modal-content modal-content  col-md-6 col-md-offset-3">
   <form id="paypal_test_action" method="post" action="<?php echo base_url(); ?>backend/common/TestPaymentGateway">
+    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
    <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
   </div>

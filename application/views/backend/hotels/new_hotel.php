@@ -197,6 +197,7 @@
                 </li>
             </ul>
             <form action="add_new_hotel" method="post" id="new_hotel_form" name="new_hotel_form" enctype="multipart/form-data"> 
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
             <input type="hidden" name="room_aminities" id="room_aminities" value="<?php echo isset($view[0]->room_aminities) ? $view[0]->room_aminities : '' ?>">
             <input type="hidden" name="keywords" id="keywords" value="<?php echo isset($view[0]->keywords) ? $view[0]->keywords : '' ?>">
             <input type="hidden" name="hotels_edit_id" id="hotels_edit_id" value="<?php echo isset($view[0]->hotels_edit_id) ? $view[0]->hotels_edit_id : '' ?>">

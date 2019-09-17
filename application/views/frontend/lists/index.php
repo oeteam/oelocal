@@ -586,6 +586,7 @@
 				</div>
 					<div class="bookfilters hpadding20 hidden-xs">
 						<form id="Mian_search_form"  method="get">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" class="citycode" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
 							<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
@@ -771,6 +772,7 @@
 						<input type="hidden" id="scroll-form" value="search_form">
 						<div class="line2 hidden-xs"></div>
 						<form id="search_form"  method="post" class="hidden-xs">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 							<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
 							<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
@@ -1093,6 +1095,7 @@
       </div>
       <div class="modal-body">
       	<form id="Mian_search_form_sm">
+      		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
       		<input type="hidden" class="citycode" name="citycode"  value="<?php echo $_REQUEST['citycode'] ?>">
 			<input type="hidden" class="cityname" name="cityname"  value="<?php echo $_REQUEST['cityname'] ?>">
 			<input type="hidden" class="countryname" name="countryname" value="<?php echo $_REQUEST['countryname'] ?>">
@@ -1284,6 +1287,7 @@
       </div>
       <div class="modal-body" style="padding-top: 20px;padding-bottom: 20px;padding-left: 0px;padding-right:0px; ">
       	<form id="search_form_sm">
+      		<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
       		<input type="hidden" class="form-control b-r-40" name="citycode" class="citycode" value="<?php echo $_REQUEST['citycode'] ?>">
 			<input type="hidden" class="form-control b-r-40" name="cityname" class="cityname" value="<?php echo $_REQUEST['cityname'] ?>">
 			<input type="hidden" class="form-control b-r-40" name="countryname" class="countryname" value="<?php echo $_REQUEST['countryname'] ?>">

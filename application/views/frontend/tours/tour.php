@@ -263,6 +263,7 @@ function currency_change(type){
 						<!-- <li onclick="mySelectUpdate()" class=""><a data-toggle="tab" href="#Sights"><span class="sights"></span>Sights</a></li> -->
 					</ul>
 					<form action="<?php echo base_url(); ?>tour/tourlist" id="tour_search_form" method="get">
+						<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 						<input type="hidden" name="price" value="10;10000">
 						<input type="hidden" name="view_type" id="view_type" value="grid">
 						<div class="tab-content" id="myTabContent">

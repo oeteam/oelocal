@@ -15,6 +15,7 @@
             <br>
             <div class="col-md-12">
             <form action="<?php echo base_url(); ?>backend/hotels/room_type" name="room_type_form" id="room_type_form" method="post">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" name="edit_id" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                 <div class="row">
                     <div class="form-group col-md-12">

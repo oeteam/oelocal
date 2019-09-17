@@ -18,6 +18,7 @@
           <div class="modal-body" style="overflow-y: scroll;height: 100%; height: 400px;">
           
               <form name="supplementForm" id="supplementForm" action="<?php echo base_url(); ?>payment/supplementFormSubmit">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                 <input type="hidden" name="token" value="<?php echo $_REQUEST['token'] ?>">
                                 <?php 
 

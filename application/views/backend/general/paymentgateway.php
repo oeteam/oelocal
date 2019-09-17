@@ -49,6 +49,7 @@
                 <div id="checkout" class="tab-pane fade  <?php echo $tabName=="" || $tabName=="2CheckOut" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/checkoutsubmit" name="add_checkout_data_form" id="add_checkout_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="checkout_label_err">*</span></label>
@@ -114,6 +115,7 @@
                 <div id="telr" class="tab-pane fade  <?php echo $tabName=="Telr" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/telrsubmit" name="add_telr_data_form" id="add_telr_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="telr_label_err">*</span></label>
@@ -169,6 +171,7 @@
                 <div id="paypal" class="tab-pane fade <?php echo $tabName=="Paypal" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/paypalsubmit" name="add_paypal_data_form" id="add_paypal_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="paypal_label_err">*</span></label>
@@ -234,6 +237,7 @@
                 <div id="braintree" class="tab-pane fade <?php echo $tabName=="Braintree" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/braintreesubmit" name="add_braintree_data_form" id="add_braintree_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="braintree_label_err">*</span></label>
@@ -299,6 +303,7 @@
                 <div id="mollie" class="tab-pane fade <?php echo $tabName=="Mollie" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/molliesubmit" name="add_mollie_data_form" id="add_mollie_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="mollie_label_err">*</span></label>
@@ -354,6 +359,7 @@
                 <div id="sim" class="tab-pane fade <?php echo $tabName=="authorizeSIM" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/authorizeSIMsubmit" name="add_authorizeSIM_data_form" id="add_authorizeSIM_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="authorizeSIM_label_err">*</span></label>
@@ -428,6 +434,7 @@
                 <div id="aim" class="tab-pane fade <?php echo $tabName=="authorizeAIM" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/authorizeAIMsubmit" name="add_authorizeAIM_data_form" id="add_authorizeAIM_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="authorizeAIM_label_err">*</span></label>
@@ -489,6 +496,7 @@
                 <div id="stripe" class="tab-pane fade <?php echo $tabName=="Stripe" ? 'in active' : '' ?>">
                     <div class="bor mar_top_0">
                         <form action="<?php echo base_url(); ?>backend/common/stripesubmit" name="add_stripe_data_form" id="add_stripe_data_form" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                         <div class="row">
                             <div class="form-group col-md-6">
                                     <label>Label<span class="stripe_label_err">*</span></label>

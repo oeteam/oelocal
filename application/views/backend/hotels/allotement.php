@@ -37,6 +37,7 @@
                     </div>
                 </div>
                 <form method="get" id="allotement_filter" action="<?php echo base_url(); ?>backend/hotels/allotement">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <div class="col-md-12">
                     <div class="form-group col-md-2">
                         <label>Year</label>
@@ -152,6 +153,7 @@
             <div class="modal-content">
               <div class="modal-body">
                 <form id="bulk-update-form" method="post">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" id="tot-rooms" value="<?php echo $rooms[0]->total_rooms ?>">
                     <input type="hidden" name="room_id" value="<?php echo $_REQUEST['room_id'] ?>">
                     <input type="hidden" name="year" value="<?php echo isset($_REQUEST['year']) ? $_REQUEST['year'] : date('Y') ?>">

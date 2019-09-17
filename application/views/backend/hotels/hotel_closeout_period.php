@@ -64,6 +64,7 @@
              </br>
         <div class="row" style="margin-top: -8%;">
             <form action="add_closeout_hotel" method="post" id="add_close_hotel" name="add_close_hotel" enctype="multipart/form-data"> 
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                 <input type="hidden" value="" name="hotelid" id="hotelid">
                  <div class="form-group col-md-6">
                     <label for="from_date">From date</label>
