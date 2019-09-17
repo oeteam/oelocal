@@ -126,7 +126,7 @@ $('#hotel_login_detail_update').click(function () {
     var accept_vcc         = $("#accept_vcc").val();
     var hotel_description  = $("#hotel_description").val();
     var locationss         = $("#locationss").val();
-    if (hotel_name==""||market==""||property_name==""||city=="" ||citynearby==""||citydes=="" ||board==""||total_no_of_rooms==""||
+    if (hotel_name==""||property_name==""||city=="" ||citynearby==""||citydes=="" ||board==""||total_no_of_rooms==""||
          accept_vcc=="" || hotel_description=="" ||locationss=="") {
 
           if (hotel_name=="")    {

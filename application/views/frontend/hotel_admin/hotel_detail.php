@@ -38,13 +38,13 @@ $menu = hotel_menu_permission();
                                     <span class="hotel_name_err popup_err blink_me"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                          <!--   <div class="col-md-4">
                               <div class="form-group">
                                     <label for="" class="control-label">Market</label><span class="popup_err">*</span>
                                     <input class="form-control" id="market" name="market" type="text" value="<?php echo $view[0]['market']; ?>" readonly >
                                     <span class="market_err popup_err blink_me"></span>
                                 </div>
-                              </div>
+                              </div> -->
                               <div class="col-md-4">
                               <div class="form-group">
                                     <label for="" class="control-label">Property Name</label><span class="popup_err">*</span>
@@ -52,8 +52,6 @@ $menu = hotel_menu_permission();
                                     <span class="property_name_err popup_err blink_me"></span>
                                 </div>
                               </div>
-                            </div>
-                             <div class="row">
                               <div class="col-md-4">
                               <div class="form-group">
                                     <label for="" class="control-label">Brand Name</label><span class="popup_err">*</span>
@@ -61,6 +59,9 @@ $menu = hotel_menu_permission();
                                     <span class="brand_name_err popup_err blink_me"></span>
                                 </div>
                               </div>
+                            </div>
+                             <div class="row">
+                              
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="control-label">City</label><span class="popup_err">*</span>
@@ -75,6 +76,21 @@ $menu = hotel_menu_permission();
                                     <span class="citynearby_err popup_err blink_me"></span>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="control-label">Selling Currency</label><span class="popup_err">*</span>
+                                    <select name="sell_currency"  id="sell_currency" class="form-control" disabled>
+                                      <?php foreach ($currency_list as $key => $value) { 
+                                        if(($view[0]['sell_currency']) == $value->currency_type) {?>
+                                      <option selected="" value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
+                                       <?php }    else { ?>
+                                      <option  value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
+                                      <?php  } } ?>
+                                    </select>
+                                    <span class="sell_currency_err popup_err blink_me"></span>
+
+                                </div>
+                            </div>
                         </div> 
                        <div class="row"> 
                           <div class="col-md-4">
@@ -85,23 +101,6 @@ $menu = hotel_menu_permission();
                                <span class="citydes_err popup_err blink_me"></span>
                               </div>
                           </div>
-                          <!-- <div class="col-md-4">
-                              <div class="form-group">
-                              <label for="" class="control-label">Board</label>
-                              <span class="popup_err">*</span>
-                                    <select class="form-control" id="board" name="board" data-placeholder=" Board"  disabled>
-                                      <?php foreach ($board as $key => $value) { ?>
-                                            <option value="<?php echo $value ?>"><?php echo $value ?></option>
-                                      <?php } ?>
-                                            <!-- <option value="RO">RO</option>
-                                            <option value="B&B">B&B</option>
-                                            <option value="HB">HB</option>
-                                            <option value="FB">FB</option>
-                                            <option value="AL">AL</option> -->
-                                        <!-- </select>
-                                <span class="board_err popup_err blink_me"></span>
-                                </div> 
-                            </div>  -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                 <label for="" class="control-label">Select Hotel Facilities</label><span class="popup_err">*</span>
@@ -154,35 +153,8 @@ $menu = hotel_menu_permission();
                             </div>
                           </div>
                           <div class="row">
-                            
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for=""  class="control-label">Room Aminities</label>
-                                    
-                                    <?php if(empty($room_amin[0])){ ?>
-                                      <select class="form-control multi-select2" id="room_aminity" data-placeholder="Select Aminity" multiple="multiple" name="room_aminity[]" disabled>
-                                          <?php foreach ($rAminity as $key =>$value) {   ?> 
-                                            <option value="<?php echo ($value->id) ?>">
-                                            <?php echo $value->Aminities;?>  
-                                            </option> 
-                                          <?php }?>
-                                      </select>
-                                    <?php } else{ ?>
-                                      <select class="form-control multi-select2" id="room_aminity" data-placeholder="Select Aminity" multiple="multiple" name="room_aminity[]" disabled>
-                                         <?php foreach ($room_amin as $key =>$value) { ?>
-                                         <option selected data-icon="<?php echo base_url() ?>" value="<?php echo $value[0]->id ?>">
-                                          <?php echo $value[0]->Aminities ?>
-                                         </option>
-                                          <?php }foreach ($rAminity as $key =>$value) { ?>   
-                                          <option value="<?php echo $value->id ?>"><?php echo $value->Aminities;?></option>
-                                      <?php } ?>
-                                      </select>
-                                    <?php  } ?>
-                                  </div>
-                            </div>
-                          
                             <div class="form-group col-md-4">
-                                <p><label>Complimentry</label></p>
+                                <p><label>Complimentary</label></p>
                                 <?php if (($view[0]['wifi'])=='on') { ?>
                                 <input checked="" class="filled-in" id="wifi" name="wifi" type="checkbox" value="on"/>
                                 <?php } else{ ?>
@@ -244,6 +216,16 @@ $menu = hotel_menu_permission();
                                <span class="starr_err popup_err blink_me"></span>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for=""  class="control-label">Search keywords</label>
+                                    <input type="text" name="keyword" id="keyword" value="
+                                    <?php $am = $implodedata2;
+                                    $aminity = explode("close",$am);
+                                    foreach ($aminity as $item) {}
+                                    echo join ('close', $aminity); ?>" data-role="tagsinput" />
+                                </div>
+                            </div> 
                         </div>    
                         <div class="row">
                           <div class="col-md-4">
@@ -277,14 +259,17 @@ $menu = hotel_menu_permission();
                                     <div class="col-md-4">
                                        <div class="form-group">
                                            <label for="" class="control-label">Accepting VCC</label><span class="popup_err">*</span>
-                                           <input class="form-control" id="accept_vcc" name="accept_vcc" type="text" value="<?php echo $view[0]['accepting_vcc']; ?>" readonly>
+                                           <select class="form-control" id="accept_vcc" name="accept_vcc" readonly>
+                                             <option <?php echo $view[0]['accepting_vcc']==0 || $view[0]['accepting_vcc']=="" ? 'selected' : '' ?> value="0">No</option>
+                                             <option <?php echo $view[0]['accepting_vcc']==1 ? 'selected' : '' ?> value="1">Yes</option>
+                                           </select>
                                      <span class="accept_vcc_err popup_err blink_me"></span>
 
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                           <label for="" class="control-label">Channel Manager:(if any)</label><span class="popup_err">*</span>
+                                           <label for="" class="control-label">Channel Manager:(if any)</label>
                                            <input class="form-control" id="channel_manager" name="channel_manager" type="text" value="<?php echo $view[0]['channel']; ?>" readonly>
                                         </div>
                                     </div>
@@ -301,42 +286,6 @@ $menu = hotel_menu_permission();
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="" class="control-label">Part of Any Chain or Collection</label><span class="popup_err">*</span>
-                                    <input class="form-control" id="part_of_chain" name="part_of_chain" type="text" value="<?php echo $view[0]['chain']; ?>" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="" class="control-label">Selling Currency</label><span class="popup_err">*</span>
-                                    <select name="sell_currency"  id="sell_currency" class="form-control" disabled>
-                                      <?php foreach ($currency_list as $key => $value) { 
-                                        if(($view[0]['sell_currency']) == $value->currency_type) {?>
-                                      <option selected="" value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
-                                       <?php }    else { ?>
-                                      <option  value="<?php echo $value->currency_type ?>"><?php echo $value->currency_name. ' ('.($value->currency_type).')' ?></option>
-                                      <?php  } } ?>
-                                    </select>
-                                    <span class="sell_currency_err popup_err blink_me"></span>
-
-                                </div>
-                            </div>
-                            
-                            
-                            
-
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for=""  class="control-label">Search keywords</label>
-                                    <input type="text" name="keyword" id="keyword" value="
-                                    <?php $am = $implodedata2;
-                                    $aminity = explode("close",$am);
-                                    foreach ($aminity as $item) {}
-                                    echo join ('close', $aminity); ?>" data-role="tagsinput" />
-                                </div>
-                            </div> 
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label>Location</label>

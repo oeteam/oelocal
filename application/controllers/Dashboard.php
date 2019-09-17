@@ -139,10 +139,9 @@ class Dashboard extends MY_Controller {
 	}
   	public function updating_hotel_details() {
       // $aminity=(explode(",",$_REQUEST['room_aminity']));
-      $aminity=$_REQUEST['room_aminity'];
       $keyword= (explode(",",$_REQUEST['keyword']));
       $hotel_log_id=$this->session->userdata('hotelid');
-  		$Update = $this->Hotels_Model->updateinghoteldetaillog($_REQUEST,$hotel_log_id,$aminity,$keyword);
+  		$Update = $this->Hotels_Model->updateinghoteldetaillog($_REQUEST,$hotel_log_id,$keyword);
         // print_r($aminity);
         // exit();
             // echo json_encode($Update);
@@ -924,7 +923,7 @@ class Dashboard extends MY_Controller {
     $draw = intval($this->input->get("draw"));
     $start = intval($this->input->get("start"));
     $length = intval($this->input->get("length"));
-    $hotel_contract = $this->Hotels_Model->select_hotel_for_contract($_REQUEST['id'],1);
+    $hotel_contract = $this->Hotels_Model->select_hotel_created_contract($_REQUEST['id'],1);
     // print_r($hotel_contract);exit;
     foreach($hotel_contract->result() as $key => $r) {
 

@@ -122,7 +122,7 @@ $Hotelsbanner = Hotelsbanner();
                                  <div id="SupplierLogin" class="tab-pane fade">
                                     <div class="container-fluid">
                                        <div class="row">
-                                          <form method="post" action="<?php echo base_url('dashboard/hotel_panel'); ?>" id="hotel_panel_login" autocomplete="off">
+                                          <form method="post" id="hotel_panel_login" autocomplete="off">
                                              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                              <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-md-12">

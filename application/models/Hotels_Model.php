@@ -365,7 +365,7 @@ class Hotels_Model extends CI_Model {
 		return $hotel_room_id;
 	}
 	public function hotel_list_select($filter) {
-		$this->db->select('*,IF(supplier=1,(select CONCAT(Agent_Code," - ",First_Name," ",Last_Name) from hotel_tbl_agents where id = supplierid),"Otelseasy") as supplierName');
+		$this->db->select('*,IF(supplier=1 && supplierid!="",(select CONCAT(Agent_Code," - ",First_Name," ",Last_Name) from hotel_tbl_agents where id = supplierid),"Otelseasy") as supplierName');
 		$this->db->from('hotel_tbl_hotels');
 		$this->db->where('delflg',$filter);
 		$this->db->order_by('id','desc');
@@ -785,7 +785,7 @@ class Hotels_Model extends CI_Model {
 		$this->db->update('hotel_tbl_hotel_room_type',$data);
 		return true;
 	}
-	public function updateinghoteldetaillog($data,$hotel_log_id,$aminity,$keyword) {
+	public function updateinghoteldetaillog($data,$hotel_log_id,$keyword) {
         
         if (!isset($data['parking'])) {
 			$data['parking']=0;
@@ -800,7 +800,7 @@ class Hotels_Model extends CI_Model {
 			'hotel_name'         => $data['hotel_name'],
 			'lattitude'          => $data['us3-lat'],
 			'longitude'          => $data['us3-lon'],
-			'market'			 => $data['market'],
+			// 'market'			 => $data['market'],
 			'property_name'		 => $data['property_name'],
 			'brand_name'		 => $data['brand_name'],
 		    'city'               => $data['city'],
@@ -6646,6 +6646,19 @@ class Hotels_Model extends CI_Model {
 	        }
         }
     return true;
+    }
+    public function select_hotel_created_contract($id,$filter=NULL) {
+	    $this->db->select('*');
+        $this->db->from('hotel_tbl_contract');
+        $this->db->where('hotel_id',$id);
+        $this->db->where('Created_By','');
+        if ($filter==0) {
+        	$this->db->where('to_date <',date('Y-m-d'));
+        } else {
+        	$this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
+        }
+        $query=$this->db->get();
+		return $query;
     }
 }		
 

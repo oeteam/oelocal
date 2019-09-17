@@ -220,7 +220,6 @@ $(document).ready(function() {
     });
   $('#login_form_hotel_panel').click(function (e) {
       e.preventDefault();
-      var url = $("#hotel_panel_login").attr("action");
       $.ajax({
         dataType: 'json',
         type: 'post',
@@ -229,7 +228,8 @@ $(document).ready(function() {
         cache: false,
         success: function (response) {
           if (response.status == "1") {
-               $("#hotel_panel_login").submit();
+            window.location = base_url+"dashboard/hotel_panel";
+               // $("#hotel_panel_login").submit();
           } else {
             $(".error_msg1").text(response.error);
           }
