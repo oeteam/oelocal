@@ -716,6 +716,18 @@ var hotel_id = $("#hotel_id").val();
                 $('[data-toggle="tooltip"]').tooltip();          
                 }
               });
+          } else if(response.table == "home_banner_list_table") {
+            var homebanners_list_table = $("#homebanners_list_table").dataTable({
+                    "bDestroy": true,
+                    "ajax": {
+                        url : base_url+'/backend/Hotels/Bannerlist',
+                        type : 'POST'
+
+                    },
+                "fnDrawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();          
+                }
+              });
           } else {
               room_type_table.api().ajax.reload(function(){ 
                 addToast(response.error,response.color);
@@ -2734,6 +2746,9 @@ function Displaydeletefun(id) {
 function Trendinghoteldeletefun(id) {
   deletepopupfun(base_url+"backend/hotels/Trendingdelete",id);
 }
+function Homebannerdeletefun(id) {
+  deletepopupfun(base_url+"backend/hotels/Bannerdelete",id);
+}
 function ValidateFileUpload() {
         var fuData = document.getElementById('room_image');
         var FileUploadPath = fuData.value;
@@ -3880,7 +3895,6 @@ $("#DisplayUpdate").click(function() {
     });
 $("#trendUpdate").click(function() {
   var hotelone = $("#hotel1text").val();
-  alert();
   var hoteltwo   = $("#hotel2text").val();
   var hotelthree = $("#hotel3text").val();
   var hotelfour   = $("#hotel4text").val();
@@ -3926,6 +3940,41 @@ $("#trendUpdate").click(function() {
     addToast('Trending Hotels Updated Successfully',"green");
     $("#trendForm").attr('action',base_url+'backend/Hotels/add_trending_hotels');
     $("#trendForm").submit();
+  }
+});
+$("#bannerUpdate").click(function() {
+  var hotelone = $("#hotel1text").val();
+  var hoteltwo   = $("#hotel2text").val();
+  var hotelthree = $("#hotel3text").val();
+  var hotelfour   = $("#hotel4text").val();
+  if (hotelone=="") {
+    addToast("Set 1 Hotels field is required !","orange");
+    $("#hotelone_undo_redo_to").focus();
+  } else if(hotelone.split(',').length!=6) {
+    addToast("Select 6 hotels for set 1 !","orange");
+    $("#hotelone_undo_redo_to").focus();
+  } else if (hoteltwo=="") {
+    addToast("Set 2 Hotels field is required !","orange");
+    $("#hoteltwo_undo_redo_to").focus();
+  } else if(hoteltwo.split(',').length!=6) {
+    addToast("Select 6 hotels for set 2 !","orange");
+    $("#hoteltwo_undo_redo_to").focus();
+  } else if (hotelthree=="") {
+    addToast("Set 3 Hotels field is required !","orange");
+    $("#hotelthree_undo_redo_to").focus();
+  } else if(hotelthree.split(',').length!=6) {
+    addToast("Select 6 hotels for set 3 !","orange");
+    $("#hotelthree_undo_redo_to").focus();
+  } else if (hotelfour=="") {
+    addToast("Set 4 Hotels field is required !","orange");
+    $("#hotelfour_undo_redo_to").focus();
+  } else if(hotelfour.split(',').length!=6) {
+    addToast("Select 6 hotels for set 4 !","orange");
+    $("#hotelfour_undo_redo_to").focus();
+  } else {
+    addToast('Homepage Banners Updated Successfully',"green");
+    $("#bannerForm").attr('action',base_url+'backend/Hotels/add_homepage_banners');
+    $("#bannerForm").submit();
   }
 });
 

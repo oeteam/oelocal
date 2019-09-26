@@ -6702,6 +6702,41 @@ class Hotels_Model extends CI_Model {
 		$this->db->delete('hotel_tbl_trending');
 		return true;
 	}
+    public function homebannerList() {    
+		$this->db->select('*');
+		$this->db->from('home_page_banner');
+	    $query=$this->db->get();
+		return $query;
+	}
+	public function bannerSubmit($request) {
+		for($i=1;$i<=4;$i++) {
+			if ($request['trendEdit'][$i-1]!="") {
+				$this->db->where('id',$request['trendEdit'][$i-1]);
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->update('home_page_banner',$data);
+			} else {
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->insert('home_page_banner',$data);
+			}
+		}
+
+		return true;		
+    }
+    public function Bannerdelete($id) {
+		$this->db->where('id',$id);
+		$this->db->delete('home_page_banner');
+		return true;
+	}
 }		
 
 
