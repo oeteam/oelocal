@@ -209,7 +209,7 @@
 							<input type="text" class="form-control wh90percent" value="<?php echo $viwedate2  ?>" readonly>
 						</div>
 						<div class="col-sm-3 text-center">
-							<span class="opensans size13"><b>Number of Days</b></span>
+							<span class="opensans size13"><b>Number of Nights</b></span>
 							<h4><?php echo $tot_days ?></h4>
 						</div>
 						<div class="col-sm-3 text-center">
@@ -232,7 +232,7 @@
 			            			} else {
 			            				$childss= "0";
 			            			} ?>
-								<label>Child(s) : <span class="badge"><?php echo $childss ?></span></label>
+								<label><?php echo $childss > 1 ? 'Children' : 'Child' ?> : <span class="badge"><?php echo $childss ?></span></label>
 							</div>
 						</div>
 					</div>

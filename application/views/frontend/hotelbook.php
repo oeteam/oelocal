@@ -843,7 +843,7 @@ $(document).ready(function() {
 		                    <label class="margtop10 text-muted">Adult(s) <span class="badge bg-blue"><?php echo $adultss ?></span></label>
 		                  </div>
 		                  <div class="col-sm-3 col-xs-6 text-center">
-		                    <label class="margtop10 text-muted">Children(s) <span class="badge bg-blue"><?php echo $childs ?></span></label>
+		                    <label class="margtop10 text-muted"><?php echo $childs > 1 ? 'Children' : 'Child' ?> <span class="badge bg-blue"><?php echo $childs ?></span></label>
 		                  </div>
 		                </div>
 

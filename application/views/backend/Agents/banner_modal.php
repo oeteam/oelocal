@@ -50,6 +50,7 @@
     window.prettyPrint && prettyPrint();
 
     $('#undo_redo').multiselect({
+        sort:false,
         search: {
             left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
             right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -61,7 +62,9 @@
     <?php if ($permission!='') { ?>
     var permission_check = $("#permission_check").val().split(",");
     $.each(permission_check, function(i, v) {
-    $('#undo_redo option[value='+v+']').attr('selected','selected');
+        $('#undo_redo option[value='+v+']').attr('selected','selected');
+        $("#undo_redo_rightSelected").trigger('click');
+        $('#undo_redo_to').prop('selectedIndex', 0).focus(); 
     });
     <?php } ?>
 

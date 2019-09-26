@@ -1468,7 +1468,12 @@ class Hotels extends MY_Controller {
 	    	$update  = $this->Hotels_Model->allotBlkupdate($_REQUEST);
 	    	$description = 'Stop sale bulk update [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.implode(",",$_REQUEST['bulk-alt-con-id']).', From Date: '.$_REQUEST['bulk-alt-fromDate'].', To Date: '.$_REQUEST['bulk-alt-toDate'].']';
 	        AdminlogActivity($description);
-	    	redirect('../backend/hotels/hotels_stopSale?month='.$_REQUEST['month'].'&year='.$_REQUEST['year'].'&hotel_id='.$_REQUEST['hotel_id'].'&room_id='.$_REQUEST['room_id'].'&con_id='.$_REQUEST['bulk_alt_contract_id']);
+	        $Return['error'] = "Updated Successfully!";
+	        $Return['color'] = 'green';
+	        $Return['status'] = '1';
+	     
+	        echo json_encode($Return);
+	    	// redirect('../backend/hotels/hotels_stopSale?month='.$_REQUEST['month'].'&year='.$_REQUEST['year'].'&hotel_id='.$_REQUEST['hotel_id'].'&room_id='.$_REQUEST['room_id'].'&con_id='.$_REQUEST['bulk_alt_contract_id']);
     	} else {
     		redirect($_SERVER['HTTP_REFERER']);
     	}
@@ -3551,12 +3556,15 @@ class Hotels extends MY_Controller {
 		if (isset($_REQUEST['id'])) {
 			$data['edit']= $this->Hotels_Model->TrendingEdit($_REQUEST['id']);
 			if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+				$Trendinglist = $this->Hotels_Model->Trendinglist();
+				$data['edit'] = $Trendinglist->result();
 				$this->load->view('backend/hotels/trendingAdd',$data);
 			} else {
 				redirect(base_url().'backend/dashboard');
 			}
 		} else {
 			if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$Trendinglist = $this->Hotels_Model->Trendinglist();
 				$this->load->view('backend/hotels/trendingAdd',$data);
 			} else {
 				redirect(base_url().'backend/dashboard');
@@ -3590,7 +3598,7 @@ class Hotels extends MY_Controller {
 			}else{
 	  	          $edit="";
 	        }	
-	  if($displayMenu[0]->delete!=0){
+	  		if($displayMenu[0]->delete!=0){
 				$delete='<a href="#" onclick="Trendinghoteldeletefun('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-trash-o red" aria-hidden="true"></i></a>';
 			}else{
 	            $delete="";
@@ -3606,7 +3614,7 @@ class Hotels extends MY_Controller {
 				$key+1,
 				$impHotelName[$key],
 				$r->set,
-				$edit.$delete,
+				$edit,
 			);
       	}
 		$output = array(

@@ -6652,24 +6652,36 @@ class Hotels_Model extends CI_Model {
         $this->db->from('hotel_tbl_contract');
         $this->db->where('hotel_id',$id);
         $this->db->where('Created_By','');
-        if ($filter==0) {
-        	$this->db->where('to_date <',date('Y-m-d'));
-        } else {
-        	$this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
-        }
+        // if ($filter==0) {
+        // 	$this->db->where('to_date <',date('Y-m-d'));
+        // } else {
+        // 	$this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
+        // }
         $query=$this->db->get();
 		return $query;
     }
     public function TrendingSubmit($request) {
 		for($i=1;$i<=6;$i++) {
-			$data= array( 
-        	      'hotelid'    =>  $request['hotel'.$i.'text'],
-        	      'set'   =>  $i,
-        	      'Created_Date' => date('Y-m-d H:i:s'),
-        	      'Created_By' => $this->session->userdata('id'),
-		     	);
-			$this->db->insert('hotel_tbl_trending',$data);
+			if ($request['trendEdit'][$i-1]!="") {
+				$this->db->where('id',$request['trendEdit'][$i-1]);
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->update('hotel_tbl_trending',$data);
+			} else {
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->insert('hotel_tbl_trending',$data);
+			}
 		}
+
 		return true;		
     }
     public function Trendinglist() {    

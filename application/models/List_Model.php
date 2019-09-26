@@ -850,10 +850,10 @@ class List_Model extends CI_Model {
   }
   public function review_add($data) {
     $data= array(
-      'Username' =>$data['review_uname'],
-      'Evaluation' =>$data['evaluation'],
-      'Title' =>$data['title'],
-      'Comment' =>$data['comment'],
+      'Username' => $this->db->escape_str($data['review_uname']),
+      'Evaluation' => $this->db->escape_str($data['evaluation']), 
+      'Title' => $this->db->escape_str($data['title']),
+      'Comment' => $this->db->escape_str($data['comment']),
       'Cleanliness' => is_numeric($data['cleanliness'][2]) ? $data['cleanliness'] : '0;4.2',
       'Room_Comfort' => is_numeric($data['room_comfort'][2]) ? $data['room_comfort'] : '0;5',
       'Location' => is_numeric($data['location'][2]) ? $data['location'] : '0;2.5',

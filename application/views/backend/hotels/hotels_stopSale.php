@@ -8,6 +8,45 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
 
 <style type="text/css">
+    .progress {
+    position: relative;
+    /*margin: 20px;*/
+    width: 400px;
+    background-color: #ddd;
+    border: 1px solid blue;
+    padding: 1px;
+    /*left: 15px;*/
+    border-radius: 3px;
+    height: 15px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 30px;
+    background-image:
+       -webkit-linear-gradient(-45deg, 
+                               transparent 33%, rgba(0, 0, 0, .1) 33%, 
+                               rgba(0,0, 0, .1) 66%, transparent 66%),
+       -webkit-linear-gradient(top, 
+                               rgba(255, 255, 255, .25), 
+                               rgba(0, 0, 0, .25)),
+       -webkit-linear-gradient(left, #09c, #f44);
+
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+.percent {
+    position: absolute;
+    display: inline-block;
+    color: #fff;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    margin-top: -9px;
+    margin-left: -20px;
+    -webkit-border-radius: 4px;
+}
   .trumbowyg-fullscreen-button {
     /*display: none ! important;*/
   }
@@ -236,10 +275,11 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
 </div>
  <!-- Bulk update Calendar Modal -->
         <div id="bulk-update-modal" class="modal fade-scale" role="dialog">
-          <div class="modal-dialog modal-sm">
+          <div class="modal-dialog ">
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-body">
+                <div class="form-entry">
                 <form id="bulk-update-form" method="post">
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>"> 
                     <input type="hidden" id="tot-rooms" value="<?php echo $hotels[0]->Number_of_room ?>">
@@ -341,8 +381,16 @@ $StopSale = menuPermissionAvailability($this->session->userdata('id'),'Hotels','
                         <button id="bulk-alt-UpdateBtn" type="button" class="btn btn-sm btn-default nBtn">Update</button>
                         <button type="button" class="btn btn-default nBtn nclose" data-dismiss="modal">X</button>
                     </div>
+                   </form>
                 </div>
-                </form>
+                </div>
+                <div class="progressive-section hide">
+                </div>
+                <div class="blk-btn-progress row hide">
+                    <button class="pull-right btn-sm btn-primary blk-restart" style="margin-right: 5px;">Restart</button>
+                    <button class="pull-right btn-sm btn-primary blk-close" style="margin-right: 5px;" data-dismiss="modal">Close</button>
+                </div>
+                </div>
               </div>
             </div>
 
@@ -497,11 +545,92 @@ $('#bulk-alt-con-id').multiselect({
                 addToast('Rooms field is required!','orange');
                 $("#bulk-alt-room_id").focus();
             } else {
-                $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotBlkupdate');
-                $("#bulk-update-form").submit();
+                $(".progressive-section").removeClass('hide');
+                $(".form-entry").addClass('hide');
+                $(".progressive-section").append('<div class="prog"><label>Other Season</label><div class="progress" ><div class="progress-bar" style="width: 0%;"></div><div class="percent" >0%</div></div></div>');
+                // $("#bulk-update-form").attr('action',base_url+'backend/hotels/allotBlkupdate');
+                // $("#bulk-update-form").submit();
+
+
+                $.ajax({
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener("progress", function(evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = (evt.loaded / evt.total) * 100;
+                                //Do something with upload progress here
+                                var percentValue = percentComplete + '%';
+                                $(".progress-bar").animate({
+                                    width: '90%'
+                                }, {
+                                    duration: 5000,
+                                    easing: "linear",
+                                    step: function (x) {
+                                    percentText = Math.round(x * 100 / percentComplete);
+                                        if (percentText < 91) {
+                                            $(".progress-bar").width(percentText + "%");
+                                            $(".percent").text(percentText + "%");
+                                        }
+                                    }
+                                });
+                            }
+                       }, false);
+                       return xhr;
+                    },
+                    type: 'POST',
+                    dataType: "json",
+                        url: base_url+'backend/hotels/allotBlkupdate',
+                        data: $('#bulk-update-form').serialize(),
+                        success: function(data){
+                            //Do something on success
+                            console.log("end");
+                            $(".progress-bar").animate({
+                                    width: '100%'
+                                }, {
+                                    duration: 5000,
+                                    easing: "linear",
+                                    step: function (x) {
+                                    percentText = 100;
+                                        $(".progress-bar").width("100%");
+                                        $(".percent").text("100%");
+                                    }
+                                });
+
+                            $(".progress-bar").width("100%");
+                            $(".percent").text("100%");
+                            $(".blk-btn-progress").removeClass('hide')
+                        },
+                        error: function() {
+                          // $(".progress-bar").css("background","red");
+                          // alert("Other Season upload Failed");
+                          setTimeout(function(){ 
+                              percentText = 100;
+                              $(".progress-bar").width(percentText + "%");
+                              $(".percent").text(percentText + "%");
+                              $(".blk-btn-progress").removeClass('hide')
+                          }, 180000);
+                        }
+                  });
+
             }
            
         })
+        
+
+        $(".blk-close").click(function() {
+            $(".prog").remove();
+            $(".progressive-section").addClass('hide');
+            $(".form-entry").removeClass('hide');
+            $(".blk-btn-progress").addClass('hide');
+            location.reload();
+        })
+        $(".blk-restart").click(function() {
+            $(".prog").remove();
+            $(".progressive-section").addClass('hide');
+            $(".form-entry").removeClass('hide');
+            $(".blk-btn-progress").addClass('hide');
+        })
+        
 // });
 </script>
 <?php init_tail(); ?>

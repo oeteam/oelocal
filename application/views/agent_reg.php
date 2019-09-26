@@ -316,17 +316,6 @@ $data = title();
     </div>
   </div>
 </div>
-<div class="col-sm-5 trade-licence">
-  <div class=form-horizondal>
-    <div class="form-group">
-      <label for="trade-licence" class="col-sm-3 control-label fontstyl" style="">Trade Licence<!-- <span class="starcolor">*</span> --></label>
-      <div class="col-sm-9">
-        <input type="file" class="form-control" id="tradefile" name="tradefile">
-        <span class="tradelicence_err popup_err blink_me"></span>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
  <div class="row">
 <div class="col-sm-1"></div>
