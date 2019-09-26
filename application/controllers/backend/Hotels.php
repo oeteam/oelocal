@@ -3536,6 +3536,43 @@ class Hotels extends MY_Controller {
         $Return['status'] = '1';
         echo json_encode($Return);
     }
+    public function trending_hotels() {
+		// $displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+		// if (count($displayMenu)!=0 && $displayMenu[0]->view==1) {
+     			$this->load->view('backend/hotels/trending_hotels'); 
+    	// } else {
+     //  			redirect(base_url().'backend/dashboard');
+    	// }  		
+	}
+	public function trendingAdd() {
+		$data['edit'] = array();
+	    $data['view']= $this->Hotels_Model->hotel_select();
+		//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+		// if (isset($_REQUEST['id'])) {
+		// 	$data['edit']= $this->Hotels_Model->DisplayEdit($_REQUEST['id']);
+		// 	if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+		// 		$this->load->view('backend/hotels/DisplayEdit',$data);
+		// 	} else {
+		// 		redirect(base_url().'backend/dashboard');
+		// 	}
+		// } else {
+		// 	if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$this->load->view('backend/hotels/trendingAdd',$data);
+		// 	} else {
+		// 		redirect(base_url().'backend/dashboard');
+		// 	}
+		// }		
+	}
+	public function add_trending_hotels(){
+	  $id = $this->Hotels_Model->TrendingSubmit($_REQUEST);
+	  if(isset($_REQUEST['trendEdit'])&& $_REQUEST['trendEdit']!="") {
+	  	$description = 'Trending Hotels updated [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', Set 5 Hotel ID: '.$_REQUEST['hotel5text'].', Set 6 Hotel ID: '.$_REQUEST['hotel6text'].', ID: '.$_REQUEST['trendEdit'].']';
+      } else {
+    	$description = 'New Trending Hotels added [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', Set 45Hotel ID: '.$_REQUEST['hotel5text'].', Set 6 Hotel ID: '.$_REQUEST['hotel6text'].']';
+      }
+      AdminlogActivity($description);
+	  redirect(base_url().'backend/hotels/trending_hotels');
+	}
 }
 
 
