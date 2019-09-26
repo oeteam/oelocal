@@ -3553,20 +3553,20 @@ class Hotels extends MY_Controller {
 		$data['edit'] = array();
 	    $data['view']= $this->Hotels_Model->hotel_select();
 		//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
-		// if (isset($_REQUEST['id'])) {
-		// 	$data['edit']= $this->Hotels_Model->DisplayEdit($_REQUEST['id']);
-		// 	if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
-		// 		$this->load->view('backend/hotels/DisplayEdit',$data);
-		// 	} else {
-		// 		redirect(base_url().'backend/dashboard');
-		// 	}
-		// } else {
+		if (isset($_REQUEST['id'])) {
+			$data['edit']= $this->Hotels_Model->TrendingEdit($_REQUEST['id']);
+			//if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+				$this->load->view('backend/hotels/trendingAdd',$data);
+			// } else {
+			// 	redirect(base_url().'backend/dashboard');
+			// }
+		} else {
 		// 	if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
 				$this->load->view('backend/hotels/trendingAdd',$data);
 		// 	} else {
 		// 		redirect(base_url().'backend/dashboard');
 		// 	}
-		// }		
+		}		
 	}
 	public function add_trending_hotels(){
 	  $id = $this->Hotels_Model->TrendingSubmit($_REQUEST);
@@ -3577,6 +3577,46 @@ class Hotels extends MY_Controller {
       }
       AdminlogActivity($description);
 	  redirect(base_url().'backend/hotels/trending_hotels');
+	}
+	public function Trendinglist() {
+		if ($this->session->userdata('name')==""){
+			redirect("../backend/");
+		}
+		$data = array();
+		// Datatables Variables
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+		$Trendinglist = $this->Hotels_Model->Trendinglist();
+		foreach($Trendinglist->result() as $key => $r) {
+			//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+			//if($displayMenu[0]->edit!=0){
+			$edit='<a href="trendingAdd?id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+			// }else{
+	  	//           $edit="";
+	  //       }		
+			$hotelsname = array();
+	       	$hotels = explode(",", $r->hotelid);
+	       	foreach ($hotels as $exakey => $exavalue) {
+	       		$hotelsname[$exakey] = $this->Hotels_Model->gethotelname($exavalue);
+	       	}
+	       	$impHotelName[$key] =  implode(",", $hotelsname);
+
+			$data[] = array(
+				$key+1,
+				$impHotelName[$key],
+				$r->set,
+				$edit,
+			);
+      	}
+		$output = array(
+		   	"draw" 			=> $draw,
+			"recordsTotal" 	=> $Trendinglist->num_rows(),
+			"recordsFiltered" => $Trendinglist->num_rows(),
+			"data" => $data
+		);
+	  echo json_encode($output);
+	  exit();
 	}
 }
 
