@@ -6672,6 +6672,19 @@ class Hotels_Model extends CI_Model {
 		}
 		return true;		
     }
+    public function Trendinglist() {    
+		$this->db->select('*');
+		$this->db->from('hotel_tbl_trending');
+	    $query=$this->db->get();
+		return $query;
+	}
+	public function TrendingEdit($id) {
+    	$this->db->select('*');
+		$this->db->from('hotel_tbl_trending');
+       	$this->db->where('id',$id);
+	    $query=$this->db->get()->result();
+		return $query;
+    }
 }		
 
 

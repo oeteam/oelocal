@@ -3848,6 +3848,7 @@ $("#DisplayUpdate").click(function() {
     });
 $("#trendUpdate").click(function() {
   var hotelone = $("#hotel1text").val();
+  alert();
   var hoteltwo   = $("#hotel2text").val();
   var hotelthree = $("#hotel3text").val();
   var hotelfour   = $("#hotel4text").val();
@@ -3856,20 +3857,38 @@ $("#trendUpdate").click(function() {
   if (hotelone=="") {
     addToast("Set 1 Hotels field is required !","orange");
     $("#hotelone_undo_redo_to").focus();
+  } else if(hotelone.split(',').length!=6) {
+    addToast("Select 6 hotels for set 1 !","orange");
+    $("#hotelone_undo_redo_to").focus();
   } else if (hoteltwo=="") {
     addToast("Set 2 Hotels field is required !","orange");
+    $("#hoteltwo_undo_redo_to").focus();
+  } else if(hoteltwo.split(',').length!=6) {
+    addToast("Select 6 hotels for set 2 !","orange");
     $("#hoteltwo_undo_redo_to").focus();
   } else if (hotelthree=="") {
     addToast("Set 3 Hotels field is required !","orange");
     $("#hotelthree_undo_redo_to").focus();
+  } else if(hotelthree.split(',').length!=6) {
+    addToast("Select 6 hotels for set 3 !","orange");
+    $("#hotelthree_undo_redo_to").focus();
   } else if (hotelfour=="") {
     addToast("Set 4 Hotels field is required !","orange");
+    $("#hotelfour_undo_redo_to").focus();
+  } else if(hotelfour.split(',').length!=6) {
+    addToast("Select 6 hotels for set 4 !","orange");
     $("#hotelfour_undo_redo_to").focus();
   } else if (hotelfive=="") {
     addToast("Set 5 Hotels field is required !","orange");
     $("#hotelfive_undo_redo_to").focus();
+  } else if(hotelfive.split(',').length!=6) {
+    addToast("Select 6 hotels for set 5 !","orange");
+    $("#hotelfive_undo_redo_to").focus();
   } else if (hotelsix=="") {
     addToast("Set 6 Hotels field is required !","orange");
+    $("#hotelsix_undo_redo_to").focus();
+  } else if(hotelsix.split(',').length!=6) {
+    addToast("Select 6 hotels for set 6 !","orange");
     $("#hotelsix_undo_redo_to").focus();
   } else {
     addToast('Trending Hotels Updated Successfully',"green");

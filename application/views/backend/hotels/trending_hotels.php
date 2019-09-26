@@ -22,8 +22,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Agents</th>
                                         <th>Hotels</th>
+                                        <th>Set</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -41,6 +41,16 @@
 
 <script src="<?php echo static_url(); ?>assets/js/hotel.js"></script>
 <script type="text/javascript">
-    var trendingHotels_list_table = $("#trendingHotels_list_table").dataTable();
+    var trendingHotels_list_table = $("#trendingHotels_list_table").dataTable({
+        "bDestroy": true,
+        "ajax": {
+            url : base_url+'/backend/Hotels/Trendinglist',
+            type : 'POST'
+
+        },
+        "fnDrawCallback": function(settings){
+            $('[data-toggle="tooltip"]').tooltip();          
+        }
+    });
 </script>
 <?php init_tail(); ?>
