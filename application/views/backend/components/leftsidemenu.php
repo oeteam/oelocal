@@ -95,6 +95,10 @@
                                     <li><a class= "room_facilities_menu" href="<?php echo base_url(); ?>backend/hotels/room_facilities">Room Facilities/Amenities</a>
                                     </li>
                                     <?php } ?>
+
+                                    <li><a class= "trending_hotels_menu" href="<?php echo base_url(); ?>backend/hotels/trending_hotels">Trending Hotels</a>
+                                    </li>
+                                    
                                     </ul>
                                 </div>
                             </li>
