@@ -6662,14 +6662,26 @@ class Hotels_Model extends CI_Model {
     }
     public function TrendingSubmit($request) {
 		for($i=1;$i<=6;$i++) {
-			$data= array( 
-        	      'hotelid'    =>  $request['hotel'.$i.'text'],
-        	      'set'   =>  $i,
-        	      'Created_Date' => date('Y-m-d H:i:s'),
-        	      'Created_By' => $this->session->userdata('id'),
-		     	);
-			$this->db->insert('hotel_tbl_trending',$data);
+			if ($request['trendEdit'][$i-1]!="") {
+				$this->db->where('id',$request['trendEdit'][$i-1]);
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->update('hotel_tbl_trending',$data);
+			} else {
+				$data= array( 
+	        	      'hotelid'    =>  $request['hotel'.$i.'text'],
+	        	      'set'   =>  $i,
+	        	      'Created_Date' => date('Y-m-d H:i:s'),
+	        	      'Created_By' => $this->session->userdata('id'),
+			     	);
+				$this->db->insert('hotel_tbl_trending',$data);
+			}
 		}
+
 		return true;		
     }
     public function Trendinglist() {    

@@ -3554,14 +3554,18 @@ class Hotels extends MY_Controller {
 	    $data['view']= $this->Hotels_Model->hotel_select();
 		//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
 		if (isset($_REQUEST['id'])) {
-			$data['edit']= $this->Hotels_Model->TrendingEdit($_REQUEST['id']);
+			// $data['edit']= $this->Hotels_Model->TrendingEdit($_REQUEST['id']);
 			//if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+				$Trendinglist = $this->Hotels_Model->Trendinglist();
+				$data['edit'] = $Trendinglist->result();
 				$this->load->view('backend/hotels/trendingAdd',$data);
 			// } else {
 			// 	redirect(base_url().'backend/dashboard');
 			// }
 		} else {
 		// 	if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$Trendinglist = $this->Hotels_Model->Trendinglist();
+				$data['edit'] = $Trendinglist->result();
 				$this->load->view('backend/hotels/trendingAdd',$data);
 		// 	} else {
 		// 		redirect(base_url().'backend/dashboard');

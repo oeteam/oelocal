@@ -1921,7 +1921,7 @@ class Payment_Model extends CI_Model {
           }
         }
         if (count($data)==0) {
-           $data[0]['description'] = "This booking is Nonrefundable";
+          $data[0]['description'] = "This booking is Nonrefundable";
           $data[0]['after'] = "";
           $data[0]['before'] = "";
           $data[0]['percentage'] = "";
