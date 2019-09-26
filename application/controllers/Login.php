@@ -47,7 +47,7 @@ class Login extends MY_Controller {
                 'is_logged_in' => '1',
                 'last_login_date' => date('d-m-Y H:i:s')
               ); 
-              $login_id = $this->User_Model->update_login_record_agent($data,$result[0]->id);
+              $login_id = $this->User_Model->update_login_record_agent($data,$result[0]->id,$result[0]->logged_id);
               $newdata = array(
                       'logeed_id'  => $login_id,
                       'agent_id'  => $result[0]->id,

@@ -41,7 +41,7 @@ class User_Model extends CI_Model {
     // }
     public function authorizeagent($user_name, $password,$agent_code) {
         /*Main Agent authorization start*/
-        $this->db->select('id,Email,First_Name,Last_Name,Sex');
+        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
         $this->db->where('Username',$user_name);
         $this->db->where('password',$password);
         $this->db->where('Agent_Code',$agent_code);
@@ -53,7 +53,7 @@ class User_Model extends CI_Model {
         /*Accounts Agent authorization start*/
 
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex');
+        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
         $this->db->where('First_Name_Accounts',$user_name);
         $this->db->where('Password_Accounts',$password);
         $this->db->where('Agent_Code',$agent_code);
@@ -65,7 +65,7 @@ class User_Model extends CI_Model {
         /*Accounts Agent authorization end*/
         /*Reservation Agent authorization start*/
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex');
+        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
         $this->db->where('First_Name_Reservation',$user_name);
         $this->db->where('Password_Reservation',$password);
         $this->db->where('Agent_Code',$agent_code);
@@ -77,7 +77,7 @@ class User_Model extends CI_Model {
         /*Reservation Agent authorization end*/
         /*Management Agent authorization start*/
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex');
+        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
         $this->db->where('First_Name_Management',$user_name);
         $this->db->where('Password_Management',$password);
         $this->db->where('Agent_Code',$agent_code);
@@ -105,8 +105,14 @@ class User_Model extends CI_Model {
         $this->db->update('hotel_tbl_user',$data);
         return true;
     }
-    public function update_login_record_agent($data,$id) {
+    public function update_login_record_agent($data,$id,$logged_id) {
+        $logged_id = $logged_id+1;
+        if ($logged_id > 6) {
+            $logged_id = 1;
+        }
+        $this->db->query('update hotel_tbl_agents SET logged_id = '.$logged_id.' where id = '.$id.'');
         $this->db->insert('hotel_tbl_agent_log',$data);
+
         $id = $this->db->insert_id();
         return $id;
     }

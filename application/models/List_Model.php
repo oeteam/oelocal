@@ -5115,20 +5115,34 @@ public function loadRequest($action,$arr_value) {
     return $query->result();
   } 
   public function trendingHotels() {
-    $this->db->select('htl_banner');
+    $this->db->select('logged_id');
     $this->db->from('hotel_tbl_agents');
     $this->db->where('id',$this->session->userdata('agent_id'));
     $result = $this->db->get()->result();
-    if ($result[0]->htl_banner!="") {
-      $hotelId = explode(",", $result[0]->htl_banner);
+
+
+    // $this->db->select('hotelid');
+    // $this->db->from('hotel_tbl_trending');
+    // $this->db->limit(($result[0]->logged_id-1),1);
+    $result1 = $this->db->query('select hotelid from hotel_tbl_trending limit '.($result[0]->logged_id-1).',1')->result();
+
+    if ($result1[0]->hotelid!="") {
+      $hotelId = explode(",", $result1[0]->hotelid);
       $this->db->select('*');
       $this->db->from('hotel_tbl_hotels');
       $this->db->where_in('id',$hotelId);
-      $result1 = $this->db->get()->result();
+      $result2 = $this->db->get()->result();
+      foreach ($hotelId as $key => $value) {
+        $this->db->select('*');
+        $this->db->from('hotel_tbl_hotels');
+        $this->db->where('id',$value);
+        $query = $this->db->get()->result();
+        $result3[$key] = $query[0];
+      }
     } else {
-      $result1 = $this->db->query('SELECT COUNT(*) as c,b.* FROM hotel_tbl_booking a inner join hotel_tbl_hotels b on a.hotel_id = b.id where b.id in (57,24,36,28,143,38) group by hotel_id limit 6')->result(); 
+      $result3 = $this->db->query('SELECT COUNT(*) as c,b.* FROM hotel_tbl_booking a inner join hotel_tbl_hotels b on a.hotel_id = b.id where b.id in (57,24,36,28,143,38) group by hotel_id limit 6')->result(); 
     }
-    return $result1;
+    return $result3;
   }
   public function room_current_count_price($room_id,$start_date,$end_date,$contract_id,$adults,$child,$request,$markup,$index) {
           /*Tax percentage grt from contract start*/
