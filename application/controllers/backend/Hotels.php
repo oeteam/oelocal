@@ -1468,7 +1468,12 @@ class Hotels extends MY_Controller {
 	    	$update  = $this->Hotels_Model->allotBlkupdate($_REQUEST);
 	    	$description = 'Stop sale bulk update [Hotel Code: HE0'.$_REQUEST['hotel_id'].', Contract ID: '.implode(",",$_REQUEST['bulk-alt-con-id']).', From Date: '.$_REQUEST['bulk-alt-fromDate'].', To Date: '.$_REQUEST['bulk-alt-toDate'].']';
 	        AdminlogActivity($description);
-	    	redirect('../backend/hotels/hotels_stopSale?month='.$_REQUEST['month'].'&year='.$_REQUEST['year'].'&hotel_id='.$_REQUEST['hotel_id'].'&room_id='.$_REQUEST['room_id'].'&con_id='.$_REQUEST['bulk_alt_contract_id']);
+	        $Return['error'] = "Updated Successfully!";
+	        $Return['color'] = 'green';
+	        $Return['status'] = '1';
+	     
+	        echo json_encode($Return);
+	    	// redirect('../backend/hotels/hotels_stopSale?month='.$_REQUEST['month'].'&year='.$_REQUEST['year'].'&hotel_id='.$_REQUEST['hotel_id'].'&room_id='.$_REQUEST['room_id'].'&con_id='.$_REQUEST['bulk_alt_contract_id']);
     	} else {
     		redirect($_SERVER['HTTP_REFERER']);
     	}

@@ -26,7 +26,7 @@ $Mail = menuPermissionAvailability($this->session->userdata('id'),'General','Mai
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="list-title">Smtp Password</label>
-                            <input type="text" class="form-control" id="smtp_password" name="smtp_password" placeholder="Smtp Password" value="<?php echo $view[0]->smtp_password ?>">
+                            <input type="Password" class="form-control" id="smtp_password" name="smtp_password" placeholder="Smtp Password" value="<?php echo $view[0]->smtp_password ?>">
                     	</div>
                         <div class="form-group col-md-6">
                             <label for="list-title">Smtp Port</label>

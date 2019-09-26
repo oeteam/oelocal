@@ -641,7 +641,7 @@ function currency_change(type){
 							<a href="<?php echo base_url() ?>details?search_id=<?php echo $value->id; ?>&&mark_up=&&Check_in=<?php echo date('m/d/Y',strtotime( '+2 days' )) ?>&&Check_out=<?php echo date('m/d/Y',strtotime( '+3 days' )) ?>&&adults[]=2&&Child[]=0&&Room1ChildAges=&&Room2ChildAges=&&Room3ChildAges=&&Room4ChildAges=&&Room5ChildAges=&&Room6ChildAges=&&Room7ChildAges=&&Room8ChildAges=&&Room9ChildAges=&&Room10ChildAges=&&contract_id=&providers=otelseasy&nationality=">
 								<div class="col-lg-4">
 									<div class="cuadro_intro_hover ">
-										<img class="img-responsive" src="<?php echo images_url().'uploads/gallery/'.$value->id.'/'.$value->Image1 ?>">
+										<img class="img-responsive"  style="height: 220px;"  src="<?php echo images_url().'uploads/gallery/'.$value->id.'/'.$value->Image1 ?>">
 										<div class="caption-text">
 		                                       <h3 class="news-title"><?php echo $value->hotel_name; ?></h3>
 		                               </div>
@@ -649,7 +649,7 @@ function currency_change(type){
 		                                    <div class="blur"></div>
 		                                    <div class="caption-text">
 		                                       <h3 class="news-title"></h3>
-		                                       <p class="news-dec"><?php echo strlen($value->hotel_description) > 200 ? mb_substr($value->hotel_description,0,200).'..' : $value->hotel_description ; ?></p>
+		                                       <p class="news-dec"><?php echo strlen($value->hotel_description) > 180 ? mb_substr($value->hotel_description,0,180).'..' : $value->hotel_description ; ?></p>
 		                                       <p class="news-dec text-left" style="text-indent: 10px;">Location : <?php echo $value->city; ?></p>
 		                                       <p class="news-dec text-left" style="text-indent: 10px;">Category :  <?php echo $star; ?></p>
 		                                    </div>

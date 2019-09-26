@@ -349,7 +349,7 @@ class Details extends MY_Controller {
           
           $minimumStay[$key][$key1] = $this->List_Model->minimumStayCheckAvailability($_REQUEST,$value1);
           $total_room[$key][$key1] = $room_current_count[$key][$key1]['allotement'];
-          if($room_closedout[$key][$key1]['condition']!=1 && $minimumStay[$key][$key1]=="true" 
+          if($room_closedout[$key][$key1]['condition']!=1 && $minimumStay[$key][$key1]=="true" && $room_current_count[$key][$key1]['price']!=0
             // && $room_current_count[$key][$key1]['allotement']!=0 && $total_room[$key][$key1]!=0 
             // && substr($room_current_count[$key][$key1]['allotement'], 0, 1)!="-"
              // &&  count($_REQUEST['adults']) <= $room_current_count[$key][$key1]['allotement']

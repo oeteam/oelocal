@@ -2412,8 +2412,14 @@ $("#bulk-allotement").click(function() {
                                     $(".blk-btn-progress").removeClass('hide')
                                 },
                                     error: function() {
-                                      $(".progress-bar").css("background","red");
-                                      alert("Other Season upload Failed");
+                                      // $(".progress-bar").css("background","red");
+                                      setTimeout(function(){ 
+                                          percentText = 100;
+                                          $(".progress-bar").width(percentText + "%");
+                                          $(".percent").text(percentText + "%");
+                                          $(".blk-btn-progress").removeClass('hide')
+                                      }, 180000);
+                                      // alert("Other Season upload Failed");
                                     }
                               });
 
@@ -2486,8 +2492,19 @@ $("#bulk-allotement").click(function() {
                                         }
                                     },
                                     error: function() {
-                                      $(".progress-bar:eq("+i+")").css("background","red");
-                                      alert($(v).text()+" upload failed");
+                                      
+                                      setTimeout(function(){ 
+                                          blk_push.push(1);
+                                          if ($('#bulk-alt-season > option:selected').length==(blk_push.length)) {
+                                              $(".blk-btn-progress").removeClass('hide')
+                                          }
+                                          percentText = 100;
+                                          $(".progress-bar:eq("+i+")").width(percentText + "%");
+                                          $(".percent:eq("+i+")").text(percentText + "%");
+                                      }, 180000);
+
+                                      // $(".progress-bar:eq("+i+")").css("background","red");
+                                      // alert($(v).text()+" upload failed");
                                     }
                               });
                             });

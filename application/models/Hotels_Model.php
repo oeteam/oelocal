@@ -6652,11 +6652,11 @@ class Hotels_Model extends CI_Model {
         $this->db->from('hotel_tbl_contract');
         $this->db->where('hotel_id',$id);
         $this->db->where('Created_By','');
-        if ($filter==0) {
-        	$this->db->where('to_date <',date('Y-m-d'));
-        } else {
-        	$this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
-        }
+        // if ($filter==0) {
+        // 	$this->db->where('to_date <',date('Y-m-d'));
+        // } else {
+        // 	$this->db->where('to_date >',date('Y-m-d', strtotime('-1 days')));
+        // }
         $query=$this->db->get();
 		return $query;
     }
