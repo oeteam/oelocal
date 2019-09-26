@@ -3542,34 +3542,31 @@ class Hotels extends MY_Controller {
         echo json_encode($Return);
     }
     public function trending_hotels() {
-		// $displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
-		// if (count($displayMenu)!=0 && $displayMenu[0]->view==1) {
-     			$this->load->view('backend/hotels/trending_hotels'); 
-    	// } else {
-     //  			redirect(base_url().'backend/dashboard');
-    	// }  		
+		$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Trending Hotels'); 
+		if (count($displayMenu)!=0 && $displayMenu[0]->view==1) {
+     		$this->load->view('backend/hotels/trending_hotels'); 
+    	} else {
+      		redirect(base_url().'backend/dashboard');
+    	}  		
 	}
 	public function trendingAdd() {
 		$data['edit'] = array();
 	    $data['view']= $this->Hotels_Model->hotel_select();
-		//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+		$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Trending Hotels'); 
 		if (isset($_REQUEST['id'])) {
-			// $data['edit']= $this->Hotels_Model->TrendingEdit($_REQUEST['id']);
-			//if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+			if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
 				$Trendinglist = $this->Hotels_Model->Trendinglist();
 				$data['edit'] = $Trendinglist->result();
 				$this->load->view('backend/hotels/trendingAdd',$data);
-			// } else {
-			// 	redirect(base_url().'backend/dashboard');
-			// }
+			} else {
+				redirect(base_url().'backend/dashboard');
+			}
 		} else {
-		// 	if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
-				$Trendinglist = $this->Hotels_Model->Trendinglist();
-				$data['edit'] = $Trendinglist->result();
+			if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
 				$this->load->view('backend/hotels/trendingAdd',$data);
-		// 	} else {
-		// 		redirect(base_url().'backend/dashboard');
-		// 	}
+			} else {
+				redirect(base_url().'backend/dashboard');
+			}
 		}		
 	}
 	public function add_trending_hotels(){
@@ -3577,7 +3574,7 @@ class Hotels extends MY_Controller {
 	  if(isset($_REQUEST['trendEdit'])&& $_REQUEST['trendEdit']!="") {
 	  	$description = 'Trending Hotels updated [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', Set 5 Hotel ID: '.$_REQUEST['hotel5text'].', Set 6 Hotel ID: '.$_REQUEST['hotel6text'].', ID: '.$_REQUEST['trendEdit'].']';
       } else {
-    	$description = 'New Trending Hotels added [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', Set 45Hotel ID: '.$_REQUEST['hotel5text'].', Set 6 Hotel ID: '.$_REQUEST['hotel6text'].']';
+    	$description = 'New Trending Hotels added [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', Set 5Hotel ID: '.$_REQUEST['hotel5text'].', Set 6 Hotel ID: '.$_REQUEST['hotel6text'].']';
       }
       AdminlogActivity($description);
 	  redirect(base_url().'backend/hotels/trending_hotels');
@@ -3593,12 +3590,17 @@ class Hotels extends MY_Controller {
 		$length = intval($this->input->get("length"));
 		$Trendinglist = $this->Hotels_Model->Trendinglist();
 		foreach($Trendinglist->result() as $key => $r) {
-			//$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
-			//if($displayMenu[0]->edit!=0){
+			$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Display Management'); 
+			if($displayMenu[0]->edit!=0){
 			$edit='<a href="trendingAdd?id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-			// }else{
-	  	//           $edit="";
-	  //       }		
+			}else{
+	  	          $edit="";
+	        }	
+	  		if($displayMenu[0]->delete!=0){
+				$delete='<a href="#" onclick="Trendinghoteldeletefun('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-trash-o red" aria-hidden="true"></i></a>';
+			}else{
+	            $delete="";
+	        }		
 			$hotelsname = array();
 	       	$hotels = explode(",", $r->hotelid);
 	       	foreach ($hotels as $exakey => $exavalue) {
@@ -3621,6 +3623,125 @@ class Hotels extends MY_Controller {
 		);
 	  echo json_encode($output);
 	  exit();
+	}
+	public function Trendingdelete() {
+		if ($this->session->userdata('name')=="") {
+			redirect("../backend/");
+		}
+		$result = $this->Hotels_Model->Trendingdelete($_REQUEST['delete_id']);
+		if ($result==true) {
+			$Return['error'] = "Deleted Successfully";
+      		$Return['color'] = 'green';
+      		$Return['status'] = '1';
+      		$Return['table'] = 'Trending_hotel_list_table';
+      		$description = 'Trending hotel list Deleted [ID:'.$_REQUEST['delete_id'].']';
+    		AdminlogActivity($description);
+		} else {
+			$Return['error'] = "Deleted Unsuccessfully!";
+      		$Return['color'] = 'red';
+		}
+        echo json_encode($Return);
+	}
+	public function homepage_banner() {
+		$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Homepage Banner'); 
+		if (count($displayMenu)!=0 && $displayMenu[0]->view==1) {
+     		$this->load->view('backend/hotels/homepage_banner'); 
+    	} else {
+      		redirect(base_url().'backend/dashboard');
+    	}  		
+	}
+	public function homebannerAdd() {
+		$data['edit'] = array();
+	    $data['view']= $this->Hotels_Model->hotel_select();
+		$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Homepage Banner'); 
+		if (isset($_REQUEST['id'])) {
+			if (count($displayMenu)!=0 && $displayMenu[0]->edit==1) {
+				$homebannerList = $this->Hotels_Model->homebannerList();
+				$data['edit'] = $homebannerList->result();
+				$this->load->view('backend/hotels/homebannerAdd',$data);
+			} else {
+				redirect(base_url().'backend/dashboard');
+			}
+		} else {
+			if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$this->load->view('backend/hotels/homebannerAdd',$data);
+			} else {
+				redirect(base_url().'backend/dashboard');
+			}
+		}		
+	}
+	public function add_homepage_banners(){
+	  $id = $this->Hotels_Model->bannerSubmit($_REQUEST);
+	  if(isset($_REQUEST['bannerEdit'])&& $_REQUEST['bannerEdit']!="") {
+	  	$description = 'Homepage banners updated [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].', ID: '.$_REQUEST['trendEdit'].']';
+      } else {
+    	$description = 'New homepage banners added [Set1 Hotel ID: '.$_REQUEST['hotel1text'].', Set 2 Hotel ID: '.$_REQUEST['hotel2text'].', Set 3 Hotel ID: '.$_REQUEST['hotel3text'].', Set 4 Hotel ID: '.$_REQUEST['hotel4text'].']';
+      }
+      AdminlogActivity($description);
+	  redirect(base_url().'backend/hotels/homepage_banner');
+	}
+	public function Bannerlist() {
+		if ($this->session->userdata('name')==""){
+			redirect("../backend/");
+		}
+		$data = array();
+		// Datatables Variables
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+		$homebannerList = $this->Hotels_Model->homebannerList();
+		foreach($homebannerList->result() as $key => $r) {
+			$displayMenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Homepage Banner'); 
+			if($displayMenu[0]->edit!=0){
+			$edit='<a href="homebannerAdd?id='.$r->id.'" class="sb2-2-1-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+			}else{
+	  	          $edit="";
+	        }	
+	  		if($displayMenu[0]->delete!=0){
+				$delete='<a href="#" onclick="Homebannerdeletefun('.$r->id.');" data-toggle="modal" data-target="#myModal" class="sb2-2-1-edit delete"><i class="fa fa-trash-o red" aria-hidden="true"></i></a>';
+			}else{
+	            $delete="";
+	        }		
+			$hotelsname = array();
+	       	$hotels = explode(",", $r->hotelid);
+	       	foreach ($hotels as $exakey => $exavalue) {
+	       		$hotelsname[$exakey] = $this->Hotels_Model->gethotelname($exavalue);
+	       	}
+	       	$impHotelName[$key] =  implode(",", $hotelsname);
+
+			$data[] = array(
+				$key+1,
+				$impHotelName[$key],
+				$r->set,
+				$edit.$delete,
+			);
+      	}
+		$output = array(
+		   	"draw" 			=> $draw,
+			"recordsTotal" 	=> $homebannerList->num_rows(),
+			"recordsFiltered" => $homebannerList->num_rows(),
+			"data" => $data
+		);
+	  echo json_encode($output);
+	  exit();
+	}
+	public function Bannerdelete() {
+		if ($this->session->userdata('name')=="") {
+			redirect("../backend/");
+		}
+		$result = $this->Hotels_Model->Bannerdelete($_REQUEST['delete_id']);
+		if ($result==true) {
+			$Return['error'] = "Deleted Successfully";
+      		$Return['color'] = 'green';
+      		$Return['status'] = '1';
+      		$Return['table'] = 'home_banner_list_table';
+      		$description = 'Homepage banner list Deleted [ID:'.$_REQUEST['delete_id'].']';
+    		AdminlogActivity($description);
+		} else {
+			$Return['error'] = "Deleted Unsuccessfully!";
+      		$Return['color'] = 'red';
+		}
+        echo json_encode($Return);
 	}
 }
 
