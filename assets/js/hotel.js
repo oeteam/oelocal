@@ -704,6 +704,18 @@ var hotel_id = $("#hotel_id").val();
                 $('[data-toggle="tooltip"]').tooltip();          
                 }
               });
+          } else if(response.table == "Trending_hotel_list_table") {
+            var trendingHotels_list_table = $("#trendingHotels_list_table").dataTable({
+                    "bDestroy": true,
+                    "ajax": {
+                        url : base_url+'/backend/Hotels/Trendinglist',
+                        type : 'POST'
+
+                    },
+                "fnDrawCallback": function(settings){
+                $('[data-toggle="tooltip"]').tooltip();          
+                }
+              });
           } else {
               room_type_table.api().ajax.reload(function(){ 
                 addToast(response.error,response.color);
@@ -2701,6 +2713,9 @@ function discountdeletefun(id) {
 }
 function Displaydeletefun(id) {
   deletepopupfun(base_url+"backend/hotels/Displaydelete",id);
+}
+function Trendinghoteldeletefun(id) {
+  deletepopupfun(base_url+"backend/hotels/Trendingdelete",id);
 }
 function ValidateFileUpload() {
         var fuData = document.getElementById('room_image');

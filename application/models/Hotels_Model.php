@@ -6685,6 +6685,11 @@ class Hotels_Model extends CI_Model {
 	    $query=$this->db->get()->result();
 		return $query;
     }
+    public function Trendingdelete($id) {
+		$this->db->where('id',$id);
+		$this->db->delete('hotel_tbl_trending');
+		return true;
+	}
 }		
 
 
