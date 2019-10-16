@@ -99,11 +99,14 @@ class lists extends MY_Controller {
                       $RequestType = 'On Request';
                       $btnColor = '#fb6330';
                     }
+                    $RequestType = 'More Rooms';
+                      $btnColor = 'green';
                     $request = 'RequestType='.$RequestType.'&hotel_id='.$value['HotelCode'].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'].'&countryname='.$_REQUEST['countryname'].'&hotel_name='.$_REQUEST['hotel_name'].'&citycode='.$_REQUEST['citycode'].'&cityname='.$_REQUEST['cityname'];    
                     // $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment?'.$request.'\',\''.str_replace("'", "", $value['HotelName']).'\',\''.str_replace("'", "", $value['HotelAddress']).'\',\''.$value['HotelPicture'].'\',\''.$value['HotelCode'].'\','.$value['Rating'].')" style="background:'.$btnColor.';border-bottom: 2px solid '.$btnColor.';cursor:pointer" href="#" class="hotel-view-btn">'.$RequestType.'</a>';
                     $BookBtn = '<a  style="background:'.$btnColor.';border-bottom: 2px solid '.$btnColor.';cursor:pointer" target="_blank" href="'.base_url().'payment?'.$request.'" class="hotel-view-btn">'.$RequestType.'</a>';
 
                     $HotelRequest = base_url().'details?search_id='.$value['HotelCode'].'&mark_up=&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&providers=otelseasy'.'&location='.$_REQUEST['location'].'&countryname='.$_REQUEST['countryname'].'&hotel_name='.$_REQUEST['hotel_name'].'&citycode='.$_REQUEST['citycode'].'&cityname='.$_REQUEST['cityname'];
+                    $HotelRequest = '#';
                     if (!is_numeric($value['oldPrice'])) {
                       $value['oldPrice'] = 0;
                     }
@@ -263,7 +266,7 @@ class lists extends MY_Controller {
             <a href="'.$value->HotelPicture.'"  data-title="'.$value->HotelName.'" data-gallery="multiimages" data-toggle="lightbox"><img src="'.$value->HotelPicture.'"  alt=""/></a>
             <div class="liover"></div>
             <a class="fav-icon" href="#" onclick="favourite_add('.$this->session->userdata("agent_id").','.$value->HotelCode.')"></a>
-            <a class="book-icon" target="'.$target.'" href="'.$reqDetails.'"></a>
+            <a class="book-icon"  href="'.$reqDetails.'"></a>
             </div>
             </div>
             <div class="col-md-9 offset-0">
@@ -283,7 +286,7 @@ class lists extends MY_Controller {
             '.$moreDetails.'
             </div>
             <div class="labelleft2">      
-            <a  target="'.$target.'" class="'.$reqClass.'" href="'.$reqDetails.'"><H3>'.$value->HotelName.'</H3></a>
+            <span  class="'.$reqClass.'" href="'.$reqDetails.'"><H3>'.$value->HotelName.'</H3></span>
             '.$value->RatingImg.'
             <p class="grey">'.utf8_encode($HotelDescription[$key]).'</p><br/>
             <ul class="hotelpreferences--search">
@@ -309,7 +312,7 @@ class lists extends MY_Controller {
           <a href="'.$value->HotelPicture.'"  data-title="'.$value->HotelName.'" data-gallery="multiimages" data-toggle="lightbox"><img src="'.$value->HotelPicture.'"  alt=""/></a>
           <div class="liover"></div>
           <a class="fav-icon" href="#" onclick="favourite_add('.$this->session->userdata("agent_id").','.$value->HotelCode.')"></a>
-          <a class="book-icon" target="_blank" href="'.$reqDetails.'"></a>
+          <a class="book-icon"  href="'.$reqDetails.'"></a>
           </div>
           <div class="itemlabel">
           <div class="right mt1" style="top:-19px;">
@@ -326,7 +329,7 @@ class lists extends MY_Controller {
             <a href="'.$value->HotelPicture.'"  data-title="'.$value->HotelName.'" data-gallery="multiimages" data-toggle="lightbox"><img src="'.$value->HotelPicture.'"  alt=""/></a>
             <div class="liover"></div>
             <a class="fav-icon" href="#" onclick="favourite_add('.$this->session->userdata("agent_id").','.$value->HotelCode.')"></a>
-            <a class="book-icon" target="'.$target.'" href="'.$reqDetails.'"></a>
+            <a class="book-icon"  href="'.$reqDetails.'"></a>
             </div>
             </div>
             <div class="col-md-9 col-xs-8 offset-0">
@@ -338,7 +341,7 @@ class lists extends MY_Controller {
             '.$value->BookBtn.'
             </div>
             <div class="labelleft2">      
-            <a  target="'.$target.'" class="'.$reqClass.'" href="'.$reqDetails.'"><H3 style="font-size:11px;">'.$value->HotelName.'</H3></a>
+            <span class="'.$reqClass.'" href="'.$reqDetails.'"><H3 style="font-size:11px;">'.$value->HotelName.'</H3></span>
             '.$value->RatingImg.'
             <img src="'.$value->ReviewImg.'" class="review-sm" width="70" alt=""/>
             <ul class="hotelpreferences--search">
@@ -360,7 +363,7 @@ class lists extends MY_Controller {
           <a href="'.$value->HotelPicture.'"  data-title="'.$value->HotelName.'" data-gallery="multiimages" data-toggle="lightbox"><img src="'.$value->HotelPicture.'"  alt=""/></a>
           <div class="liover"></div>
           <a class="fav-icon" href="#"></a>
-          <a class="book-icon" target="_blank" href="'.$reqDetails.'"></a>
+          <a class="book-icon" href="'.$reqDetails.'"></a>
           </div>
           <div class="itemlabel2">
           <div class="labelright">

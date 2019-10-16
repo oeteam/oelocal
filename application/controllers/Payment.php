@@ -638,7 +638,14 @@ class Payment extends MY_Controller {
                   
                   
                   </style>';
-        $total_markup = $data[0]->agent_markup+$data[0]->admin_markup+$data[0]->search_markup;
+        $revenueMarkup = explode(",", $data[0]->revenueMarkup);
+        $revenueExtrabedMarkup = explode(",", $data[0]->revenueExtrabedMarkup);
+        $revenueExtrabedMarkupType = explode(",", $data[0]->revenueExtrabedMarkupType);
+        $revenueBoardMarkup = explode(",", $data[0]->revenueBoardMarkup);
+        $revenueBoardMarkupType = explode(",", $data[0]->revenueBoardMarkupType);
+        $revenueGeneralMarkupType = explode(",", $data[0]->revenueGeneralMarkupType);
+        $revenueGeneralMarkup = explode(",", $data[0]->revenueGeneralMarkup);
+
         $book_room_count = $data[0]->book_room_count;
         $individual_amount = explode(",", $data[0]->individual_amount);
         $individual_discount = explode(",", $data[0]->individual_discount);
@@ -658,7 +665,17 @@ class Payment extends MY_Controller {
         $amenddata = $this->Payment_Model->getamendmentdata($_REQUEST['id']);
 
         $ExBed =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
+
+        $boardName = explode(",", $data[0]->boardName);
+        $contract_id = explode(",", $data[0]->contract_id);
+        $admin_markup = explode(",", $data[0]->admin_markup);
         for ($i=1; $i <= $book_room_count; $i++) {
+          if (isset($admin_markup[$i-1])) {
+            $total_markup = $data[0]->agent_markup+$admin_markup[$i-1]+$data[0]->search_markup;
+          } else {
+            $total_markup = $data[0]->agent_markup+$admin_markup[0]+$data[0]->search_markup;
+          }
+
           if(isset($amenddata)&&$amenddata!="") { 
             foreach ($amenddata as $key => $value) {
               if ( $value->status==1) {
@@ -768,11 +785,22 @@ class Payment extends MY_Controller {
             $individual_amount1[$j] = $individual_amount[$j];
           }
           $rmAmount = 0;
-          if ($data[0]->revenueMarkup!="" && $data[0]->revenueMarkup!=0) {
-            if ($data[0]->revenueMarkupType=='Percentage') {
-              $rmAmount = ($individual_amount1[$j]*$data[0]->revenueMarkup)/100;
-            } else {
-              $rmAmount = $data[0]->revenueMarkup;
+          if (isset($revenueMarkup[$i-1])) {
+            if ($revenueMarkup[$i-1]!="" && $revenueMarkup[$i-1]!=0) {
+              if ($revenueMarkupType[$i-1]=='Percentage') {
+                $rmAmount = ($individual_amount1[$j]*$revenueMarkup[$i-1])/100;
+              } else {
+                $rmAmount = $revenueMarkup[$i-1];
+              }
+            }
+
+          } else {
+            if ($revenueMarkup[0]!="" && $revenueMarkup[0]!=0) {
+              if ($revenueMarkupType[0]=='Percentage') {
+                $rmAmount = ($individual_amount1[$j]*$revenueMarkup[0])/100;
+              } else {
+                $rmAmount = $revenueMarkup[0];
+              }
             }
           }
           $roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
@@ -781,7 +809,7 @@ class Payment extends MY_Controller {
           $tb51 .='<tr>
                     <td>'.date('d/m/Y', strtotime($data[0]->check_in. ' + '.$j.'  days')).'</td>
                     <td style="text-align:left">'.$RoomName.'</td>
-                    <td>'.$data[0]->boardName.'</td>
+                    <td>'.$boardName[$i-1].'</td>
                     <td style="text-align: right">';
                     if ($individual_discount[$j]!=0) {
                       $tb51 .='<small style="color:red;text-decoration:line-through">'.currency_type(agent_currency(),$roomAmount[$j]).' '.agent_currency().'</small>
@@ -800,18 +828,36 @@ class Payment extends MY_Controller {
                   foreach ($exroomExplode as $Exrkey => $EXRvalue) {
                     if ($EXRvalue==$i) { 
                       $ExMAmount = 0;
-                      if ($data[0]->revenueMarkup!="") {
-                        if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
-                          if ($data[0]->revenueExtrabedMarkupType=='Percentage') {
-                            $ExMAmount = ($examountExplode[$Exrkey]*$data[0]->revenueExtrabedMarkup)/100;
+                      if (isset($revenueMarkup[$i-1])) {
+                        if ($revenueMarkup[$i-1]!="") {
+                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                            if ($revenueExtrabedMarkupType[$i-1]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[$i-1])/100;
+                            } else {
+                              $ExMAmount = $revenueExtrabedMarkup[$i-1];
+                            }
                           } else {
-                            $ExMAmount = $data[0]->revenueExtrabedMarkup;
+                            if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[$i-1])/100;
+                            } else {
+                              $ExMAmount = $revenueBoardMarkup[$i-1];
+                            }
                           }
-                        } else {
-                          if ($data[0]->revenueBoardMarkupType=='Percentage') {
-                            $ExMAmount = ($examountExplode[$Exrkey]*$data[0]->revenueBoardMarkup)/100;
+                        }
+                      } else {
+                        if ($revenueMarkup[0]!="") {
+                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                            if ($revenueExtrabedMarkupType[0]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[0])/100;
+                            } else {
+                              $ExMAmount = $revenueExtrabedMarkup[0];
+                            }
                           } else {
-                            $ExMAmount = $data[0]->revenueBoardMarkup;
+                            if ($revenueBoardMarkupType[0]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[0])/100;
+                            } else {
+                              $ExMAmount = $revenueBoardMarkup[0];
+                            }
                           }
                         }
                       }
@@ -846,11 +892,21 @@ class Payment extends MY_Controller {
                   foreach ($gsadultExplode as $gsakey => $gsavalue) {
                     if ($gsavalue==$i) {
                       $GSMAmount = 0;
-                      if ($data[0]->revenueMarkup!="") {
-                        if ($data[0]->revenueGeneralMarkupType=='Percentage') {
-                          $GSMAmount = ($gsadultAmountExplode[$gsakey]*$data[0]->revenueGeneralMarkup)/100;
-                        } else {
-                          $GSMAmount = $data[0]->revenueGeneralMarkup;
+                      if (isset($revenueMarkup[$i-1])) {
+                        if ($revenueGeneralMarkup[$i-1]!="") {
+                          if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+                            $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[$i-1])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[$i-1];
+                          }
+                        }
+                      } else {
+                        if ($revenueGeneralMarkup[0]!="") {
+                          if ($revenueGeneralMarkupType[0]=='Percentage') {
+                            $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[0])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[0];
+                          }
                         }
                       }
                       $GSDis = 0;
@@ -858,9 +914,14 @@ class Payment extends MY_Controller {
                         $GSDis = $individual_discount[$j];
                       }
                       $GAamount[$j] = (($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount-(((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)*$GSDis/100);
+                      if ($gsvalue->application=="Per Room") {
+                        $generalType = $gsvalue->generalType;
+                      } else {
+                        $generalType = 'Adults '.$gsvalue->generalType;
+                      }
                       $tb51 .= '<tr>
                             <td></td>
-                            <td style="text-align:left">'.$gsvalue->application=="Per Room" ? $gsvalue->generalType : 'Adults '.$gsvalue->generalType.'</td>
+                            <td style="text-align:left">'.$generalType.'</td>
                             <td>-</td>
                             <td style="text-align:right">';
                               if ($GSDis!=0) {
@@ -877,11 +938,21 @@ class Payment extends MY_Controller {
                  foreach ($gschildExplode as $gsckey => $gscvalue) {
                       if ($gscvalue==$i) {
                         $GSMAmount = 0;
-                        if ($data[0]->revenueMarkup!="") {
-                          if ($data[0]->revenueGeneralMarkupType=='Percentage') {
-                            $GSMAmount = ($gschildAmountExplode[$gsckey]*$data[0]->revenueGeneralMarkup)/100;
-                          } else {
-                            $GSMAmount = $data[0]->revenueGeneralMarkup;
+                        if (isset($revenueMarkup[$i-1])) {
+                          if ($revenueGeneralMarkup[$i-1]!="") {
+                            if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+                              $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[$i-1])/100;
+                            } else {
+                              $GSMAmount = $revenueGeneralMarkup[$i-1];
+                            }
+                          }
+                        } else {
+                          if ($revenueGeneralMarkup[0]!="") {
+                            if ($revenueGeneralMarkupType[0]=='Percentage') {
+                              $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[0])/100;
+                            } else {
+                              $GSMAmount = $revenueGeneralMarkup[0];
+                            }
                           }
                         }
                         $GSDis = 0;
@@ -917,11 +988,21 @@ class Payment extends MY_Controller {
                 foreach ($ABRwadultexplode as $ABRwkey => $ABRwvalue) {
                   if ($ABRwvalue==$i) {
                     $BSMAmount = 0;
-                    if ($data[0]->revenueMarkup!="") {
-                      if ($data[0]->revenueBoardMarkupType=='Percentage') {
-                        $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$data[0]->revenueBoardMarkup)/100;
-                      } else {
-                        $BSMAmount = $data[0]->revenueBoardMarkup*$ABReqwadultexplode[$ABRwkey];
+                    if (isset($revenueMarkup[$i-1])) {
+                      if ($revenueBoardMarkup[$i-1]!="") {
+                        if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+                          $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[$i-1])/100;
+                        } else {
+                          $BSMAmount = $revenueBoardMarkup[$i-1]*$ABReqwadultexplode[$ABRwkey];
+                        }
+                      }
+                    } else {
+                      if ($revenueBoardMarkup[0]!="") {
+                        if ($revenueBoardMarkupType[0]=='Percentage') {
+                          $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[0])/100;
+                        } else {
+                          $BSMAmount = $revenueBoardMarkup[0]*$ABReqwadultexplode[$ABRwkey];
+                        }
                       }
                     }
                     $BSDis = 0;
@@ -952,11 +1033,21 @@ class Payment extends MY_Controller {
                 foreach ($CBRwchildexplode as $CBRwkey => $CBRwvalue) {
                   if ($CBRwvalue==$i) {
                     $BSMAmount = 0;
-                    if ($view[0]->revenueMarkup!="") {
-                      if ($view[0]->revenueBoardMarkupType=='Percentage') {
-                        $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$view[0]->revenueBoardMarkup)/100;
-                      } else {
-                        $BSMAmount = $view[0]->revenueBoardMarkup*$CBReqwchildexplode[$CBRwkey];
+                    if (isset($revenueMarkup[$i-1])) {
+                      if ($revenueBoardMarkup[$i-1]!="") {
+                        if ($revenueBoardMarkupType[$i-1] == 'Percentage') {
+                          $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[$i-1])/100;
+                        } else {
+                          $BSMAmount = $revenueBoardMarkup[$i-1]*$CBReqwchildexplode[$CBRwkey];
+                        }
+                      }
+                    } else {
+                      if ($revenueBoardMarkup[0]!="") {
+                        if ($revenueBoardMarkupType[0] == 'Percentage') {
+                          $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[0])/100;
+                        } else {
+                          $BSMAmount = $revenueBoardMarkup[0]*$CBReqwchildexplode[$CBRwkey];
+                        }
                       }
                     }
                     $BSDis = 0;
@@ -1498,6 +1589,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
 
        $ExBed =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
        $roomExp = explode(",", $data[0]->room_id);
+       $boardName = explode(",", $data[0]->boardName);
         for ($i=1; $i <= $book_room_count; $i++) {
                 if (!isset($roomExp[$i-1])) {
                   $room_id = $roomExp[0];
@@ -1532,7 +1624,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     $tb51 .='<tr>
                               <td>'.date('d/m/Y', strtotime($data[0]->check_in. ' + '.$j.'  days')).'</td>
                               <td style="text-align:left">'.$RoomName.'</td>
-                              <td>'.$data[0]->boardName.'</td>
+                              <td>'.$boardName[$i-1].'</td>
                             </tr>';
                     // Room only Rate end
                     // Extrabed list start
@@ -1561,10 +1653,14 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                             foreach ($gsadultExplode as $gsakey => $gsavalue) {
                               if ($gsavalue==$i) {
                                 $GAamount[$j] = (($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey];
-
+                                  if ($gsvalue->application=="Per Room") {
+                                    $generalType = $gsvalue->generalType;
+                                  } else {
+                                    $generalType = 'Adults '.$gsvalue->generalType;
+                                  }
                                   $tb51 .= '<tr>
                                         <td></td>
-                                        <td style="text-align:left">'.$gsvalue->application=="Per Room" ? $gsvalue->generalType : 'Adults '.$gsvalue->generalType.'</td>
+                                        <td style="text-align:left">'.$generalType.'</td>
                                         <td>-</td>
                                         </tr>';
                                 } 
@@ -1739,13 +1835,14 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       echo json_encode(true);
     }
     public function dummy() {
-      $this->output->enable_profiler(TRUE);
-      $sections = array(
-        'config'  => TRUE,
-        'queries' => TRUE
-      );
+     emailNotification('Booking','Accept',$this->session->userdata('agent_id'),'28','147','','0','On Requst');
+     //  $this->output->enable_profiler(TRUE);
+     //  $sections = array(
+     //    'config'  => TRUE,
+     //    'queries' => TRUE
+     //  );
 
-     $this->output->set_profiler_sections($sections);
+     // $this->output->set_profiler_sections($sections);
      // $this->benchmark->mark('starting_point');
      // $this->benchmark->mark('ending_point');
      
@@ -3769,29 +3866,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       // Get Markup start
       $agent_markup = mark_up_get();
       $agent_general_markup = general_mark_up_get();
-      $revenue_markup = revenue_markup1($data['hotel_id'],$data['contract_id'],$this->session->userdata('agent_id'));
-      $total_markup = $agent_markup+$agent_general_markup;
-      $admin_markup = $agent_general_markup;
-      $revenueType = '';
-      $revenue = 0;
-      $revenueExtrabed = 0;
-      $revenueGeneral = 0;
-      $revenueBoard = 0;
-      $revenueExtrabedType = '';
-      $revenueGeneralType = '';
-      $revenueBoardType = '';
-      if ($revenue_markup['Markup']!='') {
-        $total_markup = $agent_markup;
-        $admin_markup = 0;
-        $revenueType = $revenue_markup['Markuptype'];
-        $revenue = $revenue_markup['Markup'];
-        $revenueExtrabed = $revenue_markup['ExtrabedMarkup'];
-        $revenueGeneral = $revenue_markup['GeneralSupMarkup'];
-        $revenueBoard = $revenue_markup['BoardSupMarkup'];
-        $revenueExtrabedType = $revenue_markup['ExtrabedMarkuptype'];
-        $revenueGeneralType = $revenue_markup['GeneralSupMarkuptype'];
-        $revenueBoardType = $revenue_markup['BoardSupMarkuptype'];
-      }
+      
       // Get markup end
           
       // Roomwise data finding start
@@ -3818,6 +3893,34 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $arrRoomIndex = explode("-", $data['RoomIndex'][$i]);
         $RoomID[$i] = $arrRoomIndex[1]; 
         $ContractID[$i] = $arrRoomIndex[0]; 
+
+        // Get markup start
+        $revenue_markup = revenue_markup1($data['hotel_id'],$ContractID[$i],$this->session->userdata('agent_id'));
+
+        $total_markup[$i] = $agent_markup+$agent_general_markup;
+        $admin_markup[$i] = $agent_general_markup;
+        $revenueType[$i] = '';
+        $revenue[$i] = 0;
+        $revenueExtrabed[$i] = 0;
+        $revenueGeneral[$i] = 0;
+        $revenueBoard[$i] = 0;
+        $revenueExtrabedType[$i] = '';
+        $revenueGeneralType[$i] = '';
+        $revenueBoardType[$i] = '';
+        if ($revenue_markup['Markup']!='') {
+          $total_markup[$i] = $agent_markup;
+          $admin_markup[$i] = 0;
+          $revenueType[$i] = $revenue_markup['Markuptype'];
+          $revenue[$i] = $revenue_markup['Markup'];
+          $revenueExtrabed[$i] = $revenue_markup['ExtrabedMarkup'];
+          $revenueGeneral[$i] = $revenue_markup['GeneralSupMarkup'];
+          $revenueBoard[$i] = $revenue_markup['BoardSupMarkup'];
+          $revenueExtrabedType[$i] = $revenue_markup['ExtrabedMarkuptype'];
+          $revenueGeneralType[$i] = $revenue_markup['GeneralSupMarkuptype'];
+          $revenueBoardType[$i] = $revenue_markup['BoardSupMarkuptype'];
+        }
+
+        // Get markup end
 
         // Dicount value declaration start
         $discountGet = Alldiscount(date('Y-m-d',strtotime($data['Check_in'])),date('Y-m-d',strtotime($data['Check_out'])),$data['hotel_id'],$RoomID[$i],$ContractID[$i],'Room');
@@ -3966,14 +4069,14 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'Room4Discount' => isset($Room4Discount) ? $Room4Discount : 0,
               'Room5Discount' => isset($Room5Discount) ? $Room5Discount  : 0,
               'Room6Discount' => isset($Room6DiscountPercentage) ? $Room6DiscountPercentage : 0,
-              'revenueMarkupType' => $revenueType,
-              'revenueMarkup' => $revenue,
-              'revenueExtrabedMarkup' => $revenueExtrabed,
-              'revenueExtrabedMarkupType' => $revenueExtrabedType,
-              'revenueGeneralMarkup' => $revenueGeneral,
-              'revenueGeneralMarkupType' => $revenueGeneralType,
-              'revenueBoardMarkup' => $revenueBoard,
-              'revenueBoardMarkupType' => $revenueBoardType,
+              'revenueMarkupType' => implode(",", $revenueType),
+              'revenueMarkup' => implode(",", $revenue),
+              'revenueExtrabedMarkup' => implode(",", $revenueExtrabed),
+              'revenueExtrabedMarkupType' => implode(",", $revenueExtrabedType),
+              'revenueGeneralMarkup' => implode(",", $revenueGeneral),
+              'revenueGeneralMarkupType' => implode(",", $revenueGeneralType),
+              'revenueBoardMarkup' => implode(",", $revenueBoard),
+              'revenueBoardMarkupType' => implode(",", $revenueBoardType),
               'Room1individual_amount' => implode(",", $data['Room1per_day_amount']),
               'Room2individual_amount' => implode(",", $data['Room2per_day_amount']),
               'Room3individual_amount' => implode(",", $data['Room3per_day_amount']),
@@ -3996,7 +4099,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'adults_count' =>$data['adults'],
               'childs_count' =>$data['childs'],
               'agent_markup' =>$agent_markup,
-              'admin_markup' =>$admin_markup,
+              'admin_markup' => implode(",", $admin_markup),
               'check_in' => $data['Check_in'],
               'check_out' => $data['Check_out'],
               'no_of_days' => $tot_days,
@@ -4053,6 +4156,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $tmangchildamount = array();
         $implodechildcount = 0;
         $totalBsamount = 0;
+
         for ($i=0; $i < count($_REQUEST['reqadults']); $i++) { 
           $IndexSplit = explode("-", $data['RoomIndex'][$i]);
 
@@ -4132,7 +4236,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     $RwgChildamount[$key4] = "";
                   }
                   $Rwgsapplication[$key4] = $general[$i]['application'][$key3][$key4];
-                  $bkgeneralSupplementConfirm = $this->Payment_Model->bkgeneralSupplementConfirm($gstayDate, $gBookingDate, $generalType, $gadultamount[$key4] , $gchildamount[$key4], $agent_markup, $total_markup, $admin_markup,$insert_id,array_sum($data['reqadults']),array_sum($data['reqChild']),1,$Rwgadult[$key4],$Rwgchild[$key4],$RwgAdultamount[$key4],$RwgChildamount[$key4],$Rwgsapplication[$key4],$IndexSplit[1],$IndexSplit[0],($i+1));
+                  $bkgeneralSupplementConfirm = $this->Payment_Model->bkgeneralSupplementConfirm($gstayDate, $gBookingDate, $generalType, $gadultamount[$key4] , $gchildamount[$key4], $agent_markup, $total_markup[$i], $admin_markup[$i],$insert_id,array_sum($data['reqadults']),array_sum($data['reqChild']),1,$Rwgadult[$key4],$Rwgchild[$key4],$RwgAdultamount[$key4],$RwgChildamount[$key4],$Rwgsapplication[$key4],$IndexSplit[1],$IndexSplit[0],($i+1));
                 }
               }
             }
@@ -4166,7 +4270,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     $rwbchild = "";
                     $rwbchildamount = "";
                   }
-                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Breakfast', $dataBreakfast['adultsAmount'] , $dataBreakfast['ChildAge'], $dataBreakfast['ChildAmount'], $agent_markup, $total_markup, $admin_markup,$insert_id,$dataBreakfast['adultsCount'],'1',$rwbadults,$rwbadlutamount,$rwbchild,$rwbchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
+                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Breakfast', $dataBreakfast['adultsAmount'] , $dataBreakfast['ChildAge'], $dataBreakfast['ChildAmount'], $agent_markup, $total_markup[$i], $admin_markup[$i],$insert_id,$dataBreakfast['adultsCount'],'1',$rwbadults,$rwbadlutamount,$rwbchild,$rwbchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
                  }
               }
             }
@@ -4199,7 +4303,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                       $rwlchildamount = "";
                     }
 
-                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Lunch', $dataLunch['adultsAmount'] , $dataLunch['ChildAge'], $dataLunch['ChildAmount'], $agent_markup, $total_markup, $admin_markup,$insert_id,$dataLunch['adultsCount'],'1',$rwladults,$rwladlutamount,$rwlchild,$rwlchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
+                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Lunch', $dataLunch['adultsAmount'] , $dataLunch['ChildAge'], $dataLunch['ChildAmount'], $agent_markup, $total_markup[$i], $admin_markup[$i],$insert_id,$dataLunch['adultsCount'],'1',$rwladults,$rwladlutamount,$rwlchild,$rwlchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
                  }
                }
             }
@@ -4231,7 +4335,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                       $rwdchild = "";
                       $rwdchildamount = "";
                     }
-                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Dinner', $dataDinner['adultsAmount'] , $dataDinner['ChildAge'], $dataDinner['ChildAmount'], $agent_markup, $total_markup, $admin_markup,$insert_id,$dataDinner['adultsCount'],'1',$rwdadults,$rwdadlutamount,$rwdchild,$rwdchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
+                  $bkboardSupplementConfirm = $this->Payment_Model->bkboardSupplementConfirm($stdate[$j], $BookingDate, 'Dinner', $dataDinner['adultsAmount'] , $dataDinner['ChildAge'], $dataDinner['ChildAmount'], $agent_markup, $total_markup[$i], $admin_markup[$i],$insert_id,$dataDinner['adultsCount'],'1',$rwdadults,$rwdadlutamount,$rwdchild,$rwdchildamount,$IndexSplit[0],$IndexSplit[1],($i+1));
                  }
                }
             }
@@ -4260,6 +4364,40 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         //emailNotification('Booking','Accept',$this->session->userdata('agent_id'),$data['hotel_id'],$insert_id,'','',$data['RequestType']);
         $this->session->set_flashdata('message', 'Booked Successfully');
         redirect('../hotels');
+      }
+      public function room_details_view() {
+        $room_facilitiesdata = array();
+        $view = $this->Hotels_Model->hotel_detail_view_room_type($_REQUEST['id']);
+        $room_facilities = explode(",", $view[0]->room_facilities);
+        foreach ($room_facilities as $key => $value) {
+          $room_facilitiesdata[$key] = $this->List_Model->room_facilities_data($value);
+        }
+        
+
+        $return = '<div class="row">';
+        $return .= '<div class="col-md-12"><h4>'.$view[0]->room_name.' '.$view[0]->Room_Type.'</h4></div>';
+        if ($view[0]->images!="") {
+          $return .= '<div class="col-md-6"><img width="100%" src="'.base_url().'uploads/rooms/'.$view[0]->room_id.'/'.$view[0]->images.'"></img></div>';
+          
+        }
+        $return .= '<div class="col-md-6"><p>Max adults : '.$view[0]->occupancy.'</p>
+          <p>Max Children : '.$view[0]->occupancy_child.'</p>
+          </div>';
+        if(count($room_facilitiesdata)!=0) {
+          $return .= '<div class="clearfix"></div>
+           <div class="col-md-12">
+            <h4 class="text-green margtop25 text-justify">Basic Aminities<small class="right traveller-validate validated"></small></h4>
+            <ul class="checklist" style="margin:15px">';
+              foreach ($room_facilitiesdata as $key1 => $value3) {
+                $return .='<li>'.$value3[0]->Room_Facility.'</li>';
+              }
+          $return .= '</ul>
+          </div>';
+
+        }
+
+        $return .= '</div>';
+        echo $return;
       }
 }
 

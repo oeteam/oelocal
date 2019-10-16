@@ -1388,7 +1388,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     $general = $ci->Hotels_Model->general_booking_detail($booking_id);
 
     $book_room_count = $booking[0]->book_room_count;
-    $total_markup = $booking[0]->agent_markup+$booking[0]->admin_markup+$booking[0]->search_markup;
     $individual_amount = explode(",", $booking[0]->individual_amount);
     $individual_discount = explode(",", $booking[0]->individual_discount);
     $checkin_date=date_create($booking[0]->check_in);
@@ -1710,7 +1709,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     if ($booking[0]->board!="") {
       $board = 'Board : '.$booking[0]->board.'<br>';
     }
-    $total_markup = $booking[0]->agent_markup+$booking[0]->admin_markup;
 
     if ($booking[0]->booking_flag==2) {
       $subject = 'YOUR BOOKING IS CONFIRMED (BOOKING ID : '.$booking[0]->booking_id.')';     
@@ -1734,7 +1732,14 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
     if (count($cancellation)!=0) {
       $roomExp = explode(",", $booking[0]->room_id);
       $cancellationTerm.= '<p style="color: #b21105;font-weight: bold;">Cancellations / Amendments</p>';
+      $admin_markup = explode(",", $booking[0]->admin_markup);
       foreach ($roomExp as $key => $value) {
+        if (isset($admin_markup[$i-1])) {
+          $total_markup = $booking[0]->agent_markup+$admin_markup[$i-1]+$booking[0]->search_markup;
+        } else {
+          $total_markup = $booking[0]->agent_markup+$admin_markup[0]+$booking[0]->search_markup;
+        }
+
       $cancellationTerm.= '<h4 class="room-name" style="padding: 0px;margin: 0px;text-indent: 5px;">Room '.($key+1).'</h4>
       <table class="table-bordered" style="width:100%">
                     <thead style="background-color: #0074b9;">
@@ -1832,7 +1837,6 @@ function emailNotification($mailTYpe , $MailProcess, $agent_id,$hotel_id,$bookin
           
           $ci->email->subject($subject);
           $ci->email->message($message);
-          
           $ci->email->send();
           $ci->email->clear();
     /*Agent mail end*/

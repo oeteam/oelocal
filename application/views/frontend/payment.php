@@ -4,6 +4,13 @@
 ?> 
 <script type="text/javascript" src="<?php echo static_url(); ?>skin/js/payment.js"></script>
 <style>
+  .room-name-img {
+    color: red;
+    visibility:hidden;
+  }
+  .room-name:hover .room-name-img {
+    visibility:visible;
+  }
   .m-0 {
     margin: 0;
   }
@@ -645,6 +652,16 @@ function ConSelectFun(){
         }
     });
 }
+function room_details_view(id) {
+  $.ajax({
+        url: base_url+'payment/room_details_view?id='+id,
+        type: "POST",
+        data:{},
+        success:function(data) {
+          $("#RoomViewModal").find('.modal-body').html(data);
+        }
+    });
+}
 $(document).ready(function() {
    $(".details").on("click", function( e ) {
     
@@ -745,7 +762,7 @@ $(document).ready(function() {
 
               <div class="row">
                 <div class="col-sm-3">
-                  <img src="<?php echo images_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20 hidden-xs" width="100%" alt="">
+                  <img  src="<?php echo images_url();?>uploads/gallery/<?php echo $view[0]->id ?>/<?php echo $view[0]->Image1 ?>" class="margtop20 hidden-xs" width="100%" alt="">
                   <p><span class="bold"><?php echo $view[0]->hotel_name ?></span></p>
                   <p>
                     <?php if ($view[0]->rating==10) { ?>
@@ -813,9 +830,9 @@ $(document).ready(function() {
                         <a class="details htlbutton btn col-sm-4 col-xs-12" href="#map"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
                         <a class="details htlbutton btn col-sm-4 col-xs-12" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
                       </div>
-                      <div class="hidden-xs">
-                        <a class="details htlbutton btn" href="#hrooms" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
-                        <a class="details htlbutton btn" href="#details" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                      <div class="hidden-xs col-md-12">
+                        <a class="details htlbutton btn" href="#hrooms" style="width:20%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn" href="#details" style="width:19.6%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
                         <a class="details htlbutton btn" href="#gallery" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
                         <a class="details htlbutton btn" href="#map" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
                         <a class="details htlbutton btn" href="#other" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
@@ -863,82 +880,108 @@ $(document).ready(function() {
                         placeholder="Zip Code" value="<?php echo $agent_info[0]->Pincode ?>"><small class="required-msg">*required</small></div>
                   </div>
                   <!-- traveller details  -->
-                <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
-
                   <div class="row">
-                 <div class="col-sm-12 col-xs-12">
-                    <table class="table table-bordered guest-table">
-                      <thead>
-                        <tr>
-                          <th style="width: 5%" class="text-center">#</th>
-                            <th style="width: 30%">Adult/Children</th>
-                            <th style="width: 15%">Title</th>
-                            <th style="width: 25%">First Name</th>
-                            <th style="width: 25%">Last Name</th>
-                            <th style="width: 15%"class="text-center">Age</th>
-                        </tr>
-                      </thead>
-                      <tbody class="guesttbody">
-                        <?php for ($x=0; $x < count($_REQUEST['adults']); $x++) { 
-                         ?> 
-                        <tr class="room-no">
-                          <td class="text-center"><i class="fa fa-home"></i></td>
-                          <td colspan="5">Room <?php echo $x+1 ?></td>
-                        </tr>
-                        <?php for ($i=0; $i < $_REQUEST['adults'][$x] ; $i++) {  ?>
-                        <tr>
-                          <td class="text-center"><?php echo $i+1 ?></td>
-                          <td>Adult</td>
-                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo $x+1 ?>Adulttitle[]">
-                              <option value="Mr">Mr</option>
-                              <option value="Mrs">Mrs</option>
-                              <option value="Ms">Ms</option>
-                              <option value="Miss">Miss</option>
-                            </select></td>
-                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
-                            <small class="required-msg">*required</small></td>
-                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
-                            <small class="required-msg">*required</small></td>
-                          <td class="text-center"><input type="number" class="form-control validatecc validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
-                            <small class="required-msg">*required</small></td>
-                        </tr>
-                      <?php } ?>
-                      <?php for ($j=0; $j <$_REQUEST['Child'][$x] ; $j++) { ?>
-                        <tr>
-                          <td class="text-center"><?php echo $j+1 ?></td>
-                          <td>Child</td>
-                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
-                            <option value="Mr">Mr</option>
-                              <option value="Ms">Ms</option>
-                            </select></td>
-                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]"><small class="required-msg">*required</small></td>
-                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]"><small class="required-msg">*required</small></td>
-                          <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="reqroom<?php echo ($x+1)  ?>-childAge[]" value="<?php echo $_REQUEST['room'.($x+1).'-childAge'][$j] ?>" readonly><small class="required-msg">*required</small></td>
-                        </tr>
-                      <?php } ?>
-                      <?php } ?>
-                      </tbody>
-                    </table>
+                    <div class="col-md-10">
+                      <p class="pull-right margtop15">Please fill all traveller's details</p>
+                    </div> 
+                    <div class="col-md-2"> 
+                      <button type="button" data-toggle="modal" id="travellerModalButton" data-target="#travellerModal" class="btn btn-sm btn-primary pull-right margtop15">Add Traveller's</button>
+                    </div>
                   </div>
-                </div>
-
-                </div>
-
-              </div>
-
-            <div class="col-sm-12 ">
+                  <div class="col-sm-12 ">
             <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button id="Continue_book" type="button" name="Continue_book"class="bluebtn" style="margin-left: 5px">Continue</button><span>
             </h5>
             </div>
           </div>
+             <div class="modal fade " id="travellerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="width: 60%;">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Travellers Details <small class="right traveller-validate validated"></small></h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                       <div class="col-sm-12 col-xs-12" style="max-height: 350px;overflow-y: scroll;">
+                          <table class="table table-bordered guest-table">
+                            <thead>
+                              <tr>
+                                <th style="width: 5%" class="text-center">#</th>
+                                  <th style="width: 30%">Adult/Children</th>
+                                  <th style="width: 15%">Title</th>
+                                  <th style="width: 25%">First Name</th>
+                                  <th style="width: 25%">Last Name</th>
+                                  <th style="width: 15%"class="text-center">Age</th>
+                              </tr>
+                            </thead>
+                            <tbody class="guesttbody">
+                              <?php for ($x=0; $x < count($_REQUEST['adults']); $x++) { 
+                               ?> 
+                              <tr class="room-no">
+                                <td class="text-center"><i class="fa fa-home"></i></td>
+                                <td colspan="5">Room <?php echo $x+1 ?></td>
+                              </tr>
+                              <?php for ($i=0; $i < $_REQUEST['adults'][$x] ; $i++) {  ?>
+                              <tr>
+                                <td class="text-center"><?php echo $i+1 ?></td>
+                                <td>Adult</td>
+                                <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo $x+1 ?>Adulttitle[]">
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Ms">Ms</option>
+                                    <option value="Miss">Miss</option>
+                                  </select></td>
+                                <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
+                                  <small class="required-msg">*required</small></td>
+                                <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
+                                  <small class="required-msg">*required</small></td>
+                                <td class="text-center"><input type="number" class="form-control validatecc validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+                                  <small class="required-msg">*required</small></td>
+                              </tr>
+                            <?php } ?>
+                            <?php for ($j=0; $j <$_REQUEST['Child'][$x] ; $j++) { ?>
+                              <tr>
+                                <td class="text-center"><?php echo $j+1 ?></td>
+                                <td>Child</td>
+                                <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
+                                  <option value="Mr">Mr</option>
+                                    <option value="Ms">Ms</option>
+                                  </select></td>
+                                <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]"><small class="required-msg">*required</small></td>
+                                <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]"><small class="required-msg">*required</small></td>
+                                <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="reqroom<?php echo ($x+1)  ?>-childAge[]" value="<?php echo $_REQUEST['room'.($x+1).'-childAge'][$j] ?>" readonly><small class="required-msg">*required</small></td>
+                              </tr>
+                            <?php } ?>
+                            <?php } ?>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="row"> 
+                         <div class="col-sm-12 col-xs-12">
+                           <button type="button" class="btn btn-sm btn-primary margtop10 pull-right" id="travellerSubmit">Submit</button>
+                         </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            </div>
+
+            
               <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
               <div class="row r-type margtop10" id="hrooms">
                 <?php $div = 12/count($_REQUEST['adults']);
                 for ($i=0; $i < count($_REQUEST['adults']) ; $i++) { ?> 
                 <div class="col-sm-<?php echo $div ?> r-type--room">
-                  <h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
+                 <h5>Room <?php echo $i+1 ?> (Adult <?php echo $_REQUEST['adults'][$i] ?><?php echo $_REQUEST['Child'][$i]!="" && $_REQUEST['Child'][$i]!=0 ? ' Child '.$_REQUEST['Child'][$i] : '' ?>)</h5>
                   <ul class="list-unstyled r-type--list margtop10">
                     <?php 
                     foreach ($rooms[$i] as $key => $value) { 
@@ -952,7 +995,7 @@ $(document).ready(function() {
                     <input type="radio" <?php echo $checked; ?> name="Room<?php echo $i+1 ?>" id="Room<?php echo $i+1 ?><?php echo $value->RoomIndex ?>" value="<?php echo $value->RoomIndex ?>">
                         
                         <div class="av-div availability <?php echo $value->RequestType!="Book" ? 'on-req' : '' ?>">
-                          <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i><?php echo $value->RoomName ?> - <?php echo $value->board ?> 
+                          <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green"></i> <span class="room-name"><?php echo $value->RoomName ?> - <?php echo $value->board ?> <span class="room-name-img" onclick="room_details_view(<?php  echo $value->room_id ?>);"  data-toggle="modal" data-target="#RoomViewModal"><i class="fa fa-file-image-o" aria-hidden="true"></i></span></span>
                           
                           <?php 
                             $CancellationPolicy[$i][$key] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$value->contract_id,$value->room_id);
@@ -1128,7 +1171,22 @@ $(document).ready(function() {
   
   </div>
   <!-- Central Modal Medium Warning-->
-  
+  <div class="modal fade" id="RoomViewModal">
+    <div class="modal-dialog" style="width: 51%;">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"><?php echo $view[0]->hotel_name ?></h4>
+          <button type="button" style="margin-top: -19px" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
   
 
 <?php } init_front_black_tail(); ?> 

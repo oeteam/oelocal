@@ -1429,7 +1429,7 @@ class Payment_Model extends CI_Model {
 
         for($i = 0; $i < $tot_days; $i++) {
           $date[$i] = date('Y-m-d', strtotime($request['Check_in']. ' + '.$i.'  days'));
-          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id']."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
+          $CancellationPolicyCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_cancellationfee WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$contract_id."'  AND hotel_id = '".$request['hotel_id']."' AND daysTo <= '".$tot_days1."' order by daysTo asc")->result();
           if (count($CancellationPolicyCheck[$i])!=0) {
             foreach ($CancellationPolicyCheck[$i] as $key => $value) {
                 $exploderoomType[$key] = explode(",", $value->roomType);
@@ -2529,7 +2529,6 @@ class Payment_Model extends CI_Model {
       $ExBed =  $this->Payment_Model->getExtrabedDetails($book_id);
       $amenddata = $this->Payment_Model->getamendmentdata($book_id);
 
-      $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
       $book_room_count = $view[0]->book_room_count;
       $individual_amount = explode(",", $view[0]->individual_amount);
       if ($view[0]->individual_discount!="") {
@@ -2544,7 +2543,13 @@ class Payment_Model extends CI_Model {
       $BoardDiscount = explode(",", $view[0]->BoardDiscount);
       $RequestType = explode(",", $view[0]->RequestType);
 
+      $admin_markup = explode(",", $view[0]->admin_markup);
       for ($i=1; $i <= $book_room_count; $i++) {
+        if (isset($admin_markup[$i-1])) {
+          $total_markup = $view[0]->agent_markup+$admin_markup[$i-1]+$view[0]->search_markup;
+        } else {
+          $total_markup = $view[0]->agent_markup+$admin_markup[0]+$view[0]->search_markup;
+        }
         if(isset($amenddata)&& $amenddata!="") {
           foreach ($amenddata as $key => $value) {
             $varIndividual = 'Room'.$i.'individual_amount';
@@ -2615,17 +2620,22 @@ class Payment_Model extends CI_Model {
           $CPEAmoAD[$j] = 0;
           $ExAmount[$j] = 0;
           $TExAmount[$j] = 0;
+          $APTExAmount[$j] = 0;
           $CPGAmoAD[$j] = 0;
           $CPAmoAD[$j] = 0; 
           $GCamount[$j] = 0;
+          $APGCamount[$j] =0;
           $CPBAAmoAD[$j] = 0;
           $BAamount[$j] = 0;
           $TBAamount[$j] = 0;
+          $APTBAamount[$j] =0;
           $CPBCAmoAd[$j]  = 0;
           $BCamount[$j] = 0;
           $TBCamount[$j]  = 0;
+          $APTBCamount[$j]  = 0;
           $CPGAmoAD[$j] = 0;
           $GAamount[$j] = 0;
+          $APGAamount[$j] = 0;
           $TPBAamount[$j] = 0;
           $amendmentarrTot = array();
           if(isset($amendmentarr[$i-1])) {
@@ -2638,16 +2648,42 @@ class Payment_Model extends CI_Model {
           }
           /* Room rates start */
           $rmAmount = 0;
-          if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
-            if ($view[0]->revenueMarkupType=='Percentage') {
-              $rmAmount = ($individual_amount1[$j]*$view[0]->revenueMarkup)/100;
-            } else {
-              $rmAmount = $view[0]->revenueMarkup;
+          $revenueMarkup = explode(",", $view[0]->revenueMarkup);
+          $revenueMarkupType = explode(",", $view[0]->revenueMarkupType);
+          if (isset($revenueMarkup[$i-1])) {
+            if ($revenueMarkup[$i-1]!="" && $revenueMarkup[$i-1]!=0) {
+              if ($revenueMarkupType[$i-1]=='Percentage') {
+                $rmAmount = ($individual_amount1[$j]*$revenueMarkup[$i-1])/100;
+              } else {
+                $rmAmount = $revenueMarkup[$i-1];
+              }
+            }
+          } else {
+            if ($revenueMarkup[0]!="" && $revenueMarkup[0]!=0) {
+              if ($revenueMarkupType[0]=='Percentage') {
+                $rmAmount = ($individual_amount1[$j]*$revenueMarkup[0])/100;
+              } else {
+                $rmAmount = $revenueMarkup[0];
+              }
             }
           }
+          $revenueMarkup = explode(",", $view[0]->revenueMarkup);
+          $revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
+          $revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
+          $revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
+          $revenueBoardMarkupType = explode(",", $view[0]->revenueBoardMarkupType);
+          $revenueGeneralMarkupType = explode(",", $view[0]->revenueGeneralMarkupType);
+          $revenueGeneralMarkup = explode(",", $view[0]->revenueGeneralMarkup);
+          
           // Cost Room price 
             $CPRMRate[$j] = $individual_amount1[$j]-($individual_amount1[$j]*$individual_discount[$j])/100;
           // Selling Room price start
+            if (isset($admin_markup[$i-1])) {
+              $admin_markuprate= $admin_markup[$i-1];
+            } else {
+              $admin_markuprate= $admin_markup[0];
+            }
+            $Adminprofit[$j] =  (($individual_amount1[$j]*$admin_markuprate)/100)+$rmAmount;
             $roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;
             $DisroomAmount[$j] = $roomAmount[$j]-($roomAmount[$j]*$individual_discount[$j])/100;
           /* Room rates end */
@@ -2661,18 +2697,36 @@ class Payment_Model extends CI_Model {
                   foreach ($exroomExplode as $Exrkey => $EXRvalue) {
                     if ($EXRvalue==$i) {
                       $ExMAmount = 0;
-                      if ($view[0]->revenueMarkup!="") {
-                        if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
-                          if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
-                            $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
+                      if (isset($revenueMarkup[$i-1])) {
+                        if ($revenueMarkup[$i-1]!="") {
+                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                            if ($revenueExtrabedMarkupType[$i-1]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[$i-1])/100;
+                            } else {
+                              $ExMAmount = $revenueExtrabedMarkup[$i-1];
+                            }
                           } else {
-                            $ExMAmount = $view[0]->revenueExtrabedMarkup;
+                            if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[$i-1])/100;
+                            } else {
+                              $ExMAmount = $revenueBoardMarkup[$i-1];
+                            }
                           }
-                        } else {
-                          if ($view[0]->revenueBoardMarkupType=='Percentage') {
-                            $ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueBoardMarkup)/100;
+                        }
+                      } else {
+                        if ($revenueMarkup[0]!="") {
+                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+                            if ($revenueExtrabedMarkupType[0]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[0])/100;
+                            } else {
+                              $ExMAmount = $revenueExtrabedMarkup[0];
+                            }
                           } else {
-                            $ExMAmount = $view[0]->revenueBoardMarkup;
+                            if ($revenueBoardMarkupType[0]=='Percentage') {
+                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[0])/100;
+                            } else {
+                              $ExMAmount = $revenueBoardMarkup[0];
+                            }
                           }
                         }
                       }
@@ -2685,6 +2739,7 @@ class Payment_Model extends CI_Model {
                       // Extrabed Selling Price
                       $ExAmount[$j] = (($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount-(((($examountExplode[$Exrkey]*$total_markup)/100)+$examountExplode[$Exrkey]+$ExMAmount)*$ExDis/100);
                       $TExAmount[$j] +=$ExAmount[$j];
+                      $APTExAmount[$j] +=(($examountExplode[$Exrkey]*$admin_markuprate)/100)+$ExMAmount-(((($examountExplode[$Exrkey]*$admin_markuprate)/100)+$ExMAmount)*$ExDis/100);
                     } 
                   } 
                 } 
@@ -2694,7 +2749,6 @@ class Payment_Model extends CI_Model {
  
           /* General supplement start */
             if (count($general)!=0) {
-              
               foreach ($general as $gskey => $gsvalue) {
                 if ($gsvalue->gstayDate==date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days'))) {
                   $gsadultExplode = explode(",", $gsvalue->Rwadult);
@@ -2703,11 +2757,21 @@ class Payment_Model extends CI_Model {
                   foreach ($gsadultExplode as $gsakey => $gsavalue) {
                     if ($gsavalue==$i) {
                       $GSMAmount = 0;
-                      if ($view[0]->revenueMarkup!="") {
-                        if ($view[0]->revenueGeneralMarkupType=='Percentage') {
-                          $GSMAmount = ($gsadultAmountExplode[$gsakey]*$view[0]->revenueGeneralMarkup)/100;
-                        } else {
-                          $GSMAmount = $view[0]->revenueGeneralMarkup;
+                      if (isset($revenueMarkup[$i-1])) {
+                        if ($revenueGeneralMarkup[$i-1]!="") {
+                          if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+                            $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[$i-1])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[$i-1];
+                          }
+                        }
+                      } else {
+                        if ($revenueGeneralMarkup[0]!="") {
+                          if ($revenueGeneralMarkupType[0]=='Percentage') {
+                            $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[0])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[0];
+                          }
                         }
                       }
                       $GSDis = 0;
@@ -2717,21 +2781,35 @@ class Payment_Model extends CI_Model {
                       // Adult general cost rate
                       $CPGAmoAD[$j] = $gsadultAmountExplode[$gsakey]-($gsadultAmountExplode[$gsakey]*$GSDis)/100;
                       // Adult general selling rate
+                      
                       $GAamount[$j] = ((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)-((($gsadultAmountExplode[$gsakey]*$total_markup)/100)+$gsadultAmountExplode[$gsakey]+$GSMAmount)*$GSDis/100;
+                      
+                      $APGAamount[$j] = ((($gsadultAmountExplode[$gsakey]*$admin_markuprate)/100)+$GSMAmount)-((($gsadultAmountExplode[$gsakey]*$admin_markuprate)/100)+$GSMAmount)*$GSDis/100;
                     }
                   }
                   // Adult general supplements end
                   // Child general supplements start
                   $gschildExplode = explode(",", $gsvalue->Rwchild);
                   $gschildAmountExplode = explode(",", $gsvalue->RwchildAmount);
+
                   foreach ($gschildExplode as $gsckey => $gscvalue) {
                     if ($gscvalue==$i) {
                       $GSMAmount = 0;
-                      if ($view[0]->revenueMarkup!="") {
-                        if ($view[0]->revenueGeneralMarkupType=='Percentage') {
-                          $GSMAmount = ($gschildAmountExplode[$gsckey]*$view[0]->revenueGeneralMarkup)/100;
-                        } else {
-                          $GSMAmount = $view[0]->revenueGeneralMarkup;
+                      if (isset($revenueMarkup[$i-1])) {
+                        if ($revenueGeneralMarkup[$i-1]!="") {
+                          if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+                            $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[$i-1])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[$i-1];
+                          }
+                        }
+                      } else {
+                        if ($revenueGeneralMarkup[0]!="") {
+                          if ($revenueGeneralMarkupType[0]=='Percentage') {
+                            $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[0])/100;
+                          } else {
+                            $GSMAmount = $revenueGeneralMarkup[0];
+                          }
                         }
                       }
                       $GSDis = 0;
@@ -2741,7 +2819,10 @@ class Payment_Model extends CI_Model {
                       // Child general cost rate
                       $CPAmoAD[$j] = $gschildAmountExplode[$gsckey]-$gschildAmountExplode[$gsckey]*$GSDis/100;
                       // Child general selling rate
+                      
                       $GCamount[$j] = ((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)-((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)*$GSDis/100;
+                      
+                      $APGCamount[$j] = ((($gschildAmountExplode[$gsckey]*$admin_markuprate)/100)+$GSMAmount)-((($gschildAmountExplode[$gsckey]*$admin_markuprate)/100)+$GSMAmount)*$GSDis/100;
                     }
                   }
                   // Child general supplements end
@@ -2763,11 +2844,21 @@ class Payment_Model extends CI_Model {
               foreach ($ABRwadultexplode as $ABRwkey => $ABRwvalue) {
                 if ($ABRwvalue==$i) {
                   $BSMAmount = 0;
-                  if ($view[0]->revenueMarkup!="") {
-                    if ($view[0]->revenueBoardMarkupType=='Percentage') {
-                      $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$view[0]->revenueBoardMarkup)/100;
-                    } else {
-                      $BSMAmount = $view[0]->revenueBoardMarkup*$ABReqwadultexplode[$ABRwkey];
+                  if (isset($revenueMarkup[$i-1])) {
+                    if ($revenueBoardMarkup[$i-1]!="") {
+                      if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+                        $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[$i-1])/100;
+                      } else {
+                        $BSMAmount = $revenueBoardMarkup[$i-1]*$ABReqwadultexplode[$ABRwkey];
+                      }
+                    }
+                  } else {
+                    if ($revenueBoardMarkup[0]!="") {
+                      if ($revenueBoardMarkupType[0]=='Percentage') {
+                        $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[0])/100;
+                      } else {
+                        $BSMAmount = $revenueBoardMarkup[0]*$ABReqwadultexplode[$ABRwkey];
+                      }
                     }
                   }
                   $BSDis = 0;
@@ -2781,6 +2872,7 @@ class Payment_Model extends CI_Model {
                   // Adult board selling rate
                   $BAamount[$j] = ((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)-((($ABRwadultamountexplode[$ABRwkey]*$total_markup)/100)+$ABRwadultamountexplode[$ABRwkey]+$BSMAmount)*$BSDis/100;
                   $TBAamount[$j] += $BAamount[$j];
+                  $APTBAamount[$j] += ((($ABRwadultamountexplode[$ABRwkey]*$admin_markuprate)/100)+$BSMAmount)-((($ABRwadultamountexplode[$ABRwkey]*$admin_markuprate)/100)+$BSMAmount)*$BSDis/100;
                 }
               }
               // Adult Board end
@@ -2792,11 +2884,21 @@ class Payment_Model extends CI_Model {
               foreach ($CBRwchildexplode as $CBRwkey => $CBRwvalue) {
                 if ($CBRwvalue==$i) {
                   $BSMAmount = 0;
-                  if ($view[0]->revenueMarkup!="") {
-                    if ($view[0]->revenueBoardMarkupType=='Percentage') {
-                      $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$view[0]->revenueBoardMarkup)/100;
-                    } else {
-                      $BSMAmount = $view[0]->revenueBoardMarkup*$CBReqwchildexplode[$CBRwkey];
+                  if (isset($revenueMarkup[$i-1])) {
+                    if ($revenueBoardMarkup[$i-1]!="") {
+                      if ($revenueBoardMarkupType[$i-1] == 'Percentage') {
+                        $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[$i-1])/100;
+                      } else {
+                        $BSMAmount = $revenueBoardMarkup[$i-1]*$CBReqwchildexplode[$CBRwkey];
+                      }
+                    }
+                  } else {
+                    if ($revenueBoardMarkup[0]!="") {
+                      if ($revenueBoardMarkupType[0] == 'Percentage') {
+                        $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[0])/100;
+                      } else {
+                        $BSMAmount = $revenueBoardMarkup[0]*$CBReqwchildexplode[$CBRwkey];
+                      }
                     }
                   }
                   $BSDis = 0;
@@ -2808,6 +2910,7 @@ class Payment_Model extends CI_Model {
                   // Child Board selling price
                   $BCamount[$j] = ((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)-((($CBRwchildamountexplode[$CBRwkey]*$total_markup)/100)+$CBRwchildamountexplode[$CBRwkey]+$BSMAmount)*$BSDis/100;
                   $TBCamount[$j] += $BCamount[$j];
+                  $APTBCamount[$j] += ((($CBRwchildamountexplode[$CBRwkey]*$admin_markuprate)/100)+$BSMAmount)-((($CBRwchildamountexplode[$CBRwkey]*$admin_markuprate)/100)+$BSMAmount)*$BSDis/100;
                 }
               }
               // Child Board end
@@ -2821,23 +2924,30 @@ class Payment_Model extends CI_Model {
         if (isset($DisTypExplode[$i-1]) && $DisTypExplode[$i-1]=="stay&pay" && $Fdays!=0) {
         array_splice($CPRMRate, 1,$Fdays);
         array_splice($DisroomAmount, 1,$Fdays);
+        array_splice($Adminprofit, 1,$Fdays);
+
         if ($ExtrabedDiscount[$i-1]==1) {
           array_splice($CPEAmoAD,1,$Fdays);
           array_splice($TExAmount,1,$Fdays);
+          array_splice($APTExAmount,1,$Fdays);
         }
         if ($GeneralDiscount[$i-1]==1) {
           array_splice($CPGAmoAD,1,$Fdays);
           array_splice($CPAmoAD,1,$Fdays);
 
           array_splice($GAamount,1,$Fdays);
+          array_splice($APGAamount,1,$Fdays);
           array_splice($GCamount,1,$Fdays);
+          array_splice($APGCamount,1,$Fdays);
         }
         if ($BoardDiscount[$i-1]==1) {
           array_splice($TPBAamount,1,$Fdays);
           array_splice($CPBCAmoAd,1,$Fdays);
 
           array_splice($TBAamount,1,$Fdays);
+          array_splice($APTBAamount,1,$Fdays);
           array_splice($TBCamount,1,$Fdays);
+          array_splice($APTBCamount,1,$Fdays);
         }
       } 
       $costPrice[$i] = array_sum($CPRMRate)+array_sum($CPEAmoAD)+array_sum($CPGAmoAD)+array_sum($CPAmoAD)+array_sum($TPBAamount)+array_sum($CPBCAmoAd);
@@ -2845,6 +2955,8 @@ class Payment_Model extends CI_Model {
 
       $totRmAmt[$i] = array_sum($DisroomAmount)+array_sum($TExAmount)+array_sum($GAamount)+array_sum($GCamount)+array_sum($TBAamount)+array_sum($TBCamount); 
         
+
+      $toadminProfit[$i] = array_sum($Adminprofit)+array_sum($APTExAmount)+array_sum($APGAamount)+array_sum($APGCamount)+array_sum($APTBAamount)+array_sum($APTBCamount);  
       // Roomwise total rates end
       }
       $costPrice = array_sum($costPrice);
@@ -2854,7 +2966,7 @@ class Payment_Model extends CI_Model {
       }
       $sellingPrice = ((array_sum($totRmAmt)*$tax)/100)+(array_sum($totRmAmt));
       $Agentprofit= ($costPrice*($view[0]->agent_markup))/100;
-      $Adminprofit= ($costPrice*($view[0]->admin_markup))/100;
+      $Adminprofit= array_sum($toadminProfit);
       if ($Adminprofit==0) {
         $Adminprofit= $sellingPrice-($Agentprofit+$costPrice);
       }
@@ -2933,7 +3045,8 @@ class Payment_Model extends CI_Model {
       IF(extrabedChild=0,extrabedChild1,0) ,(IF(extrabedChild=0,extrabedChild1,0)- IF(extrabedChild=0,extrabedChild1,0)*boarddis/100)) as boardChildAmount,
       IF(generalsub!=0,IF(StayGeneral=1, generalsub,generalsub-(generalsub*generaldis/100)),0) as generalsubAmount
 
-      FROM (select con.board,CONCAT(f.room_name,' ',g.Room_Type) as RoomName,a.hotel_id,a.contract_id,a.room_id,a.allotement as allotment, a.amount as TtlPrice1,dis.discount_type,dis.Extrabed as StayExbed,dis.General as StayGeneral,dis.Board as StayBoard,IF(dis.stay_night!='',(dis.pay_night*ceil(".$tot_days."/dis.stay_night))+(".$tot_days."-(dis.stay_night*ceil(".$tot_days."/dis.stay_night))),0) as fday ,CONCAT(con.contract_id,'-',a.room_id) as RoomIndex, rev.ExtrabedMarkup,rev.ExtrabedMarkuptype,
+      FROM (select con.board,CONCAT(f.room_name,' ',g.Room_Type) as RoomName,a.hotel_id,a.contract_id,a.room_id,
+      if(con.contract_type='Sub',(select GetAllotmentCount(a.allotement_date,a.hotel_id,CONCAT('CON0',linkedcontract),a.room_id,'".date('Y-m-d')."',".$tot_days.")),a.allotement) as allotment, a.amount as TtlPrice1,dis.discount_type,dis.Extrabed as StayExbed,dis.General as StayGeneral,dis.Board as StayBoard,IF(dis.stay_night!='',(dis.pay_night*ceil(".$tot_days."/dis.stay_night))+(".$tot_days."-(dis.stay_night*ceil(".$tot_days."/dis.stay_night))),0) as fday ,CONCAT(con.contract_id,'-',a.room_id) as RoomIndex, rev.ExtrabedMarkup,rev.ExtrabedMarkuptype,
 
         ((a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
@@ -2949,24 +3062,24 @@ class Payment_Model extends CI_Model {
           AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB') 
         ) limit 1)/100)
          ) as TtlPrice,
-        (select IF(count(*)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100)+(amount*".$markup."/100),amount+ExtrabedMarkup+(amount*".$markup."/100)),amount+(sum(amount)*".($markup+$general_markup)."/100)),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
+        (select IF(count(1)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100)+(amount*".$markup."/100),amount+ExtrabedMarkup+(amount*".$markup."/100)),amount+(sum(amount)*".($markup+$general_markup)."/100)),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
             ".$data['adults'][$key]." > f.standard_capacity ) as extrabed, 
 
-        (select IF(count(*)=0,'',IF(0=".$RoomChildAge1.",0,IF(ChildAgeFrom < ".$RoomChildAge1." && ChildAgeTo >= ".$RoomChildAge1.",IF(ExtrabedMarkup!='' && ChildAmount!=0,IF(ExtrabedMarkuptype='Percentage',ChildAmount+(ChildAmount*ExtrabedMarkup/100), ChildAmount+ExtrabedMarkup) ,ChildAmount+(ChildAmount*".$general_markup."/100))+(ChildAmount*".$markup."/100),0))) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND ".($data['adults'][$key]+$data['Child'][$key])." > f.standard_capacity) as extrabedChild, 
+        (select IF(count(1)=0,'',IF(0=".$RoomChildAge1.",0,IF(ChildAgeFrom < ".$RoomChildAge1." && ChildAgeTo >= ".$RoomChildAge1.",IF(ExtrabedMarkup!='' && ChildAmount!=0,IF(ExtrabedMarkuptype='Percentage',ChildAmount+(ChildAmount*ExtrabedMarkup/100), ChildAmount+ExtrabedMarkup) ,ChildAmount+(ChildAmount*".$general_markup."/100))+(ChildAmount*".$markup."/100),0))) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND ".($data['adults'][$key]+$data['Child'][$key])." > f.standard_capacity) as extrabedChild, 
 
-        (select IF(count(*)=0,0,IF(0=".$RoomChildAge1.",0,IF(startAge <= ".$RoomChildAge1." && finalAge >= ".$RoomChildAge1.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',sum(amount)+(sum(amount)*BoardSupMarkup/100)+(sum(amount)*".$markup."/100),sum(amount)+(count(amount)*BoardSupMarkup)+(sum(amount)*".$markup."/100)),sum(amount)+(sum(amount)*".($markup+$general_markup)."/100)),0))) from hotel_tbl_boardsupplement where a.allotement_date BETWEEN 
+        (select IF(count(1)=0,0,IF(0=".$RoomChildAge1.",0,IF(startAge <= ".$RoomChildAge1." && finalAge >= ".$RoomChildAge1.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',sum(amount)+(sum(amount)*BoardSupMarkup/100)+(sum(amount)*".$markup."/100),sum(amount)+(count(amount)*BoardSupMarkup)+(sum(amount)*".$markup."/100)),sum(amount)+(sum(amount)*".($markup+$general_markup)."/100)),0))) from hotel_tbl_boardsupplement where a.allotement_date BETWEEN 
         fromDate AND toDate AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND IF(con.board='RO',board IN (''),IF(con.board='BB',board IN ('Breakfast'),IF(con.board='HB',board IN ('Breakfast','Dinner'),board IN ('Breakfast','Lunch','Dinner'))))) as extrabedChild1,
 
-        (select IF(count(*)=0,0,IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount*".$data['adults'][$key].")+(adultAmount*".$data['adults'][$key].")*GeneralSupMarkup/100,(adultAmount*".$data['adults'][$key].")+(GeneralSupMarkup*".$data['adults'][$key].")),(adultAmount*".$data['adults'][$key].")+((adultAmount*".$data['adults'][$key].")*".$general_markup."/100)) + ((adultAmount*".$data['adults'][$key].")*".$markup."/100) ,IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount)+(adultAmount)*GeneralSupMarkup/100,adultAmount+GeneralSupMarkup) ,adultAmount+((adultAmount)*".$general_markup."/100))+((adultAmount)*".$markup."/100)))  
+        (select IF(count(1)=0,0,IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount*".$data['adults'][$key].")+(adultAmount*".$data['adults'][$key].")*GeneralSupMarkup/100,(adultAmount*".$data['adults'][$key].")+(GeneralSupMarkup*".$data['adults'][$key].")),(adultAmount*".$data['adults'][$key].")+((adultAmount*".$data['adults'][$key].")*".$general_markup."/100)) + ((adultAmount*".$data['adults'][$key].")*".$markup."/100) ,IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount)+(adultAmount)*GeneralSupMarkup/100,adultAmount+GeneralSupMarkup) ,adultAmount+((adultAmount)*".$general_markup."/100))+((adultAmount)*".$markup."/100)))  
           + 
 
-           IF(count(*)=0,0, IF(0=".$RoomChildAge1." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge1.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) )) 
+           IF(count(1)=0,0, IF(0=".$RoomChildAge1." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge1.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) )) 
 
-          + IF(count(*)=0,0, IF(0=".$RoomChildAge2." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge2.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
+          + IF(count(1)=0,0, IF(0=".$RoomChildAge2." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge2.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
 
-          +  IF(count(*)=0,0, IF(0=".$RoomChildAge3." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge3.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
+          +  IF(count(1)=0,0, IF(0=".$RoomChildAge3." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge3.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
 
-          +  IF(count(*)=0,0, IF(0=".$RoomChildAge4." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge4.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
+          +  IF(count(1)=0,0, IF(0=".$RoomChildAge4." && childAmount=0,0,IF(MinChildAge < ".$RoomChildAge4.", IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+((childAmount)*GeneralSupMarkup/100),(childAmount)+GeneralSupMarkup),(childAmount+((childAmount)*".$general_markup."/100))),IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(childAmount)+(childAmount*GeneralSupMarkup/100),childAmount+GeneralSupMarkup) ,childAmount))+((childAmount)*".$markup."/100) ,0) ))
 
          from hotel_tbl_generalsupplement where a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND  mandatory = 1) as generalsub, 
 

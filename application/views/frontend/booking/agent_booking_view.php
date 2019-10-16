@@ -165,7 +165,14 @@
 				<h4 class="dark bold">Booking Amount Breakup</h4>
 				<?php 
 				// print_r($ExBed);
-		        $total_markup = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
+				$revenueMarkup = explode(",", $view[0]->revenueMarkup);
+				$revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
+				$revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
+				$revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
+				$revenueBoardMarkupType = explode(",", $view[0]->revenueBoardMarkupType);
+				$revenueGeneralMarkupType = explode(",", $view[0]->revenueGeneralMarkupType);
+				$revenueGeneralMarkup = explode(",", $view[0]->revenueGeneralMarkup);
+
 				$book_room_count = $view[0]->book_room_count;
 				$individual_amount = explode(",", $view[0]->individual_amount);
 				$individual_discount = explode(",", $view[0]->individual_discount);
@@ -180,7 +187,15 @@
 		        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
 		        $RequestType = explode(",", $view[0]->RequestType);
 
+		        $boardName = explode(",", $view[0]->boardName);
+				$contract_id = explode(",", $view[0]->contract_id);
+				$admin_markup = explode(",", $view[0]->admin_markup);
 				for ($i=1; $i <= $book_room_count; $i++) {
+					if (isset($admin_markup[$i-1])) {
+			          $total_markup = $view[0]->agent_markup+$admin_markup[$i-1]+$view[0]->search_markup;
+			        } else {
+			          $total_markup = $view[0]->agent_markup+$admin_markup[0]+$view[0]->search_markup;
+			        }
 					if(isset($amenddata)&&$amenddata!="") { 
 						foreach ($amenddata as $key => $value) {
 							if ( $value->status==1) {
@@ -290,7 +305,7 @@
             					<tr>
 	            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
 	            					<td><?php echo $RoomName ?></td>
-	            					<td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
+	            					<td style="text-align: center"><?php echo $boardName[$i-1]; ?></td>
 	            					<td style="text-align: right">
             							<p class="new-price">
 
@@ -343,21 +358,39 @@
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
 		            					 	$ExMAmount = 0;
-            								if ($view[0]->revenueMarkup!="") {
-            									if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
-	            									if ($view[0]->revenueExtrabedMarkupType=='Percentage') {
-	            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueExtrabedMarkup)/100;
-	            									} else {
-	            										$ExMAmount = $view[0]->revenueExtrabedMarkup;
-	            									}
-            									} else {
-            										if ($view[0]->revenueBoardMarkupType=='Percentage') {
-	            										$ExMAmount = ($examountExplode[$Exrkey]*$view[0]->revenueBoardMarkup)/100;
-	            									} else {
-	            										$ExMAmount = $view[0]->revenueBoardMarkup;
-	            									}
-            									}
-            								}
+						                      if (isset($revenueMarkup[$i-1])) {
+						                        if ($revenueMarkup[$i-1]!="") {
+						                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+						                            if ($revenueExtrabedMarkupType[$i-1]=='Percentage') {
+						                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[$i-1])/100;
+						                            } else {
+						                              $ExMAmount = $revenueExtrabedMarkup[$i-1];
+						                            }
+						                          } else {
+						                            if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+						                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[$i-1])/100;
+						                            } else {
+						                              $ExMAmount = $revenueBoardMarkup[$i-1];
+						                            }
+						                          }
+						                        }
+						                      } else {
+						                        if ($revenueMarkup[0]!="") {
+						                          if ($exTypeExplode[$Exrkey]=="Adult Extrabed" || $exTypeExplode[$Exrkey]=="Child Extrabed") {
+						                            if ($revenueExtrabedMarkupType[0]=='Percentage') {
+						                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueExtrabedMarkup[0])/100;
+						                            } else {
+						                              $ExMAmount = $revenueExtrabedMarkup[0];
+						                            }
+						                          } else {
+						                            if ($revenueBoardMarkupType[0]=='Percentage') {
+						                              $ExMAmount = ($examountExplode[$Exrkey]*$revenueBoardMarkup[0])/100;
+						                            } else {
+						                              $ExMAmount = $revenueBoardMarkup[0];
+						                            }
+						                          }
+						                        }
+						                      }
             								$ExDis = 0;
             								if ($ExtrabedDiscount[$i-1]==1) {
             									$ExDis = $individual_discount[$j];
@@ -395,13 +428,23 @@
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
 		            					 		$GSMAmount = 0;
-	            								if ($view[0]->revenueMarkup!="") {
-	            									if ($view[0]->revenueGeneralMarkupType=='Percentage') {
-	            										$GSMAmount = ($gsadultAmountExplode[$gsakey]*$view[0]->revenueGeneralMarkup)/100;
-	            									} else {
-	            										$GSMAmount = $view[0]->revenueGeneralMarkup;
-	            									}
-	            								}
+												if (isset($revenueMarkup[$i-1])) {
+													if ($revenueGeneralMarkup[$i-1]!="") {
+													  if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+													    $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[$i-1])/100;
+													  } else {
+													    $GSMAmount = $revenueGeneralMarkup[$i-1];
+													  }
+													}
+												} else {
+													if ($revenueGeneralMarkup[0]!="") {
+													  if ($revenueGeneralMarkupType[0]=='Percentage') {
+													    $GSMAmount = ($gsadultAmountExplode[$gsakey]*$revenueGeneralMarkup[0])/100;
+													  } else {
+													    $GSMAmount = $revenueGeneralMarkup[0];
+													  }
+													}
+												}
 	            								$GSDis = 0;
 	            								if ($GeneralDiscount[$i-1]==1) {
 	            									$GSDis = $individual_discount[$j];
@@ -432,17 +475,23 @@
 		            					 	<td class="text-center">-</td>
 		            					 	<td class="text-right"><?php 
 		            					 		$GSMAmount = 0;
-	            								if ($view[0]->revenueMarkup!="") {
-	            									if ($view[0]->revenueGeneralMarkupType=='Percentage') {
-	            										$GSMAmount = ($gschildAmountExplode[$gsckey]*$view[0]->revenueGeneralMarkup)/100;
-	            									} else {
-	            										$GSMAmount = $view[0]->revenueGeneralMarkup;
-	            									}
-	            								}
-	            								$GSDis = 0;
-	            								if ($GeneralDiscount[$i-1]==1) {
-	            									$GSDis = $individual_discount[$j];
-	            								}
+							                      if (isset($revenueMarkup[$i-1])) {
+							                        if ($revenueGeneralMarkup[$i-1]!="") {
+							                          if ($revenueGeneralMarkupType[$i-1]=='Percentage') {
+							                            $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[$i-1])/100;
+							                          } else {
+							                            $GSMAmount = $revenueGeneralMarkup[$i-1];
+							                          }
+							                        }
+							                      } else {
+							                        if ($revenueGeneralMarkup[0]!="") {
+							                          if ($revenueGeneralMarkupType[0]=='Percentage') {
+							                            $GSMAmount = ($gschildAmountExplode[$gsckey]*$revenueGeneralMarkup[0])/100;
+							                          } else {
+							                            $GSMAmount = $revenueGeneralMarkup[0];
+							                          }
+							                        }
+							                      }
 
 		            					 		$GCamount[$j] = ((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)-((($gschildAmountExplode[$gsckey]*$total_markup)/100)+$gschildAmountExplode[$gsckey]+$GSMAmount)*$GSDis/100;
 		            					 		if ($GSDis!=0) { ?>
@@ -474,13 +523,23 @@
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
             								$BSMAmount = 0;
-            								if ($view[0]->revenueMarkup!="") {
-            									if ($view[0]->revenueBoardMarkupType=='Percentage') {
-            										$BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$view[0]->revenueBoardMarkup)/100;
-            									} else {
-            										$BSMAmount = $view[0]->revenueBoardMarkup*$ABReqwadultexplode[$ABRwkey];
-            									}
-            								}
+							                  if (isset($revenueMarkup[$i-1])) {
+							                    if ($revenueBoardMarkup[$i-1]!="") {
+							                      if ($revenueBoardMarkupType[$i-1]=='Percentage') {
+							                        $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[$i-1])/100;
+							                      } else {
+							                        $BSMAmount = $revenueBoardMarkup[$i-1]*$ABReqwadultexplode[$ABRwkey];
+							                      }
+							                    }
+							                  } else {
+							                    if ($revenueBoardMarkup[0]!="") {
+							                      if ($revenueBoardMarkupType[0]=='Percentage') {
+							                        $BSMAmount = ($ABRwadultamountexplode[$ABRwkey]*$revenueBoardMarkup[0])/100;
+							                      } else {
+							                        $BSMAmount = $revenueBoardMarkup[0]*$ABReqwadultexplode[$ABRwkey];
+							                      }
+							                    }
+							                  }
             								$BSDis = 0;
             								if ($BoardDiscount[$i-1]==1) {
             									$BSDis = $individual_discount[$j];
@@ -514,13 +573,23 @@
             							<td class="text-center">-</td>
             							<td class="text-right"><?php 
             								$BSMAmount = 0;
-            								if ($view[0]->revenueMarkup!="") {
-            									if ($view[0]->revenueBoardMarkupType=='Percentage') {
-            										$BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$view[0]->revenueBoardMarkup)/100;
-            									} else {
-            										$BSMAmount = $view[0]->revenueBoardMarkup*$CBReqwchildexplode[$CBRwkey];
-            									}
-            								}
+							                  if (isset($revenueMarkup[$i-1])) {
+							                    if ($revenueBoardMarkup[$i-1]!="") {
+							                      if ($revenueBoardMarkupType[$i-1] == 'Percentage') {
+							                        $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[$i-1])/100;
+							                      } else {
+							                        $BSMAmount = $revenueBoardMarkup[$i-1]*$CBReqwchildexplode[$CBRwkey];
+							                      }
+							                    }
+							                  } else {
+							                    if ($revenueBoardMarkup[0]!="") {
+							                      if ($revenueBoardMarkupType[0] == 'Percentage') {
+							                        $BSMAmount = ($CBRwchildamountexplode[$CBRwkey]*$revenueBoardMarkup[0])/100;
+							                      } else {
+							                        $BSMAmount = $revenueBoardMarkup[0]*$CBReqwchildexplode[$CBRwkey];
+							                      }
+							                    }
+							                  }
             								$BSDis = 0;
             								if ($BoardDiscount[$i-1]==1) {
             									$BSDis = $individual_discount[$j];

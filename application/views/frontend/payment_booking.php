@@ -1010,7 +1010,7 @@
 					$Cancellation[$i] = $this->Payment_Model->get_CancellationPolicy_table($_REQUEST,$IndexSplit[0],$IndexSplit[1]);
 				?>	
 				<div class="payment-table-wrap">
-					<h4 class="room-name">Room <?php echo $i+1 ?> - <?php echo roomnameGET($RoomId,$_REQUEST['hotel_id']) ?></h4>
+					<h4 class="room-name">Room <?php echo $i+1 ?> - <?php echo roomnameGET($IndexSplit[1],$_REQUEST['hotel_id']) ?></h4>
 					<table class="table table-bordered table-hover">
 						<thead>
 					      <tr>

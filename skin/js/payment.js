@@ -27,6 +27,54 @@ $(document).ready(function() {
             }
         }
     })
+
+  $("#travellerSubmit").click(function() {
+      var err = 0;
+      var validate = $('.validate');
+      $.each(validate,function() {
+          if ($(this).val()=="" || $(this).val()==" ") {
+              $(this).removeClass('validated');
+              err += 1;
+              $("#email").focus();
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+          } else {
+              $(this).addClass('validated');
+          }
+       })
+
+      var namevalidate = $('.name-validate');
+
+      $.each(namevalidate,function() {
+          if ($(this).val()=="" || $(this).val()==" ") {
+              $(this).removeClass('validated');
+              err += 1;
+              $("#email").focus();
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+          } else {
+              if($(this).val().match(letters)) {
+                  if ($(this).val().length < 2) {
+                      err += 1;
+                      $(".traveller-validate").text('Minimum two letters should be used in First name and Last name!');
+                  } else {
+                      $(this).addClass('validated');
+                  }
+              } else {
+                  err += 1;
+                  $(".traveller-validate").text('Please check alphabets only accepted in First name and Last name!');
+                  $("#email").focus();
+                  document.body.scrollTop = 0;
+                  document.documentElement.scrollTop = 0;
+              }
+          }
+       })
+       
+       if (err==0) {
+        $(".close").trigger("click");
+       }
+
+  })
 	$('#Continue_book').click(function () {
     var err = 0;
         var validate = $('.validate');
@@ -79,7 +127,9 @@ $(document).ready(function() {
             $('.room-type-validate').removeClass('validated');
             err += 1;
         }
-
+        if (err!=0) {
+          $("#travellerModalButton").trigger("click");
+        }
         if (err==0) {
             $("#payment_form").attr("action",base_url+"payment/payment_booking");
             $("#payment_form").submit();

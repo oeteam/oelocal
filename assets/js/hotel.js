@@ -3019,6 +3019,7 @@ function room_allotement_add_fun() {
       if ($("#room_id").val()!="") {
         $('.yourmodalid').trigger('click');
       } else {
+        $(".sss").prop('disabled',true);
         addToast("Inserted Successfully","green");
         $("#allotement_form").attr('action',base_url+'backend/hotels/add_room_allotement');
         $("#allotement_form").submit();

@@ -90,7 +90,11 @@
         display: none;
  }
 </style>
-
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
 <div class="sb2-2">
     <?php $contractmenu = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Hotels Contract'); ?>
         <div class="sb2-2-add-blog sb2-2-1 hotel-view-readonly">
@@ -98,7 +102,7 @@
             <p>
             <h3>Contract Details <small>(currency : <?php echo hotel_currency_type($_REQUEST['hotel_id']) ?>)</small>
                 <span class="pull-right"> 
-                    <a href="<?php echo base_url(); ?>backend/hotels/contract_menu"  class="btn-sm btn-primary">Back</a>
+                    <a href="#" onclick="goBack()"  class="btn-sm btn-primary">Back</a>
                 </span>
                 <?php if($contractmenu[0]->edit!=0) { ?>
                 <span class="pull-right"  style="margin-right: 5px;"> 
