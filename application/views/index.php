@@ -25,14 +25,15 @@ $Hotelsbanner = Hotelsbanner();
          </div>
          <div class="item">
             <div class="carousel-caption">
-                     <!--                  <h3>Extraordinary Experience</h3>
-                        <p>Start the day relaxing over a cup of hot coffee at your private sit out, as you enjoy the Sun come through the misty mountains among clatter of the fauna and flora that surround you. </p>-->
+               <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
+               <p>  with otelseasy.com</p>
+                        
                      </div>
                   </div>
                   <div class="item">
                      <div class="carousel-caption">
-                     <!--        <h3>Want to enjoy something unique? </h3>
-                        <p>Be sure to enjoy a nice dip in your private plunge pool.</p>-->
+                        <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
+                        <p>  with otelseasy.com</p>
                      </div>
                   </div>
                </div>
@@ -204,21 +205,22 @@ $Hotelsbanner = Hotelsbanner();
                   <div class="container hidden-xs">
                      <div class="row">
                         <?php
-                         foreach($HotelsView as $h_value){
+                         foreach($HotelsView as $key => $h_value){
+                           if ($key < 4) {
                           ?>
                            <div class="col-lg-3">
-                              <div class="cuadro_intro_hover ">
-                                 <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="img-responsive" width="100%"  alt=""/>
+                              <div class="cuadro_intro_hover " style="background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
+                                 <!-- <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="simg-responsive illustration" swidth="100%"  alt=""/> -->
                                  <div class="caption">
-                                    <div class="blur"></div>
+                                    <div class="blur" style="background-color: rgba(76, 76, 76, 0.45)"></div>
                                     <div class="caption-text">
-                                       <h3 class="news-title"><?php echo $h_value->hotel_name; ?></h3>
+                                       <h3 class="news-title" style="border: none;background: #4c4c4c00"><?php echo $h_value->hotel_name; ?></h3>
                                        <p class="news-dec"><?php echo strlen($h_value->hotel_description) > 80 ? mb_substr($h_value->hotel_description,0,80).'..' : $h_value->hotel_description ; ?></p>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <?php } ?>
+                           <?php } } ?>
                         </div>
                      </div>
                   </div>
@@ -231,7 +233,6 @@ $Hotelsbanner = Hotelsbanner();
                               <h3 class="signup-title">The hottest hotel deals.Straight to your inbox</h3>
                               <div class="advance-search">
                                  <form  method="post" action="" >
-                                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                     <div class="row">
                                        <!-- Store Search -->
                                        <div class="col-lg-9">
@@ -247,6 +248,7 @@ $Hotelsbanner = Hotelsbanner();
                               <h3 class="signup-title">So many fans, but who's counting?</h3>
                                  <!-- Total -->
                                  <!-- Facebook -->
+
                                  <iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/Otelseasy-103828817692500/?modal=admin_todo_tour&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="340" height="70" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
 
                                 <!--  <button data-easyshare-button="facebook">
@@ -268,18 +270,17 @@ $Hotelsbanner = Hotelsbanner();
                               </div> -->
                            </div>
                         </div>
-
                            <div class="col-md-6" style="background-color: #f4f4f4;">
-                              <?php if (count($Hotelsbanner)!=0) { ?>
-                              <div class="cuadro_intro_hover" style="height:275px">
-                                 <div>
-                                 <img src="<?php echo images_url(); ?>uploads/gallery/<?php echo $Hotelsbanner[0]->id."/".$Hotelsbanner[0]->Image1 ?>" class="img-responsive"  alt="" style="height:100%;margin: 0 auto;"/>
-                                 </div>
-                                 <div class="caption" style="top:200px">
-                                    <div class="blur"></div>
+                              <?php if (isset($HotelsView[4])) { ?>
+                              <div class="cuadro_intro_hover" style="height:275px;background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
+                                <!--  <div>
+                                 <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>" class="img-responsive"  alt="" style="sheight:100%;margin: 0 auto;"/>
+                                 </div> -->
+                                 <div class="caption" style="top:200px;">
+                                    <div class="blur" style="background-color: rgba(76, 76, 76, 0.21);"></div>
                                     <div class="caption-text">
-                                       <h3 class="news-title"><?php echo $Hotelsbanner[0]->hotel_name; ?></h3>
-                                       <p class="news-dec"><?php echo strlen($Hotelsbanner[0]->hotel_description) > 80 ? mb_substr($Hotelsbanner[0]->hotel_description,0,80).'..' : $Hotelsbanner[0]->hotel_description ; ?></p>
+                                       <h3 class="news-title" style="border: none;background: #4c4c4c00"><?php echo $HotelsView[4]->hotel_name; ?></h3>
+                                       <p class="news-dec"><?php echo strlen($HotelsView[4]->hotel_description) > 80 ? mb_substr($HotelsView[4]->hotel_description,0,80).'..' : $HotelsView[4]->hotel_description ; ?></p>
                                     </div>
                                  </div>
                               </div>

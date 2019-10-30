@@ -743,6 +743,9 @@ class Payment extends MY_Controller {
       }
 
       $RoomName = roomnameGET($room_id,$data[0]->hotel_id);
+      if (!isset($boardName[$i-1])) {
+        $boardName[$i-1] = $boardName[0];
+      }
       $tb51.='
         <h4 class="room-name">Room '.$i.'
         <span style="float:right">';

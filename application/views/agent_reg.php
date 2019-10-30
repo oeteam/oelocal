@@ -72,21 +72,6 @@ $data = title();
         </div>
         <div class="col-sm-5">
           <div class=form-horizondal>
-            <div class="form-group">
-              <label for="address" class="col-sm-3 control-label fontstyl" style="">Address <span class="starcolor">*</span></label>
-              <div class="col-sm-9">
-                <textarea id="address" name="address" class="form-control"></textarea>
-                <span class="address_err popup_err blink_me"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-1"></div>
-      </div>  
-      <div class="row">
-        <div class="col-sm-1"></div>
-       <div class="col-sm-5">
-        <div class=form-horizondal>
           <div class="form-group">
             <label for="email" class="col-sm-3 control-label fontstyl" style="">Agency email <span class="starcolor">*</span></label>
             <div class="col-sm-9">
@@ -98,6 +83,81 @@ $data = title();
             </div>
           </div>
         </div>
+        </div>
+        <div class="col-sm-1"></div>
+      </div>  
+
+      <div class="row">
+       <div class="col-sm-1"></div>
+       <div class="col-sm-5">
+        <div class=form-horizondal>
+          <div class="form-group">
+            <label for="first_name" class="col-sm-3 control-label fontstyl" style="">First Name<span class="starcolor">*</span></label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="first_name" name="first_name">
+              <span class="first_name_err popup_err blink_me"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class=form-horizondal>
+          <div class="form-group">
+            <label for="last_name" class="col-sm-3 control-label fontstyl" style="">Last Name<span class="starcolor">*</span></label>
+
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="last_name" name="last_name">
+              <span class="last_name_err popup_err blink_me"></span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div> 
+    <div class="row">
+       <div class="col-sm-1"></div>
+       <div class="col-sm-5">
+          <div class=form-horizondal>
+            <div class="form-group">
+              <label for="telephone" class="col-sm-3 control-label fontstyl" style="">Telephone<span class="starcolor">*</span></label>
+
+              <div class="col-sm-9">
+                <input type="number" class="hide-spinner form-control" id="telephone" name="telephone">
+                <span class="telephone_err popup_err blink_me"></span>
+
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-sm-5">
+        <div class=form-horizondal>
+          <div class="form-group">
+            <label for="phone" class="col-sm-3 control-label fontstyl" style="">Mobile Number<span class="starcolor">*</span></label>
+
+            <div class="col-sm-9">
+              <input type="number" class="hide-spinner form-control" id="phone" name="phone">
+              <span class="mobile_err popup_err blink_me"></span>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-sm-1"></div>
+       <div class="col-sm-5">
+        <div class=form-horizondal>
+         <div class="form-group">
+           <label for="city" class="col-sm-3 control-label fontstyl" style="">City<span class="starcolor">*</span></label>
+           <div class="col-sm-9">
+             <input type="text" class="form-control" id="city" name="city">
+             <span class="city_err popup_err blink_me"></span>
+
+           </div>
+         </div>
+       </div>
       </div>
       <div class="col-sm-5">
         <div class=form-horizondal>
@@ -113,118 +173,59 @@ $data = title();
         </div>
       </div>
       <div class="col-sm-1"></div>
-    </div>  
-    <div class="row">
-     <div class="col-sm-1"></div>
-     <div class="col-sm-5">
-      <div class=form-horizondal>
-        <div class="form-group">
-          <label for="first_name" class="col-sm-3 control-label fontstyl" style="">First Name<span class="starcolor">*</span></label>
+    </div> 
+      <div class="row">
+       <div class="col-sm-1"></div>
+       <div class="col-sm-5">
+         <div class=form-horizondal>
+           <div class="form-group">
+             <label for="country" class="col-sm-3 control-label fontstyl" style="">Country<span class="starcolor">*</span></label>
+             <div class="col-sm-9">
+               <select name="ConSelect" id="ConSelect" onchange ="ConSelectFun();" class="form-control">
+                <option value=""> Country </option>
+                <?php $count=count($contry);
 
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="first_name" name="first_name">
-            <span class="first_name_err popup_err blink_me"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-5">
-      <div class=form-horizondal>
-        <div class="form-group">
-          <label for="telephone" class="col-sm-3 control-label fontstyl" style="">Telephone<span class="starcolor">*</span></label>
+                for ($i=0; $i <$count ; $i++) { ?>
+                <option value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
+                <?php  } ?>
+                </select>
+               <span class="country_err popup_err blink_me"></span>
 
-          <div class="col-sm-9">
-            <input type="number" class="hide-spinner form-control" id="telephone" name="telephone">
-            <span class="telephone_err popup_err blink_me"></span>
-
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-1"></div>
-  </div>  
-  <div class="row">
-   <div class="col-sm-1"></div>
-   <div class="col-sm-5">
-    <div class=form-horizondal>
-      <div class="form-group">
-        <label for="last_name" class="col-sm-3 control-label fontstyl" style="">Last Name<span class="starcolor">*</span></label>
-
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="last_name" name="last_name">
-          <span class="last_name_err popup_err blink_me"></span>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-5">
-    <div class=form-horizondal>
-      <div class="form-group">
-        <label for="phone" class="col-sm-3 control-label fontstyl" style="">Mobile Number<span class="starcolor">*</span></label>
-
-        <div class="col-sm-9">
-          <input type="number" class="hide-spinner form-control" id="phone" name="phone">
-          <span class="mobile_err popup_err blink_me"></span>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</div>  
-<div class="row">
- <div class="col-sm-1"></div>
- <div class="col-sm-5">
-   <div class=form-horizondal>
-     <div class="form-group">
-       <label for="country" class="col-sm-3 control-label fontstyl" style="">Country<span class="starcolor">*</span></label>
-       <div class="col-sm-9">
-         <select name="ConSelect" id="ConSelect" onchange ="ConSelectFun();" class="form-control">
-          <option value=""> Country </option>
-          <?php $count=count($contry);
-
-          for ($i=0; $i <$count ; $i++) { ?>
-          <option value="<?php echo $contry[$i]->id;?>" sortname="<?php echo  $contry[$i]->sortname; ?>"><?php echo $contry[$i]->name; ?></option>
-          <?php  } ?>
-          </select>
-         <span class="country_err popup_err blink_me"></span>
-
+             </div>
+           </div>
+         </div>
        </div>
-     </div>
-   </div>
- </div>
-  <div class="col-sm-5">
-   <div class=form-horizondal>
-     <div class="form-group">
-       <label for="state" class="col-sm-3 control-label fontstyl" style="">State<span class="starcolor">*</span></label>
-       <div class="col-sm-9">
-         <div class="multi-select-mod multi-select-trans multi-select-trans1">
-         <select name="stateSelect" id="stateSelect" class="form-control">
-         <option value="">Select</option>
-         </select> 
-         <span class="state_err popup_err blink_me"></span>
+        <div class="col-sm-5">
+         <div class=form-horizondal>
+           <div class="form-group">
+             <label for="state" class="col-sm-3 control-label fontstyl" style="">State<span class="starcolor">*</span></label>
+             <div class="col-sm-9">
+               <div class="multi-select-mod multi-select-trans multi-select-trans1">
+               <select name="stateSelect" id="stateSelect" class="form-control">
+               <option value="">Select</option>
+               </select> 
+               <span class="state_err popup_err blink_me"></span>
 
+             </div>
+           </div>
+         </div>
        </div>
-     </div>
-   </div>
- </div>
-</div>
- <div class="col-sm-1"></div>
+      </div>
+       <div class="col-sm-1"></div>
 
-</div>
+      </div>   
 <div class="row">
  <div class="col-sm-1"></div>
 <div class="col-sm-5">
-   <div class=form-horizondal>
-     <div class="form-group">
-       <label for="city" class="col-sm-3 control-label fontstyl" style="">City<span class="starcolor">*</span></label>
-       <div class="col-sm-9">
-         <input type="text" class="form-control" id="city" name="city">
-         <span class="city_err popup_err blink_me"></span>
-
-       </div>
-     </div>
-   </div>
+    <div class=form-horizondal>
+      <div class="form-group">
+        <label for="address" class="col-sm-3 control-label fontstyl" style="">Address <span class="starcolor">*</span></label>
+        <div class="col-sm-9">
+          <textarea id="address" name="address" class="form-control"></textarea>
+          <span class="address_err popup_err blink_me"></span>
+        </div>
+      </div>
+    </div>
  </div>
 <div class="col-sm-5">
   <div class=form-horizondal>

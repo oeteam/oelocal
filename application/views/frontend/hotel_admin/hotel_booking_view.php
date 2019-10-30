@@ -135,6 +135,8 @@
 			        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
 			        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
 			        $RequestType = explode(",", $view[0]->RequestType);
+		        $boardName = explode(",", $view[0]->boardName);
+			        
 				for ($i=1; $i <= $book_room_count; $i++) { 
 					if (!isset($ExtrabedDiscount[$i-1])) {
 						$ExtrabedDiscount[$i-1] = 0;
@@ -195,6 +197,9 @@
 					}
 
 					$RoomName = roomnameGET($room_id,$view[0]->hotel_id);
+					if (!isset($boardName[$i-1])) {
+						$boardName[$i-1] = $boardName[0];
+					}
 				?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
@@ -229,7 +234,7 @@
             					<tr>
 	            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
 	            					<td><?php echo $RoomName ?></td>
-	            					<td style="text-align: center"><?php echo $view[0]->boardName; ?></td>
+	            					<td style="text-align: center"><?php echo $boardName[$i-1]; ?></td>
 	            					<td style="text-align: right">
             								<?php 
             								

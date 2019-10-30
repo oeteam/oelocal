@@ -263,6 +263,9 @@
 					}
 
 					$RoomName = roomnameGET($room_id,$view[0]->hotel_id);
+					if (!isset($boardName[$i-1])) {
+						$boardName[$i-1] = $boardName[0];
+					}
 				?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
