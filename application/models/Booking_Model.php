@@ -771,5 +771,12 @@ class Booking_Model extends CI_Model {
     $query = $this->db->get()->result();
     return $query;
   }
+  public function gettravellerdata($id) {
+    $this->db->select("*");
+    $this->db->from("traveller_details");
+    $this->db->where("bookingid",$id);
+    $query = $this->db->get()->result();
+    return $query;
+  }
 }
 

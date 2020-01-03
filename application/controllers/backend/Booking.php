@@ -182,6 +182,7 @@ class Booking extends MY_Controller {
       $data['logs'] = $this->Booking_Model->getBookingLogs($_REQUEST['id']);
       $data['amendments'] = $this->Booking_Model->getamendments($_REQUEST['id']);
       $data['amenddata'] = $this->Booking_Model->getamendmentdata($_REQUEST['id']);
+      $data['travellers'] = $this->Booking_Model->gettravellerdata($_REQUEST['id']);
       $this->load->view('backend/booking/hotel_booking_view',$data);
   }
   public function hotel_portel_admin_permission() {
