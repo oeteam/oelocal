@@ -535,6 +535,7 @@ class Dashboard extends MY_Controller {
       
       $data['ExBed']  =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
       $data['cancelation'] =  $this->Payment_Model->get_cancellation_terms($_REQUEST['id']);
+      $data['travellers'] = $this->Payment_Model->gettravellerdata($_REQUEST['id']);
       $this->load->view('frontend/hotel_admin/hotel_booking_view',$data);
 	}
     public function hotel_portel_permission() {

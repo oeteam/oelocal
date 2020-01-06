@@ -202,7 +202,7 @@
                   <?php  if (count($notify)!=0) {
                    foreach ($notify as $key => $value) {
                     if ($value->rejected==2) { ?>
-                        <div class='msgbox offset-0'><a href='<?php echo base_urlx(); ?>Dashboard/booking_details_portel?id=<?php echo $value->bk_id?>'><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/>
+                        <div class='msgbox offset-0'><a href='<?php echo base_url(); ?>Dashboard/booking_details_portel?id=<?php echo $value->bk_id?>'><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/>
                         <span class='opensans size13 dark'>You have a New booking request </span><br/></div>
                   <?php } if ($value->rejected==0) { ?>
                         <div class='msgbox offset-0'><a href='<?php echo base_url(); ?>Dashboard/booking_details_portel?id=<?php echo $value->bk_id?>'><img src='<?php echo images_url(); ?>uploads/rooms/<?php echo $value->room_id ?>/<?php echo $value->images ?>' alt='' width='30' class='left margright10 roundav'/>

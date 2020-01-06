@@ -400,7 +400,7 @@ class Payment extends MY_Controller {
       $data['cancelation'] =  $this->Payment_Model->get_cancellation_terms($_REQUEST['id']);
       $data['amenddata'] =  $this->Payment_Model->getamendmentdata($_REQUEST['id']);
       $data['ExBed']  =  $this->Payment_Model->getExtrabedDetails($_REQUEST['id']);
-
+      $data['travellers'] = $this->Payment_Model->gettravellerdata($_REQUEST['id']);
       $this->load->view('frontend/booking/agent_booking_view',$data);
      }
      public function agent_booking_cancel() {

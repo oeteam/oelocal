@@ -67,29 +67,17 @@
 					<table class="table table-striped table-dark">
 						<thead>
 							<tr>
-								<td>Rooms</td>
 								<td>Name</td>
-								
+								<td>Email</td>
+								<td>Contact number</td>
 							</tr>
 						</thead>
-						<tbody>
-							<?php 
-							for ($w=1; $w <=$view[0]->book_room_count; $w++) { 
-							$RoomFname = "Room".$w."-FName";
-							$RoomLname = "Room".$w."-LName";
-
-							 ?>
+						<tbody>	
 							<tr>
-								<td>Room <?php echo $w ?></td>
-								<?php if ($w==1) { ?>
-									<td><?php echo $view[0]->bk_contact_fname." ".$view[0]->bk_contact_lname; ?></td>
-									
-								<?php } else { ?>
-									<td><?php echo $view[0]->$RoomFname; ?> <?php echo isset($view[0]->$RoomLname) ? $view[0]->$RoomLname : '' ?></td>
-									
-								<?php } ?>
+								<td><?php echo $view[0]->bk_contact_fname." ".$view[0]->bk_contact_lname; ?></td>
+								<td><?php echo $view[0]->bk_contact_email ?></td>
+								<td><?php echo $view[0]->bk_contact_number ?></td>	
 							</tr>
-							<?php } ?>
 						</tbody>
 					</table>
 				</div>
@@ -112,6 +100,37 @@
 				</br>
 		</div>
 		</div>
+		<?php if(count($travellers)!=0) { ?>
+			<div class="col-md-12">
+				<div class="col-mds-12">
+					<h4>Traveller Details</h4> 
+						<table class="table table-striped table-dark">
+							<thead>
+								<tr>
+									<td>Rooms</td>
+									<td>Name</td>
+									<td>Age</td>
+								</tr>
+							</thead>
+							<tbody>	
+								<?php 
+								for ($w=1; $w <=$view[0]->book_room_count; $w++) { 
+									foreach($travellers as $value) {
+										if($w==$value->roomindex) { ?>
+										<tr>
+											<td>Room <?php echo $w ?></td>
+											<td><?php echo $value->title." ".$value->firstname." ".$value->lastname; ?></td>
+											<td><?php echo $value->age ?></td>								
+										</tr>
+									<?php }
+									} 
+								} ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<?php } ?>
 	
 		<div class="col-md-12">
 				<h4 class="dark bold">Booking Amount Breakup</h4>
@@ -120,8 +139,7 @@
 			<div class="col-md-12">
 				<!-- <h4 class="opensans dark bold">Booking Amount Breakup</h4> -->
 					<?php 
-					// print_r($board);
-			        $total_markup 	 = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
+			        //$total_markup 	 = $view[0]->agent_markup+$view[0]->admin_markup+$view[0]->search_markup;
 					$book_room_count = $view[0]->book_room_count;
 					$individual_amount = explode(",", $view[0]->individual_amount);
 					$individual_discount = explode(",", $view[0]->individual_discount);
@@ -135,7 +153,7 @@
 			        $GeneralDiscount = explode(",", $view[0]->GeneralDiscount);
 			        $BoardDiscount = explode(",", $view[0]->BoardDiscount);
 			        $RequestType = explode(",", $view[0]->RequestType);
-		        $boardName = explode(",", $view[0]->boardName);
+		        	$boardName = explode(",", $view[0]->boardName);
 			        
 				for ($i=1; $i <= $book_room_count; $i++) { 
 					if (!isset($ExtrabedDiscount[$i-1])) {
