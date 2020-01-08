@@ -3570,7 +3570,6 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
          $guestfname = $_REQUEST['Room1AdultFirstName'][0];
          $guestlname =  $_REQUEST['Room1AdultLastName'][0];
 
-         print_r($_REQUEST);exit;
          $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup,$guestfname,$guestlname,$_REQUEST['board']);
          for($i=0;$i<$_REQUEST['no_of_rooms'];$i++) {
           for($j=0;$j<$_REQUEST['adults'][$i];$j++){
