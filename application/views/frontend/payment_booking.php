@@ -259,12 +259,12 @@
 							$ctBchildamount = 0;
 		                 	$textrabedamount = 0;
               			 ?>
-                                <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
+                         <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
 			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
 		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
-		                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
-		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
-		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+	                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultFirstName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] : '' ?>">
+		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
+		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '' ?>">
 		                <?php } ?>
 		                <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
 		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
@@ -278,7 +278,7 @@
                     <div class="col-md-12">
 						<div class="row">
 						<?php 
-					//	$additionalfoodrequest = array();
+						$additionalfoodrequest = array();
 						if(count($additionalfoodrequest)!=0) { ?>
 						<span class="size16px bold dark">Add meals</span><br/><br/>
 						<?php } ?>
@@ -422,7 +422,7 @@
 						$IndexSplit = explode("-", $_REQUEST['Room'.($RAkey+1)]);
 						$contractId= $IndexSplit[0];
 						$RoomId= $IndexSplit[1];
-        				// $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'));
+        				$revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'));
         				$extrabed = $this->Payment_Model->get_PaymentConfirmextrabedAllotment($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey);
         				
         				$general = $this->Payment_Model->get_Confirmgeneral_supplement($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey+1);
@@ -465,8 +465,7 @@
 	            				</thead>
 	            				<tbody>
 	            					<?php for ($i=1; $i <=$tot_days ; $i++) {
-            						$revenue_markup = revenue_markup2($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'),date('Y-m-d' ,strtotime($result[$i]['date'])));       
-							$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
+            						$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
             						$result[$i]['roomName'] = roomnameGET($RoomId,$_REQUEST['hotel_id']);
 	            					$FextrabedAmount[$i-1]  = 0;
 	            					$TFextrabedAmount[$i-1]  = 0;
@@ -524,7 +523,7 @@
 		            						<br>
 		            					<?php }
 		            					if ($i==1) {
-		            						$oneNight[$RAkey][0] = $DisroomAmount[1];
+		            						$oneNight[$RAkey][] = $DisroomAmount[1];
 		            					}
 		            					echo currency_type(agent_currency(),$DisroomAmount[$i]) ?> <?php echo agent_currency() ?></td>
 	            					</tr>
@@ -563,7 +562,7 @@
 					            						<br>
 		                    						<?php }
 		            								if ($i==1) {
-					            						$oneNight[$RAkey][1] = $GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100;
+					            						$oneNight[$RAkey][] = $GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100;
 					            					}	
 	            								 echo currency_type(agent_currency(),$GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100)." ".agent_currency(); ?></td>
 	            							</tr>
@@ -600,7 +599,7 @@
 					            						<br>
 		                    						<?php }
             									if ($i==1) {
-				            						$oneNight[$RAkey][2] = $GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100;
+				            						$oneNight[$RAkey][] = $GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100;
 				            					 }	
 	            								 echo currency_type(agent_currency(),$GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100)." ".agent_currency(); ?></td>
 	            							</tr>
@@ -654,7 +653,7 @@
 					            						<br>
 	                    						<?php }
 	                    						if ($i==1) {
-				            						$oneNight[$RAkey][3] = $FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100;
+				            						$oneNight[$RAkey][] = $FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100;
 				            					 }
 	                    						echo currency_type(agent_currency(),$FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100) ?> <?php echo agent_currency() ?>
 	                    					</td>
@@ -694,7 +693,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][4] = $BBAamount[$i-1];
+						            						$oneNight[$RAkey][] = $BBAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$BBAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -735,7 +734,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][5] = $BBCamount[$i-1];
+						            						$oneNight[$RAkey][] = $BBCamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$BBCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -782,7 +781,7 @@
 			                    						<?php }
 
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][6] = $LAamount[$i-1];
+						            						$oneNight[$RAkey][] = $LAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$LAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -821,7 +820,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][7] = $LCamount[$i-1];
+						            						$oneNight[$RAkey][] = $LCamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$LCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -865,7 +864,7 @@
 						            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][8] = $DAamount[$i-1];
+						            						$oneNight[$RAkey][] = $DAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$DAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -903,7 +902,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][9] = $DCamount[$i-1];
+						            						$oneNight[$RAkey][] = $DCamount[$i-1];
 						            					}
 	            										echo currency_type(agent_currency(),$DCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -1030,17 +1029,15 @@
 					    		<td><?php echo $Cancvalue['after'] ?></td>
 					    		<td><?php echo $Cancvalue['before'] ?></td>
 					    		<td><?php 
-					    		$charge = $total[$i]*($Cancvalue['percentage']/100);
 					    		if ($Cancvalue['application']=="FIRST NIGHT") {
 					    			$finalAmount = array_sum($oneNight[$i]);
-				    				$charge =$finalAmount*($Cancvalue['percentage']/100);
 					    		}
 
 					    		if ($Cancvalue['application']=="FREE OF CHARGE") {
 					    			$finalAmount = 0;
-					    			$charge = 0;
 					    		}
 
+					    		$charge = $total[$i]*($Cancvalue['percentage']/100);
 					    		echo currency_type(agent_currency(),$charge)." ".agent_currency()
 					    		// echo $Cancvalue['percentage'] ?> (<?php echo $Cancvalue['application'] ?>)</td>
 					    	</tr>
@@ -1203,4 +1200,6 @@
 
 <!-- END OF CONTENT -->
 <?php init_front_black_tail(); ?> 
+
+	
 
