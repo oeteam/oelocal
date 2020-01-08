@@ -3570,8 +3570,30 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
          $guestfname = $_REQUEST['Room1AdultFirstName'][0];
          $guestlname =  $_REQUEST['Room1AdultLastName'][0];
 
-
+         print_r($_REQUEST);exit;
          $insert_id = $this->Payment_Model->TBOBookingConfirm($this->session->userdata('agent_id'),$ClientReferenceNumber,$BookingId,$Bookingresponse['TripId'],$Bookingresponse['ConfirmationNo'],$Bookingresponse['BookingStatus'],$_REQUEST['hotel_name'],$_REQUEST['RoomTypeName'][0],$_REQUEST['Check_in'],$_REQUEST['Check_out'],$_REQUEST['tot'],$_REQUEST['no_of_days'],$_REQUEST['no_of_rooms'],$_REQUEST['hotel_id'],$PriceChange,$admin_markup,$guestfname,$guestlname,$_REQUEST['board']);
+         for($i=0;$i<$_REQUEST['no_of_rooms'];$i++) {
+          for($j=0;$j<$_REQUEST['adults'][$i];$j++){
+            $travelers = array('title' => $_REQUEST['Room'.($i+1).'Adulttitle'][$j],
+                    'firstname' => $_REQUEST['Room'.($i+1).'AdultFirstName'][$j],
+                    'lastname' => $_REQUEST['Room'.($i+1).'AdultLastName'][$j],
+                    'age' => $_REQUEST['Room'.($i+1).'AdultAge'][$j],
+                    'type' => 'adult',
+                    'roomindex' => ($i+1),
+                    'bookingid' => $insert_id);
+            $this->Payment_Model->travelers_add($travelers);
+          }
+          for($j=0;$j<$_REQUEST['Child'][$i];$j++){
+            $travelers = array('title' => $_REQUEST['Room'.($i+1).'ChildTitle'][$j],
+                    'firstname' => $_REQUEST['Room'.($i+1).'ChildFirstName'][$j],
+                    'lastname' => $_REQUEST['Room'.($i+1).'ChildLastName'][$j],
+                    'age' => $_REQUEST['reqroom'.($i+1).'-ChildAge'][$j],
+                    'type' => 'child',
+                    'roomindex' => ($i+1),
+                    'bookingid' => $insert_id);
+            $this->Payment_Model->travelers_add($travelers);
+          }
+        }
          if($type=='Credit') {
           $agent_credit_get = $this->Payment_Model->agent_credit_get();
           $agent_amount = $agent_credit_get-$_REQUEST['tot'];
@@ -3935,7 +3957,6 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $booking_id = $max_id[0]->id+1;
         $max_booking_id = "HAB0".$booking_id;
       }
-    
       // Get Max booking Id end 
           
       // Get Markup start
@@ -4335,7 +4356,30 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'Created_Date' => date('Y-m-d H:i:s'),
               'Created_By' =>  $this->session->userdata('agent_id'),
             );
+//print_r($data);exit;
         $insert_id = $this->Payment_Model->room_booking_add($datas);
+        for($i=0;$i<$data['no_of_rooms'];$i++) {
+          for($j=0;$j<$data['reqadults'][$i];$j++){
+            $travelers = array('title' => $data['Room'.($i+1).'Adulttitle'][$j],
+                    'firstname' => $data['Room'.($i+1).'AdultFirstName'][$j],
+                    'lastname' => $data['Room'.($i+1).'AdultLastName'][$j],
+                    'age' => $data['Room'.($i+1).'AdultAge'][$j],
+                    'type' => 'adult',
+                    'roomindex' => ($i+1),
+                    'bookingid' => $insert_id);
+            $this->Payment_Model->travelers_add($travelers);
+          }
+          for($j=0;$j<$data['reqChild'][$i];$j++){
+            $travelers = array('title' => $data['Room'.($i+1).'ChildTitle'][$j],
+                    'firstname' => $data['Room'.($i+1).'ChildFirstName'][$j],
+                    'lastname' => $data['Room'.($i+1).'ChildLastName'][$j],
+                    'age' => $data['reqroom'.($i+1).'-childAge'][$j],
+                    'type' => 'child',
+                    'roomindex' => ($i+1),
+                    'bookingid' => $insert_id);
+            $this->Payment_Model->travelers_add($travelers);
+          }
+        }
         $boardData = array();
         $ABadultamount = array();
         $tmangadultamount = array();

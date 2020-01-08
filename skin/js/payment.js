@@ -557,4 +557,3 @@ function aditionalfoodRemoveRequest1(prm,req) {
     }
   });
 }
-
