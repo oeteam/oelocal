@@ -261,15 +261,15 @@
               			 ?>
                          <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
 			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
-		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
+		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'Adulttitle'][$i]) ? $_REQUEST['Room'.($x+1).'Adulttitle'][$i] : '' ?>">   
 	                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultFirstName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] : '' ?>">
 		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
 		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '' ?>">
 		                <?php } ?>
 		                <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
-		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
-							<input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]">
-							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]">
+		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'ChildTitle'][$j]) ? $_REQUEST['Room'.($x+1).'ChildTitle'][$j] : '' ?>">
+							<input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'ChildFirstName'][$j]) ? $_REQUEST['Room'.($x+1).'ChildFirstName'][$j] : '' ?>">
+							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'ChildLastName'][$j]) ? $_REQUEST['Room'.($x+1).'ChildLastName'][$j] : '' ?>">
 		                <?php } ?>
 		                <?php } ?>
                      <input type="hidden" name="boardChildTotal" value="<?php echo $ctBchildamount ?>">
