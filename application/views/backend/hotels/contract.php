@@ -15,9 +15,9 @@ $contractmenu = menuPermissionAvailability($this->session->userdata('id'),'Hotel
                     foreach ($view as $key => $value) {
                         if (isset($_REQUEST['hotel_id']) && $_REQUEST['hotel_id']==$value->id) {
                         ?>
-                        <option selected="" value="<?php echo $value->hotel_id; ?>"><?php echo $value->hotel_name; ?></option>
+                        <option selected="" value="<?php echo $value->id; ?>"><?php echo $value->hotel_name; ?> <?php echo $value->supplier==1 ?  $value->Agent_Code : '' ?></option>
                     <?php } else { ?>
-                        <option value="<?php echo $value->hotel_id; ?>"><?php echo $value->hotel_name; ?></option>
+                        <option value="<?php echo $value->id; ?>"><?php echo $value->hotel_name; ?> <?php echo $value->supplier==1 ?  $value->Agent_Code : '' ?></option>
 
                 	<?php } } ?>
                 </select>

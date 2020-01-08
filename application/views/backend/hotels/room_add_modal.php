@@ -116,7 +116,7 @@
               <div class="form-group col-md-6">
                   <label for="LinkedRoom">Linked Room</label>
                   <select id="LinkedRoom" name="LinkedRoom" class="form-control">
-                    <option>--Select--</option>
+                    <option value="">--Select--</option>
                     <?php foreach ($linkedRooms as $LRkey => $LRvalue) {
                       if(isset($view[0]->linked_to_room_type) && $view[0]->linked_to_room_type==$LRvalue->id) { ?>
                         <option selected="" value="<?php echo $LRvalue->id ?>"><?php echo $LRvalue->room_name." ".$LRvalue->Room_Type ?></option>

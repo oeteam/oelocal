@@ -3563,6 +3563,8 @@ class Hotels extends MY_Controller {
 			}
 		} else {
 			if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$Trendinglist = $this->Hotels_Model->Trendinglist();
+				$data['edit'] = $Trendinglist->result();
 				$this->load->view('backend/hotels/trendingAdd',$data);
 			} else {
 				redirect(base_url().'backend/dashboard');
@@ -3664,6 +3666,8 @@ class Hotels extends MY_Controller {
 			}
 		} else {
 			if (count($displayMenu)!=0 && $displayMenu[0]->create==1) {
+				$homebannerList = $this->Hotels_Model->homebannerList();
+				$data['edit'] = $homebannerList->result();
 				$this->load->view('backend/hotels/homebannerAdd',$data);
 			} else {
 				redirect(base_url().'backend/dashboard');
@@ -3702,6 +3706,7 @@ class Hotels extends MY_Controller {
 			}else{
 	            $delete="";
 	        }		
+	        $delete="";
 			$hotelsname = array();
 	       	$hotels = explode(",", $r->hotelid);
 	       	foreach ($hotels as $exakey => $exavalue) {
@@ -3742,6 +3747,17 @@ class Hotels extends MY_Controller {
       		$Return['color'] = 'red';
 		}
         echo json_encode($Return);
+	}
+	public function cancellationPolicytitle() {
+
+		$this->db->select('*');
+		$this->db->from('hotel_tbl_cancellationfee');
+		$this->db->where('contract_id',$_REQUEST['conId']);
+		$this->db->where('FIND_IN_SET('.$_REQUEST['roomId'].',IFNULL(roomType,"")) > 0');
+		$this->db->where('"'.$_REQUEST['altDate'].'" BETWEEN fromDate AND toDate');
+		$query = $this->db->get()->result();
+		$data['view'] = $query;
+		$this->load->view('backend/hotels/cancellationPolicytitle',$data); 
 	}
 }
 

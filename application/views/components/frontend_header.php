@@ -47,7 +47,8 @@ $data = title();
   <div class="container">
    <div class="row">
     <div class="col-md-3">
-     <div class="logo"><a href="<?php echo base_url(); ?>"><img width="120" src="<?php echo static_url(); ?>skin/images/agent_login/logo.png"   alt=""/></a></div>
+     <div class="logo"><a href="<?php echo base_url(); ?>">
+      <img width="120" src="<?php echo static_url(); ?>skin/images/agent_login/logo.png"   alt=""/></a></div>
      <!--logo-->
    </div>
    <?php

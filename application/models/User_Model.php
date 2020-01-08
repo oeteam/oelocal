@@ -41,61 +41,67 @@ class User_Model extends CI_Model {
     // }
     public function authorizeagent($user_name, $password,$agent_code) {
         /*Main Agent authorization start*/
-        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
-        $this->db->where('Username',$user_name);
-        $this->db->where('password',$password);
-        $this->db->where('Agent_Code',$agent_code);
-        $this->db->where('delflg',"1");
-        $this->db->from('hotel_tbl_agents');
-        $this->db->limit('1');
-        $query = $this->db->get();
+
+        $sql = "SELECT id,Email,First_Name,Last_Name,Sex,logged_id FROM hotel_tbl_agents WHERE Username = ? AND password = ? AND Agent_Code = ? AND delflg = 1 limit 1";
+
+        $query = $this->db->query($sql, array($user_name, $password, $agent_code));
+
+
+        // $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
+        // $this->db->where('Username',$user_name);
+        // $this->db->where('password',$password);
+        // $this->db->where('Agent_Code',$agent_code);
+        // $this->db->where('delflg',"1");
+        // $this->db->from('hotel_tbl_agents');
+        // $this->db->limit('1');
+        // $query = $this->db->get();
         /*Main Agent authorization end*/
         /*Accounts Agent authorization start*/
 
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
-        $this->db->where('First_Name_Accounts',$user_name);
-        $this->db->where('Password_Accounts',$password);
-        $this->db->where('Agent_Code',$agent_code);
-        $this->db->where('delflg',"1");
-        $this->db->from('hotel_tbl_agents');
-        $this->db->limit('1');
-        $query1 = $this->db->get();
+        // $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
+        // $this->db->where('First_Name_Accounts',$user_name);
+        // $this->db->where('Password_Accounts',$password);
+        // $this->db->where('Agent_Code',$agent_code);
+        // $this->db->where('delflg',"1");
+        // $this->db->from('hotel_tbl_agents');
+        // $this->db->limit('1');
+        // $query1 = $this->db->get();
 
         /*Accounts Agent authorization end*/
         /*Reservation Agent authorization start*/
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
-        $this->db->where('First_Name_Reservation',$user_name);
-        $this->db->where('Password_Reservation',$password);
-        $this->db->where('Agent_Code',$agent_code);
-        $this->db->where('delflg',"1");
-        $this->db->from('hotel_tbl_agents');
-        $this->db->limit('1');
-        $query2 = $this->db->get();
+        // $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
+        // $this->db->where('First_Name_Reservation',$user_name);
+        // $this->db->where('Password_Reservation',$password);
+        // $this->db->where('Agent_Code',$agent_code);
+        // $this->db->where('delflg',"1");
+        // $this->db->from('hotel_tbl_agents');
+        // $this->db->limit('1');
+        // $query2 = $this->db->get();
 
         /*Reservation Agent authorization end*/
         /*Management Agent authorization start*/
 
-        $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
-        $this->db->where('First_Name_Management',$user_name);
-        $this->db->where('Password_Management',$password);
-        $this->db->where('Agent_Code',$agent_code);
-        $this->db->where('delflg',"1");
-        $this->db->from('hotel_tbl_agents');
-        $this->db->limit('1');
-        $query3 = $this->db->get();
+        // $this->db->select('id,Email,First_Name,Last_Name,Sex,logged_id');
+        // $this->db->where('First_Name_Management',$user_name);
+        // $this->db->where('Password_Management',$password);
+        // $this->db->where('Agent_Code',$agent_code);
+        // $this->db->where('delflg',"1");
+        // $this->db->from('hotel_tbl_agents');
+        // $this->db->limit('1');
+        // $query3 = $this->db->get();
 
         /*Management Agent authorization end*/
 
         if (count($query->result())!=0) {
             return $query->result();
-        } else if (count($query1->result())!=0) {
-            return $query1->result();
-        } if (count($query2->result())!=0) {
-            return $query2->result();
-        } else if (count($query3->result())!=0) {
-            return $query3->result();
+        // } else if (count($query1->result())!=0) {
+        //     return $query1->result();
+        // } if (count($query2->result())!=0) {
+        //     return $query2->result();
+        // } else if (count($query3->result())!=0) {
+        //     return $query3->result();
         } else {
             return "failed";
         }

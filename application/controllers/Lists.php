@@ -101,6 +101,16 @@ class lists extends MY_Controller {
                     }
                     $RequestType = 'More Rooms';
                       $btnColor = 'green';
+                    // if ($value['alt']!=0) {
+                    //   $RequestType = 'Book';
+                    //   $btnColor = 'green';
+                    // } else {
+                    //   $RequestType = 'On Request';
+                    //   $btnColor = '#fb6330';
+                    // }
+                    $RequestType = 'More Rooms';
+                    $btnColor = 'green';
+
                     $request = 'RequestType='.$RequestType.'&hotel_id='.$value['HotelCode'].'&Check_in='.$_REQUEST['Check_in'].'&Check_out='.$_REQUEST['Check_out'].'&'.$requestAdults.'&'.$requestChild.$imploderequestChildAge1.'&no_of_rooms='.count($_REQUEST['adults']).'&nationality='.$_REQUEST['nationality'].'&location='.$_REQUEST['location'].'&countryname='.$_REQUEST['countryname'].'&hotel_name='.$_REQUEST['hotel_name'].'&citycode='.$_REQUEST['citycode'].'&cityname='.$_REQUEST['cityname'];    
                     // $BookBtn = '<a onclick="tokenSetfn(\''.base_url().'payment?'.$request.'\',\''.str_replace("'", "", $value['HotelName']).'\',\''.str_replace("'", "", $value['HotelAddress']).'\',\''.$value['HotelPicture'].'\',\''.$value['HotelCode'].'\','.$value['Rating'].')" style="background:'.$btnColor.';border-bottom: 2px solid '.$btnColor.';cursor:pointer" href="#" class="hotel-view-btn">'.$RequestType.'</a>';
                     $BookBtn = '<a  style="background:'.$btnColor.';border-bottom: 2px solid '.$btnColor.';cursor:pointer" target="_blank" href="'.base_url().'payment?'.$request.'" class="hotel-view-btn">'.$RequestType.'</a>';

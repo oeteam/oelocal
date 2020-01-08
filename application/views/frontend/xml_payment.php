@@ -1085,11 +1085,11 @@ $(".details").on("click", function( e ) {
                     <div class="av-div">
                        <h5 class="r-type--name m-0"><i class="fa fa-check-circle text-green"></i><i class="fa fa-circle-thin text-green" style="    margin-right: 2px;"></i><?php echo $value['RoomTypeName'] ?> - <?php echo count($value['Inclusion'])!=0 ? $value['Inclusion'] : 'Room Only' ?>
                      <?php 
-                              if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
+                                if (isset($value['CancelPolicies']['CancelPolicy'][0])) {
                                   $cancelList[$key] = $value['CancelPolicies']['CancelPolicy'];
                                 } else {
                                   $cancelList[$key][0] = $value['CancelPolicies']['CancelPolicy'];
-                               } 
+                                } 
                                
                                if(isset($cancelList[$key][0]['@attributes']) && $cancelList[$key][0]['@attributes']['CancellationCharge']==0) { ?>
                                 <span class="pull-right" data-toggle="modal" data-target="#myModalRoom-<?php echo $value['RoomIndex'] ?>">Free of Cancellation till <?php echo $cancelList[$key][0]['@attributes']['ToDate']?> <span>
@@ -1122,7 +1122,8 @@ $(".details").on("click", function( e ) {
 
                       <?php  }
                       } ?>
-                      <?php $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
+                      <?php 
+                        $DayRates = $value['RoomRate']['@attributes']['TotalFare'];
                         $DayRates = ($DayRates*$total_markup)/100+$DayRates ?>
                       <p class="text-green m-0 bold">
                         <input type="hidden" class="com-amnt" value="<?php echo xml_currency_change($DayRates,$value['RoomRate']['@attributes']['Currency'],agent_currency()); ?>">

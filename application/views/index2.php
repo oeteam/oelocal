@@ -1,7 +1,7 @@
 <?php init_load_frontend_header(); 
 
 $HotelsView = HotelsView();
-// $Hotelsbanner = Hotelsbanner();
+$Hotelsbanner = Hotelsbanner();
 // print_r($Hotelsbanner);exit;
 ?>
 <!-- <script type="text/javascript">
@@ -11,33 +11,82 @@ $HotelsView = HotelsView();
    }
 </script> -->
 <!--baner-->
+<style type="text/css">
+  .logo a:hover {
+    text-decoration: none ! important;
+  }
+</style>
+<section >
+   <div style="background: url('<?php echo base_url(); ?>agentLoginStyle/img/main-ice-fall.png');
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    z-index: 99999999;
+    background-position: inherit;
+    display: block;
+    background-repeat: repeat-x;"></div>
 
-<section>
    <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
+      <div style="background: url('<?php echo base_url(); ?>agentLoginStyle/img/ice-fall.gif');width: 100%;
+    z-index: 99999999;
+    height: 550px;
+    position: absolute;" ></div>
+      <div style="background:url('<?php echo base_url() ?>agentLoginStyle/img/AnitaG_Spidey-Santa.gif');
+      width: 90%;
+    height: 100%;
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 999999999999999999;
+    top: 316px;
+    transform: rotate(-7deg);
+    left: 26px; "></div>
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
          <div class="item active">
             <div class="bnr-ad"></div>
             <div class="carousel-caption">
-               <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
-               <p>  with otelseasy.com</p>
+               <h3 style="stext-shadow: 1px 1px 3px red;">Otelseasy wishing you  </h3>
+               <h3 style="stext-shadow: 1px 1px 3px red;"> and your family a  </h3>
+               <p style="text-shadow: 1px 1px 3px red;font-size: 30px">  Happy Christmas</p>
             </div>
          </div>
          <div class="item">
             <div class="carousel-caption">
-               <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
-               <p>  with otelseasy.com</p>
+               <h3 style="stext-shadow: 1px 1px 3px red;">Otelseasy wishing you  </h3>
+               <h3 style="stext-shadow: 1px 1px 3px red;"> and your family a  </h3>
+               <p style="">  Happy Christmas</p>
                         
-                     </div>
-                  </div>
-                  <div class="item">
-                     <div class="carousel-caption">
-                        <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
-                        <p>  with otelseasy.com</p>
-                     </div>
-                  </div>
                </div>
-               <div id="box-hldr">
+            </div>
+            <div class="item">
+               <div class="carousel-caption">
+                  <h3 style="stext-shadow: 1px 1px 3px red;">Otelseasy wishing you  </h3>
+                 <h3 style="stext-shadow: 1px 1px 3px red;"> and your family a  </h3>
+                 <p style="">  Happy Christmas</p>
+               </div>
+            </div>
+         </div>
+         <img src="<?php base_url() ?>agentLoginStyle/img/tree3.png" style="margin-right: 0px;
+    position: absolute;
+    bottom: -5px;
+    right: 25px;
+    width: 87px;z-index: 997;">
+    <img src="<?php base_url() ?>agentLoginStyle/img/tree1.png" style="margin-right: 0px;
+    position: absolute;
+    bottom: -5px;
+    right: 91px;
+    width: 87px;z-index: 997;opacity: 0.8;">
+    <img src="<?php base_url() ?>agentLoginStyle/img/tree2.png" style="margin-right: 0px;
+    position: absolute;
+    bottom: -5px;
+    right: 150px;
+    width: 87px;z-index: 997;">
+    <img src="<?php base_url() ?>agentLoginStyle/img/snowground.png" style="    position: absolute;
+    bottom: -46px;
+    width: 100%;
+    z-index: 13;
+    height: 127px;">
+               <div id="box-hldr" style="z-index: 99999999999999999999999999">
                   <div class="col-md-12">
                      <div class="panel with-nav-tabs panel-info">
                         <div class="panel-heading toggle-style">
@@ -183,9 +232,12 @@ $HotelsView = HotelsView();
                            </div><!--panel-body-->
 
                         </div>
+
                      </div>
+
                   </div>
                   <!--carosel fade-->
+               
                </section>
                <!--baner-->
                <section class="baner-botom hidden-xs">
@@ -209,11 +261,7 @@ $HotelsView = HotelsView();
                            if ($key < 4) {
                           ?>
                            <div class="col-lg-3">
-<<<<<<< Updated upstream
                               <div class="cuadro_intro_hover " style="background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
-=======
-                              <div class="cuadro_intro_hover " style="background: url(<?php echo images_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
->>>>>>> Stashed changes
                                  <!-- <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="simg-responsive illustration" swidth="100%"  alt=""/> -->
                                  <div class="caption">
                                     <div class="blur" style="background-color: rgba(76, 76, 76, 0.45)"></div>
@@ -276,11 +324,7 @@ $HotelsView = HotelsView();
                         </div>
                            <div class="col-md-6" style="background-color: #f4f4f4;">
                               <?php if (isset($HotelsView[4])) { ?>
-<<<<<<< Updated upstream
                               <div class="cuadro_intro_hover" style="height:275px;background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
-=======
-                              <div class="cuadro_intro_hover" style="height:275px;background: url(<?php echo images_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
->>>>>>> Stashed changes
                                 <!--  <div>
                                  <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>" class="img-responsive"  alt="" style="sheight:100%;margin: 0 auto;"/>
                                  </div> -->
@@ -295,18 +339,6 @@ $HotelsView = HotelsView();
                               <?php } ?>
                            </div>
                            <div>
-                              <div class="postman-run-button"
-data-postman-action="collection/import"
-data-postman-var-1="a74b3febd3256cd90d89"></div>
-<script type="text/javascript">
-  (function (p,o,s,t,m,a,n) {
-    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
-    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
-      (n = o.createElement("script")),
-      (n.id = s+t), (n.async = 1), (n.src = m), n
-    ));
-  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
-</script>
                            </div>
                      </div>
                   </div>
@@ -639,9 +671,5 @@ data-postman-var-1="a74b3febd3256cd90d89"></div>
 </div>
 </div>
 <!-- Modal -->
-<style type="text/css">
-   .illustration {
-      width: 325px;
-   }
-</style>
+
 <?php init_load_frontend_footer(); ?>

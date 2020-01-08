@@ -1,4 +1,6 @@
-<?php init_head(); ?>
+<?php init_head(); 
+$RoomType = menuPermissionAvailability($this->session->userdata('id'),'Hotels','Rooms'); 
+?>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">
@@ -30,9 +32,9 @@
                                         <th>Max child</th>
                                         <th>Max Capacity</th>
                                         <th>Status</th>
-                                        <?php if ($this->session->userdata('role')!=3) { ?>
+                                         <?php if(count($roomMenu)!=0 && ($roomMenu[0]->edit==1  || $roomMenu[0]->delete==1)) { ?>
                                         <th>Action</th>
-                                        <?php } ?>
+                                        <?php }  ?>
                                     </tr>
                                 </thead>
                                 <tbody>

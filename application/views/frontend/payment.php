@@ -833,6 +833,8 @@ $(document).ready(function() {
                       <div class="hidden-xs col-md-12">
                         <a class="details htlbutton btn" href="#hrooms" style="width:20%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
                         <a class="details htlbutton btn" href="#details" style="width:19.6%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
+                        <a class="details htlbutton btn" href="#hrooms" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
+                        <a class="details htlbutton btn" href="#details" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
                         <a class="details htlbutton btn" href="#gallery" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
                         <a class="details htlbutton btn" href="#map" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
                         <a class="details htlbutton btn" href="#other" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
@@ -889,6 +891,68 @@ $(document).ready(function() {
                     </div>
                   </div>
                   <div class="col-sm-12 ">
+                <!-- <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4> -->
+
+    <!--               <div class="row">
+                 <div class="col-sm-12 col-xs-12">
+                    <table class="table table-bordered guest-table">
+                      <thead>
+                        <tr>
+                          <th style="width: 5%" class="text-center">#</th>
+                            <th style="width: 30%">Adult/Children</th>
+                            <th style="width: 15%">Title</th>
+                            <th style="width: 25%">First Name</th>
+                            <th style="width: 25%">Last Name</th>
+                            <th style="width: 15%"class="text-center">Age</th>
+                        </tr>
+                      </thead>
+                      <tbody class="guesttbody">
+                        <?php for ($x=0; $x < count($_REQUEST['adults']); $x++) { 
+                         ?> 
+                        <tr class="room-no">
+                          <td class="text-center"><i class="fa fa-home"></i></td>
+                          <td colspan="5">Room <?php echo $x+1 ?></td>
+                        </tr>
+                        <?php for ($i=0; $i < $_REQUEST['adults'][$x] ; $i++) {  ?>
+                        <tr>
+                          <td class="text-center"><?php echo $i+1 ?></td>
+                          <td>Adult</td>
+                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo $x+1 ?>Adulttitle[]">
+                              <option value="Mr">Mr</option>
+                              <option value="Mrs">Mrs</option>
+                              <option value="Ms">Ms</option>
+                              <option value="Miss">Miss</option>
+                            </select></td>
+                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
+                            <small class="required-msg">*required</small></td>
+                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
+                            <small class="required-msg">*required</small></td>
+                          <td class="text-center"><input type="number" class="form-control validatecc validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+                            <small class="required-msg">*required</small></td>
+                        </tr>
+                      <?php } ?>
+                      <?php for ($j=0; $j <$_REQUEST['Child'][$x] ; $j++) { ?>
+                        <tr>
+                          <td class="text-center"><?php echo $j+1 ?></td>
+                          <td>Child</td>
+                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
+                            <option value="Mr">Mr</option>
+                              <option value="Ms">Ms</option>
+                            </select></td>
+                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]"><small class="required-msg">*required</small></td>
+                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]"><small class="required-msg">*required</small></td>
+                          <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="reqroom<?php echo ($x+1)  ?>-childAge[]" value="<?php echo $_REQUEST['room'.($x+1).'-childAge'][$j] ?>" readonly><small class="required-msg">*required</small></td>
+                        </tr>
+                      <?php } ?>
+                      <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div> -->
+
+           
+
+            <div class="col-sm-12 ">
             <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button id="Continue_book" type="button" name="Continue_book"class="bluebtn" style="margin-left: 5px">Continue</button><span>
@@ -975,7 +1039,8 @@ $(document).ready(function() {
             </div>
             </div>
 
-            
+
+              </div>
               <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
               <div class="row r-type margtop10" id="hrooms">
                 <?php $div = 12/count($_REQUEST['adults']);

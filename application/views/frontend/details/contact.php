@@ -58,8 +58,8 @@
                 <i class="fa fa-map-marker"></i>
               </span>
             </p>
-            <h4 class="text-center">Address</h4>
-            <p class="text-center">Otelseasy.com FZ LLC,</p>
+            <h4 class="text-center">Dubai Office Address</h4>
+            <p class="text-center"><b>Otelseasy.com FZ LLC,</b></p>
             <p class="text-center">Office# 502, Mostafawi Business Centre, Khalid Bin Al Waleed Road,Al Mankhool,Bur Dubai UAE</p>
           </div>
           <div class="col-md-4">
@@ -82,6 +82,27 @@
           </div>
        </div>
     </div>
+    <div class="row">
+                    <div class="col-md-4">
+                      <p>
+                        <span class="icon-span">
+                          <i class="fa fa-map-marker"></i>
+                        </span>
+                      </p>
+                      <h4 class="text-center">India Office Address</h4>
+                      <p class="text-center"><b>MY TRAVEL JOURNEY</b></p>
+                      <p class="text-center">421-4TH FLOOR GALLERIA TOWER DLF,PHASE IV 122009,GURUGRAM,HARYANA</p>
+                    </div>
+                    <div class="col-md-4">
+                      <p>
+                        <span class="icon-span">
+                          <i class="fa fa-phone"></i>
+                        </span>
+                      </p>
+                      <p class="text-center">+91 9650716660</p>
+                      <p class="text-center">0124-4359671</p>
+                    </div>
+                  </div>
  </div>
 </section>
 <?php init_front_black_tail(); ?> 

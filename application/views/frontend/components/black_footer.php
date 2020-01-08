@@ -76,8 +76,8 @@
 	<div class="container center grey"> 
 	<a href="<?php echo base_url(); ?>dashboard">Home</a> | 
 	<a href="<?php echo base_url(); ?>hotels">Hotel</a> | 
-	<a href="<?php echo base_url(); ?>transfer">Transfer</a> |
-	<a href="<?php echo base_url(); ?>tour">Tour</a> |
+<!-- 	<a href="<?php echo base_url(); ?>transfer">Transfer</a> |
+	<a href="<?php echo base_url(); ?>tour">Tour</a> | -->
 	<a href="<?php echo base_url(); ?>contact">Contact</a> |
 	<a href="<?php echo base_url(); ?>termcondition">Terms & Conditions</a> |
 	<a href="<?php echo base_url(); ?>PrivacyPolicy">Privacy Policy</a> 

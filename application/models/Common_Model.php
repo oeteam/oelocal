@@ -467,7 +467,7 @@ class Common_Model extends CI_Model {
     } else if($module=='Icons Settings') {
       $query = $this->db->query('SELECT * ,id as user_id,icon_name as name,updated_date as dateVal,"Admin" as userType ,"Update" as event ,"Created new Icon" as narration ,IF((SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.updated_by)!="",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.updated_by),"Existing Admin") as userName FROM hotel_tbl_icons as a where a.updated_date!=""')->result();
     } else if($module=='Availability') {
-      $query = $this->db->query('SELECT *,id as userid,"" as name,UpdatedDate as dateVal,"Admin" as userType,"Update" as event ,CONCAT("Updated existing allotment for",(SELECT contract_id FROM hotel_tbl_contract WHERE id = a.contract_id)) as narration,IF(UpdatedBy!=" ",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.UpdatedBy),(SELECT hotel_name FROM hotel_tbl_hotels WHERE id = a.hotel_id)) as userName FROM hotel_tbl_allotement as a where a.UpdatedDate!="" limit 500')->result();
+      $query = $this->db->query('SELECT *,id as userid,"" as name,CreatedDate as dateVal,"Admin" as userType,"Update" as event ,CONCAT("Updated existing allotment for",(SELECT contract_id FROM hotel_tbl_contract WHERE id = a.contract_id)) as narration,IF(CreatedBy!=" ",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.CreatedBy),(SELECT hotel_name FROM hotel_tbl_hotels WHERE id = a.hotel_id)) as userName FROM hotel_tbl_allotement_log as a where a.CreatedDate!="" order by id desc limit 1000')->result();
     } else if($module=='Board Supplements') {
       $query = $this->db->query('SELECT *,id as userid,"" as name,UpdatedDate as dateVal,"Admin" as userType,"Update" as event ,CONCAT("Updated existing board supplements for",(SELECT contract_id FROM hotel_tbl_contract WHERE id = a.contract_id)) as narration,IF(UpdatedBy!=" ",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.UpdatedBy),(SELECT hotel_name FROM hotel_tbl_hotels WHERE id = a.hotel_id)) as userName FROM hotel_tbl_boardsupplement as a where a.UpdatedDate!="" order by a.UpdatedDate desc limit 500')->result(); 
     } else if($module=='General Supplements') {
@@ -521,7 +521,7 @@ class Common_Model extends CI_Model {
     } else if($module=='Mail Settings') {
       $query = $this->db->query('SELECT * ,id as user_id,"" as name,updated_date as dateVal,"Agent" as userType ,"Update" as event ,"Updated general mail settings" as narration ,IF((SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.updated_by)!="",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.updated_by),"Existing Admin") as userName FROM hotel_tbl_mail_setting as a')->result();
     } else if($module=='Availability') {
-      $query = $this->db->query('SELECT *,id as userid,"" as name,CreatedDate as dateVal,"Admin" as userType,"Create" as event ,CONCAT("Created new allotment for",(SELECT contract_id FROM hotel_tbl_contract WHERE id = a.contract_id)) as narration,IF(CreatedBy!=" ",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.CreatedBy),(SELECT hotel_name FROM hotel_tbl_hotels WHERE id = a.hotel_id)) as userName FROM hotel_tbl_allotement as a limit 500')->result(); 
+      $query = array(); 
     } else if($module=='Board Supplements') {
       $query = $this->db->query('SELECT *,id as userid,"" as name,CreatedDate as dateVal,"Admin" as userType,"Create" as event ,CONCAT("Created new board supplement for",(SELECT contract_id FROM hotel_tbl_contract WHERE id = a.contract_id)) as narration,IF(CreatedBy!=" ",(SELECT CONCAT(First_Name, " ", Last_Name) FROM hotel_tbl_user WHERE id = a.CreatedBy),(SELECT hotel_name FROM hotel_tbl_hotels WHERE id = a.hotel_id)) as userName FROM hotel_tbl_boardsupplement as a order by a.CreatedDate desc limit 500')->result(); 
     } else if($module=='General Supplements') {
@@ -1256,6 +1256,14 @@ class Common_Model extends CI_Model {
       $final= $query->result();
       $count= count($final);
       return $count;
+  }
+  public function apiuserList($filter) {
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_agents');
+      $this->db->where('api_status',$filter);
+      $this->db->where('delflg',1);
+      $query=$this->db->get();
+      return $query;
   }
 }
 

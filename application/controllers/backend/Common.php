@@ -1479,6 +1479,91 @@ class Common extends MY_Controller {
     $this->db->update('hotel_tbl_general_settings',$data);
     echo json_encode($hash);
   }
+  public function apiuserList() {
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $api = $this->Common_Model->apiuserList($_REQUEST['filter']);
+      foreach($api->result() as $key => $r) {
+        if ($r->api_status==1) {
+          $switch = '<div class="switch">
+                  <label>
+                      <input type="checkbox"  checked="checked" id="api_status'.$r->id.'"  onchange="api_status('.$r->id.',0);" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        } else {
+          $switch = '<div class="switch">
+                  <label>
+                      <input type="checkbox"   id="api_status'.$r->id.'"  onchange="api_status('.$r->id.',1);" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        }
+
+        if ($r->api_live==1) {
+          $switch1 = '<div class="switch">
+                  <label>
+                      <input type="checkbox"  checked="checked" id="api_live'.$r->id.'"  onchange="api_live('.$r->id.',0);" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        } else {
+          $switch1 = '<div class="switch">
+                  <label>
+                      <input type="checkbox"   id="api_live'.$r->id.'"  onchange="api_live('.$r->id.',1);" >
+                      <span class="lever"></span>
+                    </label>
+                </div>';
+        }
+
+        $data[] = array(
+            $key+1,
+            '<a class="text-primary" href="'.base_url().'/backend/agents/new_agent?edit_id='.$r->id.'"><b class="text-primary">'.$r->Agent_Code.'</b></a>',
+            $r->First_Name." ".$r->Last_Name,
+            $r->Mobile,
+            $r->Email,
+            $switch,
+            $switch1,
+        );
+      }
+      $output = array(
+        "draw" => $draw,
+       "recordsTotal"    => $api->num_rows(),
+       "recordsFiltered" => $api->num_rows(),
+       "data" => $data
+      );
+      echo json_encode($output);
+      exit();
+  }
+  public function apiStatus() {
+    $array = array('api_status' => $_REQUEST['status']);
+    $this->db->where('id',$_REQUEST['id']);
+    $this->db->update('hotel_tbl_agents',$array);
+    $id = $_REQUEST['id'];
+    if ($_REQUEST['status']==0) {
+      $description = 'API status Disabled [Agent id:'.$id.']';
+    } else {
+      $description = 'API status [Agent id:'.$id.']';
+    }
+    AdminlogActivity($description);
+    echo json_encode(true);
+  }
+  public function apilive() {
+    $array = array('api_live' => $_REQUEST['status']);
+    $this->db->where('id',$_REQUEST['id']);
+    $this->db->update('hotel_tbl_agents',$array);
+    $id = $_REQUEST['id'];
+    if ($_REQUEST['status']==0) {
+      $description = 'API live Disabled [Agent id:'.$id.']';
+    } else {
+      $description = 'API live [Agent id:'.$id.']';
+    }
+    AdminlogActivity($description);
+    echo json_encode(true);
+  }
 }
 
 

@@ -1066,7 +1066,8 @@ class Payment_Model extends CI_Model {
                           if (count($boardalt[$i])!=0) {
                             foreach ($boardalt[$i] as $key21 => $value21) {
                               if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                                $extrabedAmount[$i][$index][$key21] =  $value21->amount;
+                                $extrabedAmounttmp[$i][$index][$key21][$key18] =  $value21->amount;
+                                $extrabedAmount[$i][$index][$key21] =  array_sum($extrabedAmounttmp[$i][$index][$key21]);
                                 $exrooms[$i][$index][$key18] = $index+1;
                                 $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
                               }
@@ -1076,7 +1077,8 @@ class Payment_Model extends CI_Model {
 
                       }
                   }
-                  
+
+
                 }
 
               // }
@@ -1096,7 +1098,8 @@ class Payment_Model extends CI_Model {
                 if (count($boardalt[$i])!=0) {
                   foreach ($boardalt[$i] as $key21 => $value21) {
                     if ($value21->startAge <= $value18 && $value21->finalAge >= $value18) {
-                      $extrabedAmount[$i][$index][$key21] =  $value21->amount;
+                      $extrabedAmounttmp[$i][$index][$key21][$key18] =  $value21->amount;
+                      $extrabedAmount[$i][$index][$key21] =  array_sum($extrabedAmounttmp[$i][$index][$key21]);
                       $exrooms[$i][$index][$key18] = $index+1;
                       $extrabedType[$i][$index][$key21] =  'Child '.$value21->board;
                     }
@@ -1256,12 +1259,12 @@ class Payment_Model extends CI_Model {
     $childBoardAmount[] = array();
     foreach ($request['RoomIndex'] as $key => $value) {
       // Markup define start
-      $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$request['contract_id'][$key],$this->session->userdata('agent_id'));
+      // $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$request['contract_id'][$key],$this->session->userdata('agent_id'));
       $agent_markup = mark_up_get()+general_mark_up_get();
-      if ($revenue_markup['Markup']!='') {
-        $agent_markup = mark_up_get();
-      }
-      $total_markup = $agent_markup;
+      // if ($revenue_markup['Markup']!='') {
+      //   $agent_markup = mark_up_get();
+      // }
+      // $total_markup = $agent_markup;
       // Markup define end
       // Max child get start
       $this->db->select('max_child_age');
@@ -1273,6 +1276,12 @@ class Payment_Model extends CI_Model {
         $adultBoardAmountRM[$key] = array();
       for($i = 0; $i < $tot_days; $i++) {
         $date[$i] = date('Y-m-d', strtotime($start_date. ' + '.$i.'  days'));
+        $revenue_markup = revenue_markup2($_REQUEST['hotel_id'],$request['contract_id'][$key],$this->session->userdata('agent_id'),$date[$i]);
+        if ($revenue_markup['Markup']!='') {
+          $agent_markup = mark_up_get();
+        }
+        $total_markup = $agent_markup;
+        
         if(isset($request['Room'.($key+1)][$date[$i]])) {
           $boardSplmntCheck[$i] = $this->db->query("SELECT * FROM hotel_tbl_boardsupplement WHERE '".$date[$i]."' BETWEEN fromDate AND toDate AND contract_id = '".$request['contract_id'][$key]."' AND FIND_IN_SET('".$request['room_id'][$key]."', IFNULL(roomType,'')) > 0 AND board = '".$request['supplementType']."' ")->result();
           if (count($boardSplmntCheck[$i])!=0) {
@@ -1405,8 +1414,30 @@ class Payment_Model extends CI_Model {
     return $data;
   }
   public function get_CancellationPolicy_contractConfirm($request,$contract_id,$room_id) {
+      $checkin_date=date_create($request['Check_in']);
+      $checkout_date=date_create($request['Check_out']);
+      $no_of_days=date_diff($checkin_date,$checkout_date);
+      $tot_days = $no_of_days->format("%a");
+
       $refund= $this->db->query("SELECT * FROM hotel_tbl_contract WHERE contract_id = '".$contract_id."' AND nonRefundable = 1")->result();
+
+      $disNRFVal = array();
+      for ($i=0; $i < $tot_days ; $i++) {
+        $dateOut = date('Y-m-d', strtotime($_REQUEST['Check_in']. ' + '.$i.'  days'));
+        $disNRF[$i] = DateWisediscountNonRefundable($dateOut,$request['hotel_id'],$room_id,$contract_id,'Room',$_REQUEST['Check_in'],$_REQUEST['Check_out']);
+        if ($disNRF[$i]['NRF']==1) {
+          $disNRFVal = $disNRF[$i]['discount'];
+        }
+      }
+
       if (count($refund)!=0) {
+        $data[0]['msg'] = "This booking is Nonrefundable";
+        $data[0]['percentage'] = 100;
+        $data[0]['daysInAdvance'] = 0;
+        $data[0]['application'] = 'NON REFUNDABLE';
+        $data[0]['daysFrom'] = '365';
+        $data[0]['daysTo'] = '0';
+      } else if(count($disNRFVal)!=0) {
         $data[0]['msg'] = "This booking is Nonrefundable";
         $data[0]['percentage'] = 100;
         $data[0]['daysInAdvance'] = 0;
@@ -1417,10 +1448,7 @@ class Payment_Model extends CI_Model {
 
         $roomType = $this->db->query("SELECT * FROM hotel_tbl_hotel_room_type WHERE id = '".$room_id."'")->result();
         $data = array();
-        $checkin_date=date_create($request['Check_in']);
-        $checkout_date=date_create($request['Check_out']);
-        $no_of_days=date_diff($checkin_date,$checkout_date);
-        $tot_days = $no_of_days->format("%a");
+        
 
         $start=date_create(date('m/d/Y'));
         $end=date_create($request['Check_in']);
@@ -2544,6 +2572,16 @@ class Payment_Model extends CI_Model {
       $RequestType = explode(",", $view[0]->RequestType);
 
       $admin_markup = explode(",", $view[0]->admin_markup);
+
+      $revenueMarkup = explode(",", $view[0]->revenueMarkup);
+      $revenueMarkupType = explode(",", $view[0]->revenueMarkupType);
+      $revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
+      $revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
+      $revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
+      $revenueBoardMarkupType = explode(",", $view[0]->revenueBoardMarkupType);
+      $revenueGeneralMarkupType = explode(",", $view[0]->revenueGeneralMarkupType);
+      $revenueGeneralMarkup = explode(",", $view[0]->revenueGeneralMarkup);
+
       for ($i=1; $i <= $book_room_count; $i++) {
         if (isset($admin_markup[$i-1])) {
           $total_markup = $view[0]->agent_markup+$admin_markup[$i-1]+$view[0]->search_markup;
@@ -2610,6 +2648,36 @@ class Payment_Model extends CI_Model {
         if($view[0]->$varIndividual!="") {
           $individual_discount = explode(",", $view[0]->$varIndividualDis);
         }
+
+        $varRoomrevenueMarkup = 'Room'.$i.'revenueMarkup';
+        $varRoomrevenueMarkupType = 'Room'.$i.'revenueMarkupType';
+        if ($view[0]->$varRoomrevenueMarkup!="") {
+          $$varRoomrevenueMarkup = explode(",", $view[0]->$varRoomrevenueMarkup);
+          $$varRoomrevenueMarkupType = explode(",", $view[0]->$varRoomrevenueMarkupType);
+        }
+        
+        $varRoomrevenueExtrabedMarkup = 'Room'.$i.'revenueExtrabedMarkup';
+        $varRoomrevenueExtrabedMarkupType = 'Room'.$i.'revenueExtrabedMarkupType';
+        if ($view[0]->$varRoomrevenueExtrabedMarkup!="") {
+          $$varRoomrevenueExtrabedMarkup = explode(",", $view[0]->$varRoomrevenueExtrabedMarkup);
+          $$varRoomrevenueExtrabedMarkupType = explode(",", $view[0]->$varRoomrevenueExtrabedMarkupType);
+        }
+
+        $varRoomrevenueBoardMarkup = 'Room'.$i.'revenueBoardMarkup';
+        $varRoomrevenueBoardMarkupType = 'Room'.$i.'revenueBoardMarkupType';
+        if ($view[0]->$varRoomrevenueBoardMarkup!="") {
+          $$varRoomrevenueBoardMarkup = explode(",", $view[0]->$varRoomrevenueBoardMarkup);
+          $$varRoomrevenueBoardMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+        }
+
+        $varRoomrevenueGeneralMarkup = 'Room'.$i.'revenueGeneralMarkup';
+        $varRoomrevenueGeneralMarkupType = 'Room'.$i.'revenueGeneralMarkupType';
+        if ($view[0]->$varRoomrevenueGeneralMarkup!="") {
+          $$varRoomrevenueGeneralMarkup = explode(",", $view[0]->$varRoomrevenueGeneralMarkup);
+          $$varRoomrevenueGeneralMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+        }
+
+
         $oneNight = array();
         for ($j=0; $j < $tot_days ; $j++) { 
           if (!isset($individual_discount[$j])) {
@@ -2637,6 +2705,28 @@ class Payment_Model extends CI_Model {
           $GAamount[$j] = 0;
           $APGAamount[$j] = 0;
           $TPBAamount[$j] = 0;
+          
+          if (isset($$varRoomrevenueMarkup[$j])) {
+            $revenueMarkup[$i-1] = $$varRoomrevenueMarkup[$j];
+            $revenueMarkupType[$i-1] = $$varRoomrevenueMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueExtrabedMarkup[$j])) {
+            $revenueExtrabedMarkup[$i-1] = $$varRoomrevenueExtrabedMarkup[$j];
+            $revenueExtrabedMarkupType[$i-1] = $$varRoomrevenueExtrabedMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueBoardMarkup[$j])) {
+            $revenueBoardMarkup[$i-1] = $$varRoomrevenueBoardMarkup[$j];
+            $revenueBoardMarkupType[$i-1] = $$varRoomrevenueBoardMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueGeneralMarkup[$j])) {
+            $revenueGeneralMarkup[$i-1] = $$varRoomrevenueGeneralMarkup[$j];
+            $revenueGeneralMarkupType[$i-1] = $$varRoomrevenueGeneralMarkupType[$j];
+          }
+
+
           $amendmentarrTot = array();
           if(isset($amendmentarr[$i-1])) {
             foreach ($amendmentarr[$i-1] as $key => $value) {
@@ -2648,8 +2738,6 @@ class Payment_Model extends CI_Model {
           }
           /* Room rates start */
           $rmAmount = 0;
-          $revenueMarkup = explode(",", $view[0]->revenueMarkup);
-          $revenueMarkupType = explode(",", $view[0]->revenueMarkupType);
           if (isset($revenueMarkup[$i-1])) {
             if ($revenueMarkup[$i-1]!="" && $revenueMarkup[$i-1]!=0) {
               if ($revenueMarkupType[$i-1]=='Percentage') {
@@ -2667,13 +2755,7 @@ class Payment_Model extends CI_Model {
               }
             }
           }
-          $revenueMarkup = explode(",", $view[0]->revenueMarkup);
-          $revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
-          $revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
-          $revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
-          $revenueBoardMarkupType = explode(",", $view[0]->revenueBoardMarkupType);
-          $revenueGeneralMarkupType = explode(",", $view[0]->revenueGeneralMarkupType);
-          $revenueGeneralMarkup = explode(",", $view[0]->revenueGeneralMarkup);
+          
           
           // Cost Room price 
             $CPRMRate[$j] = $individual_amount1[$j]-($individual_amount1[$j]*$individual_discount[$j])/100;
@@ -3033,42 +3115,61 @@ class Payment_Model extends CI_Model {
 
       $room = "SELECT *,TotalPrice-(TtlPrice*fday)+(exAmountTot-(exAmount*fday))+(boardChildAmountTot-(boardChildAmount*fday))+(exChildAmountTot-(exChildAmount*fday))+(generalsubAmountTot-(generalsubAmount*fday)) as dd 
       FROM (
-        SELECT *,sum(TtlPrice) as TotalPrice,count(*) as counts,IF(min(allotment)=0,'On Request','Book') as RequestType,sum(exAmount) as exAmountTot,sum(exChildAmount) as exChildAmountTot
+        SELECT *,sum(FinalAmnt) as TotalPrice,count(*) as counts,IF(min(allotment)<=0,'On Request','Book') as RequestType,sum(exAmount) as exAmountTot,sum(exChildAmount) as exChildAmountTot
         ,sum(boardChildAmount) as boardChildAmountTot,sum(generalsubAmount) as generalsubAmountTot,IF(sum(exAmount)!=0,'Adult Extrabed','') as extraLabel,
         IF(sum(exChildAmount)!=0,'Child Extrabed','') as extraChildLabel,IF(sum(boardChildAmount)!=0,'Child supplements','') as boardChildLabel 
          FROM (
-         SELECT *,
+         SELECT *,IF(".$data['adults'][$key]."
+            +IF(0=".$RoomChildAge1.",0,IF(max_child_age< ".$RoomChildAge1.",1,0))
+            +IF(0=".$RoomChildAge2.",0,IF(max_child_age< ".$RoomChildAge2.",1,0))
+            +IF(0=".$RoomChildAge3.",0,IF(max_child_age< ".$RoomChildAge3.",1,0))
+            +IF(0=".$RoomChildAge4.",0,IF(max_child_age< ".$RoomChildAge4.",1,0)) > standard_capacity && extrabed=0,0,TtlPrice) as FinalAmnt,
       IF(extrabed!=0,IF(StayExbed=1,extrabed,extrabed-(extrabed*exdis/100)),0) as exAmount,
+
       IF(StayExbed=1,
       IF(extrabedChild=0,0,extrabedChild) ,(IF(extrabedChild=0,0,extrabedChild)- IF(extrabedChild=0,0,extrabedChild)*exdis/100)) as exChildAmount ,
+      
       IF(StayBoard=1,
-      IF(extrabedChild=0,extrabedChild1,0) ,(IF(extrabedChild=0,extrabedChild1,0)- IF(extrabedChild=0,extrabedChild1,0)*boarddis/100)) as boardChildAmount,
+      IF(extrabedChild=0,extrabedChild1,0) ,(IF(extrabedChild=0,extrabedChild1,0)- IF(extrabedChild=0,extrabedChild1,0)*exdis/100)) as boardChildAmount,
+
       IF(generalsub!=0,IF(StayGeneral=1, generalsub,generalsub-(generalsub*generaldis/100)),0) as generalsubAmount
 
       FROM (select con.board,CONCAT(f.room_name,' ',g.Room_Type) as RoomName,a.hotel_id,a.contract_id,a.room_id,
-      if(con.contract_type='Sub',(select GetAllotmentCount(a.allotement_date,a.hotel_id,CONCAT('CON0',linkedcontract),a.room_id,'".date('Y-m-d')."',".$tot_days.")),a.allotement) as allotment, a.amount as TtlPrice1,dis.discount_type,dis.Extrabed as StayExbed,dis.General as StayGeneral,dis.Board as StayBoard,IF(dis.stay_night!='',(dis.pay_night*ceil(".$tot_days."/dis.stay_night))+(".$tot_days."-(dis.stay_night*ceil(".$tot_days."/dis.stay_night))),0) as fday ,CONCAT(con.contract_id,'-',a.room_id) as RoomIndex, rev.ExtrabedMarkup,rev.ExtrabedMarkuptype,
+      if(con.contract_type='Sub',(select GetAllotmentCount1(a.allotement_date,a.hotel_id,CONCAT('CON0',linkedcontract),a.room_id ,'".date('Y-m-d')."',".$tot_days.",".count($data['adults']).")),(select GetAllotmentCount1(a.allotement_date,a.hotel_id,a.contract_id,a.room_id ,'".date('Y-m-d')."',".$tot_days.",".count($data['adults'])."))) as allotment, a.amount as TtlPrice1,dis.discount_type,dis.Extrabed as StayExbed,dis.General as StayGeneral,dis.Board as StayBoard,IF(dis.stay_night!='',(dis.pay_night*ceil(".$tot_days."/dis.stay_night))+(".$tot_days."-(dis.stay_night*ceil(".$tot_days."/dis.stay_night))),0) as fday ,CONCAT(con.contract_id,'-',a.room_id) as RoomIndex, rev.ExtrabedMarkup,rev.ExtrabedMarkuptype,f.standard_capacity,con.max_child_age,
 
         ((a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))
         - (a.amount+(a.amount*".$markup."/100)+IF(rev.Markup!='',IF(rev.Markuptype='Percentage',(a.amount*rev.Markup/100),(rev.Markup)), (a.amount*".$general_markup."/100)))*
 
-         ((SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where
-        Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND FIND_IN_SET(a.hotel_id ,hotelid) > 0 
-         AND FIND_IN_SET(a.room_id,room) > 0 
-         AND FIND_IN_SET(a.contract_id,contract) > 0 
-         AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' 
-          AND Bkbefore <  DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' 
-          AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB')
-          OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' 
-          AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB') 
-        ) order by Bkbefore desc limit 1)/100)
+         (select GetDiscount(a.allotement_date,a.hotel_id,a.contract_id,a.room_id,'".date('Y-m-d')."',".$tot_days.")/100)
          ) as TtlPrice,
         (select IF(count(1)!=0,IF(ExtrabedMarkup!='',IF(ExtrabedMarkuptype='Percentage',amount+(amount*ExtrabedMarkup/100)+(amount*".$markup."/100),amount+ExtrabedMarkup+(amount*".$markup."/100)),amount+(sum(amount)*".($markup+$general_markup)."/100)),0) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND 
-            ".$data['adults'][$key]." > f.standard_capacity ) as extrabed, 
+            ".$data['adults'][$key]."
+            +IF(0=".$RoomChildAge1.",0,IF(con.max_child_age< ".$RoomChildAge1.",1,0))
+            +IF(0=".$RoomChildAge2.",0,IF(con.max_child_age< ".$RoomChildAge2.",1,0))
+            +IF(0=".$RoomChildAge3.",0,IF(con.max_child_age< ".$RoomChildAge3.",1,0))
+            +IF(0=".$RoomChildAge4.",0,IF(con.max_child_age< ".$RoomChildAge4.",1,0)) > f.standard_capacity ) as extrabed, 
+            
+         if(".$data['adults'][$key]."
+            +IF(0=".$RoomChildAge1.",0,IF(con.max_child_age< ".$RoomChildAge1.",1,0))
+            +IF(0=".$RoomChildAge2.",0,IF(con.max_child_age< ".$RoomChildAge2.",1,0))
+            +IF(0=".$RoomChildAge3.",0,IF(con.max_child_age< ".$RoomChildAge3.",1,0))
+            +IF(0=".$RoomChildAge4.",0,IF(con.max_child_age< ".$RoomChildAge4.",1,0)) > f.standard_capacity,
+             
+        (select IF(count(1)=0,'',IF(0=".$RoomChildAge1.",0,IF(ChildAgeFrom < ".$RoomChildAge1." && ChildAgeTo >= ".$RoomChildAge1.",IF(ExtrabedMarkup!='' && ChildAmount!=0,IF(ExtrabedMarkuptype='Percentage',ChildAmount+(ChildAmount*ExtrabedMarkup/100), ChildAmount+ExtrabedMarkup) ,ChildAmount+(ChildAmount*".$general_markup."/100))+(ChildAmount*".$markup."/100),0))) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND ".($data['adults'][$key]+$data['Child'][$key])." > f.standard_capacity) ,0) as extrabedChild, 
 
-        (select IF(count(1)=0,'',IF(0=".$RoomChildAge1.",0,IF(ChildAgeFrom < ".$RoomChildAge1." && ChildAgeTo >= ".$RoomChildAge1.",IF(ExtrabedMarkup!='' && ChildAmount!=0,IF(ExtrabedMarkuptype='Percentage',ChildAmount+(ChildAmount*ExtrabedMarkup/100), ChildAmount+ExtrabedMarkup) ,ChildAmount+(ChildAmount*".$general_markup."/100))+(ChildAmount*".$markup."/100),0))) from hotel_tbl_extrabed where a.allotement_date BETWEEN from_date AND to_date AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND ".($data['adults'][$key]+$data['Child'][$key])." > f.standard_capacity) as extrabedChild, 
+        if(".$data['adults'][$key]."
+            +IF(0=".$RoomChildAge1.",0,IF(con.max_child_age< ".$RoomChildAge1.",1,0))
+            +IF(0=".$RoomChildAge2.",0,IF(con.max_child_age< ".$RoomChildAge2.",1,0))
+            +IF(0=".$RoomChildAge3.",0,IF(con.max_child_age< ".$RoomChildAge3.",1,0))
+            +IF(0=".$RoomChildAge4.",0,IF(con.max_child_age< ".$RoomChildAge4.",1,0)) > f.standard_capacity,
+        (select IF(count(1)=0,0,IF(0=IF(0=".$RoomChildAge1.",0,IF(con.max_child_age >= ".$RoomChildAge1.",1,0)),0,sum(IF(startAge <= ".$RoomChildAge1." && finalAge >= ".$RoomChildAge1.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',amount+(amount*BoardSupMarkup/100)+(amount*".$markup."/100),amount+(BoardSupMarkup)+(amount*".$markup."/100)),amount+(amount*".($markup+$general_markup)."/100)),0))))
 
-        (select IF(count(1)=0,0,IF(0=".$RoomChildAge1.",0,IF(startAge <= ".$RoomChildAge1." && finalAge >= ".$RoomChildAge1.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',sum(amount)+(sum(amount)*BoardSupMarkup/100)+(sum(amount)*".$markup."/100),sum(amount)+(count(amount)*BoardSupMarkup)+(sum(amount)*".$markup."/100)),sum(amount)+(sum(amount)*".($markup+$general_markup)."/100)),0))) from hotel_tbl_boardsupplement where a.allotement_date BETWEEN 
-        fromDate AND toDate AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND IF(con.board='RO',board IN (''),IF(con.board='BB',board IN ('Breakfast'),IF(con.board='HB',board IN ('Breakfast','Dinner'),board IN ('Breakfast','Lunch','Dinner'))))) as extrabedChild1,
+        +IF(count(1)=0,0,IF(0=IF(0=".$RoomChildAge2.",0,IF(con.max_child_age >= ".$RoomChildAge2.",1,0)),0,sum(IF(startAge <= ".$RoomChildAge2." && finalAge >= ".$RoomChildAge2.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',amount+(amount*BoardSupMarkup/100)+(amount*".$markup."/100),amount+(BoardSupMarkup)+(amount*".$markup."/100)),amount+(amount*".($markup+$general_markup)."/100)),0))))
+
+        +IF(count(1)=0,0,IF(0=IF(0=".$RoomChildAge3.",0,IF(con.max_child_age >= ".$RoomChildAge3.",1,0)),0,sum(IF(startAge <= ".$RoomChildAge3." && finalAge >= ".$RoomChildAge3.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',amount+(amount*BoardSupMarkup/100)+(amount*".$markup."/100),amount+(BoardSupMarkup)+(amount*".$markup."/100)),amount+(amount*".($markup+$general_markup)."/100)),0))))
+
+        +IF(count(1)=0,0,IF(0=IF(0=".$RoomChildAge4.",0,IF(con.max_child_age >= ".$RoomChildAge4.",1,0)),0,sum(IF(startAge <= ".$RoomChildAge4." && finalAge >= ".$RoomChildAge4.",IF(BoardSupMarkup!='',IF(BoardSupMarkuptype='Percentage',amount+(amount*BoardSupMarkup/100)+(amount*".$markup."/100),amount+(BoardSupMarkup)+(amount*".$markup."/100)),amount+(amount*".($markup+$general_markup)."/100)),0)))) from hotel_tbl_boardsupplement where a.allotement_date BETWEEN 
+        fromDate AND toDate AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND IF(con.board='RO',board IN (''),IF(con.board='BB',board IN ('Breakfast'),IF(con.board='HB',board IN ('Breakfast','Dinner'),board IN ('Breakfast','Lunch','Dinner'))))) ,0) as extrabedChild1,
 
         (select IF(count(1)=0,0,IF(application='Per Person',IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount*".$data['adults'][$key].")+(adultAmount*".$data['adults'][$key].")*GeneralSupMarkup/100,(adultAmount*".$data['adults'][$key].")+(GeneralSupMarkup*".$data['adults'][$key].")),(adultAmount*".$data['adults'][$key].")+((adultAmount*".$data['adults'][$key].")*".$general_markup."/100)) + ((adultAmount*".$data['adults'][$key].")*".$markup."/100) ,IF(GeneralSupMarkup!='',IF(GeneralSupMarkuptype='Percentage',(adultAmount)+(adultAmount)*GeneralSupMarkup/100,adultAmount+GeneralSupMarkup) ,adultAmount+((adultAmount)*".$general_markup."/100))+((adultAmount)*".$markup."/100)))  
           + 
@@ -3083,20 +3184,26 @@ class Payment_Model extends CI_Model {
 
          from hotel_tbl_generalsupplement where a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND hotel_id = a.hotel_id AND FIND_IN_SET(a.room_id, IFNULL(roomType,'')) > 0 AND  mandatory = 1) as generalsub, 
 
-      (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND Extrabed = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as exdis,
+      (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND Extrabed = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as exdis,
 
-         (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND Board = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as boarddis,
+         (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND Board = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as boarddis,
 
-         (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND General = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as generaldis
+         (SELECT IF(min(discount)!='',discount,0) FROM `hoteldiscount` where Discount_flag = 1 AND FIND_IN_SET(a.allotement_date,BlackOut)=0  AND General = 1 AND FIND_IN_SET(a.hotel_id ,hotelid) > 0  AND FIND_IN_SET(a.room_id,room) > 0  AND FIND_IN_SET(a.contract_id,contract) > 0 AND ((Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."'  AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND numofnights <= ".$tot_days." AND discount_type = 'MLOS')  OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = '') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date  AND  BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."' AND discount_type = 'EB') OR (Styfrom <= a.allotement_date AND Styto >= a.allotement_date AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."')  AND discount_type = 'REB')) order by Bkbefore desc limit 1) as generaldis
 
       FROM hotel_tbl_allotement a INNER JOIN hotel_tbl_contract con ON con.contract_id = a.contract_id 
 
-      LEFT JOIN hotel_tbl_revenue rev ON FIND_IN_SET(a.hotel_id, IFNULL(rev.hotels,'')) > 0 AND FIND_IN_SET(a.contract_id, IFNULL(rev.contracts,'')) > 0 AND  FIND_IN_SET(".$this->session->userdata('agent_id').", IFNULL(rev.Agents,'')) > 0  AND rev.FromDate <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND  rev.ToDate >= '".date('Y-m-d',strtotime($data['Check_out']))."'
+      LEFT JOIN hotel_tbl_revenue rev ON FIND_IN_SET(a.hotel_id, IFNULL(rev.hotels,'')) > 0 AND FIND_IN_SET(a.contract_id, IFNULL(rev.contracts,'')) > 0 AND  FIND_IN_SET(".$this->session->userdata('agent_id').", IFNULL(rev.Agents,'')) > 0  AND rev.FromDate <= a.allotement_date AND  rev.ToDate >= a.allotement_date
 
       LEFT JOIN hoteldiscount dis ON FIND_IN_SET(a.hotel_id,dis.hotelid) > 0 AND FIND_IN_SET(a.contract_id,dis.contract) > 0 
       AND FIND_IN_SET(a.room_id,dis.room) > 0 AND Discount_flag = 1 AND (Styfrom <= '".date('Y-m-d',strtotime($data['Check_in']))."' AND Styto >= '".date('Y-m-d',strtotime($data['Check_in']))."' 
       AND BkFrom <= '".date('Y-m-d')."' AND BkTo >= '".date('Y-m-d')."') AND Bkbefore < DATEDIFF(a.allotement_date,'".date('Y-m-d')."') AND FIND_IN_SET(a.allotement_date,BlackOut)=0 
-      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id INNER JOIN hotel_tbl_room_type g ON g.id = f.room_type  where (f.max_total >= ".($data['adults'][$key]+$data['Child'][$key])." AND f.occupancy >= ".$data['adults'][$key]." AND f.occupancy_child >= ".$data['Child'][$key].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0 AND (SELECT count(*) FROM hotel_tbl_closeout_period WHERE closedDate IN ('".$implode_data."') AND FIND_IN_SET(a.room_id,roomType)>0 AND contract_id = a.contract_id AND hotel_id = a.hotel_id) =0 AND a.hotel_id = ".$hotel_id." AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off ) extra) discal GROUP BY hotel_id,room_id,contract_id HAVING counts = ".$tot_days.") x order by dd asc";
+      AND discount_type = 'stay&pay' AND stay_night <= ".$tot_days." INNER JOIN hotel_tbl_hotel_room_type f ON f.id = a.room_id INNER JOIN hotel_tbl_room_type g ON g.id = f.room_type  where (f.max_total >= ".($data['adults'][$key]+$data['Child'][$key])." AND f.occupancy >= ".$data['adults'][$key]."
+        +IF(0=".$RoomChildAge1.",0,IF(con.max_child_age< ".$RoomChildAge1.",1,0))
+        +IF(0=".$RoomChildAge2.",0,IF(con.max_child_age< ".$RoomChildAge2.",1,0))
+        +IF(0=".$RoomChildAge3.",0,IF(con.max_child_age< ".$RoomChildAge3.",1,0))
+        +IF(0=".$RoomChildAge4.",0,IF(con.max_child_age< ".$RoomChildAge4.",1,0))
+
+      AND f.occupancy_child >= ".$data['Child'][$key].") AND f.delflg = 1 AND a.allotement_date IN ('".$implode_data."') AND a.contract_id IN ('".$implode_data2."') AND a.amount !=0 AND (SELECT count(*) FROM hotel_tbl_minimumstay WHERE a.allotement_date BETWEEN fromDate AND toDate AND contract_id = a.contract_id AND minDay > ".$tot_days.") = 0  AND a.hotel_id = ".$hotel_id." AND DATEDIFF(a.allotement_date,'".date('Y-m-d')."') >= a.cut_off ) extra ) discal where discal.FinalAmnt!=0 GROUP BY hotel_id,room_id,contract_id HAVING counts = ".$tot_days.") x order by dd asc";
       return $this->db->query($room)->result();
     }
     public function gettravellerdata($id) {

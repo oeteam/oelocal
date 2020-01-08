@@ -1188,6 +1188,9 @@ function goBack() {
             $('.datepicker-years').css('display','block');
         });
     // });
+    function cancellationPolicytitle(altDate,conId,roomId) {
+        $("#canModal").load(base_url+'backend/hotels/cancellationPolicytitle?altDate='+altDate+'&conId='+conId+'&roomId='+roomId);
+    }
 </script>
 <?php init_tail(); ?>
 

@@ -19,19 +19,19 @@ class Login extends MY_Controller {
     
     public function index()
     { 
-        if ($_REQUEST['agent_code']=="") {
+        if ($this->input->post('agent_code')=="") {
           $Return['error'] = 'Agent Code field is required!';
           $Return['color'] = 'orange';
-        }else if ($_REQUEST['user_name']=="") {
+        }else if ($this->input->post('user_name')=="") {
           $Return['error'] = 'User Name field is required!';
           $Return['color'] = 'orange';
-        } else if ($_REQUEST['password']=="") {
+        } else if ($this->input->post('password')=="") {
           $Return['error'] = 'Password field is required!';
           $Return['color'] = 'orange';
         } else {
-          $username  = $_REQUEST['user_name'];
-          $password  = md5($_REQUEST['password']);
-          $agent_code = $_REQUEST['agent_code'];
+          $username  = $this->input->post('user_name');
+          $password  = md5($this->input->post('password'));
+          $agent_code = $this->input->post('agent_code');
           $result = $this->User_Model->authorizeagent($username,$password,$agent_code);
           if ($result=="failed") {
               $Return['error'] = 'Login failed';
@@ -120,15 +120,15 @@ class Login extends MY_Controller {
   }
   public function hotel_portel_login()
     {     
-        if ($_REQUEST['user_name']=="") {
+        if ($this->input->post('user_name')=="") {
           $Return['error'] = 'Hotel code is required!';
           $Return['color'] = 'orange';
-        }  elseif ($_REQUEST['password']=="") {
+        }  elseif ($this->input->post('password')=="") {
           $Return['error'] = 'Password field is required!';
           $Return['color'] = 'orange';
         } else {
-          $username  = $_REQUEST['user_name'];
-          $password  = md5($_REQUEST['password']);
+          $username  = $this->input->post('user_name');
+          $password  = md5($this->input->post('password'));
           $result = $this->Hotels_Model->authorizehotelportel($username,$password);
           if ($result=="failed") {
               $Return['error'] = 'Login failed';

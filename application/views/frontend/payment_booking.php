@@ -84,6 +84,41 @@
 	  top: 50%;
 	  transform: translateY(-50%);
 	}
+	/* GUEST TABLE STYLES */
+  .guest-table {
+      table-layout: fixed;
+      width: 100%;
+      margin: 0;
+  }
+  .guest-table tbody tr > td, .guest-table thead tr > th {
+      padding: 5px 8px;
+  }
+  .guest-table thead > tr > th {
+      background-color: #f5f5f5;
+      color: #737373;
+  }
+
+  .guest-table .room-no > td {
+      background-color: #fafafa;
+      color: #0074b9;
+      font-weight: 600;
+      font-size: 12px;
+  }
+  .validate + .required-msg,.name-validate + .required-msg {
+    color: #e16359;
+      display: block;
+      text-align: right;
+      margin-right: 6px;
+      position: relative;
+      top: -17px;
+      opacity: 1;
+      height: 0px;
+      font-size: 11px;
+      font-weight: 100;
+  }
+.validated + .required-msg, .room-type-validate.validated {
+    display: none ! important;
+  }
 </style>
 	<div class="container breadcrub">
 		<ol class="track-progress" data-steps="5">
@@ -236,14 +271,77 @@
 							</div>
 						</div>
 					</div>
+
+
+					 <!-- traveller details  -->
+					 <?php $sess =  $this->session->userdata('booking_data'); ?>
+                <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
+             	 <div class="row">
+                 <div class="col-sm-12 col-xs-12">
+                    <table class="table table-bordered guest-table">
+                      <thead>
+                        <tr>
+                          <th style="width: 5%" class="text-center">#</th>
+                            <th style="width: 30%">Adult/Children</th>
+                            <th style="width: 15%">Title</th>
+                            <th style="width: 25%">First Name</th>
+                            <th style="width: 25%">Last Name</th>
+                            <th style="width: 15%"class="text-center">Age</th>
+                        </tr>
+                      </thead>
+                      <tbody class="guesttbody">
+                        <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
+                         ?> 
+                        <tr class="room-no">
+                          <td class="text-center"><i class="fa fa-home"></i></td>
+                          <td colspan="5">Room <?php echo $x+1 ?></td>
+                        </tr>
+                        <?php for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
+                        <tr>
+                          <td class="text-center"><?php echo $i+1 ?></td>
+                          <td>Adult</td>
+                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo $x+1 ?>Adulttitle[]">
+                              <option value="Mr">Mr</option>
+                              <option value="Mrs">Mrs</option>
+                              <option value="Ms">Ms</option>
+                              <option value="Miss">Miss</option>
+                            </select></td>
+                          <td><input type="text" class="form-control validated name-validate input-sm" value="<?php echo isset($sess['Room'.($x+1).'AdultFirstName'][$i]) ? $sess['Room'.($x+1).'AdultFirstName'][$i] : '' ?>" name="Room<?php echo $x+1 ?>AdultFirstName[]">
+                            <small class="required-msg">*required</small></td>
+                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($sess['Room'.($x+1).'AdultLastName'][$i]) ? $sess['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
+                            <small class="required-msg">*required</small></td>
+                          <td class="text-center"><input type="number" class="form-control validatecc validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($sess['Room'.($x+1).'AdultAge'][$i]) ? $sess['Room'.($x+1).'AdultAge'][$i] : '' ?>">
+                            <small class="required-msg">*required</small></td>
+                        </tr>
+                      <?php } ?>
+                      <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
+                        <tr>
+                          <td class="text-center"><?php echo $j+1 ?></td>
+                          <td>Child</td>
+                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
+                            <option value="Mr">Mr</option>
+                              <option value="Ms">Ms</option>
+                            </select></td>
+                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]" value="<?php echo isset($sess['Room'.($x+1).'ChildFirstName'][$j]) ? $sess['Room'.($x+1).'ChildFirstName'][$j] : '' ?>"><small class="required-msg">*required</small></td>
+                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]" value="<?php echo isset($sess['Room'.($x+1).'ChildLastName'][$j]) ? $sess['Room'.($x+1).'ChildLastName'][$j] : '' ?>"><small class="required-msg">*required</small></td>
+                          <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="reqroom<?php echo ($x+1)  ?>-childAge[]" value="<?php echo $_REQUEST['room'.($x+1).'-childAge'][$j] ?>" readonly><small class="required-msg">*required</small></td>
+                        </tr>
+                      <?php } ?>
+                      <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+
 						<?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { ?>
-					<div class="col-md-6 textleft">
+<!-- 					<div class="col-md-6 textleft">
 						<input type="text" class="hide" id="first_name" name="first_name[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultFirstName'][0] ?>">
 
 						</div>
 						<div class="col-md-6 textleft">
 							<input type="text" class="hide" name="last_name[]" id="last_name" value="<?php echo $_REQUEST['Room'.($x+1).'AdultLastName'][0] ?>">
-						</div>
+						</div> -->
 						<?php } ?>
 						<div class="col-md-6 textleft">
 							</span><input type="text" class="hide" name="email" id="email" value="<?php echo $_REQUEST['email'] ?>">
@@ -260,17 +358,28 @@
 							$ctBchildamount = 0;
 		                 	$textrabedamount = 0;
               			 ?>
+<<<<<<< Updated upstream
+                        	<?php  
+                        	for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
+			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) { 
+			                 ?>
+		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
+	                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultFirstName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] : '' ?>">
+		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
+		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '' ?>">
+=======
                                 <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
 			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
-		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
+	<!-- 	                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
 		                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
 		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
-		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
+		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]"> -->
+>>>>>>> Stashed changes
 		                <?php } ?>
 		                <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
-		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
+<!-- 		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
 							<input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]">
-							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]">
+							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]"> -->
 		                <?php } ?>
 		                <?php } ?>
                      <input type="hidden" name="boardChildTotal" value="<?php echo $ctBchildamount ?>">
@@ -421,7 +530,6 @@
 						$IndexSplit = explode("-", $_REQUEST['Room'.($RAkey+1)]);
 						$contractId= $IndexSplit[0];
 						$RoomId= $IndexSplit[1];
-        				$revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'));
         				$extrabed = $this->Payment_Model->get_PaymentConfirmextrabedAllotment($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey);
         				
         				$general = $this->Payment_Model->get_Confirmgeneral_supplement($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey+1);
@@ -466,6 +574,8 @@
 	            				<tbody>
 	            					<?php 
 	            					for ($i=1; $i <=$tot_days ; $i++) {
+            						$revenue_markup = revenue_markup2($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'),date('Y-m-d' ,strtotime($result[$i]['date'])));
+
             						$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
             						$result[$i]['roomName'] = roomnameGET($RoomId,$_REQUEST['hotel_id']);
 	            					$FextrabedAmount[$i-1]  = 0;
@@ -525,7 +635,7 @@
 		            						<br>
 		            					<?php }
 		            					if ($i==1) {
-		            						$oneNight[$RAkey][] = $DisroomAmount[1];
+		            						$oneNight[$RAkey][0] = $DisroomAmount[1];
 		            					}
 		            					echo currency_type(agent_currency(),$DisroomAmount[$i]) ?> <?php echo agent_currency() ?></td>
 	            					</tr>
@@ -564,7 +674,7 @@
 					            						<br>
 		                    						<?php }
 		            								if ($i==1) {
-					            						$oneNight[$RAkey][] = $GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100;
+					            						$oneNight[$RAkey][1] = $GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100;
 					            					}	
 	            								 echo currency_type(agent_currency(),$GAamount[$i-1]-($GAamount[$i-1]*$GDis)/100)." ".agent_currency(); ?></td>
 	            							</tr>
@@ -601,7 +711,7 @@
 					            						<br>
 		                    						<?php }
             									if ($i==1) {
-				            						$oneNight[$RAkey][] = $GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100;
+				            						$oneNight[$RAkey][2] = $GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100;
 				            					 }	
 	            								 echo currency_type(agent_currency(),$GCamount[$i-1]-($GCamount[$i-1]*$GDis)/100)." ".agent_currency(); ?></td>
 	            							</tr>
@@ -655,7 +765,7 @@
 					            						<br>
 	                    						<?php }
 	                    						if ($i==1) {
-				            						$oneNight[$RAkey][] = $FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100;
+				            						$oneNight[$RAkey][3] = $FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100;
 				            					 }
 	                    						echo currency_type(agent_currency(),$FextrabedAmount[$i-1]-($FextrabedAmount[$i-1]*$exDis)/100) ?> <?php echo agent_currency() ?>
 	                    					</td>
@@ -695,7 +805,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $BBAamount[$i-1];
+						            						$oneNight[$RAkey][4] = $BBAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$BBAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -736,7 +846,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $BBCamount[$i-1];
+						            						$oneNight[$RAkey][5] = $BBCamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$BBCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -783,7 +893,7 @@
 			                    						<?php }
 
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $LAamount[$i-1];
+						            						$oneNight[$RAkey][6] = $LAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$LAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -822,7 +932,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $LCamount[$i-1];
+						            						$oneNight[$RAkey][7] = $LCamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$LCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -866,7 +976,7 @@
 						            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $DAamount[$i-1];
+						            						$oneNight[$RAkey][8] = $DAamount[$i-1];
 						            					 }
 	            										echo currency_type(agent_currency(),$DAamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -904,7 +1014,7 @@
 							            						<br>
 			                    						<?php }
 	            										if ($i==1) {
-						            						$oneNight[$RAkey][] = $DCamount[$i-1];
+						            						$oneNight[$RAkey][9] = $DCamount[$i-1];
 						            					}
 	            										echo currency_type(agent_currency(),$DCamount[$i-1]) ?> <?php echo agent_currency()
 	            										 ?></td>
@@ -1035,15 +1145,16 @@
 					    		<td><?php echo $Cancvalue['after'] ?></td>
 					    		<td><?php echo $Cancvalue['before'] ?></td>
 					    		<td><?php 
+					    		$charge = $total[$i]*($Cancvalue['percentage']/100);
 					    		if ($Cancvalue['application']=="FIRST NIGHT") {
 					    			$finalAmount = array_sum($oneNight[$i]);
+				    				$charge =$finalAmount*($Cancvalue['percentage']/100);
 					    		}
 
 					    		if ($Cancvalue['application']=="FREE OF CHARGE") {
 					    			$finalAmount = 0;
+					    			$charge = 0;
 					    		}
-
-					    		$charge = $total[$i]*($Cancvalue['percentage']/100);
 					    		echo currency_type(agent_currency(),$charge)." ".agent_currency()
 					    		// echo $Cancvalue['percentage'] ?> (<?php echo $Cancvalue['application'] ?>)</td>
 					    	</tr>

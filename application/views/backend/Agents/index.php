@@ -1,6 +1,25 @@
 <?php init_head(); 
 $agentmenu = menuPermissionAvailability($this->session->userdata('id'),'Agents',''); 
 ?>
+<style type="text/css">
+.multi-select-trans1 .form-control {
+    padding: 0px 0 !important;
+  }
+  .input-hide input {
+    display: none ! important;
+  }
+  .input-hide li {
+    display: none ! important;
+  }
+
+  #agent_table_wrapper .btn  {
+      height: 27px;
+      font-size: 12px;
+      line-height: 28px;
+      background: #009688;
+      margin: 1px;
+  }
+</style>
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">

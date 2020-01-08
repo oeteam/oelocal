@@ -170,11 +170,17 @@
 								</tr>
 							</thead>
 							<tbody>
+								<!-- <?php 
+								for ($w=1; $w <=$view[0]->book_room_count; $w++) { 
+									$RoomFname = "Room".$w."FName";
+									$RoomLname = "Room".$w."LName";
+							 	?> -->
 								<tr>
 									<td><?php echo $view[0]->bk_contact_fname." ".$view[0]->bk_contact_lname ?></td>
 									<td><?php echo $view[0]->bk_contact_email ?></td>
 									<td><?php echo $view[0]->bk_contact_number ?></td>							
 								</tr>
+							<!-- <?php  } ?> -->
 							</tbody>
 						</table>
 					</div>
@@ -287,6 +293,7 @@
         				<div class="card-header text-uppercase" style="padding: 10px; border-bottom: 1px solid #ccc; ">
 							<?php 
 							$revenueMarkup = explode(",", $view[0]->revenueMarkup);
+							$revenueMarkupType = explode(",", $view[0]->revenueMarkupType);
 							$revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
 							$revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
 							$revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
@@ -393,6 +400,35 @@
 								if (!isset($contract_id[$i-1])) {
 									$contract_id[$i-1] = $contract_id[0];
 								}
+
+								$varRoomrevenueMarkup = 'Room'.$i.'revenueMarkup';
+								$varRoomrevenueMarkupType = 'Room'.$i.'revenueMarkupType';
+								if ($view[0]->$varRoomrevenueMarkup!="") {
+									$$varRoomrevenueMarkup = explode(",", $view[0]->$varRoomrevenueMarkup);
+									$$varRoomrevenueMarkupType = explode(",", $view[0]->$varRoomrevenueMarkupType);
+							 	}
+							 	
+							 	$varRoomrevenueExtrabedMarkup = 'Room'.$i.'revenueExtrabedMarkup';
+								$varRoomrevenueExtrabedMarkupType = 'Room'.$i.'revenueExtrabedMarkupType';
+								if ($view[0]->$varRoomrevenueExtrabedMarkup!="") {
+									$$varRoomrevenueExtrabedMarkup = explode(",", $view[0]->$varRoomrevenueExtrabedMarkup);
+									$$varRoomrevenueExtrabedMarkupType = explode(",", $view[0]->$varRoomrevenueExtrabedMarkupType);
+							 	}
+
+							 	$varRoomrevenueBoardMarkup = 'Room'.$i.'revenueBoardMarkup';
+								$varRoomrevenueBoardMarkupType = 'Room'.$i.'revenueBoardMarkupType';
+								if ($view[0]->$varRoomrevenueBoardMarkup!="") {
+									$$varRoomrevenueBoardMarkup = explode(",", $view[0]->$varRoomrevenueBoardMarkup);
+									$$varRoomrevenueBoardMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+							 	}
+
+							 	$varRoomrevenueGeneralMarkup = 'Room'.$i.'revenueGeneralMarkup';
+								$varRoomrevenueGeneralMarkupType = 'Room'.$i.'revenueGeneralMarkupType';
+								if ($view[0]->$varRoomrevenueGeneralMarkup!="") {
+									$$varRoomrevenueGeneralMarkup = explode(",", $view[0]->$varRoomrevenueGeneralMarkup);
+									$$varRoomrevenueGeneralMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+							 	}
+
 							 ?>
 							<div class="row payment-table-wrap">
 			            		<div class="col-md-12">
@@ -425,6 +461,8 @@
 		            							if (!isset($individual_discount[$j])) {
 	        										$individual_discount[$j] = 0;
 	        									}
+	        								
+
 
 												$ExAmount[$j] = 0;
 												$TExAmount[$j] = 0;
@@ -468,6 +506,25 @@
 									              $admin_markuprate= $admin_markup[0];
 									            }
 
+									            if (isset($$varRoomrevenueMarkup[$j])) {
+	            									$revenueMarkup[$i-1] = $$varRoomrevenueMarkup[$j];
+	            									$revenueMarkupType[$i-1] = $$varRoomrevenueMarkupType[$j];
+	            								}
+
+	            								if (isset($$varRoomrevenueExtrabedMarkup[$j])) {
+	            									$revenueExtrabedMarkup[$i-1] = $$varRoomrevenueExtrabedMarkup[$j];
+	            									$revenueExtrabedMarkupType[$i-1] = $$varRoomrevenueExtrabedMarkupType[$j];
+	            								}
+
+	            								if (isset($$varRoomrevenueBoardMarkup[$j])) {
+	            									$revenueBoardMarkup[$i-1] = $$varRoomrevenueBoardMarkup[$j];
+	            									$revenueBoardMarkupType[$i-1] = $$varRoomrevenueBoardMarkupType[$j];
+	            								}
+
+	            								if (isset($$varRoomrevenueGeneralMarkup[$j])) {
+	            									$revenueGeneralMarkup[$i-1] = $$varRoomrevenueGeneralMarkup[$j];
+	            									$revenueGeneralMarkupType[$i-1] = $$varRoomrevenueGeneralMarkupType[$j];
+	            								}
 		            						?>
 		            						<tr>
 			            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
@@ -476,6 +533,7 @@
 			            					<td style="text-align: right">
 	            								<p class="new-price">
 		            								<?php 
+		            								
 		            								$amendmentarrTot = array();
 		            								if(isset($amendmentarr[$i-1])) {
 			            								foreach ($amendmentarr[$i-1] as $key => $value) {

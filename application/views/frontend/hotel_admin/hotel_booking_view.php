@@ -72,7 +72,7 @@
 								<td>Contact number</td>
 							</tr>
 						</thead>
-						<tbody>	
+						<tbody>
 							<tr>
 								<td><?php echo $view[0]->bk_contact_fname." ".$view[0]->bk_contact_lname; ?></td>
 								<td><?php echo $view[0]->bk_contact_email ?></td>

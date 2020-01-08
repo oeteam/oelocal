@@ -88,7 +88,7 @@
                         </span>
                       </p>
                       <h4 class="text-center">India Office Address</h4>
-                      <p class="text-center"><B>MY TRAVEL JOURNEY</B></p>
+                      <p class="text-center"><B>Otelseasy India</B></p>
                       <p class="text-center">421-4TH FLOOR GALLERIA TOWER DLF,PHASE IV 122009,GURUGRAM,HARYANA</p>
                     </div>
                     <div class="col-md-4">

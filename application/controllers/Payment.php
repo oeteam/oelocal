@@ -109,36 +109,45 @@ class Payment extends MY_Controller {
         if (isset($_REQUEST['board'])) {
           $data['board'] = $this->Payment_Model->get_PaymentConfirmboard_supplement($_REQUEST);
         }
-      // $contractBoardCheck = $this->Payment_Model->contractBoardCheck($_REQUEST['contract_id']);
-      // $data['boardName'] = $contractBoardCheck;
-      // if ($contractBoardCheck=="RO") {
-      //   $Breakfast = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Breakfast');
-      //   if ($Breakfast!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Breakfast';
-      //   }
-      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-      //   if ($Lunch!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
-      //   }
-      //   $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
-      //   if ($Dinner!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Dinner';
-      //   }
-      // } else if ($contractBoardCheck=="BB") {
-      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-      //   if ($Lunch!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
-      //   }
-      //   $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
-      //   if ($Dinner!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Dinner';
-      //   }
-      // } else if ($contractBoardCheck=="HB") {
-      //   $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
-      //   if ($Lunch!=false) {
-      //     $data['additionalfoodrequest']['board'][] = 'Lunch';
-      //   }
-      // } 
+
+
+        for ($j=0; $j < count($_REQUEST['reqadults']); $j++) { 
+            $IndexSplit = explode("-", $_REQUEST['Room'.($j+1)]);
+            $contractIdArr[$j]= $IndexSplit[0];
+        }
+        
+        if (count(array_unique($contractIdArr))==1) {
+            $contractBoardCheck = $this->Payment_Model->contractBoardCheck($_REQUEST['contract_id']);
+            $data['boardName'] = $contractBoardCheck;
+            if ($contractBoardCheck=="RO") {
+              $Breakfast = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Breakfast');
+              if ($Breakfast!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Breakfast';
+              }
+              $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+              if ($Lunch!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Lunch';
+              }
+              $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
+              if ($Dinner!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Dinner';
+              }
+            } else if ($contractBoardCheck=="BB") {
+              $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+              if ($Lunch!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Lunch';
+              }
+              $Dinner = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Dinner');
+              if ($Dinner!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Dinner';
+              }
+            } else if ($contractBoardCheck=="HB") {
+              $Lunch = $this->Payment_Model->additionalfoodrequest($_REQUEST,'Lunch');
+              if ($Lunch!=false) {
+                $data['additionalfoodrequest']['board'][] = 'Lunch';
+              }
+            } 
+        }
       if ($this->session->userdata('Breakfast')!="") { 
        $data['Breakfast'] = $this->Payment_Model->supplementcheck($this->session->userdata('Breakfast'));
       } 
@@ -162,7 +171,7 @@ class Payment extends MY_Controller {
       $data['authorize_sim'] = $this->List_Model->getsimdetails();
       $data['authorize_aim'] = $this->List_Model->getaimdetails();
       $data['telr'] = $this->List_Model->gettelrdetails();
-      $this->session->unset_userdata('booking_data');
+      // $this->session->unset_userdata('booking_data');
       $this->load->view('frontend/payment_booking',$data);
      }
      public function payment_booking_confirm() {
@@ -639,6 +648,7 @@ class Payment extends MY_Controller {
                   
                   </style>';
         $revenueMarkup = explode(",", $data[0]->revenueMarkup);
+        $revenueMarkupType = explode(",", $data[0]->revenueMarkupType);
         $revenueExtrabedMarkup = explode(",", $data[0]->revenueExtrabedMarkup);
         $revenueExtrabedMarkupType = explode(",", $data[0]->revenueExtrabedMarkupType);
         $revenueBoardMarkup = explode(",", $data[0]->revenueBoardMarkup);
@@ -746,6 +756,35 @@ class Payment extends MY_Controller {
       if (!isset($boardName[$i-1])) {
         $boardName[$i-1] = $boardName[0];
       }
+
+      $varRoomrevenueMarkup = 'Room'.$i.'revenueMarkup';
+      $varRoomrevenueMarkupType = 'Room'.$i.'revenueMarkupType';
+      if ($data[0]->$varRoomrevenueMarkup!="") {
+        $$varRoomrevenueMarkup = explode(",", $data[0]->$varRoomrevenueMarkup);
+        $$varRoomrevenueMarkupType = explode(",", $data[0]->$varRoomrevenueMarkupType);
+      }
+      
+      $varRoomrevenueExtrabedMarkup = 'Room'.$i.'revenueExtrabedMarkup';
+      $varRoomrevenueExtrabedMarkupType = 'Room'.$i.'revenueExtrabedMarkupType';
+      if ($data[0]->$varRoomrevenueExtrabedMarkup!="") {
+        $$varRoomrevenueExtrabedMarkup = explode(",", $data[0]->$varRoomrevenueExtrabedMarkup);
+        $$varRoomrevenueExtrabedMarkupType = explode(",", $data[0]->$varRoomrevenueExtrabedMarkupType);
+      }
+
+      $varRoomrevenueBoardMarkup = 'Room'.$i.'revenueBoardMarkup';
+      $varRoomrevenueBoardMarkupType = 'Room'.$i.'revenueBoardMarkupType';
+      if ($data[0]->$varRoomrevenueBoardMarkup!="") {
+        $$varRoomrevenueBoardMarkup = explode(",", $data[0]->$varRoomrevenueBoardMarkup);
+        $$varRoomrevenueBoardMarkupType = explode(",", $data[0]->$varRoomrevenueBoardMarkupType);
+      }
+
+      $varRoomrevenueGeneralMarkup = 'Room'.$i.'revenueGeneralMarkup';
+      $varRoomrevenueGeneralMarkupType = 'Room'.$i.'revenueGeneralMarkupType';
+      if ($data[0]->$varRoomrevenueGeneralMarkup!="") {
+        $$varRoomrevenueGeneralMarkup = explode(",", $data[0]->$varRoomrevenueGeneralMarkup);
+        $$varRoomrevenueGeneralMarkupType = explode(",", $data[0]->$varRoomrevenueBoardMarkupType);
+      }
+
       $tb51.='
         <h4 class="room-name">Room '.$i.'
         <span style="float:right">';
@@ -777,6 +816,27 @@ class Payment extends MY_Controller {
           $BCamount[$j] = 0;
           $TBAamount[$j] = 0;
           $TBCamount[$j] = 0;
+
+
+          if (isset($$varRoomrevenueMarkup[$j])) {
+            $revenueMarkup[$i-1] = $$varRoomrevenueMarkup[$j];
+            $revenueMarkupType[$i-1] = $$varRoomrevenueMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueExtrabedMarkup[$j])) {
+            $revenueExtrabedMarkup[$i-1] = $$varRoomrevenueExtrabedMarkup[$j];
+            $revenueExtrabedMarkupType[$i-1] = $$varRoomrevenueExtrabedMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueBoardMarkup[$j])) {
+            $revenueBoardMarkup[$i-1] = $$varRoomrevenueBoardMarkup[$j];
+            $revenueBoardMarkupType[$i-1] = $$varRoomrevenueBoardMarkupType[$j];
+          }
+
+          if (isset($$varRoomrevenueGeneralMarkup[$j])) {
+            $revenueGeneralMarkup[$i-1] = $$varRoomrevenueGeneralMarkup[$j];
+            $revenueGeneralMarkupType[$i-1] = $$varRoomrevenueGeneralMarkupType[$j];
+          }
           // Room only Rate start
           $amendmentarrTot = array();
           if(isset($amendmentarr[$i-1])) {
@@ -1534,8 +1594,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         <th class="tgh rgt_bor" style="border:none" colspan="2"></th>
       </tr>';
       foreach ($Rwadult as $rwkey => $rwvalue) {
-        $roomFName= 'Room'.($rwkey+1).'-FName';
-        $roomLName= 'Room'.($rwkey+1).'-LName';
+        $roomFName= 'Room'.($rwkey+1).'FName';
+        $roomLName= 'Room'.($rwkey+1).'LName';
         if ($rwkey==0) {
           $tb3.= '
           <tr>
@@ -3748,6 +3808,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       }
     }
     public function index() {
+      $roomDataCheck = array();
       if ($this->session->userdata('agent_id')=="") {
         redirect(base_url());
       }
@@ -3772,9 +3833,19 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
       if ($contracts!=false) {
         for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
           $rooms[$i] = $this->Payment_Model->roomwisepaxdata($_REQUEST['hotel_id'],$i,$_REQUEST,$contracts['contract_id']);
+          if (isset($rooms[$i][0])) {
+            $roomDataCheck[$i] = $rooms[$i][0];
+          }
         }
       }
-      $data['rooms'] = $rooms;
+      if (count($roomDataCheck)==count($_REQUEST['adults'])) {
+        $data['rooms'] = $rooms;
+      } else {
+        for ($i=0; $i < count($_REQUEST['adults']); $i++) { 
+          $rooms[$i] = array();
+        }
+        $data['rooms'] = $rooms;
+      }
       $data['agent_info'] = $this->Common_Model->agent_info();
       $this->load->view('frontend/payment',$data);
     }
@@ -3887,6 +3958,29 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         if (!isset($data['Room'.($x+1).'per_day_amount'])) {
           $data['Room'.($x+1).'per_day_amount'] = array();
         }
+        $varRoomrevenueMarkup = 'Room'.($x+1).'revenueMarkup';
+        $$varRoomrevenueMarkup = array();
+
+        $varRoomrevenueMarkupType = 'Room'.($x+1).'revenueMarkupType';
+        $$varRoomrevenueMarkupType = array();
+
+        $varRoomrevenueExtrabedMarkup = 'Room'.($x+1).'revenueExtrabedMarkup';
+        $$varRoomrevenueExtrabedMarkup = array();
+
+        $varRoomrevenueExtrabedMarkupType = 'Room'.($x+1).'revenueExtrabedMarkupType';
+        $$varRoomrevenueExtrabedMarkupType = array();
+
+        $varRoomrevenueGeneralMarkup = 'Room'.($x+1).'revenueGeneralMarkup';
+        $$varRoomrevenueGeneralMarkup = array();
+
+        $varRoomrevenueGeneralMarkupType = 'Room'.($x+1).'revenueGeneralMarkupType';
+        $$varRoomrevenueGeneralMarkupType = array();
+
+        $varRoomrevenueBoardMarkup = 'Room'.($x+1).'revenueBoardMarkup';
+        $$varRoomrevenueBoardMarkup = array();
+
+        $varRoomrevenueBoardMarkupType = 'Room'.($x+1).'revenueBoardMarkupType';
+        $$varRoomrevenueBoardMarkupType = array();
       }
 
       for ($i=0; $i < count($data['reqadults']); $i++) { 
@@ -3899,30 +3993,30 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $ContractID[$i] = $arrRoomIndex[0]; 
 
         // Get markup start
-        $revenue_markup = revenue_markup1($data['hotel_id'],$ContractID[$i],$this->session->userdata('agent_id'));
+        // $revenue_markup = revenue_markup1($data['hotel_id'],$ContractID[$i],$this->session->userdata('agent_id'));
 
         $total_markup[$i] = $agent_markup+$agent_general_markup;
         $admin_markup[$i] = $agent_general_markup;
-        $revenueType[$i] = '';
-        $revenue[$i] = 0;
-        $revenueExtrabed[$i] = 0;
-        $revenueGeneral[$i] = 0;
-        $revenueBoard[$i] = 0;
-        $revenueExtrabedType[$i] = '';
-        $revenueGeneralType[$i] = '';
-        $revenueBoardType[$i] = '';
-        if ($revenue_markup['Markup']!='') {
-          $total_markup[$i] = $agent_markup;
-          $admin_markup[$i] = 0;
-          $revenueType[$i] = $revenue_markup['Markuptype'];
-          $revenue[$i] = $revenue_markup['Markup'];
-          $revenueExtrabed[$i] = $revenue_markup['ExtrabedMarkup'];
-          $revenueGeneral[$i] = $revenue_markup['GeneralSupMarkup'];
-          $revenueBoard[$i] = $revenue_markup['BoardSupMarkup'];
-          $revenueExtrabedType[$i] = $revenue_markup['ExtrabedMarkuptype'];
-          $revenueGeneralType[$i] = $revenue_markup['GeneralSupMarkuptype'];
-          $revenueBoardType[$i] = $revenue_markup['BoardSupMarkuptype'];
-        }
+        // $revenueType[$i] = '';
+        // $revenue[$i] = 0;
+        // $revenueExtrabed[$i] = 0;
+        // $revenueGeneral[$i] = 0;
+        // $revenueBoard[$i] = 0;
+        // $revenueExtrabedType[$i] = '';
+        // $revenueGeneralType[$i] = '';
+        // $revenueBoardType[$i] = '';
+        // if ($revenue_markup['Markup']!='') {
+        //   $total_markup[$i] = $agent_markup;
+        //   $admin_markup[$i] = 0;
+        //   $revenueType[$i] = $revenue_markup['Markuptype'];
+        //   $revenue[$i] = $revenue_markup['Markup'];
+        //   $revenueExtrabed[$i] = $revenue_markup['ExtrabedMarkup'];
+        //   $revenueGeneral[$i] = $revenue_markup['GeneralSupMarkup'];
+        //   $revenueBoard[$i] = $revenue_markup['BoardSupMarkup'];
+        //   $revenueExtrabedType[$i] = $revenue_markup['ExtrabedMarkuptype'];
+        //   $revenueGeneralType[$i] = $revenue_markup['GeneralSupMarkuptype'];
+        //   $revenueBoardType[$i] = $revenue_markup['BoardSupMarkuptype'];
+        // }
 
         // Get markup end
 
@@ -3957,11 +4051,52 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           $ExArr[$i] = array();
           $GsArr[$i] = array();
           $BsArr[$i] = array();
+          
+
           for ($j=0; $j < $tot_days ; $j++) {
             $dateOut = date('Y-m-d', strtotime($data['Check_in']. ' + '.$j.'  days'));
+            $revenue_markup = revenue_markup2($data['hotel_id'],$ContractID[$i],$this->session->userdata('agent_id'),$dateOut);
+
+            $varRoomrevenueMarkup = 'Room'.($i+1).'revenueMarkup';
+            $$varRoomrevenueMarkup[$j] = '';
+
+            $varRoomrevenueMarkupType = 'Room'.($i+1).'revenueMarkupType';
+            $$varRoomrevenueMarkupType[$j] = '';
+
+            $varRoomrevenueExtrabedMarkup = 'Room'.($i+1).'revenueExtrabedMarkup';
+            $$varRoomrevenueExtrabedMarkup[$j] = '';
+
+            $varRoomrevenueExtrabedMarkupType = 'Room'.($i+1).'revenueExtrabedMarkupType';
+            $$varRoomrevenueExtrabedMarkupType[$j] = '';
+
+            $varRoomrevenueGeneralMarkup = 'Room'.($i+1).'revenueGeneralMarkup';
+            $$varRoomrevenueGeneralMarkup[$j] = '';
+
+            $varRoomrevenueGeneralMarkupType = 'Room'.($i+1).'revenueGeneralMarkupType';
+            $$varRoomrevenueGeneralMarkupType[$j] = '';
+
+            $varRoomrevenueBoardMarkup = 'Room'.($i+1).'revenueBoardMarkup';
+            $$varRoomrevenueBoardMarkup[$j] = '';
+
+            $varRoomrevenueBoardMarkupType = 'Room'.($i+1).'revenueBoardMarkupType';
+            $$varRoomrevenueBoardMarkupType[$j] = '';
+
+            if ($revenue_markup['Markup']!='') {
+              $$varRoomrevenueMarkup[$j] = $revenue_markup['Markup'];
+              $$varRoomrevenueMarkupType[$j] = $revenue_markup['Markuptype'];
+              $$varRoomrevenueExtrabedMarkup[$j] = $revenue_markup['ExtrabedMarkup'];
+              $$varRoomrevenueExtrabedMarkupType[$j] = $revenue_markup['ExtrabedMarkuptype'];
+              $$varRoomrevenueGeneralMarkup[$j] = $revenue_markup['GeneralSupMarkup'];
+              $$varRoomrevenueGeneralMarkupType[$j] = $revenue_markup['GeneralSupMarkuptype'];
+              $$varRoomrevenueBoardMarkup[$j] = $revenue_markup['BoardSupMarkup'];
+              $$varRoomrevenueBoardMarkupType[$j] = $revenue_markup['BoardSupMarkuptype'];
+
+            }
+
+
             $DateWisediscount[$j] = DateWisediscount($dateOut,$data['hotel_id'],$RoomID[$i],$ContractID[$i],'Room',$data['Check_in'],$data['Check_out']);
             $discount[$i][$j]  = 0;
-            if (isset($DateWisediscount[$j]['discountCode']) && $DateWisediscount[$j]['discountCode']!="") {
+            if (isset($DateWisediscount[$j]['discountCode'])) {
               $discountCodes[$i][$j]= $DateWisediscount[$j]['discountCode'];
               $discountTypes[$i][$j] = $DateWisediscount[$j]['discountType'];
               $discount[$i][$j] = $DateWisediscount[$j]['discount'];
@@ -3983,7 +4118,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           $discountCode[$i] = implode(",", array_unique($discountCodes[$i]));
           $DiscountType[$i] = implode(",", array_unique($discountTypes[$i]));
         }
-        // Dicount value declaration start
+        // Dicount value declaration end
       }
       $discountStay= implode(",", $discountStay);
       $discountPay= implode(",", $discountPay);
@@ -4039,7 +4174,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
           $reqroom10childAge = implode(",", $data['reqroom10-childAge']);
         }
         if (isset($data['first_name_child'])) {
-            $first_name_child = implode(",", $data['first_name_adult']);
+            $first_name_child = implode(",", $data['first_name_child']);
         } else {
             $first_name_child = "";
         }
@@ -4073,14 +4208,62 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'Room4Discount' => isset($Room4Discount) ? $Room4Discount : 0,
               'Room5Discount' => isset($Room5Discount) ? $Room5Discount  : 0,
               'Room6Discount' => isset($Room6DiscountPercentage) ? $Room6DiscountPercentage : 0,
-              'revenueMarkupType' => implode(",", $revenueType),
-              'revenueMarkup' => implode(",", $revenue),
-              'revenueExtrabedMarkup' => implode(",", $revenueExtrabed),
-              'revenueExtrabedMarkupType' => implode(",", $revenueExtrabedType),
-              'revenueGeneralMarkup' => implode(",", $revenueGeneral),
-              'revenueGeneralMarkupType' => implode(",", $revenueGeneralType),
-              'revenueBoardMarkup' => implode(",", $revenueBoard),
-              'revenueBoardMarkupType' => implode(",", $revenueBoardType),
+              'Room1revenueMarkup' => implode(",", $Room1revenueMarkup),
+              'Room2revenueMarkup' => implode(",", $Room2revenueMarkup),
+              'Room3revenueMarkup' => implode(",", $Room3revenueMarkup),
+              'Room4revenueMarkup' => implode(",", $Room4revenueMarkup),
+              'Room5revenueMarkup' => implode(",", $Room5revenueMarkup),
+              'Room6revenueMarkup' => implode(",", $Room6revenueMarkup),
+              'Room1revenueMarkupType' => implode(",", $Room1revenueMarkupType),
+              'Room2revenueMarkupType' => implode(",", $Room2revenueMarkupType),
+              'Room3revenueMarkupType' => implode(",", $Room3revenueMarkupType),
+              'Room4revenueMarkupType' => implode(",", $Room4revenueMarkupType),
+              'Room5revenueMarkupType' => implode(",", $Room5revenueMarkupType),
+              'Room6revenueMarkupType' => implode(",", $Room6revenueMarkupType),
+              'Room1revenueExtrabedMarkup' => implode(",", $Room1revenueExtrabedMarkup),
+              'Room2revenueExtrabedMarkup' => implode(",", $Room2revenueExtrabedMarkup),
+              'Room3revenueExtrabedMarkup' => implode(",", $Room3revenueExtrabedMarkup),
+              'Room4revenueExtrabedMarkup' => implode(",", $Room4revenueExtrabedMarkup),
+              'Room5revenueExtrabedMarkup' => implode(",", $Room5revenueExtrabedMarkup),
+              'Room6revenueExtrabedMarkup' => implode(",", $Room6revenueExtrabedMarkup),
+              'Room1revenueExtrabedMarkupType' => implode(",", $Room1revenueExtrabedMarkupType),
+              'Room2revenueExtrabedMarkupType' => implode(",", $Room2revenueExtrabedMarkupType),
+              'Room3revenueExtrabedMarkupType' => implode(",", $Room3revenueExtrabedMarkupType),
+              'Room4revenueExtrabedMarkupType' => implode(",", $Room4revenueExtrabedMarkupType),
+              'Room5revenueExtrabedMarkupType' => implode(",", $Room5revenueExtrabedMarkupType),
+              'Room6revenueExtrabedMarkupType' => implode(",", $Room6revenueExtrabedMarkupType),
+              'Room1revenueGeneralMarkup' => implode(",", $Room1revenueGeneralMarkup),
+              'Room2revenueGeneralMarkup' => implode(",", $Room2revenueGeneralMarkup),
+              'Room3revenueGeneralMarkup' => implode(",", $Room3revenueGeneralMarkup),
+              'Room4revenueGeneralMarkup' => implode(",", $Room4revenueGeneralMarkup),
+              'Room5revenueGeneralMarkup' => implode(",", $Room5revenueGeneralMarkup),
+              'Room6revenueGeneralMarkup' => implode(",", $Room6revenueGeneralMarkup),
+              'Room1revenueGeneralMarkupType' => implode(",", $Room1revenueGeneralMarkupType),
+              'Room2revenueGeneralMarkupType' => implode(",", $Room2revenueGeneralMarkupType),
+              'Room3revenueGeneralMarkupType' => implode(",", $Room3revenueGeneralMarkupType),
+              'Room4revenueGeneralMarkupType' => implode(",", $Room4revenueGeneralMarkupType),
+              'Room5revenueGeneralMarkupType' => implode(",", $Room5revenueGeneralMarkupType),
+              'Room6revenueGeneralMarkupType' => implode(",", $Room6revenueGeneralMarkupType),
+              'Room1revenueBoardMarkup' => implode(",", $Room1revenueBoardMarkup),
+              'Room2revenueBoardMarkup' => implode(",", $Room2revenueBoardMarkup),
+              'Room3revenueBoardMarkup' => implode(",", $Room3revenueBoardMarkup),
+              'Room4revenueBoardMarkup' => implode(",", $Room4revenueBoardMarkup),
+              'Room5revenueBoardMarkup' => implode(",", $Room5revenueBoardMarkup),
+              'Room6revenueBoardMarkup' => implode(",", $Room6revenueBoardMarkup),
+              'Room1revenueBoardMarkupType' => implode(",", $Room1revenueBoardMarkupType),
+              'Room2revenueBoardMarkupType' => implode(",", $Room2revenueBoardMarkupType),
+              'Room3revenueBoardMarkupType' => implode(",", $Room3revenueBoardMarkupType),
+              'Room4revenueBoardMarkupType' => implode(",", $Room4revenueBoardMarkupType),
+              'Room5revenueBoardMarkupType' => implode(",", $Room5revenueBoardMarkupType),
+              'Room6revenueBoardMarkupType' => implode(",", $Room6revenueBoardMarkupType),
+              // 'revenueMarkupType' => implode(",", $revenueType),
+              // 'revenueMarkup' => implode(",", $revenue),
+              // 'revenueExtrabedMarkup' => implode(",", $revenueExtrabed),
+              // 'revenueExtrabedMarkupType' => implode(",", $revenueExtrabedType),
+              // 'revenueGeneralMarkup' => implode(",", $revenueGeneral),
+              // 'revenueGeneralMarkupType' => implode(",", $revenueGeneralType),
+              // 'revenueBoardMarkup' => implode(",", $revenueBoard),
+              // 'revenueBoardMarkupType' => implode(",", $revenueBoardType),
               'Room1individual_amount' => implode(",", $data['Room1per_day_amount']),
               'Room2individual_amount' => implode(",", $data['Room2per_day_amount']),
               'Room3individual_amount' => implode(",", $data['Room3per_day_amount']),
@@ -4131,18 +4314,18 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'individual_amount' => implode(",",$data['per_day_amount']),
               'individual_discount' => '',
               'SpecialRequest' => $data['SpecialRequest'],
-              'Room1-FName' => $data['first_name'][0],
-              'Room2-FName' => $data['first_name'][1],
-              'Room3-FName' => $data['first_name'][2],
-              'Room4-FName' => $data['first_name'][3],
-              'Room5-FName' => $data['first_name'][4],
-              'Room6-FName' => $data['first_name'][5],
-              'Room1-LName' => $data['last_name'][0],
-              'Room2-LName' => $data['last_name'][1],
-              'Room3-LName' => $data['last_name'][2],
-              'Room4-LName' => $data['last_name'][3],
-              'Room5-LName' => $data['last_name'][4],
-              'Room6-LName' => $data['last_name'][5],
+              'Room1FName' => isset($data['Room1AdultFirstName'][0]) ? implode(",", $data['Room1AdultFirstName']) : '',
+              'Room2FName' => isset($data['Room2AdultFirstName'][0]) ? implode(",", $data['Room2AdultFirstName']) : '',
+              'Room3FName' => isset($data['Room3AdultFirstName'][0]) ? implode(",", $data['Room3AdultFirstName']) : '',
+              'Room4FName' => isset($data['Room4AdultFirstName'][0]) ? implode(",", $data['Room4AdultFirstName']) : '',
+              'Room5FName' => isset($data['Room5AdultFirstName'][0]) ? implode(",", $data['Room5AdultFirstName']) : '',
+              'Room6FName' => isset($data['Room6AdultFirstName'][0]) ? implode(",", $data['Room6AdultFirstName']) : '',
+              'Room1LName' => isset($data['Room1AdultLastName'][0]) ? implode(",", $data['Room1AdultLastName']) : '',
+              'Room2LName' => isset($data['Room2AdultLastName'][0]) ? implode(",", $data['Room2AdultLastName']) : '',
+              'Room3LName' => isset($data['Room3AdultLastName'][0]) ? implode(",", $data['Room3AdultLastName']) : '',
+              'Room4LName' => isset($data['Room4AdultLastName'][0]) ? implode(",", $data['Room4AdultLastName']) : '',
+              'Room5LName' => isset($data['Room5AdultLastName'][0]) ? implode(",", $data['Room5AdultLastName']) : '',
+              'Room6LName' => isset($data['Room6AdultLastName'][0]) ? implode(",", $data['Room6AdultLastName']) : '',
               'discount' => "",
               'discountCode' => $discountCode,
               'discountType' => $discountType,
@@ -4152,7 +4335,6 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
               'Created_Date' => date('Y-m-d H:i:s'),
               'Created_By' =>  $this->session->userdata('agent_id'),
             );
-
         $insert_id = $this->Payment_Model->room_booking_add($datas);
         $boardData = array();
         $ABadultamount = array();
@@ -4180,17 +4362,20 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
             foreach ($ExtrabedAmount[$i]['date'] as $key => $value){
                 $date=$value;
                 $amount[$key]= $ExtrabedAmount[$i]['extrabedAmount'][$key];
-                
+                  
+                $RwexamtarrAmount = array();
                 foreach ($ExtrabedAmount[$i]['RwextrabedAmount'][$key] as $Rwexamtarrkey => $Rwexamtarrvalue) {
                   $RwexamtarrAmount[$Rwexamtarrkey] = implode(",", $Rwexamtarrvalue);
                 }
                 $Exrwamount[$key] = implode(",", $RwexamtarrAmount);
-               
+                
+                $RwexamtarrRoom = array();
                 foreach ($ExtrabedAmount[$i]['Exrooms'][$key] as $Rwexroomarrkey => $Rwexroomarrvalue) {
                   $RwexamtarrRoom[$Rwexroomarrkey] = implode(",", $Rwexroomarrvalue);
                 }
                 $Exrooms[$key] = implode(",", $RwexamtarrRoom);
 
+                $RwexamtarrType = array();
                 foreach ($ExtrabedAmount[$i]['extrabedType'][$key] as $Rwextypearrkey => $Rwextypearrvalue) {
                   $RwexamtarrType[$Rwextypearrkey] = implode(",", $Rwextypearrvalue);
                 }

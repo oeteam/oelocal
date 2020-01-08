@@ -480,21 +480,7 @@ class Hotels_Model extends CI_Model {
 		$this->db->update('hotel_tbl_hotels',$data);
 		return true;
     }
-    //  public function authorizehotelportel($user_name, $password) {
-    //     $this->db->select('id,hotel_name,hotel_code');
-    //     $this->db->where('hotel_code',$user_name);
-    //     $this->db->where('password',$password);
-    //     $this->db->where('delflg',"1");
-    //     $this->db->from('hotel_tbl_hotels');
-    //     $this->db->limit('1');
-    //     $query = $this->db->get();
-    //     if (count($query->result())!=0) {
-    //         return $query->result();
-    //     } else {
-    //         return "failed";
-    //     }
-    // }       
-     public function authorizehotelportel($user_name, $password) {
+    public function authorizehotelportel($user_name, $password) {
         $this->db->select('id,hotel_name,hotel_code');
         $this->db->where('hotel_code',$user_name);
         $this->db->where('password',$password);
@@ -1552,7 +1538,8 @@ class Hotels_Model extends CI_Model {
 					          'hotel_id'    => $hotel_id,
 					          'allotement_date' => $alotement_date,
 					          'amount'     => $price,
-					          'contract_id' => $contract_id
+					          'contract_id' => $contract_id,
+					          'contract_fr_id'  => str_replace('CON0','',$contract_id),
 		        );
 				$this->db->insert('hotel_tbl_allotement',$data);
 				$id = $this->db->insert_id();
@@ -1578,7 +1565,8 @@ class Hotels_Model extends CI_Model {
 					          'amount'     => $price,
 					          'allotement'     => $alotement,
 					          'cut_off' => $cut_off,
-					          'contract_id' => $contract_id
+					          'contract_id' => $contract_id,
+					          'contract_fr_id'  => str_replace('CON0','',$contract_id),
 		        );
 				$this->db->insert('hotel_tbl_allotement',$data);
 				$id = $this->db->insert_id();
@@ -1629,7 +1617,8 @@ class Hotels_Model extends CI_Model {
 				          // 'amount'     => $price,
 				          'allotement'     	=> $alotement,
 				          'cut_off' 		=> $cut_off,
-				          'contract_id' 	=> $contract_id
+				          'contract_id' 	=> $contract_id,
+				          'contract_fr_id'  => str_replace('CON0','',$contract_id),
 	        );
 			$this->db->insert('hotel_tbl_allotement',$data);
 		}
@@ -1794,9 +1783,10 @@ class Hotels_Model extends CI_Model {
 		return $query;
     }
     public function check_room(){
-    	$this->db->select('*');
+    	$this->db->select('hotel_tbl_hotels.*,ag.Agent_Code');
     	$this->db->from('hotel_tbl_hotel_room_type');
     	$this->db->join('hotel_tbl_hotels','hotel_tbl_hotels.id = hotel_tbl_hotel_room_type.hotel_id','left');
+    	$this->db->join('hotel_tbl_agents ag',' hotel_tbl_hotels.supplierid = ag.id','left');
     	$this->db->where('hotel_tbl_hotel_room_type.delflg',1);
     	$this->db->where('hotel_tbl_hotels.delflg',1);
         $this->db->order_by('hotel_tbl_hotels.hotel_name','asc');
@@ -1909,7 +1899,7 @@ class Hotels_Model extends CI_Model {
 		$this->db->update('hotel_tbl_contract', $array);
 		if ($request['contract_id']!="") {
 			/*Alotement copy start*/
-			$this->db->query("INSERT INTO hotel_tbl_allotement (room_id, hotel_id, allotement_date,amount,allotement,cut_off,contract_id) SELECT room_id, hotel_id, allotement_date,amount,allotement,cut_off,'".$contract_id."' FROM   hotel_tbl_allotement WHERE  contract_id = '".$request['contract_id']."' AND allotement_date BETWEEN  '".$_REQUEST['date_picker']."' AND '".$_REQUEST['date_picker1']."'");
+			$this->db->query("INSERT INTO hotel_tbl_allotement (room_id, hotel_id, allotement_date,amount,allotement,cut_off,contract_id,contract_fr_id) SELECT room_id, hotel_id, allotement_date,amount,allotement,cut_off,'".$contract_id."',REPLACE('".$contract_id."','CON0','')  FROM   hotel_tbl_allotement WHERE  contract_id = '".$request['contract_id']."' AND allotement_date BETWEEN  '".$_REQUEST['date_picker']."' AND '".$_REQUEST['date_picker1']."'");
 
 			/*Alotement copy end*/
 			/*Board Supplement copy start*/
@@ -2074,7 +2064,8 @@ class Hotels_Model extends CI_Model {
 							    					  'allotement_date'	=> $result[$i],
 							    					  'room_id'			=> $value,
 							    					  'hotel_id'		=> $request['hotel_id'],
-						    						  'contract_id' 	=> $request['bulk_alt_contract_id']
+						    						  'contract_id' 	=> $request['bulk_alt_contract_id'],
+						    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 							    		);
 							    		$this->db->insert('hotel_tbl_allotement',$data1);
 							    		$id = $this->db->insert_id();
@@ -2102,7 +2093,8 @@ class Hotels_Model extends CI_Model {
 							    					  'allotement_date'=> $result[$i],
 							    					  'room_id'=> $value,
 							    					  'hotel_id'=> $request['hotel_id'],
-						    						  'contract_id' => $request['bulk_alt_contract_id']
+						    						  'contract_id' => $request['bulk_alt_contract_id'],
+						    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 							    		);
 							    		$this->db->insert('hotel_tbl_allotement',$data1);
 							    		$id = $this->db->insert_id();
@@ -2324,7 +2316,8 @@ class Hotels_Model extends CI_Model {
 					    					  'allotement_date'=> $result[$i],
 					    					  'room_id'        => $value,
 					    					  'hotel_id'       => $request['hotel_id'],
-				    						  'contract_id'    => $value4
+				    						  'contract_id'    => $value4,
+				    						  'contract_fr_id'  => str_replace('CON0','',$value4),
 					    		);
 					    		$this->db->insert('hotel_tbl_allotement',$data1);
 
@@ -4724,6 +4717,7 @@ class Hotels_Model extends CI_Model {
 				    					  'room_id'        => $value,
 				    					  'hotel_id'       => $request['hotel_id'],
 			    						  'contract_id'    => $request['bulk_alt_contract_id'],
+			    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 			    						  'allotement'     => $request['bulk-alt-allotment'],
 			    						  'cut_off'        => $request['bulk-alt-cut-off'],
 			    						  'CreatedDate'    => date('Y-m-d H:i:s'),
@@ -4843,7 +4837,8 @@ class Hotels_Model extends CI_Model {
 				          'amount'     		=> $price,
 				          'allotement'     	=> $alotement,
 					      'cut_off' 		=> $cut_off,
-				          'contract_id' 	=> $contract_id
+				          'contract_id' 	=> $contract_id,
+				          'contract_fr_id'  => str_replace('CON0','',$contract_id),
 	        );
 	        // print_r($data);
 	        // exit();
@@ -5161,12 +5156,12 @@ class Hotels_Model extends CI_Model {
     	if ($filter==1) {
     		$this->db->select('*');
         	$this->db->from('hoteldiscount');
-        	$this->db->where('Styto >',date('Y-m-d'));
+        	$this->db->where('IF(discount_type!="REB",BkTo,Styto) >=',date('Y-m-d'));
         	$query=$this->db->get();
     	} else {
     		$this->db->select('*');
         	$this->db->from('hoteldiscount');
-        	$this->db->where('Styto <',date('Y-m-d'));
+        	$this->db->where('IF(discount_type!="REB",BkTo,Styto) <',date('Y-m-d'));
         	$query=$this->db->get();
     	}
        	return $query;
@@ -5344,7 +5339,8 @@ class Hotels_Model extends CI_Model {
 							    					  'allotement_date'	=> $result[$i],
 							    					  'room_id'			=> $value,
 							    					  'hotel_id'		=> $request['hotel_id'],
-						    						  'contract_id' 	=> $request['bulk_alt_contract_id']
+						    						  'contract_id' 	=> $request['bulk_alt_contract_id'],
+						    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 							    		);
 							    		$this->db->insert('hotel_tbl_allotement',$data1);
 							    		$id = $this->db->insert_id();
@@ -5389,7 +5385,8 @@ class Hotels_Model extends CI_Model {
 								    					  'allotement_date'=> $result[$i],
 								    					  'room_id'=> $value,
 								    					  'hotel_id'=> $request['hotel_id'],
-							    						  'contract_id' => $request['bulk_alt_contract_id']
+							    						  'contract_id' => $request['bulk_alt_contract_id'],
+							    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 								    		);
 								    		// print_r($data1);
 								    		// exit();
@@ -5848,6 +5845,7 @@ class Hotels_Model extends CI_Model {
 					  'allotement' => $allotment,
 					  'cut_off' => $cutoff,
 					  'contract_id' => $contract_id,
+					  'contract_fr_id'  => str_replace('CON0','',$contract_id),
 					);
 		        } else if($allotment!="") {
 		        	$data = array(
@@ -5857,6 +5855,7 @@ class Hotels_Model extends CI_Model {
 					  'amount' => $Amount,
 					  'allotement' => $allotment,
 					  'contract_id' => $contract_id,
+					  'contract_fr_id'  => str_replace('CON0','',$contract_id),
 					);
 				 } else if($cutoff!="") {
 		        	$data = array(
@@ -5866,6 +5865,7 @@ class Hotels_Model extends CI_Model {
 					  'amount' => $Amount,
 					  'cut_off' => $cutoff,
 					  'contract_id' => $contract_id,
+					  'contract_fr_id'  => str_replace('CON0','',$contract_id),
 					);
 		        } else {
 		        	$data = array(
@@ -5874,6 +5874,7 @@ class Hotels_Model extends CI_Model {
 					  'allotement_date' => $date,
 					  'amount' => $Amount,
 					  'contract_id' => $contract_id,
+					  'contract_fr_id'  => str_replace('CON0','',$contract_id),
 					);
 		        }
 
@@ -6297,7 +6298,8 @@ class Hotels_Model extends CI_Model {
 					    					  'allotement_date'=> $result[$i],
 					    					  'room_id'=> $value,
 					    					  'hotel_id'=> $request['hotel_id'],
-				    						  'contract_id' => $request['bulk_alt_contract_id']
+				    						  'contract_id' => $request['bulk_alt_contract_id'],
+				    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 					    		);
 					    		$this->db->insert('hotel_tbl_allotement',$data1);
 					    		$id = $this->db->insert_id();
@@ -6324,7 +6326,8 @@ class Hotels_Model extends CI_Model {
 					    					  'allotement_date'=> $result[$i],
 					    					  'room_id'=> $value,
 					    					  'hotel_id'=> $request['hotel_id'],
-				    						  'contract_id' => $request['bulk_alt_contract_id']
+				    						  'contract_id' => $request['bulk_alt_contract_id'],
+				    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 					    		);
 					    		$this->db->insert('hotel_tbl_allotement',$data1);
 					    		$id = $this->db->insert_id();
@@ -6588,7 +6591,8 @@ class Hotels_Model extends CI_Model {
 						    					  'allotement_date'=> $result[$i],
 						    					  'room_id'=> $value,
 						    					  'hotel_id'=> $request['hotel_id'],
-					    						  'contract_id' => $request['bulk_alt_contract_id']
+					    						  'contract_id' => $request['bulk_alt_contract_id'],
+					    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 						    		);
 						    		$this->db->insert('hotel_tbl_allotement',$data1);
 						    		$id = $this->db->insert_id();
@@ -6617,7 +6621,8 @@ class Hotels_Model extends CI_Model {
 						    					  'allotement_date'=> $result[$i],
 						    					  'room_id'=> $value,
 						    					  'hotel_id'=> $request['hotel_id'],
-					    						  'contract_id' => $request['bulk_alt_contract_id']
+					    						  'contract_id' => $request['bulk_alt_contract_id'],
+					    						  'contract_fr_id'  => str_replace('CON0','',$request['bulk_alt_contract_id']),
 						    		);
 						    		$this->db->insert('hotel_tbl_allotement',$data1);
 						    		$id = $this->db->insert_id();

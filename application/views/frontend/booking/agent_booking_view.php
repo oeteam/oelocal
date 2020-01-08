@@ -123,7 +123,7 @@
 								<td>Contact number</td>
 							</tr>
 						</thead>
-						<tbody>	
+						<tbody>
 							<tr>
 								<td><?php echo $view[0]->bk_contact_fname." ".$view[0]->bk_contact_lname; ?></td>
 								<td><?php echo $view[0]->bk_contact_email ?></td>
@@ -182,6 +182,7 @@
 				<?php 
 				// print_r($ExBed);
 				$revenueMarkup = explode(",", $view[0]->revenueMarkup);
+				$revenueMarkupType = explode(",", $view[0]->revenueMarkupType);
 				$revenueExtrabedMarkup = explode(",", $view[0]->revenueExtrabedMarkup);
 				$revenueExtrabedMarkupType = explode(",", $view[0]->revenueExtrabedMarkupType);
 				$revenueBoardMarkup = explode(",", $view[0]->revenueBoardMarkup);
@@ -282,6 +283,35 @@
 					if (!isset($boardName[$i-1])) {
 						$boardName[$i-1] = $boardName[0];
 					}
+
+
+					$varRoomrevenueMarkup = 'Room'.$i.'revenueMarkup';
+					$varRoomrevenueMarkupType = 'Room'.$i.'revenueMarkupType';
+					if ($view[0]->$varRoomrevenueMarkup!="") {
+						$$varRoomrevenueMarkup = explode(",", $view[0]->$varRoomrevenueMarkup);
+						$$varRoomrevenueMarkupType = explode(",", $view[0]->$varRoomrevenueMarkupType);
+				 	}
+				 	
+				 	$varRoomrevenueExtrabedMarkup = 'Room'.$i.'revenueExtrabedMarkup';
+					$varRoomrevenueExtrabedMarkupType = 'Room'.$i.'revenueExtrabedMarkupType';
+					if ($view[0]->$varRoomrevenueExtrabedMarkup!="") {
+						$$varRoomrevenueExtrabedMarkup = explode(",", $view[0]->$varRoomrevenueExtrabedMarkup);
+						$$varRoomrevenueExtrabedMarkupType = explode(",", $view[0]->$varRoomrevenueExtrabedMarkupType);
+				 	}
+
+				 	$varRoomrevenueBoardMarkup = 'Room'.$i.'revenueBoardMarkup';
+					$varRoomrevenueBoardMarkupType = 'Room'.$i.'revenueBoardMarkupType';
+					if ($view[0]->$varRoomrevenueBoardMarkup!="") {
+						$$varRoomrevenueBoardMarkup = explode(",", $view[0]->$varRoomrevenueBoardMarkup);
+						$$varRoomrevenueBoardMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+				 	}
+
+				 	$varRoomrevenueGeneralMarkup = 'Room'.$i.'revenueGeneralMarkup';
+					$varRoomrevenueGeneralMarkupType = 'Room'.$i.'revenueGeneralMarkupType';
+					if ($view[0]->$varRoomrevenueGeneralMarkup!="") {
+						$$varRoomrevenueGeneralMarkup = explode(",", $view[0]->$varRoomrevenueGeneralMarkup);
+						$$varRoomrevenueGeneralMarkupType = explode(",", $view[0]->$varRoomrevenueBoardMarkupType);
+				 	}
 				?>
 				<div class="row payment-table-wrap">
             		<div class="col-md-12">
@@ -320,6 +350,27 @@
 									$BCamount[$j] = 0;
 									$TBAamount[$j] = 0;
 									$TBCamount[$j] = 0;
+
+
+									if (isset($$varRoomrevenueMarkup[$j])) {
+    									$revenueMarkup[$i-1] = $$varRoomrevenueMarkup[$j];
+    									$revenueMarkupType[$i-1] = $$varRoomrevenueMarkupType[$j];
+    								}
+
+    								if (isset($$varRoomrevenueExtrabedMarkup[$j])) {
+    									$revenueExtrabedMarkup[$i-1] = $$varRoomrevenueExtrabedMarkup[$j];
+    									$revenueExtrabedMarkupType[$i-1] = $$varRoomrevenueExtrabedMarkupType[$j];
+    								}
+
+    								if (isset($$varRoomrevenueBoardMarkup[$j])) {
+    									$revenueBoardMarkup[$i-1] = $$varRoomrevenueBoardMarkup[$j];
+    									$revenueBoardMarkupType[$i-1] = $$varRoomrevenueBoardMarkupType[$j];
+    								}
+
+    								if (isset($$varRoomrevenueGeneralMarkup[$j])) {
+    									$revenueGeneralMarkup[$i-1] = $$varRoomrevenueGeneralMarkup[$j];
+    									$revenueGeneralMarkupType[$i-1] = $$varRoomrevenueGeneralMarkupType[$j];
+    								}
         						?>
             					<tr>
 	            					<td><?php echo date('d/m/Y', strtotime($view[0]->check_in. ' + '.$j.'  days')); ?></td>
@@ -339,11 +390,11 @@
 	        									$individual_amount1[$j] = $individual_amount[$j];
 	        								}
             								$rmAmount = 0;
-            								if ($view[0]->revenueMarkup!="" && $view[0]->revenueMarkup!=0) {
-            									if ($view[0]->revenueMarkupType=='Percentage') {
-            										$rmAmount = ($individual_amount1[$j]*$view[0]->revenueMarkup)/100;
+            								if ($revenueMarkup[$i-1]!="" && $revenueMarkup[$i-1]!=0) {
+            									if ($revenueMarkupType[$i-1]=='Percentage') {
+            										$rmAmount = ($individual_amount1[$j]*$revenueMarkup[$i-1])/100;
             									} else {
-            										$rmAmount = $view[0]->revenueMarkup;
+            										$rmAmount = $revenueMarkup[$i-1];
             									}
             								}
         									$roomAmount[$j] = (($individual_amount1[$j]*$total_markup)/100)+$individual_amount1[$j]+$rmAmount;

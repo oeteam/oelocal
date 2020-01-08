@@ -108,8 +108,19 @@
                                     </ul>
                                 </div>
                             </li>
-                        <?php }
-                        $tourSupplier = menuPermissionAvailability($this->session->userdata('id'),'Tour','Tour Supplier'); 
+                        <?php } ?>
+                        <li class="tour"><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-plane" aria-hidden="true"></i>Package</a>
+                                <div class="collapsible-body left-sub-menu">
+                                    <ul>  
+                                        <li><a class= "" href="<?php echo base_url(); ?>backend/package">Package List</a>
+                                        </li>
+                                        <li><a class= "" href="<?php echo base_url(); ?>backend/package/supplier">Package Supplier</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        <?php $tourSupplier = menuPermissionAvailability($this->session->userdata('id'),'Tour','Tour Supplier'); 
                         $tourServices = menuPermissionAvailability($this->session->userdata('id'),'Tour','Tour Services');  
                         $tourContracts = menuPermissionAvailability($this->session->userdata('id'),'Tour','Tour Contracts');
                         if ((count($tourSupplier)!=0 && $tourSupplier[0]->view!=0) || (count($tourServices)!=0 && $tourServices[0]->view!=0) || (count($tourContracts)!=0 && $tourContracts[0]->view!=0)) { ?>
@@ -198,7 +209,7 @@
                         <li><a href="javascript:void(0)" class="collapsible-header"><i class="fa fa-share-alt-square" aria-hidden="true"></i> API</a>                  
                                 <div class="collapsible-body left-sub-menu">
                                     <ul>
-                                        <li><a href="<?php echo base_url(); ?>backend/common/api_provider">Provider List</a>
+                                        <li><a href="<?php echo base_url(); ?>backend/common/api_provider">API User List</a>
                                         </li>
                                     </ul>
                                 </div>

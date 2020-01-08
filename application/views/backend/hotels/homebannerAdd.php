@@ -54,10 +54,12 @@
                             <input type="hidden" name="bannerEdit[]" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                            
                             <div class="row">
+                                <p>Last hotel is showing in big banner</p>
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-xs-5">
                                             <label>Set 1 Hotels</label>
+                                            <input type="hidden" name="trendEdit[]" value="<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>">
                                             <select id="hotelone_undo_redo" class="form-control multi-select-trans2"  size="13" multiple="multiple">
                                             <?php $count=count($view);
                                                 for ($i=0; $i <$count ; $i++) {  ?>
