@@ -3951,26 +3951,26 @@ $("#bannerUpdate").click(function() {
   if (hotelone=="") {
     addToast("Set 1 Hotels field is required !","orange");
     $("#hotelone_undo_redo_to").focus();
-  } else if(hotelone.split(',').length!=4) {
-    addToast("Select 6 hotels for set 1 !","orange");
+  } else if(hotelone.split(',').length!=5) {
+    addToast("Select 5 hotels for set 1 !","orange");
     $("#hotelone_undo_redo_to").focus();
   } else if (hoteltwo=="") {
     addToast("Set 2 Hotels field is required !","orange");
     $("#hoteltwo_undo_redo_to").focus();
-  } else if(hoteltwo.split(',').length!=4) {
-    addToast("Select 6 hotels for set 2 !","orange");
+  } else if(hoteltwo.split(',').length!=5) {
+    addToast("Select 5 hotels for set 2 !","orange");
     $("#hoteltwo_undo_redo_to").focus();
   } else if (hotelthree=="") {
     addToast("Set 3 Hotels field is required !","orange");
     $("#hotelthree_undo_redo_to").focus();
-  } else if(hotelthree.split(',').length!=4) {
-    addToast("Select 6 hotels for set 3 !","orange");
+  } else if(hotelthree.split(',').length!=5) {
+    addToast("Select 5 hotels for set 3 !","orange");
     $("#hotelthree_undo_redo_to").focus();
   } else if (hotelfour=="") {
     addToast("Set 4 Hotels field is required !","orange");
     $("#hotelfour_undo_redo_to").focus();
-  } else if(hotelfour.split(',').length!=4) {
-    addToast("Select 6 hotels for set 4 !","orange");
+  } else if(hotelfour.split(',').length!=5) {
+    addToast("Select 5 hotels for set 4 !","orange");
     $("#hotelfour_undo_redo_to").focus();
   } else {
     addToast('Homepage Banners Updated Successfully',"green");

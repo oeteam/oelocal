@@ -33,7 +33,7 @@ $(document).ready(function() {
       }
   });
 
-  $("#location").bind('keypress',function(e) {
+  $("#location").on('input',function(e) {
       $('#DropdownCountry').slideUp('fast');
       $('.citycode').val("");
       $('.cityid').val("");
@@ -112,7 +112,7 @@ $(document).ready(function() {
       $(".focus-li a").trigger('click');
     }
   });
-  $("#returnlocation").bind('keypress',function(e) {
+  $("#returnlocation").on('input',function(e) {
       $('#returnDropdownCountry').slideUp('fast');
       $('.returncitycode').val("");
       $('.returncityname').val("");

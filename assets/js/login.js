@@ -37,7 +37,7 @@ $(document).ready(function() {
         cache: false,
         success: function (response) {
           if (response.status == "1") {
-            window.location = $("#front_login").attr('action');
+            window.location = base_url+"hotels";
           } else {
             $('.login-wrap').animo( { animation: 'tada' } );
             $(".error_msg").text(response.error);
