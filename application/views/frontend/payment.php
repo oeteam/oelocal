@@ -831,13 +831,10 @@ $(document).ready(function() {
                         <a class="details htlbutton btn col-sm-4 col-xs-12" href="#other"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
                       </div>
                       <div class="hidden-xs col-md-12">
-<<<<<<< Updated upstream
                         <a class="details htlbutton btn" href="#hrooms" style="width:20%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
                         <a class="details htlbutton btn" href="#details" style="width:19.6%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
-=======
                         <a class="details htlbutton btn" href="#hrooms" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Room Types</span></a>
                         <a class="details htlbutton btn" href="#details" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Details</span></a>
->>>>>>> Stashed changes
                         <a class="details htlbutton btn" href="#gallery" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Image Gallery</span></a>
                         <a class="details htlbutton btn" href="#map" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Hotel Map</span></a>
                         <a class="details htlbutton btn" href="#other" style="width:19%"><i class="fa fa-list-alt" aria-hidden="true"></i> <span>Other Aminities</span></a>
@@ -885,7 +882,6 @@ $(document).ready(function() {
                         placeholder="Zip Code" value="<?php echo $agent_info[0]->Pincode ?>"><small class="required-msg">*required</small></div>
                   </div>
                   <!-- traveller details  -->
-<<<<<<< Updated upstream
                   <div class="row">
                     <div class="col-md-10">
                       <p class="pull-right margtop15">Please fill all traveller's details</p>
@@ -895,7 +891,6 @@ $(document).ready(function() {
                     </div>
                   </div>
                   <div class="col-sm-12 ">
-=======
                 <!-- <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4> -->
 
     <!--               <div class="row">
@@ -958,14 +953,12 @@ $(document).ready(function() {
            
 
             <div class="col-sm-12 ">
->>>>>>> Stashed changes
             <div class="row b-rates margtop10" style="background: #f0f9ff;">
               <!-- <h5 class="b-rates--tax">Tax Amount : <span class="right">AED 1250</span></h5> -->
               <h5 class="text-green pull-right" style="font-weight: bold">GRAND TOTAL : <?php echo agent_currency(); ?> <span class="b-rates--grand-total">0</span><button id="Continue_book" type="button" name="Continue_book"class="bluebtn" style="margin-left: 5px">Continue</button><span>
             </h5>
             </div>
           </div>
-<<<<<<< Updated upstream
              <div class="modal fade " id="travellerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" style="width: 60%;">
                   <div class="modal-content">
@@ -1046,12 +1039,8 @@ $(document).ready(function() {
             </div>
             </div>
 
-            
-=======
-               </div>
 
               </div>
->>>>>>> Stashed changes
               <h4 class="text-green margtop25">Room Types <small class="right room-type-validate validated">*Please select all room combination</small></h4>
               <div class="row r-type margtop10" id="hrooms">
                 <?php $div = 12/count($_REQUEST['adults']);
