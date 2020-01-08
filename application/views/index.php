@@ -11,8 +11,8 @@ $HotelsView = HotelsView();
    }
 </script> -->
 <!--baner-->
-
 <section>
+
    <div id="carouselFade" class="carousel slide carousel-fade" data-ride="carousel">
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox">
@@ -20,14 +20,13 @@ $HotelsView = HotelsView();
             <div class="bnr-ad"></div>
             <div class="carousel-caption">
                <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
-               <p>  with otelseasy.com</p>
+                     <p>  with otelseasy.com</p>
             </div>
          </div>
          <div class="item">
             <div class="carousel-caption">
-               <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
-               <p>  with otelseasy.com</p>
-                        
+                    <h3>Top International Hotels and Corporate Partner Are Now Connected </h3>
+                     <p>  with otelseasy.com</p>
                      </div>
                   </div>
                   <div class="item">
@@ -51,8 +50,7 @@ $HotelsView = HotelsView();
                            <div class="tab-content">
                               <div id="Agentlogin" class="tab-pane fade in active register">
                                  <div class="container-fluid">
-                                    <form  method="post" action="<?php echo base_url('hotels'); ?>" id="front_login" autocomplete="off">
-                                       <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+                                    <form  method="post" autocomplete="off"  id="front_login">
                                        <div class="row">
                                           <div class="row">
                                              <div class="col-xs-12 col-sm-12 col-md-12">
@@ -102,7 +100,7 @@ $HotelsView = HotelsView();
 
                                              <div class="col-xs-4 col-sm-4 col-md-4">
                                                 <div class="btn-hldr">
-                                                   <button type="button" class="btn btn-primary" id="login_form_frontend_button">Sign In</button>
+                                                   <button type="submit" class="btn btn-primary" type="submit" id="login_form_frontend_button">Sign In</button>
                                                 </div>
                                              </div>
                                           </form>
@@ -123,8 +121,7 @@ $HotelsView = HotelsView();
                                  <div id="SupplierLogin" class="tab-pane fade">
                                     <div class="container-fluid">
                                        <div class="row">
-                                          <form method="post" id="hotel_panel_login" autocomplete="off">
-                                             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+                                          <form method="post" autocomplete="off"  id="hotel_panel_login">
                                              <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                                    <div class="form-group">
@@ -209,11 +206,7 @@ $HotelsView = HotelsView();
                            if ($key < 4) {
                           ?>
                            <div class="col-lg-3">
-<<<<<<< Updated upstream
                               <div class="cuadro_intro_hover " style="background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
-=======
-                              <div class="cuadro_intro_hover " style="background: url(<?php echo images_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
->>>>>>> Stashed changes
                                  <!-- <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $h_value->id."/".$h_value->Image1 ?>" class="simg-responsive illustration" swidth="100%"  alt=""/> -->
                                  <div class="caption">
                                     <div class="blur" style="background-color: rgba(76, 76, 76, 0.45)"></div>
@@ -274,13 +267,10 @@ $HotelsView = HotelsView();
                               </div> -->
                            </div>
                         </div>
+
                            <div class="col-md-6" style="background-color: #f4f4f4;">
                               <?php if (isset($HotelsView[4])) { ?>
-<<<<<<< Updated upstream
                               <div class="cuadro_intro_hover" style="height:275px;background: url(<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
-=======
-                              <div class="cuadro_intro_hover" style="height:275px;background: url(<?php echo images_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>);background-position: center center;background-repeat: no-repeat;background-size: cover;">
->>>>>>> Stashed changes
                                 <!--  <div>
                                  <img src="<?php echo base_url(); ?>uploads/gallery/<?php echo $HotelsView[4]->id."/".$HotelsView[4]->Image1 ?>" class="img-responsive"  alt="" style="sheight:100%;margin: 0 auto;"/>
                                  </div> -->
@@ -294,20 +284,6 @@ $HotelsView = HotelsView();
                               </div>
                               <?php } ?>
                            </div>
-                           <div>
-                              <div class="postman-run-button"
-data-postman-action="collection/import"
-data-postman-var-1="a74b3febd3256cd90d89"></div>
-<script type="text/javascript">
-  (function (p,o,s,t,m,a,n) {
-    !p[s] && (p[s] = function () { (p[t] || (p[t] = [])).push(arguments); });
-    !o.getElementById(s+t) && o.getElementsByTagName("head")[0].appendChild((
-      (n = o.createElement("script")),
-      (n.id = s+t), (n.async = 1), (n.src = m), n
-    ));
-  }(window, document, "_pm", "PostmanRunObject", "https://run.pstmn.io/button.js"));
-</script>
-                           </div>
                      </div>
                   </div>
                </section>
@@ -316,10 +292,9 @@ data-postman-var-1="a74b3febd3256cd90d89"></div>
                  <div class="col-md-10 col-md-offset-1" style="margin-top: 3%">
                    <!-- Modal content-->
                    <div class="modal-content">
-                    <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add" autocomplete="off"> 
-                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+                    <form method="post" action="<?php echo base_url('dashboard/popup'); ?>" id="front_hotel_add"> 
                      <div class="modal-header">
-                       <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo static_url(); ?>/assets/images/closeall.png" width="20px"> </button>
+                       <button type="button" class="close button-class" data-dismiss="modal"><img src="<?php echo base_url(); ?>/assets/images/closeall.png" width="20px"> </button>
                     </div>
                     <div class="modal-body">
                      <div class="col-sm-12">
