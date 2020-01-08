@@ -3864,6 +3864,7 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
         $booking_id = $max_id[0]->id+1;
         $max_booking_id = "HAB0".$booking_id;
       }
+    
       // Get Max booking Id end 
           
       // Get Markup start
