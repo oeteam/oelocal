@@ -28,7 +28,8 @@ $(document).ready(function() {
         }
     })
 
-  $("#travellerSubmit").click(function() {
+
+    $("#travellerSubmit").click(function() {
       var err = 0;
       var validate = $('.validate');
       $.each(validate,function() {
@@ -75,7 +76,9 @@ $(document).ready(function() {
        }
 
   })
-	$('#Continue_book').click(function () {
+
+    
+  $('#Continue_book').click(function () {
     var err = 0;
         var validate = $('.validate');
         $.each(validate,function() {
@@ -131,64 +134,24 @@ $(document).ready(function() {
           $("#travellerModalButton").trigger("click");
         }
         if (err==0) {
-            $("#payment_form").attr("action",base_url+"payment/payment_booking");
+            $("#payment_form").attr("action","payment/payment_booking");
             $("#payment_form").submit();
         }        
-  	});
+    });
     $("#Confirm_book").click(function() {
-      var err = 0;
-       var validate = $('.validate');
-        $.each(validate,function() {
-            if ($(this).val()=="" || $(this).val()==" ") {
-                $(this).removeClass('validated');
-                err += 1;
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            } else {
-                $(this).addClass('validated');
-            }
-         })
-      var namevalidate = $('.name-validate');
-
-        $.each(namevalidate,function() {
-            if ($(this).val()=="" || $(this).val()==" ") {
-                $(this).removeClass('validated');
-                err += 1;
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            } else {
-                if($(this).val().match(letters)) {
-                    if ($(this).val().length < 2) {
-                        err += 1;
-                        $(".traveller-validate").text('Minimum two letters should be used in First name and Last name!');
-                    } else {
-                        $(this).addClass('validated');
-                    }
-                } else {
-                    err += 1;
-                    $(".traveller-validate").text('Please check alphabets only accepted in First name and Last name!');
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
-            }
-         })
-        console.log(err);
-      if (err==0) {
-
-        var type = $("input[name='paymenttype']:checked").val();
-        if ($("#cancel_agree").is(':checked')) {
-          if(typeof type=="undefined") {
-              $(".pay_error").text("( Please select a payment option )*");
-              $(".pay_error").css('color','red');
-              $("#pay_options").focus();
-          } else {
-              $("#Confirm_book").attr('disabled');
-              $("#payment_form").attr("action",base_url+"payment/payment_booking_confirm");
-              $("#payment_form").submit();
-          }
+      var type = $("input[name='paymenttype']:checked").val();
+      if ($("#cancel_agree").is(':checked')) {
+        if(typeof type=="undefined") {
+            $(".pay_error").text("( Please select a payment option )*");
+            $(".pay_error").css('color','red');
+            $("#pay_options").focus();
         } else {
-          tooltip_fun("#cancel_agree");
+            $("#Confirm_book").attr('disabled');
+            $("#payment_form").attr("action",base_url+"payment/payment_booking_confirm");
+            $("#payment_form").submit();
         }
+      } else {
+        tooltip_fun("#cancel_agree");
       }
     });
      $('#room_rate_update').click(function () {
@@ -432,14 +395,14 @@ $(document).ready(function() {
      }
  });
 }); 
-	
+  
  function tooltip_fun(id) {
     $(id).attr({"title":"required !","data-toggle":"tooltip"});
     $(id).tooltip();
     $(id).focus().setTimeout(alertFunc(), 3000);
  }
 function alertFunc() {
-    console.log('');
+    
 }
 var objQueryString={};
 function getParameterByName(name) {
@@ -583,11 +546,11 @@ function supplementFormFill(value) {
     $("#Submitbtn").removeAttr('disabled','disabled');
   }
 }
-function aditionalfoodRemoveRequest1(prm,req,key) {
+function aditionalfoodRemoveRequest1(prm,req) {
   $.ajax({
     dataType: 'json',
     type: 'post',
-    url: base_url+'payment/supplementFormRemove?board='+req+'&&key='+key,
+    url: base_url+'payment/supplementFormRemove?board='+req,
     cache: false,
     success: function (respose) {
       window.location.reload(true);

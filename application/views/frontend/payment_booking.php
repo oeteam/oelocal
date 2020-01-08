@@ -1,7 +1,7 @@
 <?php init_front_head(); ?> 
 <?php init_front_head_menu(); ?> 
   
-<script type="text/javascript" src="<?php echo static_url(); ?>skin/js/payment.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>skin/js/payment.js"></script>
 <style type="text/css">
 	.stay-pay-tag {
 	    background: red;
@@ -84,41 +84,6 @@
 	  top: 50%;
 	  transform: translateY(-50%);
 	}
-	/* GUEST TABLE STYLES */
-  .guest-table {
-      table-layout: fixed;
-      width: 100%;
-      margin: 0;
-  }
-  .guest-table tbody tr > td, .guest-table thead tr > th {
-      padding: 5px 8px;
-  }
-  .guest-table thead > tr > th {
-      background-color: #f5f5f5;
-      color: #737373;
-  }
-
-  .guest-table .room-no > td {
-      background-color: #fafafa;
-      color: #0074b9;
-      font-weight: 600;
-      font-size: 12px;
-  }
-  .validate + .required-msg,.name-validate + .required-msg {
-    color: #e16359;
-      display: block;
-      text-align: right;
-      margin-right: 6px;
-      position: relative;
-      top: -17px;
-      opacity: 1;
-      height: 0px;
-      font-size: 11px;
-      font-weight: 100;
-  }
-.validated + .required-msg, .room-type-validate.validated {
-    display: none ! important;
-  }
 </style>
 	<div class="container breadcrub">
 		<ol class="track-progress" data-steps="5">
@@ -145,13 +110,13 @@
 			<div class="col-md-4" >
 				<div class="pagecontainer2 paymentbox grey">
 						<!-- <span class="opensans size18 dark bold">Book Hotel Details</span> <br> <br> -->
-						<img src="<?php echo images_url();?>uploads/rooms/<?php echo $_REQUEST['room_id'] ?>/<?php echo $view[0]->images ?>" class="left margright20" width="100%" alt=""/>
+						<img src="<?php echo base_url();?>uploads/rooms/<?php echo $_REQUEST['room_id'] ?>/<?php echo $view[0]->images ?>" class="left margright20" width="100%" alt=""/>
 						
 						
 					<div class="clearfix"></div>
 					<div class="hpadding20 margtop20">
 						<p><span class="opensans size20 bold"><?php echo $view[0]->hotel_name?></span></p>
-					    <p><img src="<?php echo static_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/></p>
+					    <p><img src="<?php echo base_url();?>skin/images/bigrating-<?php echo $view[0]->rating ?>.png" alt=""/></p>
 				    </div>		
 		            <div class="line3"></div>
 		            <div class="hpadding20 margtop20">
@@ -208,7 +173,6 @@
 				</script>
     	    <?php } ?>
 			<form method="post" name="payment_form" id="payment_form">
-				<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 				<input type="hidden" name="nationality" value="<?php echo $_REQUEST['nationality'] ?>">
 				<?php foreach ($_REQUEST['RequestType'] as $key => $value) { ?>
 					<input type="hidden" name="RequestType[]" value="<?php echo $value ?>">
@@ -271,77 +235,14 @@
 							</div>
 						</div>
 					</div>
-
-
-					 <!-- traveller details  -->
-					 <?php $sess =  $this->session->userdata('booking_data'); ?>
-                <h4 class="text-green margtop25">Travellers Details <small class="right traveller-validate validated"></small></h4>
-             	 <div class="row">
-                 <div class="col-sm-12 col-xs-12">
-                    <table class="table table-bordered guest-table">
-                      <thead>
-                        <tr>
-                          <th style="width: 5%" class="text-center">#</th>
-                            <th style="width: 30%">Adult/Children</th>
-                            <th style="width: 15%">Title</th>
-                            <th style="width: 25%">First Name</th>
-                            <th style="width: 25%">Last Name</th>
-                            <th style="width: 15%"class="text-center">Age</th>
-                        </tr>
-                      </thead>
-                      <tbody class="guesttbody">
-                        <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
-                         ?> 
-                        <tr class="room-no">
-                          <td class="text-center"><i class="fa fa-home"></i></td>
-                          <td colspan="5">Room <?php echo $x+1 ?></td>
-                        </tr>
-                        <?php for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
-                        <tr>
-                          <td class="text-center"><?php echo $i+1 ?></td>
-                          <td>Adult</td>
-                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo $x+1 ?>Adulttitle[]">
-                              <option value="Mr">Mr</option>
-                              <option value="Mrs">Mrs</option>
-                              <option value="Ms">Ms</option>
-                              <option value="Miss">Miss</option>
-                            </select></td>
-                          <td><input type="text" class="form-control validated name-validate input-sm" value="<?php echo isset($sess['Room'.($x+1).'AdultFirstName'][$i]) ? $sess['Room'.($x+1).'AdultFirstName'][$i] : '' ?>" name="Room<?php echo $x+1 ?>AdultFirstName[]">
-                            <small class="required-msg">*required</small></td>
-                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($sess['Room'.($x+1).'AdultLastName'][$i]) ? $sess['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
-                            <small class="required-msg">*required</small></td>
-                          <td class="text-center"><input type="number" class="form-control validatecc validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($sess['Room'.($x+1).'AdultAge'][$i]) ? $sess['Room'.($x+1).'AdultAge'][$i] : '' ?>">
-                            <small class="required-msg">*required</small></td>
-                        </tr>
-                      <?php } ?>
-                      <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
-                        <tr>
-                          <td class="text-center"><?php echo $j+1 ?></td>
-                          <td>Child</td>
-                          <td><select class="form-control input-sm Room-1Adulttitle" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
-                            <option value="Mr">Mr</option>
-                              <option value="Ms">Ms</option>
-                            </select></td>
-                          <td><input type="text" class="form-control validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]" value="<?php echo isset($sess['Room'.($x+1).'ChildFirstName'][$j]) ? $sess['Room'.($x+1).'ChildFirstName'][$j] : '' ?>"><small class="required-msg">*required</small></td>
-                          <td><input type="text" class="form-control validated name-validate input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]" value="<?php echo isset($sess['Room'.($x+1).'ChildLastName'][$j]) ? $sess['Room'.($x+1).'ChildLastName'][$j] : '' ?>"><small class="required-msg">*required</small></td>
-                          <td class="text-center"><input type="number" class="form-control validate validated input-sm" name="reqroom<?php echo ($x+1)  ?>-childAge[]" value="<?php echo $_REQUEST['room'.($x+1).'-childAge'][$j] ?>" readonly><small class="required-msg">*required</small></td>
-                        </tr>
-                      <?php } ?>
-                      <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-
 						<?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { ?>
-<!-- 					<div class="col-md-6 textleft">
+					<div class="col-md-6 textleft">
 						<input type="text" class="hide" id="first_name" name="first_name[]" value="<?php echo $_REQUEST['Room'.($x+1).'AdultFirstName'][0] ?>">
 
 						</div>
 						<div class="col-md-6 textleft">
 							<input type="text" class="hide" name="last_name[]" id="last_name" value="<?php echo $_REQUEST['Room'.($x+1).'AdultLastName'][0] ?>">
-						</div> -->
+						</div>
 						<?php } ?>
 						<div class="col-md-6 textleft">
 							</span><input type="text" class="hide" name="email" id="email" value="<?php echo $_REQUEST['email'] ?>">
@@ -358,28 +259,17 @@
 							$ctBchildamount = 0;
 		                 	$textrabedamount = 0;
               			 ?>
-<<<<<<< Updated upstream
-                        	<?php  
-                        	for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
-			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) { 
-			                 ?>
-		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
-	                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultFirstName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultFirstName'][$i] : '' ?>">
-		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultLastName'][$i] : '' ?>">
-		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]" value="<?php echo isset($_REQUEST['Room'.($x+1).'AdultLastName'][$i]) ? $_REQUEST['Room'.($x+1).'AdultAge'][$i] : '' ?>">
-=======
                                 <?php for ($x=0; $x < count($_REQUEST['reqadults']); $x++) { 
 			                for ($i=0; $i < $_REQUEST['reqadults'][$x] ; $i++) {  ?>
-	<!-- 	                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
+		                  	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo $x+1 ?>Adulttitle[]">   
 		                        <input type="text" class="hide form-control validated name-validate input-sm" name="Room<?php echo $x+1 ?>AdultFirstName[]">
 		                    <input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo $x+1 ?>AdultLastName[]">
-		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]"> -->
->>>>>>> Stashed changes
+		                    <input type="number" class="form-control hide validate validated input-sm" name="Room<?php echo $x+1 ?>AdultAge[]">
 		                <?php } ?>
 		                <?php for ($j=0; $j <$_REQUEST['reqChild'][$x] ; $j++) { ?>
-<!-- 		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
+		                	<input class="form-control input-sm Room-1Adulttitle hide" name="Room<?php echo ($x+1)  ?>ChildTitle[]">
 							<input type="text" class="form-control hide validated name-validate  input-sm" name="Room<?php echo ($x+1)  ?>ChildFirstName[]">
-							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]"> -->
+							<input type="text" class="form-control validated name-validate hide  input-sm" name="Room<?php echo ($x+1)  ?>ChildLastName[]">
 		                <?php } ?>
 		                <?php } ?>
                      <input type="hidden" name="boardChildTotal" value="<?php echo $ctBchildamount ?>">
@@ -387,7 +277,9 @@
                     <div class="clearfix"></div>
                     <div class="col-md-12">
 						<div class="row">
-						<?php if(count($additionalfoodrequest)!=0) { ?>
+						<?php 
+					//	$additionalfoodrequest = array();
+						if(count($additionalfoodrequest)!=0) { ?>
 						<span class="size16px bold dark">Add meals</span><br/><br/>
 						<?php } ?>
 							<div class="row">
@@ -398,12 +290,12 @@
 											<?php 
 												if ($this->session->userdata($frvalue)['supplementType']==$frvalue && $this->session->userdata($frvalue)['contract_id']==$_REQUEST['contract_id'] && $this->session->userdata($frvalue)['room_id']==$_REQUEST['room_id']  && $this->session->userdata($frvalue)['token']==$_REQUEST['token']) { ?>
 												<a href="#" class="additional-food disabled">
-													<img src="<?php echo static_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
+													<img src="<?php echo base_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
 													<p>Add <?php echo $frvalue; ?></p>
 												</a>
 											<?php } else { ?>
 												<a href="#" onclick="aditionalfoodRequest1('board%5B%5D','<?php echo $frvalue; ?>');" class="additional-food">
-													<img src="<?php echo static_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
+													<img src="<?php echo base_url();?>assets/images/<?php echo strtolower($frvalue); ?>.png" width="55px" alt="breakfast"/>
 													<p>Add <?php echo $frvalue; ?></p>
 												</a>
 											<?php	} ?>
@@ -430,7 +322,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo static_url();?>assets/images/breakfast.png" width="25px" alt="breakfast"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/breakfast.png" width="25px" alt="breakfast"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Breakfast',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>
@@ -451,7 +343,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo static_url();?>assets/images/lunch.png" width="25px" alt="lunch"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/lunch.png" width="25px" alt="lunch"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Lunch',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>
@@ -470,7 +362,7 @@
 											    font-size: 15px;
 											    font-weight: bold;
 											    color: #0074b9;
-											">Room <?php echo $i+1 ?> <img src="<?php echo static_url();?>assets/images/dinner.png" width="25px" alt="dinner"></span>
+											">Room <?php echo $i+1 ?> <img src="<?php echo base_url();?>assets/images/dinner.png" width="25px" alt="dinner"></span>
 											<a href="#" onclick="aditionalfoodRemoveRequest1('board%5B%5D','Dinner',<?php echo $i ?>);" class="pull-right additional-close"><i class="fa fa-times-circle"></i></a>
 											
 										</p>
@@ -530,6 +422,7 @@
 						$IndexSplit = explode("-", $_REQUEST['Room'.($RAkey+1)]);
 						$contractId= $IndexSplit[0];
 						$RoomId= $IndexSplit[1];
+        				// $revenue_markup = revenue_markup1($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'));
         				$extrabed = $this->Payment_Model->get_PaymentConfirmextrabedAllotment($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey);
         				
         				$general = $this->Payment_Model->get_Confirmgeneral_supplement($_REQUEST,$IndexSplit[0],$IndexSplit[1],$RAkey+1);
@@ -548,11 +441,10 @@
 						    $discountGet['pay'];
 						  }
         				// stay and pay dicount end 
-
-						$boardName = $this->Payment_Model->contractBoardCheck($contractId);
+						  $boardName = $this->Payment_Model->contractBoardCheck($contractId);
 					?>
 					<input type="hidden" name="Room<?php echo $RAkey+1?>" value="<?php echo $contractId.'-'.$RoomId ?>">
-					<input type="hidden" name="RoomIndex[<?php echo $RAkey ?>]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
+					<input type="hidden" name="RoomIndex[]" value="<?php echo $_REQUEST['Room'.($RAkey+1)] ?>">
 					<input type="hidden" name="BoardName[<?php echo $RAkey ?>]" value="<?php echo $boardName ?>">
 	            	<div class="row payment-table-wrap">
 	            		<div class="col-md-12">
@@ -572,11 +464,9 @@
 	            					</tr>
 	            				</thead>
 	            				<tbody>
-	            					<?php 
-	            					for ($i=1; $i <=$tot_days ; $i++) {
-            						$revenue_markup = revenue_markup2($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'),date('Y-m-d' ,strtotime($result[$i]['date'])));
-
-            						$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
+	            					<?php for ($i=1; $i <=$tot_days ; $i++) {
+            						$revenue_markup = revenue_markup2($_REQUEST['hotel_id'],$contractId,$this->session->userdata('agent_id'),date('Y-m-d' ,strtotime($result[$i]['date'])));       
+							$result[$i]['amount'] = special_offer_amount($result[$i]['date'],$RoomId,$_REQUEST['hotel_id'],$contractId);
             						$result[$i]['roomName'] = roomnameGET($RoomId,$_REQUEST['hotel_id']);
 	            					$FextrabedAmount[$i-1]  = 0;
 	            					$TFextrabedAmount[$i-1]  = 0;
@@ -592,7 +482,6 @@
 	            					$TGCamount[$i-1] = 0;
 
 	            					$RMdiscount = DateWisediscount(date('Y-m-d' ,strtotime($result[$i]['date'])),$_REQUEST['hotel_id'],$RoomId,$contractId,'Room',date('Y-m-d',strtotime($_REQUEST['Check_in'])),date('Y-m-d',strtotime($_REQUEST['Check_out'])),$discountGet['dis']);
-	            					
 	            					$RMdiscountval[$i] = $RMdiscount['discount'];
 	            						$GDis = 0;
 		            					if ($RMdiscount['discount']!=0 && $RMdiscount['General']!=0) { 
@@ -1089,13 +978,9 @@
 					    ?>
 		              	<h5 class="b-rates--grand">GRAND TOTAL : 
 		              	<span class="right"><?php echo agent_currency(); ?> 
-			              	<span class="b-rates--grand-total"><?php echo currency_type(agent_currency(),$finalAmount);?> </span>
+			              	<span class="b-rates--grand-total"><?php echo currency_type(agent_currency(),$finalAmount) ?> </span>
 						</span>
 						</h5>
-						<?php if (agent_currency()!='AED') { ?>
-						<p class="text-right"><small><b>AED 1 => <?php echo agent_currency(); ?> <?php echo currency_type(agent_currency(),1);?></b></small></p>
-						<p class="text-right"><small><b>AED <?php echo $finalAmount ?>  => <?php echo agent_currency(); ?> <?php echo currency_type(agent_currency(),$finalAmount);?> </b></small></p>
-						<?php } ?>
 						<?php 
 							$this->session->set_userdata('tot-'.$_REQUEST['hotel_id'],$finalAmount);
 						?>
@@ -1155,6 +1040,7 @@
 					    			$finalAmount = 0;
 					    			$charge = 0;
 					    		}
+
 					    		echo currency_type(agent_currency(),$charge)." ".agent_currency()
 					    		// echo $Cancvalue['percentage'] ?> (<?php echo $Cancvalue['application'] ?>)</td>
 					    	</tr>
@@ -1317,6 +1203,4 @@
 
 <!-- END OF CONTENT -->
 <?php init_front_black_tail(); ?> 
-
-	
 
