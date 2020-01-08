@@ -1,6 +1,10 @@
 // $(document).ready(function() {
   var agent_table = $('#agent_table').dataTable({
         "bDestroy": true,
+         dom: 'lBfrtip',
+          buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+          ],
         "ajax": {
             url : base_url+'/backend/agents/agent_list',
             type : 'GET'
@@ -192,6 +196,10 @@ function iata_check(data) {
 function filter(val) {
   var agent_table = $('#agent_table').dataTable({
         "bDestroy": true,
+         dom: 'lBfrtip',
+          buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+          ],
         "ajax": {
             url : base_url+'/backend/agents/agent_list?filter='+val,
             type : 'GET'
@@ -215,6 +223,10 @@ function agentpermissionfun(id,val) {
           success: function (response) {
             var agent_table = $('#agent_table').dataTable({
             "bDestroy": true,
+             dom: 'lBfrtip',
+              buttons: [
+                  'copy', 'csv', 'excel', 'pdf', 'print'
+              ],
             "ajax": {
                 url : base_url+'/backend/agents/agent_list?filter='+val,
                 type : 'GET'
@@ -268,6 +280,10 @@ function commonDelete() {
           addToast(response.error,response.color);
           var agent_table = $('#agent_table').dataTable({
             "bDestroy": true,
+             dom: 'lBfrtip',
+              buttons: [
+                  'copy', 'csv', 'excel', 'pdf', 'print'
+              ],
             "ajax": {
                 url : base_url+'/backend/agents/agent_list',
                 type : 'GET'
