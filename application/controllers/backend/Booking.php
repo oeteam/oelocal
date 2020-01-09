@@ -587,6 +587,7 @@ class Booking extends MY_Controller {
       $data['view'] = $xmlData['BookingDetail'];
     }
     $data['amendment'] = $this->Booking_Model->amendmentdetails($_REQUEST['id']);
+    $data['travellers'] = $this->Booking_Model->getxmltravellerdata($_REQUEST['id']);
     $this->load->view('backend/booking/xmlhotel_booking_view',$data);
   }
   // @xml booking reference modal

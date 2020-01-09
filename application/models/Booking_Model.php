@@ -775,6 +775,15 @@ class Booking_Model extends CI_Model {
     $this->db->select("*");
     $this->db->from("traveller_details");
     $this->db->where("bookingid",$id);
+    $this->db->where("hotelType",'oe');
+    $query = $this->db->get()->result();
+    return $query;
+  }
+  public function getxmltravellerdata($id) {
+    $this->db->select("*");
+    $this->db->from("traveller_details");
+    $this->db->where("bookingid",$id);
+    $this->db->where("hotelType",'tbo');
     $query = $this->db->get()->result();
     return $query;
   }

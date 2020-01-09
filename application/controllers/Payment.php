@@ -3579,7 +3579,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     'age' => $_REQUEST['Room'.($i+1).'AdultAge'][$j],
                     'type' => 'adult',
                     'roomindex' => ($i+1),
-                    'bookingid' => $insert_id);
+                    'bookingid' => $insert_id,
+                    'hotelType' => 'tbo');
             $this->Payment_Model->travelers_add($travelers);
           }
           for($j=0;$j<$_REQUEST['Child'][$i];$j++){
@@ -3589,7 +3590,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     'age' => $_REQUEST['reqroom'.($i+1).'-ChildAge'][$j],
                     'type' => 'child',
                     'roomindex' => ($i+1),
-                    'bookingid' => $insert_id);
+                    'bookingid' => $insert_id,
+                    'hotelType' => 'tbo');
             $this->Payment_Model->travelers_add($travelers);
           }
         }
@@ -4365,7 +4367,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     'age' => $data['Room'.($i+1).'AdultAge'][$j],
                     'type' => 'adult',
                     'roomindex' => ($i+1),
-                    'bookingid' => $insert_id);
+                    'bookingid' => $insert_id,
+                    'hotelType' => 'oe');
             $this->Payment_Model->travelers_add($travelers);
           }
           for($j=0;$j<$data['reqChild'][$i];$j++){
@@ -4375,7 +4378,8 @@ $pdf->writeHTML($tb2, true, false, false, false, '');
                     'age' => $data['reqroom'.($i+1).'-childAge'][$j],
                     'type' => 'child',
                     'roomindex' => ($i+1),
-                    'bookingid' => $insert_id);
+                    'bookingid' => $insert_id,
+                    'hotelType' => 'oe');
             $this->Payment_Model->travelers_add($travelers);
           }
         }
