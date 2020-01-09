@@ -1265,5 +1265,33 @@ class Common_Model extends CI_Model {
       $query=$this->db->get();
       return $query;
   }
+  public function apiuser_deposit_details_view($id){
+      $this->db->select('*');
+      $this->db->from('hotel_tbl_agents');
+      $this->db->where('id',$id);
+      $query=$this->db->get();
+      return $query->result();
+  }
+  public function apiuser_deposit_details($id){
+      $this->db->select('*');
+      $this->db->from('apiuser_deposit_detail');
+      $this->db->join('hotel_tbl_agents','apiuser_deposit_detail.agent_id = hotel_tbl_agents.id', 'left');
+      $this->db->where('apiuser_deposit_detail.agent_id',$id);
+      $query=$this->db->get();
+      return $query;
+  }
+  public function add_deposit_apiuser($request,$deposit){
+      $data= array( 'agent_id'       => $request['apiuser_id'],
+                    'Deposit_amount'  => $deposit+$request['amount'],
+                    'total_deposit'   => $request['amount'],
+                    'created_date'   => date('Y-m-d H:i:s'),
+                    'created_by'     => $this->session->userdata('name'),
+                );
+      $this->db->insert('apiuser_deposit_detail',$data);
+      $data1= array( 'deposit_amount'   => $request['amount']+$deposit);
+      $this->db->where('id',$request['apiuser_id']);
+      $this->db->update('hotel_tbl_agents',$data1);
+      return true;
+  }
 }
 

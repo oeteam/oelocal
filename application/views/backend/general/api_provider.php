@@ -30,7 +30,7 @@
                             <table class="table table-condensed table-hover" id="providerListTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Deposit</th>
                                         <th>Code</th>
                                         <th>Name</th>
                                         <th>contact</th>

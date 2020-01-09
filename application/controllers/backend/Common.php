@@ -1520,7 +1520,7 @@ class Common extends MY_Controller {
         }
 
         $data[] = array(
-            $key+1,
+            '<a title="view credits" class="primary" href="apiuser_deposit_view?id='.$r->id.'"><i class="light-blue darken-4 fa fa-arrow-circle-right" aria-hidden="true"></i></a>',
             '<a class="text-primary" href="'.base_url().'/backend/agents/new_agent?edit_id='.$r->id.'"><b class="text-primary">'.$r->Agent_Code.'</b></a>',
             $r->First_Name." ".$r->Last_Name,
             $r->Mobile,
@@ -1563,6 +1563,47 @@ class Common extends MY_Controller {
     }
     AdminlogActivity($description);
     echo json_encode(true);
+  }
+  public function apiuser_deposit_view(){
+    $deposit['view'] = $this->Common_Model->apiuser_deposit_details_view($_REQUEST['id']);
+    $this->load->view('backend/general/deposit_view',$deposit);
+  }
+  public function apiuser_deposit_view_tbl(){
+    if ($this->session->userdata('name')=="") {
+      redirect("../backend/");
+    }
+    $data = array();
+    // Datatables Variables
+    $draw = intval($this->input->get("draw"));
+    $start = intval($this->input->get("start"));
+    $length = intval($this->input->get("length"));
+    $deposit = $this->Common_Model->apiuser_deposit_details($_REQUEST['id']);
+      foreach($deposit->result() as $key => $r) {
+        $data[] = array(
+                    $key+1,
+                    $r->total_deposit,
+                    $r->Deposit_amount,
+                    $r->created_date,
+                    $r->created_by,
+
+        );
+      }
+    $output = array(
+       "draw" => $draw,
+       "recordsTotal" => $deposit->num_rows(),
+       "recordsFiltered" => $deposit->num_rows(),
+       "data" => $data
+    );
+    echo json_encode($output);
+    exit();
+  }
+  public function add_deposit() {
+    $id=$_REQUEST['apiuser_id'];
+    $deposit=$_REQUEST['deposit'];
+    $add_credit= $this->Common_Model->add_deposit_apiuser($_REQUEST,$deposit);
+    $description = 'Deposit amount has been added for an existing api user [id:'.$_REQUEST['agent_id'].']';
+    AdminlogActivity($description);
+    redirect('backend/Common/apiuser_deposit_view?id='.$id.'');
   }
 }
 

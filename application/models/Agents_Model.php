@@ -315,7 +315,7 @@ class Agents_Model extends CI_Model {
       $query=$this->db->get();
       return $query->result();
     }
-    public function currency(){
+  public function currency(){
     $this->db->select('*');
     $this->db->from('currency_update');
     $query=$this->db->get();
