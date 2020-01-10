@@ -103,6 +103,8 @@
                         <?php if (isset($edit[0]->id)) { ?>
                             <span class="pull-right"><a href="#" data-toggle="modal" data-target="#myModalbanner" onclick="banner_modal('<?php echo isset($edit[0]->id) ? $edit[0]->id : '' ?>');" class="btn-sm btn-warning">Banners</a></span>
                         <?php } ?>
+                        <span class="pull-right"><p style="margin-right: 20px;color: #255a79;" class="text-center">Credit Amount: <?php echo $edit[0]->Credit_amount ?> AED</br><?php if($edit[0]->api==1) { ?>Deposit Amount: <?php echo $edit[0]->deposit_amount ?> AED <?php } ?>
+                        </p></span>
                     </div>
                     <div class="tab-inn">
                        <!--  <?php if (isset($edit[0]->id) && $edit[0]->id!="") { ?>
