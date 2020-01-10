@@ -211,6 +211,14 @@
                                             <input id="credit" name="credit" type="number" class="form-control" value="<?php echo isset($edit[0]->Credit_amount) ? $edit[0]->Credit_amount : '' ?>">
                                             </div>
                                         </div>
+                                        <?php if($edit[0]->api == 1) { ?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label for="deposit">Deposit Amount*</label>
+                                            <input id="deposit" name="deposit" type="number" class="form-control" value="<?php echo isset($edit[0]->deposit_amount) ? $edit[0]->deposit_amount : '' ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
                                     </div>
                                     
                                 </div>
