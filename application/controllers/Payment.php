@@ -1563,6 +1563,10 @@ class Payment extends MY_Controller {
         <td style="font-size:10px;">Hotel name : '.$data[0]->hotel_name.'</td>
         <td style="text-align:right;font-size:10px;">'.$customer_phone.'</td>
       </tr>
+      <tr>
+        <td style="font-size:10px;">Hotel Address : '.$data[0]->sale_address.'</td>
+        <td style="text-align:right;font-size:10px;"></td>
+      </tr>
     </tbody>
   </table>
   </div>
