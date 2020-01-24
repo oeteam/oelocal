@@ -1527,6 +1527,7 @@ class Common extends MY_Controller {
             $r->Email,
             $switch,
             $switch1,
+            '<a title="view developers" class="primary" href="apideveloper_view?id='.$r->id.'"><i class="light-blue darken-4 fa fa-eye" aria-hidden="true"></i></a>'
         );
       }
       $output = array(
@@ -1604,6 +1605,80 @@ class Common extends MY_Controller {
     $description = 'Deposit amount has been added for an existing api user [id:'.$_REQUEST['agent_id'].']';
     AdminlogActivity($description);
     redirect('backend/Common/apiuser_deposit_view?id='.$id.'');
+  }
+  public function apideveloper_view() {
+    $id=$_REQUEST['id'];
+    $data['details'] = $this->Common_Model->developerDetails($id);
+    $this->load->view('backend/general/apidevelopers',$data);
+  }
+  public function developer_validation() {
+    if ($this->session->userdata('name')=="") {
+      redirect("../backend/");
+    } 
+    if ($_REQUEST['developer_mail']=="") {
+      $Return['error'] = 'Developer mail field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if (!filter_var($_REQUEST['developer_mail'], FILTER_VALIDATE_EMAIL)) {
+          $Return['error'] = "Invalid email format for developer mail"; 
+          $Return['color'] = 'orange'; 
+    }
+    else if ($_REQUEST['support_mail']=="") {
+      $Return['error'] = 'Support mail field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if (!filter_var($_REQUEST['support_mail'], FILTER_VALIDATE_EMAIL)) {
+          $Return['error'] = "Invalid email format for support mail"; 
+          $Return['color'] = 'orange'; 
+    }
+    else if ($_REQUEST['developer_con']=="") {
+      $Return['error'] = 'Developer Contact field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if ($_REQUEST['support_con']=="") {
+      $Return['error'] = 'Support Contact field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if ($_REQUEST['usage']=="") {
+      $Return['error'] = 'Usage limit field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if ($_REQUEST['ip_test']=="") {
+      $Return['error'] = 'IP address test field is required!';
+      $Return['color'] = 'orange';
+    }
+    else if ($_REQUEST['ip_whitelist']=="") {
+          $Return['error'] = 'IP address whitelist field is required!';
+          $Return['color'] = 'orange';
+    }
+    else {
+      if ($_REQUEST['edit_id']!="") {
+        $Return['error'] = "Updated Successfully!";
+        $Return['color'] = 'green';
+        $Return['status'] = '1';
+      } else {
+        $Return['error'] = "Inserted Successfully!";
+        $Return['color'] = 'green';
+        $Return['status'] = '1';
+      }
+    }
+    echo json_encode($Return);
+  }
+  public function add_developer() {
+    if ($this->session->userdata('name')=="") {
+      redirect("../backend/");
+    } 
+    if($_REQUEST['edit_id']!="") {
+      $result = $this->Common_Model->developerUpdate($_REQUEST);
+      $description = 'Developer details updated for api user [Api user id:'.$_REQUEST['agent_id'].']';
+      AdminlogActivity($description);
+      redirect('../backend/Common/api_provider');
+    } else {
+      $agent_id = $this->Common_Model->developerInsert($_REQUEST);
+      $description = 'New developer added for api user [Api user id:'.$_REQUEST['agent_id'].']';
+      AdminlogActivity($description);
+      redirect('../backend/Common/api_provider');
+    }
   }
 }
 

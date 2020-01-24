@@ -488,8 +488,7 @@ function RoomCombinationinitCheck() {
     } else {
       $('#Room'+1+RoomCombination.RoomIndex).prop('disabled',false);
       $('#Room'+1+RoomCombination.RoomIndex).closest('li').find('.av-div').addClass('availability');
-    }
-    
+    }  
   });
   // var availableRooms = $('.r-type--room:first-child').find('.availability').closest('li');
   // $.each(availableRooms, function(){
