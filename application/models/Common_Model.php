@@ -1293,5 +1293,47 @@ class Common_Model extends CI_Model {
       $this->db->update('hotel_tbl_agents',$data1);
       return true;
   }
+  public function developerDetails($id){
+      $this->db->select('*');
+      $this->db->from('tbl_apiDevelopers');
+      $this->db->where('agentId',$id);
+      $query=$this->db->get();
+      return $query->result();
+  }
+  public function developerUpdate($request) {
+    $data= array(
+              'developerMail' =>$request['developer_mail'],
+              'supportMail' =>$request['support_mail'],
+              'developerContact' =>$request['developer_con'],
+              'supportContact' =>$request['support_con'],
+              'usageLimit' =>$request['usage'],
+              'IP_Test' =>$request['ip_test'],
+              'IP_whitelist' =>$request['ip_whitelist'],
+              'mode' => $request['mode'],
+              'agentId' => $request['agent_id'],
+              'Updated_Date' => date("Y-m-d H:i:s"),
+              'Updated_By' =>  $this->session->userdata('id'),
+            );
+    $this->db->where('id',$request['edit_id']);
+    $this->db->update('tbl_apiDevelopers',$data);
+    return true;
+  }
+  public function developerInsert($request) {
+    $data= array(
+              'developerMail' =>$request['developer_mail'],
+              'supportMail' =>$request['support_mail'],
+              'developerContact' =>$request['developer_con'],
+              'supportContact' =>$request['support_con'],
+              'usageLimit' =>$request['usage'],
+              'IP_Test' =>$request['ip_test'],
+              'IP_whitelist' =>$request['ip_whitelist'],
+              'mode' => $request['mode'],
+              'agentId' => $request['agent_id'],
+              'Created_Date' => date("Y-m-d H:i:s"),
+              'Created_By' =>  $this->session->userdata('id'),
+            );
+    $this->db->insert('tbl_apiDevelopers',$data);
+    return true;
+  }
 }
 

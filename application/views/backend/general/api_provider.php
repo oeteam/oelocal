@@ -37,6 +37,7 @@
                                         <th>Email</th>
                                         <th>Disable/Enable</th>
                                         <th>Live</th>
+                                        <th>API Developers</th>
                                     </tr>
                                 </thead>
                                 <tbody>
