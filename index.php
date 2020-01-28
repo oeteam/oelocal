@@ -310,6 +310,14 @@ switch (ENVIRONMENT)
 
 	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
 
+/*Subin*/
+// env config call start
+require_once BASEPATH . 'dotenv/autoloader.php';
+	
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+// env config call end
+
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE

@@ -25,7 +25,7 @@ date_default_timezone_set('asia/dubai');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://dev.otelseasy.com/';
+$config['base_url'] = getenv('BASE_URL');
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
