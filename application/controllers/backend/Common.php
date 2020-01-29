@@ -1639,17 +1639,33 @@ class Common extends MY_Controller {
       $Return['error'] = 'Support Contact field is required!';
       $Return['color'] = 'orange';
     }
-    else if ($_REQUEST['usage']=="") {
-      $Return['error'] = 'Usage limit field is required!';
-      $Return['color'] = 'orange';
-    }
-    else if ($_REQUEST['ip_test']=="") {
+    else if (!isset($_REQUEST['ip_test'])) {
       $Return['error'] = 'IP address test field is required!';
       $Return['color'] = 'orange';
     }
-    else if ($_REQUEST['ip_whitelist']=="") {
+    else if (!isset($_REQUEST['ip_whitelist'])) {
           $Return['error'] = 'IP address whitelist field is required!';
           $Return['color'] = 'orange';
+    }
+    else if(isset($_REQUEST['ip_test'])) {
+      foreach($_REQUEST['ip_test'] as $value) {
+        if($value==""){
+          $Return['error'] = 'IP address test fields cannot be empty!';
+          $Return['color'] = 'orange';
+        }
+      }
+    }
+    else if(isset($_REQUEST['ip_whitelist'])) {
+      foreach($_REQUEST['ip_whitelist'] as $value1) {
+        if($value1=="") {
+          $Return['error'] = 'IP address whitelist fields cannot be empty!';
+          $Return['color'] = 'orange';
+        }
+      }
+    }
+    else if ($_REQUEST['usage']=="") {
+      $Return['error'] = 'Usage limit field is required!';
+      $Return['color'] = 'orange';
     }
     else {
       if ($_REQUEST['edit_id']!="") {

@@ -129,20 +129,36 @@
                                         </div>   
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="usage">Usage Limit*</label>
-                                                <input id="usage" name="usage" type="text" class="form-control" value="<?php echo isset($details[0]->usageLimit) ? $details[0]->usageLimit : '' ?>">
+                                                <label for="ip_test">IP Address - Test*</label>
+                                            <span>
+                                            <button type="button" id="testipadd" class="btn-sm btn-primary pull-right"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                            <table class="testTable">
+                                                <tr>
+                                                    <td> <input id="ip_test" name="ip_test[]" type="text" class="form-control"></td>
+                                                    <td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                </tr>
+                                            </table>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                            <label for="ip_test">IP Address - Test*</label>
-                                            <input id="ip_test" name="ip_test" type="text" class="form-control" value="<?php echo isset($details[0]->IP_Test) ? $details[0]->IP_Test : '' ?>">
+                                            <label for="ip_test">IP Address - Whitelist*</label>
+                                            <span>
+                                            <button type="button" id="whiteipadd" class="btn-sm btn-primary pull-right"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                            <table class="whiteTable">
+                                                <tr>
+                                                    <td><input id="ip_whitelist" name="ip_whitelist[]" type="text" class="form-control"></td>
+                                                    <td><button onclick="removewhitetrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                </tr>
+                                            </table>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                            <label for="ip_whitelist">IP Address - Whitelist*</label>
-                                            <textarea class="form-control" id="ip_whitelist" name="ip_whitelist"><?php echo isset($details[0]->IP_whitelist) ? $details[0]->IP_whitelist : '' ?></textarea> 
+                                            <label for="usage">API Usage Limit per Second*</label>
+                                            <input id="usage" name="usage" type="text" class="form-control" value="<?php echo isset($details[0]->usageLimit) ? $details[0]->usageLimit : '' ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -190,9 +206,21 @@
     </div>
 </div>
 <script>
+    $("#testipadd").click(function() {
+        $(".testTable").append('<tr> <td><input type="text" name="ip_test[]"></td><td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td></tr>');
+    });
+    $("#whiteipadd").click(function() {
+        $(".whiteTable").append('<tr> <td><input name="ip_whitelist[]" type="text"></td><td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td></tr>');
+    });
+    function removetesttrfun(e) {
+        var tr = e.target.closest('tr').remove();
+    }
+    function removewhitetrfun(e) {
+        var tr = e.target.closest('tr').remove();
+    }
     $('#add_developer_button').click(function (e) {
-      e.preventDefault();
-          $.ajax({
+        e.preventDefault();
+        $.ajax({
           dataType: 'json',
           type: 'post',
           url: base_url+'/backend/common/developer_validation',
