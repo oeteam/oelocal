@@ -134,10 +134,20 @@
                                             <button type="button" id="testipadd" class="btn-sm btn-primary pull-right"><i class="fa fa-plus"></i></button>
                                             </span>
                                             <table class="testTable">
-                                                <tr>
-                                                    <td> <input id="ip_test" name="ip_test[]" type="text" class="form-control"></td>
-                                                    <td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                
+                                                <?php if (isset($details[0]->IP_Test) && $details[0]->IP_Test!="") {
+                                                    $IP_TestArr = explode(",", $details[0]->IP_Test);
+                                                    foreach ($IP_TestArr as $key => $value) {
+                                                 ?>
+                                                <tr> 
+                                                    <td><input name="ip_whitelist[]" type="text" value="<?php echo $value ?>"></td><td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
+                                                <?php } } else { ?>
+                                                    <tr>
+                                                        <td> <input id="ip_test" name="ip_test[]" type="text" class="form-control"></td>
+                                                        <td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                    </tr>
+                                                <?php } ?>
                                             </table>
                                             </div>
                                         </div>
