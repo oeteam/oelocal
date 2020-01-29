@@ -1615,39 +1615,40 @@ class Common extends MY_Controller {
     if ($this->session->userdata('name')=="") {
       redirect("../backend/");
     } 
+    $Return = array();
     if ($_REQUEST['developer_mail']=="") {
       $Return['error'] = 'Developer mail field is required!';
       $Return['color'] = 'orange';
-    }
-    else if (!filter_var($_REQUEST['developer_mail'], FILTER_VALIDATE_EMAIL)) {
+    } 
+    if (!filter_var($_REQUEST['developer_mail'], FILTER_VALIDATE_EMAIL)) {
           $Return['error'] = "Invalid email format for developer mail"; 
           $Return['color'] = 'orange'; 
-    }
-    else if ($_REQUEST['support_mail']=="") {
+    } 
+    if ($_REQUEST['support_mail']=="") {
       $Return['error'] = 'Support mail field is required!';
       $Return['color'] = 'orange';
     }
-    else if (!filter_var($_REQUEST['support_mail'], FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($_REQUEST['support_mail'], FILTER_VALIDATE_EMAIL)) {
           $Return['error'] = "Invalid email format for support mail"; 
           $Return['color'] = 'orange'; 
     }
-    else if ($_REQUEST['developer_con']=="") {
+    if ($_REQUEST['developer_con']=="") {
       $Return['error'] = 'Developer Contact field is required!';
       $Return['color'] = 'orange';
     }
-    else if ($_REQUEST['support_con']=="") {
+    if ($_REQUEST['support_con']=="") {
       $Return['error'] = 'Support Contact field is required!';
       $Return['color'] = 'orange';
     }
-    else if (!isset($_REQUEST['ip_test'])) {
+    if (!isset($_REQUEST['ip_test'])) {
       $Return['error'] = 'IP address test field is required!';
       $Return['color'] = 'orange';
     }
-    else if (!isset($_REQUEST['ip_whitelist'])) {
+    if (!isset($_REQUEST['ip_whitelist'])) {
           $Return['error'] = 'IP address whitelist field is required!';
           $Return['color'] = 'orange';
-    }
-    else if(isset($_REQUEST['ip_test'])) {
+    } 
+    if(isset($_REQUEST['ip_test'])) {
       foreach($_REQUEST['ip_test'] as $value) {
         if($value==""){
           $Return['error'] = 'IP address test fields cannot be empty!';
@@ -1655,7 +1656,7 @@ class Common extends MY_Controller {
         }
       }
     }
-    else if(isset($_REQUEST['ip_whitelist'])) {
+    if(isset($_REQUEST['ip_whitelist'])) {
       foreach($_REQUEST['ip_whitelist'] as $value1) {
         if($value1=="") {
           $Return['error'] = 'IP address whitelist fields cannot be empty!';
@@ -1663,21 +1664,21 @@ class Common extends MY_Controller {
         }
       }
     }
-    else if ($_REQUEST['usage']=="") {
+    if ($_REQUEST['usage']=="") {
       $Return['error'] = 'Usage limit field is required!';
       $Return['color'] = 'orange';
     }
-    else {
-      if ($_REQUEST['edit_id']!="") {
+      if (count($Return)==0 && $_REQUEST['edit_id']!="") {
         $Return['error'] = "Updated Successfully!";
         $Return['color'] = 'green';
         $Return['status'] = '1';
-      } else {
+      }
+
+      if (count($Return)==0 && $_REQUEST['edit_id']=="") {
         $Return['error'] = "Inserted Successfully!";
         $Return['color'] = 'green';
         $Return['status'] = '1';
       }
-    }
     echo json_encode($Return);
   }
   public function add_developer() {
