@@ -1668,17 +1668,18 @@ class Common extends MY_Controller {
       $Return['error'] = 'Usage limit field is required!';
       $Return['color'] = 'orange';
     }
-      if (count($Return)==0 && $_REQUEST['edit_id']!="") {
-        $Return['error'] = "Updated Successfully!";
-        $Return['color'] = 'green';
-        $Return['status'] = '1';
-      }
 
-      if (count($Return)==0 && $_REQUEST['edit_id']=="") {
-        $Return['error'] = "Inserted Successfully!";
-        $Return['color'] = 'green';
-        $Return['status'] = '1';
-      }
+    if (count($Return)==0 && $_REQUEST['edit_id']!="") {
+      $Return['error'] = "Updated Successfully!";
+      $Return['color'] = 'green';
+      $Return['status'] = '1';
+    }
+
+    if (count($Return)==0 && $_REQUEST['edit_id']=="") {
+      $Return['error'] = "Inserted Successfully!";
+      $Return['color'] = 'green';
+      $Return['status'] = '1';
+    }
     echo json_encode($Return);
   }
   public function add_developer() {

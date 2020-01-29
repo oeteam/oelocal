@@ -140,7 +140,7 @@
                                                     foreach ($IP_TestArr as $key => $value) {
                                                  ?>
                                                 <tr> 
-                                                    <td><input name="ip_whitelist[]" type="text" value="<?php echo $value ?>"></td><td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                    <td><input name="ip_test[]" type="text" value="<?php echo $value ?>"></td><td><button onclick="removetesttrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
                                                 <?php } } else { ?>
                                                     <tr>
@@ -158,10 +158,20 @@
                                             <button type="button" id="whiteipadd" class="btn-sm btn-primary pull-right"><i class="fa fa-plus"></i></button>
                                             </span>
                                             <table class="whiteTable">
+                                                <?php if (isset($details[0]->IP_whitelist) && $details[0]->IP_whitelist!="") {
+                                                    $IP_whitelistArr = explode(",", $details[0]->IP_whitelist);
+                                                    foreach ($IP_whitelistArr as $key => $value) {
+                                                 ?>
+                                                 <tr>
+                                                    <td><input id="ip_whitelist" name="ip_whitelist[]" type="text" class="form-control" value="<?php echo $value ?>"></td>
+                                                    <td><button onclick="removewhitetrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
+                                                </tr>
+                                                <?php } } else { ?>
                                                 <tr>
                                                     <td><input id="ip_whitelist" name="ip_whitelist[]" type="text" class="form-control"></td>
                                                     <td><button onclick="removewhitetrfun(event)" type="button" class="btn-sm btn-danger red pull-right"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
+                                                 <?php } ?>
                                             </table>
                                             </div>
                                         </div>
