@@ -1619,35 +1619,35 @@ class Common extends MY_Controller {
     if ($_REQUEST['developer_mail']=="") {
       $Return['error'] = 'Developer mail field is required!';
       $Return['color'] = 'orange';
-    } 
+    } else
     if (!filter_var($_REQUEST['developer_mail'], FILTER_VALIDATE_EMAIL)) {
           $Return['error'] = "Invalid email format for developer mail"; 
           $Return['color'] = 'orange'; 
-    } 
+    } else
     if ($_REQUEST['support_mail']=="") {
       $Return['error'] = 'Support mail field is required!';
       $Return['color'] = 'orange';
-    }
+    } else
     if (!filter_var($_REQUEST['support_mail'], FILTER_VALIDATE_EMAIL)) {
           $Return['error'] = "Invalid email format for support mail"; 
           $Return['color'] = 'orange'; 
-    }
+    } else
     if ($_REQUEST['developer_con']=="") {
       $Return['error'] = 'Developer Contact field is required!';
       $Return['color'] = 'orange';
-    }
+    } else
     if ($_REQUEST['support_con']=="") {
       $Return['error'] = 'Support Contact field is required!';
       $Return['color'] = 'orange';
-    }
+    } else
     if (!isset($_REQUEST['ip_test'])) {
       $Return['error'] = 'IP address test field is required!';
       $Return['color'] = 'orange';
-    }
+    } else
     if (!isset($_REQUEST['ip_whitelist'])) {
           $Return['error'] = 'IP address whitelist field is required!';
           $Return['color'] = 'orange';
-    } 
+    } else
     if(isset($_REQUEST['ip_test'])) {
       foreach($_REQUEST['ip_test'] as $value) {
         if($value==""){
@@ -1655,7 +1655,7 @@ class Common extends MY_Controller {
           $Return['color'] = 'orange';
         }
       }
-    }
+    } else
     if(isset($_REQUEST['ip_whitelist'])) {
       foreach($_REQUEST['ip_whitelist'] as $value1) {
         if($value1=="") {
@@ -1663,7 +1663,7 @@ class Common extends MY_Controller {
           $Return['color'] = 'orange';
         }
       }
-    }
+    } else
     if ($_REQUEST['usage']=="") {
       $Return['error'] = 'Usage limit field is required!';
       $Return['color'] = 'orange';
