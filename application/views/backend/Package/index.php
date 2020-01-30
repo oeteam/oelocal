@@ -19,6 +19,7 @@
       margin: 1px;
   }
 </style>
+<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">
@@ -73,6 +74,8 @@
 <div id="packageModal" class="delete_modal modal fade col-md-12" role="dialog" style="max-height: 78%; width: 95%;">
  
 </div>
+
+
 <script type="text/javascript">
   filter(1);
   function filter(val) {
@@ -117,6 +120,8 @@
       }
     });
   }
+
 </script>
+<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
 <?php init_tail(); ?>
 

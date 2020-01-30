@@ -60,6 +60,7 @@
                         <th width="100" title="Child Cost">C.c</th>
                         <th width="100" title="Adult Selling">A.s</th>
                         <th width="100" title="Child Selling">C.s</th>
+                        <th width="122">More</th>
                         <th width="100">Action</th>
                     </thead>
                     <tbody class="tbody">
@@ -107,6 +108,9 @@
                                 <input type="text" class="ChildSelling" name="ChildSelling[]">
                             </td>
                             <td>
+                                <span><a href="#"  id="add_details" data-toggle="modal" data-target="#addDetails" class="btn-sm btn-primary" type="button">Add more details</a></span>
+                            </td>
+                            <td>
                                 <a class="btn-small add-tr"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                 <a class="btn-small bg-rebeccapurple copy-tr"><i class="fa fa-files-o" aria-hidden="true"></i></a>
                                 <a class="btn-small bg-red delete-tr hide" disabled="disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -121,8 +125,75 @@
             <input type="button" id="submit_package" class="no-border btn-sm btn-success" value="Update">
         </div>
     </div>
+    <div id="addDetails" class="delete_modal modal fade col-md-12" role="dialog" style="width: 70%">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Details</h4>
+                </div>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="overview">Overview :</label><span>*</span>
+                        <textarea class="form-control" name="overview" id="overview"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="address">Address :</label><span>*</span>
+                        <textarea class="form-control" name="address" id="address"></textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="duration">Duration :</label><span>*</span>
+                        <input type="text" class="form-control" name="duration" id="duration"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="inclusion">Inclusions :</label><span>*</span>
+                        <textarea class="form-control" name="inclusion" id="inclusion"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="exclusion">Exclusions :</label><span>*</span>
+                        <textarea class="form-control" name="exclusion" id="exclusion"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="terms">Terms and Conditions :</label><span>*</span>
+                        <textarea class="form-control" name="terms" id="terms"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="hours">Operational Hours</label><span>*</span>
+                        <textarea class="form-control" name="hours" id="hours"></textarea>
+                    </div>
+                </div>
+                <div class="row"><br>
+                    <h5>Booking Policy</h5><br>
+                    <div class="form-group col-md-12">
+                        <label for="cancelPolicy">Cancellation Policy</label><span>*</span>
+                        <textarea class="form-control" name="cancelPolicy" id="cancelPolicy"></textarea>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="childPolicy">Child Policy</label><span>*</span>
+                        <textarea class="form-control" name="childPolicy" id="childPolicy"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="btn-toolbar pull-right">
+                        <button type="button" class="btn btn-default nBtn nclose" data-dismiss="addDetails">close</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+    </div>
 
 <script type="text/javascript">
+$('#overview').trumbowyg();
+$('#exclusion').trumbowyg();
+$('#inclusion').trumbowyg();
+$('#terms').trumbowyg();
+$('#hours').trumbowyg();
+$('#childPolicy').trumbowyg();
+$('#cancelPolicy').trumbowyg();
 function ConSelectFun(){
   var hiddenState = $("#hiddenState").val();
   $('#stateSelect option').remove();
