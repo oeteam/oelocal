@@ -19,7 +19,6 @@
       margin: 1px;
   }
 </style>
-<link rel="stylesheet" href="<?php echo static_url(); ?>assets/css/trumbowyg.css">
 <div class="sb2-2">
     <div class="sb2-2-3">
         <div class="row">
@@ -27,7 +26,7 @@
                 <div class="box-inn-sp">
                     <div class="inn-title">
                         <span>Package list</span>
-                        <span class="pull-right"><a href="#"  id="add_package" data-toggle="modal" data-target="#packageModal" class="btn-sm btn-primary">Add package</a></span>
+                        <span class="pull-right"><a href="<?php echo base_url(); ?>backend/package/newpackage" class="btn-sm btn-primary">Add package</a></span>
                     </div>
                     <div class="row">
                         <div class="col-md-12 mar_top_10">
@@ -71,11 +70,6 @@
 </div>
 </div>
 </div>
-<div id="packageModal" class="delete_modal modal fade col-md-12" role="dialog" style="max-height: 78%; width: 95%;">
- 
-</div>
-
-
 <script type="text/javascript">
   filter(1);
   function filter(val) {
@@ -94,11 +88,6 @@
       }
     });
   }
-
-
-  $("#add_package").click(function() {
-    $("#packageModal").load(base_url+'backend/Package/packageModal');
-  })
 
   function editpackageModal(id) {
     alert("Under construction");
@@ -121,7 +110,6 @@
     });
   }
 
-</script>
-<script type="text/javascript" src="<?php echo static_url(); ?>assets/js/trumbowyg.min.js"></script> 
+</script> 
 <?php init_tail(); ?>
 

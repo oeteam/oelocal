@@ -202,7 +202,6 @@ class Package extends MY_Controller {
     echo json_encode(true);
   }
   public function PackageSubmit() {
-
     foreach ($_REQUEST['title'] as $key => $value) {
         $data = array(
             'title' => $value,
@@ -235,6 +234,14 @@ class Package extends MY_Controller {
     $this->db->update('hotel_tbl_package',$data);
 
     echo json_encode(true);
+  }
+  public function newpackage() {
+    $data['contry']= $this->Hotels_Model->SelectCountry();
+    $data['supplier']= $this->db->query('select CONCAT(FirstName," ",LastName) as Name,id from hotel_tbl_packagesupplier')->result();
+    $this->load->view("backend/package/newpackage",$data);  
+  }
+  public function detailsModal() {
+    $this->load->view('backend/Package/detailsModal');
   }
 }
 ?>
