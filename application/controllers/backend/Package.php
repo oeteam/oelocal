@@ -219,6 +219,16 @@ class Package extends MY_Controller {
             'State' => $_REQUEST['stateSelect'],
             'Created_Date' => Date('Y-m-d H:i:s'),
             'Created_By' => $this->session->userdata('id'),
+            'overview' => $_REQUEST['overview'][$key],
+            'address' => $_REQUEST['address'][$key],
+            'duration' => $_REQUEST['duration'][$key],
+            'inclusion' => $_REQUEST['inclusion'][$key],
+            'exclusion' => $_REQUEST['exclusion'][$key],
+            'terms' => $_REQUEST['terms'][$key],
+            'hours' => $_REQUEST['hours'][$key],
+            'cancelPolicy' => $_REQUEST['cancelPolicy'][$key],
+            'childPolicy' => $_REQUEST['childPolicy'][$key],
+            'images' => ''
         );
       $this->db->insert('hotel_tbl_package',$data);
     }
@@ -240,8 +250,9 @@ class Package extends MY_Controller {
     $data['supplier']= $this->db->query('select CONCAT(FirstName," ",LastName) as Name,id from hotel_tbl_packagesupplier')->result();
     $this->load->view("backend/package/newpackage",$data);  
   }
-  public function detailsModal() {
-    $this->load->view('backend/Package/detailsModal');
+  public function detailsModal($trid) {
+    $data['trid'] = $trid;
+    $this->load->view('backend/Package/detailsModal',$data);
   }
 }
 ?>

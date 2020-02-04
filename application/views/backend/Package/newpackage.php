@@ -97,7 +97,7 @@
     .modal.right .modal-dialog {
         position: fixed;
         margin: auto;
-        width: 82%;
+        width: 63%;
         height: 100%;
         -webkit-transform: translate3d(0%, 0, 0);
             -ms-transform: translate3d(0%, 0, 0);
@@ -111,6 +111,9 @@
     }
     .modal.right .modal-body {
         padding: 15px 15px 80px;
+    }
+    .modal-header {
+      background-color: lightblue;
     }
         
 /*Right*/
@@ -212,7 +215,7 @@
                           <th style="width: 10%">Action</th>
                       </thead>
                       <tbody class="tbody">
-                          <tr>
+                          <tr id="row1">
                               <td>
                                   <textarea  name="title[]" style="height: 20%"></textarea>
                               </td>
@@ -285,7 +288,7 @@
     </div>
 <script type="text/javascript">
 $('#add_details').click(function (e){
-    $("#addDetails").load(base_url+'backend/package/detailsModal');
+    $("#addDetails").load(base_url+'backend/package/detailsModal/'+$("#add_details").closest('tr').attr('id'));
 });
 function ConSelectFun(){
   var hiddenState = $("#hiddenState").val();
@@ -357,7 +360,9 @@ $(".tbody").on('keydown', '.ChildSelling', function(e) {
 })
 
 $(".tbody").on('click', '.add-tr', function(e) {
-    $("#PackageTable").find('tbody').append('<tr>'+$(".ChildSelling").closest('tr').html()+'</tr>');
+    var index = $("#PackageTable").find('tbody').find('tr').length+1;
+    var row = "row"+index;
+    $("#PackageTable").find('tbody').append('<tr id="'+row+'">'+$(".ChildSelling").closest('tr').html()+'</tr>');
     $("#PackageTable").find('tbody').last('tr').find('td:eq(0)');
     $(".delete-tr").removeClass("hide");
     $(".delete-tr:eq(0)").addClass("hide");
