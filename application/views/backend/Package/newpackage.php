@@ -158,7 +158,9 @@
     .filepond--drip-blob {
       background-color: #7f8a9a;
     }
-
+    .details textarea {
+      display: none;
+    }
 
 </style>
     <div class="sb2-2">
@@ -266,6 +268,18 @@
                                 </p><br>
                                   <span><a href="#" style="font-size: smaller"  id="add_details" data-toggle="modal" data-target="#addDetails">Add more details</a></span>
                               </td>
+                              <td class="hide">
+                                <textarea class="details" name="overview[]">ghfg</textarea>
+                                <textarea class="details" name="address[]"></textarea>
+                                <input type="hidden" name="duration[]" value="">
+                                <textarea class="details" name="inclusion[]"></textarea>
+                                <textarea class="details" name="exclusion[]"></textarea>
+                                <textarea class="details" name="terms[]"></textarea>
+                                <textarea class="details" name="hours[]"></textarea>
+                                <textarea name="cancelPolicy[]" class="details"></textarea>
+                                <textarea class="details" name="childPolicy[]"></textarea>
+                                <input type="hidden" name="images[]" value="">
+                              </td>
                           </tr>
                       </tbody>
                   </table>
@@ -288,7 +302,20 @@
     </div>
 <script type="text/javascript">
 $('#add_details').click(function (e){
-    $("#addDetails").load(base_url+'backend/package/detailsModal/'+$("#add_details").closest('tr').attr('id'));
+    var trid = $("#add_details").closest('tr').attr('id');
+    var more = {overview: $("#"+trid).find('td:eq(12)').find('textarea[name="overview[]"]').val(),
+                address: $("#"+trid).find('td:eq(12)').find('textarea[name="address[]"]').val(),
+                duration: $("#"+trid).find('td:eq(12)').find('input[name="duration[]"]').val(),
+                inclusion: $("#"+trid).find('td:eq(12)').find('textarea[name="inclusion[]"]').val(),
+                exclusion: $("#"+trid).find('td:eq(12)').find('textarea[name="exclusion[]"]').val(),
+                terms: $("#"+trid).find('td:eq(12)').find('textarea[name="terms[]"]').val(),
+                hours: $("#"+trid).find('td:eq(12)').find('textarea[name="hours[]"]').val(),
+                cancelPolicy: $("#"+trid).find('td:eq(12)').find('textarea[name="cancelPolicy[]"]').val(),
+                childPolicy: $("#"+trid).find('td:eq(12)').find('textarea[name="childPolicy[]"]').val(),
+                trid: trid,
+              };
+    more = jQuery.param(more);
+    $("#addDetails").load(base_url+'backend/package/detailsModal?'+more);
 });
 function ConSelectFun(){
   var hiddenState = $("#hiddenState").val();

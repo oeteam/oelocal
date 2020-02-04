@@ -27,50 +27,51 @@
                 <h4 class="modal-title">Add Details</h4>
             </div>
             <div class="modal-body">
+                <small class="right details-validate"></small>
                 <input type="hidden" name="trid" id="trid" value="<?php echo $trid ?>">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="overview">Overview :</label><span>*</span>
-                        <textarea class="form-control" name="overview" id="overview" ></textarea>
+                        <textarea class="form-control" name="overview" id="overview" ><?php echo isset($overview)?$overview:"" ?></textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="address">Address :</label><span>*</span>
-                        <textarea class="form-control" name="address" id="address"></textarea>
+                        <textarea class="form-control" name="address" id="address"><?php echo isset($address)?$address:"" ?></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="duration">Duration :</label><span>*</span>
-                        <input type="text" class="form-control" name="duration" id="duration"></textarea>
+                        <input type="text" class="form-control" name="duration" id="duration" value="<?php echo isset($duration)?$duration:''?>">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="inclusion">Inclusions :</label><span>*</span>
-                        <textarea class="form-control" name="inclusion" id="inclusion"></textarea>
+                        <textarea class="form-control" name="inclusion" id="inclusion"><?php echo isset($inclusion)?$inclusion:"" ?></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exclusion">Exclusions :</label><span>*</span>
-                        <textarea class="form-control" name="exclusion" id="exclusion"></textarea>
+                        <textarea class="form-control" name="exclusion" id="exclusion"><?php echo isset($exclusion)?$exclusion:"" ?></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="terms">Terms and Conditions :</label><span>*</span>
-                        <textarea class="form-control" name="terms" id="terms"></textarea>
+                        <textarea class="form-control" name="terms" id="terms"><?php echo isset($terms)?$terms:"" ?></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="hours">Operational Hours</label><span>*</span>
-                        <textarea class="form-control" name="hours" id="hours"></textarea>
+                        <textarea class="form-control" name="hours" id="hours"><?php echo isset($hours)?$hours:"" ?></textarea>
                     </div>
                 </div>
                 <div class="row"><br>
                     <h5>Booking Policy</h5><br>
                     <div class="form-group col-md-6">
                         <label for="cancelPolicy">Cancellation Policy</label><span>*</span>
-                        <textarea class="form-control" name="cancelPolicy" id="cancelPolicy"></textarea>
+                        <textarea class="form-control" name="cancelPolicy" id="cancelPolicy"><?php echo isset($cancelPolicy)?$cancelPolicy:"" ?></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="childPolicy">Child Policy</label><span>*</span>
-                        <textarea class="form-control" name="childPolicy" id="childPolicy"></textarea>
+                        <textarea class="form-control" name="childPolicy" id="childPolicy"><?php echo isset($childPolicy)?$childPolicy:"" ?></textarea>
                     </div>
                 </div>
                 <div class="row"><br>
@@ -117,8 +118,15 @@ $(function(){
 });
 $("#submit_details").click(function() {
     var trid = $('#trid').val();
-    $("#"+trid).append('<td class="hide"><input type="hidden" name="overview[]" value="'+$('#overview').val()+'"><input type="hidden" name="address[]" value="'+$('#address').val()+'"><input type="hidden" name="duration[]" value="'+$('#duration').val()+'"><input type="hidden" name="inclusion[]" value="'+$('#inclusion').val()+'"><input type="hidden" name="exclusion[]" value="'+$('#exclusion').val()+'"><input type="hidden" name="terms[]" value="'+$('#terms').val()+'"><input type="hidden" name="hours[]" value="'+$('#hours').val()+'"><input type="hidden" name="cancelPolicy[]" value="'+$('#cancelPolicy').val()+'"><input type="hidden" name="childPolicy[]" value="'+$('#childPolicy').val()+'"><input type="hidden" name="images[]" value="'+$('#images').val()+'"></td>');
-    $('#addDetails').modal('toggle');
+    $("#"+trid).find('td:eq(12)').find('textarea[name="overview[]"]').val($('#overview').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="address[]"]').val($('#address').val());
+    $("#"+trid).find('td:eq(12)').find('input[name="duration[]"]').val($('#duration').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="inclusion[]"]').val($('#inclusion').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="exclusion[]"]').val($('#exclusion').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="terms[]"]').val($('#terms').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="hours[]"]').val($('#hours').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="cancelPolicy[]"]').val($('#cancelPolicy').val());
+    $("#"+trid).find('td:eq(12)').find('textarea[name="childPolicy[]"]').val($('#childPolicy').val());
 });
 
 </script>

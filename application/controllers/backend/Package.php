@@ -250,9 +250,8 @@ class Package extends MY_Controller {
     $data['supplier']= $this->db->query('select CONCAT(FirstName," ",LastName) as Name,id from hotel_tbl_packagesupplier')->result();
     $this->load->view("backend/package/newpackage",$data);  
   }
-  public function detailsModal($trid) {
-    $data['trid'] = $trid;
-    $this->load->view('backend/Package/detailsModal',$data);
+  public function detailsModal() {
+    $this->load->view('backend/Package/detailsModal',$_REQUEST);
   }
 }
 ?>
