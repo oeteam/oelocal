@@ -266,7 +266,7 @@
                                   <a class="btn-small bg-rebeccapurple copy-tr"><i class="fa fa-files-o" aria-hidden="true"></i></a>
                                   <a class="btn-small bg-red delete-tr hide" disabled="disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </p><br>
-                                  <span><a href="#" style="font-size: smaller"  id="add_details" data-toggle="modal" data-target="#addDetails">Add more details</a></span>
+                                  <span><a href="#" style="font-size: smaller"  class="add_details" data-toggle="modal" data-target="#addDetails">Add more details</a></span>
                               </td>
                               <td class="hide">
                                 <textarea class="details" name="overview[]">ghfg</textarea>
@@ -301,8 +301,8 @@
  
     </div>
 <script type="text/javascript">
-$('#add_details').click(function (e){
-    var trid = $("#add_details").closest('tr').attr('id');
+$('.add_details').click(function (e){
+    var trid = $(".add_details").closest('tr').attr('id');
     var more = {overview: $("#"+trid).find('td:eq(12)').find('textarea[name="overview[]"]').val(),
                 address: $("#"+trid).find('td:eq(12)').find('textarea[name="address[]"]').val(),
                 duration: $("#"+trid).find('td:eq(12)').find('input[name="duration[]"]').val(),
