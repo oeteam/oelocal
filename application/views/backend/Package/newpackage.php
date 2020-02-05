@@ -269,7 +269,7 @@
                                   <span><a href="#" style="font-size: smaller"  class="add_details" data-toggle="modal" data-target="#addDetails">Add more details</a></span>
                               </td>
                               <td class="hide">
-                                <textarea class="details" name="overview[]">ghfg</textarea>
+                                <textarea class="details" name="overview[]">Test</textarea>
                                 <textarea class="details" name="address[]"></textarea>
                                 <input type="hidden" name="duration[]" value="">
                                 <textarea class="details" name="inclusion[]"></textarea>
@@ -301,8 +301,9 @@
  
     </div>
 <script type="text/javascript">
-$('.add_details').click(function (e){
-    var trid = $(".add_details").closest('tr').attr('id');
+  $(document).on('click','.tbody tr .add_details',function(){
+    var trid = $(this).closest('tr').attr('id');
+    alert(trid);
     var more = {overview: $("#"+trid).find('td:eq(12)').find('textarea[name="overview[]"]').val(),
                 address: $("#"+trid).find('td:eq(12)').find('textarea[name="address[]"]').val(),
                 duration: $("#"+trid).find('td:eq(12)').find('input[name="duration[]"]').val(),
